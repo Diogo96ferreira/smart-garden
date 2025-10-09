@@ -100,3 +100,23 @@ button {
 button:hover {
   background-color: var(--accent);
 }
+
+/* === Animation Spinner === */
+@keyframes leaf-sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: rotate(-8deg);
+  }
+}
+
+@layer utilities {
+  .animate-leaf {
+    animation: leaf-sway 1.5s ease-in-out infinite;
+  }
+}

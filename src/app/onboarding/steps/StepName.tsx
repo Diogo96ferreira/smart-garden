@@ -22,7 +22,7 @@ export function StepName({ onNext, onBack }: Props) {
       <Input type="text" placeholder="Your first name" className="max-w-xs px-2" />
 
       <div className="fixed bottom-12 left-0 w-full px-6">
-        <Button className="w-full rounded-full" onClick={onNext}>
+        <Button className="h-12 w-full rounded-full text-base" onClick={onNext}>
           Continue
         </Button>
       </div>
