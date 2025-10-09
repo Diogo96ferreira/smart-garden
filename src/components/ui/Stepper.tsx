@@ -10,7 +10,7 @@ type StepperProps = {
 
 export function Stepper({ currentStep, totalSteps }: StepperProps) {
   return (
-    <div className="mt-6 flex items-center justify-center gap-3">
+    <div className="mt-2 flex items-center justify-center gap-3">
       {Array.from({ length: totalSteps }).map((_, index) => {
         const step = index + 1;
         const isActive = step === currentStep;
@@ -23,8 +23,8 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
               opacity: isActive ? 1 : 0.4,
             }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${
-              isActive ? 'scale-125 bg-green-500 shadow-md shadow-green-300' : 'bg-gray-300'
+            className={`h-2 w-2 rounded-full transition-all duration-300 ${
+              isActive ? 'scale-105 bg-green-500 shadow-md shadow-green-300' : 'bg-gray-300'
             }`}
           />
         );

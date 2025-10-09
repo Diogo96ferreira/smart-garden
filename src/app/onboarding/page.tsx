@@ -25,7 +25,7 @@ export default function OnboardingPage() {
   ];
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4">
       {step !== 0 && (
         <div className="fixed top-8 left-4">
           <Button
@@ -52,7 +52,7 @@ export default function OnboardingPage() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="fixed bottom-2 left-0 w-full">
+      <div className="fixed bottom-4 left-0 w-full">
         <Stepper currentStep={step + 1} totalSteps={steps.length} />
       </div>
     </main>

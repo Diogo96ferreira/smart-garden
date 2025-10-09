@@ -1,38 +1,21 @@
-import type { Metadata } from 'next';
-import { Roboto, Playfair_Display } from 'next/font/google';
+import { Roboto, Fredoka } from 'next/font/google';
 import './globals.css';
 
-// Fonte principal para texto (body)
 const roboto = Roboto({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
   variable: '--font-roboto',
 });
 
-// Fonte para títulos (headings)
-const playfair = Playfair_Display({
+const fredoka = Fredoka({
   subsets: ['latin'],
-  weight: ['700', '900'],
-  variable: '--font-playfair',
+  variable: '--font-fredoka',
+  weight: ['400', '500', '700'],
 });
 
-export const metadata: Metadata = {
-  title: 'Smart Garden',
-  description: 'AI-powered garden management app',
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.variable} ${playfair.variable} font-body bg-white text-gray-900 antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${roboto.variable} ${fredoka.variable}`}>{children}</body>
     </html>
   );
 }

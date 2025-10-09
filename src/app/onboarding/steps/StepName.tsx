@@ -11,9 +11,9 @@ type Props = {
 export function StepName({ onNext, onBack }: Props) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 space-y-8 p-8">
-      <div className="content-wrapper">
-        <h2 className="text-center text-2xl font-bold">
-          You already know who we are, <br /> now let us get to know you!
+      <div className="content-wrapper space-y-4">
+        <h2 className="text-center text-4xl font-extrabold">
+          You already know who we are, now let us get to know you!
         </h2>
         <p className="text-muted-foreground text-center">
           Tell us a bit about yourself to personalize your experience.
@@ -21,7 +21,7 @@ export function StepName({ onNext, onBack }: Props) {
       </div>
       <Input type="text" placeholder="Your first name" className="max-w-xs px-2" />
 
-      <div className="fixed bottom-8 left-0 flex w-full gap-3 px-4">
+      <div className="fixed bottom-12 left-0 w-full px-6">
         <Button className="w-full rounded-full" onClick={onNext}>
           Continue
         </Button>

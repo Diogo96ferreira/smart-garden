@@ -20,7 +20,7 @@ type Props = {
 export function StepLocation({ onBack, onFinish }: Props) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 space-y-6 p-8">
-      <h2 className="text-center text-3xl font-extrabold">
+      <h2 className="text-center text-4xl font-extrabold">
         Now tell us, where is your garden located?
       </h2>
       <p className="text-muted-foreground text-center text-lg">
@@ -56,7 +56,7 @@ export function StepLocation({ onBack, onFinish }: Props) {
           </SelectContent>
         </Select>
       </div>
-      <div className="fixed bottom-8 left-0 flex w-full gap-3 px-4">
+      <div className="fixed bottom-12 left-0 w-full px-6">
         <Button className="w-full rounded-full" onClick={onFinish}>
           Finish
         </Button>
