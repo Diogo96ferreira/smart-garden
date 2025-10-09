@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node 22 LTS
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          # caching automático se "packageManager" existir no package.json (npm/pnpm/yarn)
+          # package-manager-cache: true
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test -- --watchAll=false
