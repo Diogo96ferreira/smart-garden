@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Stepper } from '@/components/ui/stepper';
+import { Stepper } from '@/components/ui/Stepper';
 
 // Importa os steps individuais
 import { StepWelcome } from './steps/StepWelcome';
