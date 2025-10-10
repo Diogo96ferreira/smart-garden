@@ -29,41 +29,67 @@ export function StepLocation({ onBack, onFinish }: Props) {
   const [selectedDistrito, setSelectedDistrito] = useState('');
   const [selectedMunicipio, setSelectedMunicipio] = useState('');
   const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  // 🔄 GeoAPI + fallback local
   useEffect(() => {
     const fetchDistritosMunicipios = async () => {
       try {
-        console.log('🔍 Tentando carregar dados da GeoAPI...');
         const resp = await axios.get<MunicipioResponse[]>(
           'https://geoapi.pt/distritos/municipios',
           { timeout: 5000 },
         );
         setDistritos(resp.data);
         localStorage.setItem('geoapi_data', JSON.stringify(resp.data));
-        console.log('✅ Dados carregados da GeoAPI');
-      } catch (err) {
-        console.warn('⚠️ GeoAPI falhou, a usar fallback local...', err);
-
+      } catch {
         try {
           const fallbackResp = await axios.get<MunicipioResponse[]>('/data/locations.json');
           setDistritos(fallbackResp.data);
           localStorage.setItem('geoapi_data', JSON.stringify(fallbackResp.data));
-          console.log('✅ Fallback local carregado com sucesso');
         } catch (fallbackErr) {
-          console.error('❌ Falha ao carregar dados de fallback local', fallbackErr);
+          console.error('❌ Fallback local falhou:', fallbackErr);
         }
       } finally {
         setLoading(false);
       }
     };
-
-    fetchDistritosMunicipios();
+    // tenta cache primeiro (opcional)
+    const cached = localStorage.getItem('geoapi_data');
+    if (cached) {
+      setDistritos(JSON.parse(cached));
+      setLoading(false);
+    } else {
+      fetchDistritosMunicipios();
+    }
   }, []);
 
   const municipios = distritos.find((d) => d.distrito === selectedDistrito)?.concelhos || [];
 
+  const handleFinish = () => {
+    localStorage.setItem('onboardingComplete', 'true');
+    onFinish(); // continua o flow normal
+  };
+
+  // 🎯 Global: Enter → finish, Esc → back (pausa quando um Select está aberto)
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (menuOpen) return;
+
+      if (e.key === 'Enter' && selectedDistrito && selectedMunicipio) {
+        e.preventDefault();
+        onFinish();
+      }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onBack();
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [menuOpen, selectedDistrito, selectedMunicipio, onFinish, onBack]);
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 space-y-6 p-8">
+    <div className="flex min-h-screen flex-col items-center justify-center space-y-4 p-8">
       <h2 className="text-center text-4xl font-extrabold">
         Now tell us, where is your garden located?
       </h2>
@@ -77,20 +103,27 @@ export function StepLocation({ onBack, onFinish }: Props) {
         </div>
       ) : (
         <>
-          {/* Select distrito */}
+          {/* Distrito */}
           <div className="select-wrapper">
-            <Label className="mb-1">District</Label>
+            <Label className="mb-2 text-lg">District</Label>
             <Select
               value={selectedDistrito}
               onValueChange={(value) => {
                 setSelectedDistrito(value);
                 setSelectedMunicipio('');
               }}
+              onOpenChange={setMenuOpen}
             >
-              <SelectTrigger className="w-[280px]">
+              <SelectTrigger className="smart-select-trigger w-[280px]">
                 <SelectValue placeholder="Select district" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent
+                side="bottom"
+                align="center"
+                className="smart-select-content"
+                // 🔑 impede o Radix de voltar a focar o Trigger quando fecha
+                onCloseAutoFocus={(e) => e.preventDefault()}
+              >
                 <SelectGroup>
                   {distritos.map((item) => (
                     <SelectItem key={item.distrito} value={item.distrito}>
@@ -102,18 +135,25 @@ export function StepLocation({ onBack, onFinish }: Props) {
             </Select>
           </div>
 
-          {/* Select município */}
+          {/* Município */}
           <div className="select-wrapper">
-            <Label className="mb-1">City</Label>
+            <Label className="mb-2 text-lg">City</Label>
             <Select
               value={selectedMunicipio}
-              onValueChange={(value) => setSelectedMunicipio(value)}
+              onValueChange={setSelectedMunicipio}
               disabled={!selectedDistrito}
+              onOpenChange={setMenuOpen}
             >
-              <SelectTrigger className="w-[280px]">
+              <SelectTrigger className="smart-select-trigger w-[280px]">
                 <SelectValue placeholder="Select city" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent
+                side="bottom"
+                align="center"
+                className="smart-select-content"
+                // 🔑 idem
+                onCloseAutoFocus={(e) => e.preventDefault()}
+              >
                 <SelectGroup>
                   {municipios.map((m) => (
                     <SelectItem key={m} value={m}>
@@ -127,14 +167,17 @@ export function StepLocation({ onBack, onFinish }: Props) {
         </>
       )}
 
-      <div className="fixed bottom-12 left-0 w-full px-6">
-        <Button
-          className="h-12 w-full rounded-full text-base"
-          onClick={onFinish}
-          disabled={!selectedMunicipio}
-        >
-          Finish
-        </Button>
+      {/* CTA */}
+      <div className="fixed right-0 bottom-12 left-0 px-6">
+        <div className="mx-auto max-w-md">
+          <Button
+            className="h-12 min-h-12 w-full text-base leading-none"
+            onClick={handleFinish}
+            disabled={!selectedMunicipio}
+          >
+            Finish
+          </Button>
+        </div>
       </div>
     </div>
   );

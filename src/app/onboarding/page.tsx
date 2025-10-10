@@ -25,7 +25,7 @@ export default function OnboardingPage() {
   ];
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4">
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
       {step !== 0 && (
         <div className="fixed top-8 left-4">
           <Button
@@ -47,6 +47,7 @@ export default function OnboardingPage() {
           exit={{ opacity: 0, x: -100 }}
           transition={{ duration: 0.4 }}
           className="w-full"
+          layout="position"
         >
           {steps[step]}
         </motion.div>
