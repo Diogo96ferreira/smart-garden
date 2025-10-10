@@ -60,7 +60,7 @@ export function StepName({ onBack, onNext }: Props) {
       <div className="fixed bottom-12 left-0 w-full px-6">
         <div className="mx-auto max-w-md">
           <Button
-            className="h-12 min-h-12 w-full text-base leading-none"
+            className="btn-primary h-12 min-h-12 w-full text-base leading-none"
             onClick={handleNext}
             disabled={!name.trim()}
           >

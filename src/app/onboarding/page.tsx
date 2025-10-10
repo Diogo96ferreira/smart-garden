@@ -29,7 +29,7 @@ export default function OnboardingPage() {
       {step !== 0 && (
         <div className="fixed top-8 left-4">
           <Button
-            className="rounded-full"
+            className="btn-primary rounded-full"
             variant="outline"
             size="icon"
             onClick={() => setStep(step - 1)} // volta um passo

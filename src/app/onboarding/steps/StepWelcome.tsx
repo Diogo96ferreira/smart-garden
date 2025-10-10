@@ -33,7 +33,7 @@ export function StepWelcome({ onNext }: Props) {
           <Button
             variant="outline"
             onClick={onNext}
-            className="h-12 min-h-12 w-full text-base leading-none"
+            className="btn-primary h-12 min-h-12 w-full text-base leading-none"
           >
             Let’s Start
           </Button>

@@ -171,7 +171,7 @@ export function StepLocation({ onBack, onFinish }: Props) {
       <div className="fixed right-0 bottom-12 left-0 px-6">
         <div className="mx-auto max-w-md">
           <Button
-            className="h-12 min-h-12 w-full text-base leading-none"
+            className="btn-primary h-12 min-h-12 w-full text-base leading-none"
             onClick={handleFinish}
             disabled={!selectedMunicipio}
           >
