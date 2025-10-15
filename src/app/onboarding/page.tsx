@@ -20,7 +20,7 @@ export default function OnboardingPage() {
     <StepLocation
       key="location"
       onBack={() => setStep(1)}
-      onFinish={() => alert('🎉 Onboarding finished!')}
+      onFinish={() => console.log('Onboarding Complete! 🎉')}
     />,
   ];
 

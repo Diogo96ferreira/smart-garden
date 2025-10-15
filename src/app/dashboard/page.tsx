@@ -1,159 +1,192 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardFooter } from '@/components/ui/card';
-import { AlarmClock, BadgeHelp, Check, Sun, CloudRain, Droplets, Leaf } from 'lucide-react';
+import { Check, AlarmClock, BadgeHelp } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { LeafLoader } from '@/components/ui/Spinner';
+import { supabase } from '@/lib/supabaseClient';
 
-interface Task {
+// ✅ Tipo explícito para as tarefas
+type Task = {
   id: number;
   title: string;
-  description: string;
-  image: string;
-  priority: 'low' | 'medium' | 'high';
-  weather: 'sun' | 'rain' | 'humidity';
-}
+  description?: string | null;
+  image?: string | null;
+  created_at?: string;
+};
 
 export default function DashboardPage() {
-  const [name, setName] = useState<string>('');
+  const [doneTasks, setDoneTasks] = useState<number[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Water Tomato Plants',
-      description: 'Soil is dry, time to hydrate!',
-      image: '/tomato.jpg',
-      priority: 'high',
-      weather: 'sun',
-    },
-    {
-      id: 2,
-      title: 'Inspect Rose Bushes',
-      description: 'Check for aphids and black spots.',
-      image: '/roses.jpg',
-      priority: 'medium',
-      weather: 'humidity',
-    },
-    {
-      id: 3,
-      title: 'Harvest Lettuce',
-      description: 'Pick outer leaves for continuous growth.',
-      image: '/alface.jpg',
-      priority: 'low',
-      weather: 'rain',
-    },
-  ];
-
+  // 🔹 1️⃣ Fetch tasks from Supabase
   useEffect(() => {
-    const storedName = localStorage.getItem('userName');
-    if (storedName) setName(storedName);
+    async function fetchTasks() {
+      try {
+        const { data, error } = await supabase
+          .from('tasks')
+          .select('*')
+          .order('created_at', { ascending: true });
+
+        if (error) throw error;
+        setTasks((data as Task[]) || []);
+      } catch (err: unknown) {
+        if (err instanceof Error) console.error('Erro ao buscar tasks:', err.message);
+        else console.error('Erro desconhecido ao buscar tasks:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTasks();
   }, []);
 
-  const priorityColor = {
-    high: 'bg-red-100 text-red-700 border-red-300',
-    medium: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-    low: 'bg-green-100 text-green-700 border-green-300',
+  // 🔹 2️⃣ Load doneTasks from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem('doneTasks');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored) as number[];
+        setDoneTasks(Array.isArray(parsed) ? parsed : []);
+      } catch {
+        setDoneTasks([]);
+      }
+    }
+  }, []);
+
+  // 🔹 3️⃣ Save doneTasks to localStorage
+  useEffect(() => {
+    localStorage.setItem('doneTasks', JSON.stringify(doneTasks));
+  }, [doneTasks]);
+
+  // 🔹 4️⃣ Handle toggle
+  const handleDone = (id: number) => {
+    setDoneTasks((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
   };
 
-  const weatherIcon = {
-    sun: <Sun className="h-4 w-4 text-yellow-500" />,
-    rain: <CloudRain className="h-4 w-4 text-blue-500" />,
-    humidity: <Droplets className="h-4 w-4 text-teal-500" />,
-  };
+  // ⚠️ Condiciona apenas o conteúdo, não o hook
+  if (loading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <LeafLoader />
+      </main>
+    );
+  }
+
+  // ✅ Agora podes calcular progress em segurança
+  const progress = tasks.length > 0 ? Math.round((doneTasks.length / tasks.length) * 100) : 0;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-green-50 to-white px-6 py-8">
-      {/* Header */}
-      <header className="mb-8 text-center sm:text-left">
-        <p className="text-lg font-medium text-green-900">Hello {name || 'Gardener'}! 👋</p>
-        <h1 className="text-2xl font-extrabold tracking-tight text-green-800 sm:text-3xl">
+    <main className="min-h-screen px-6 py-8 pb-28">
+      <header className="mb-6 text-center">
+        <p className="text-lg font-medium text-green-900">Hello Diogo! 👋</p>
+        <h1 className="text-2xl font-extrabold text-green-800 sm:text-3xl">
           Here’s what your garden needs this week 🌱
         </h1>
       </header>
 
-      {/* Task List */}
-      <section className="mx-auto max-w-2xl space-y-6">
-        {tasks.map((task, index) => (
-          <motion.div
-            key={task.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: index * 0.15,
-              duration: 0.4,
-              ease: 'easeOut',
-            }}
-          >
-            <Card className="overflow-hidden rounded-2xl bg-white/70 shadow-md backdrop-blur-sm transition-all duration-200 hover:shadow-lg">
-              <div className="flex items-center gap-4 p-5">
-                {/* Task Image */}
-                <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-gray-100 shadow-sm">
+      {/* 🌤️ Garden Overview */}
+      <section className="mb-6 rounded-2xl bg-white/80 p-5 text-green-900 shadow-md">
+        <div className="mb-3 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium">🌤️ Garden status:</p>
+            <h3 className="text-lg font-bold">
+              {progress === 100 ? 'Perfectly cared for! 🌼' : 'Healthy & hydrated'}
+            </h3>
+          </div>
+          <div className="text-right text-sm text-gray-600">
+            <p>
+              Next rain: <span className="font-medium text-green-700">Fri</span>
+            </p>
+            <p>
+              Tasks done:{' '}
+              <span className="font-medium">
+                {doneTasks.length}/{tasks.length}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        {/* 🌿 Progress Bar inside the card */}
+        <div>
+          <div className="mb-1 flex items-center justify-between">
+            <span className="text-xs font-medium text-green-800">Weekly Progress</span>
+            <span className="text-xs font-semibold text-green-700">{progress}%</span>
+          </div>
+
+          <div className="h-3 w-full overflow-hidden rounded-full bg-[#E4F6E4] shadow-inner">
+            <motion.div
+              className="h-full rounded-full bg-[#2E7D32]"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 🪴 Task List */}
+      <section className="mx-auto max-w-2xl space-y-5">
+        {tasks.map((task, index) => {
+          const isDone = doneTasks.includes(task.id);
+          return (
+            <motion.div
+              key={task.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className={`rounded-2xl bg-white/80 p-5 shadow-md transition-all duration-300 ${
+                isDone ? 'border border-green-300 opacity-70' : ''
+              }`}
+            >
+              <div className="flex items-center gap-4">
+                <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-gray-100">
                   <Image
-                    src={task.image}
+                    src={task.image || '/alface.jpg'}
                     alt={task.title}
                     width={64}
                     height={64}
                     className="h-full w-full object-cover"
                   />
                 </div>
-
-                {/* Task Info */}
                 <div className="flex-1">
-                  <h4 className="flex items-center gap-2 text-lg font-semibold text-green-800">
-                    {task.title}
-                    <span
-                      className={`rounded-full border px-2 py-0.5 text-xs ${priorityColor[task.priority]}`}
-                    >
-                      {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
-                    </span>
-                  </h4>
-                  <p className="text-sm text-gray-600">{task.description}</p>
-
-                  {/* Weather Indicator */}
-                  <div className="mt-1 flex items-center gap-1 text-sm text-gray-500">
-                    {weatherIcon[task.weather]}
-                    <span>
-                      {task.weather === 'sun'
-                        ? 'Sunny day ahead'
-                        : task.weather === 'rain'
-                          ? 'Rain expected'
-                          : 'High humidity'}
-                    </span>
-                  </div>
+                  <h4 className="text-lg font-semibold text-green-800">{task.title}</h4>
+                  <p className="text-sm text-gray-600">{task.description || '—'}</p>
                 </div>
               </div>
 
-              {/* Actions */}
-              <CardFooter className="flex flex-wrap justify-center gap-2 px-5 pt-0 pb-5 sm:justify-start">
-                <motion.div whileTap={{ scale: 0.95 }}>
-                  <Button className="flex items-center gap-1 rounded-full bg-green-500 px-4 py-1.5 text-sm text-white hover:bg-green-600">
-                    <Check className="h-4 w-4" /> Done
-                  </Button>
-                </motion.div>
+              <div className="mt-4 flex justify-center gap-2 sm:justify-start">
+                <Button
+                  onClick={() => handleDone(task.id)}
+                  className={`flex items-center gap-1 rounded-full px-4 py-1.5 text-sm ${
+                    isDone
+                      ? 'bg-green-200 text-green-700'
+                      : 'bg-green-500 text-white hover:bg-green-600'
+                  }`}
+                >
+                  <Check className="h-4 w-4" /> {isDone ? 'Done!' : 'Done'}
+                </Button>
 
-                <motion.div whileTap={{ scale: 0.95 }}>
-                  <Button
-                    variant="outline"
-                    className="flex items-center gap-1 rounded-full border bg-yellow-100 px-4 py-1.5 text-sm text-yellow-800 hover:bg-yellow-200"
-                  >
-                    <AlarmClock className="h-4 w-4" /> Postpone
-                  </Button>
-                </motion.div>
+                <Button
+                  variant="outline"
+                  className="flex items-center gap-1 rounded-full border bg-yellow-100 px-4 py-1.5 text-sm text-yellow-800 hover:bg-yellow-200"
+                >
+                  <AlarmClock className="h-4 w-4" /> Postpone
+                </Button>
 
-                <motion.div whileTap={{ scale: 0.95 }}>
-                  <Button
-                    variant="outline"
-                    className="flex items-center gap-1 rounded-full bg-red-400 px-4 py-1.5 text-sm text-white hover:bg-red-500"
-                  >
-                    <BadgeHelp className="h-4 w-4" /> How
-                  </Button>
-                </motion.div>
-              </CardFooter>
-            </Card>
-          </motion.div>
-        ))}
+                <Button
+                  variant="outline"
+                  className="flex items-center gap-1 rounded-full bg-red-400 px-4 py-1.5 text-sm text-white hover:bg-red-500"
+                >
+                  <BadgeHelp className="h-4 w-4" /> How
+                </Button>
+              </div>
+            </motion.div>
+          );
+        })}
       </section>
     </main>
   );

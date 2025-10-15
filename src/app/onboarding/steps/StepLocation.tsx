@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,6 +26,7 @@ interface MunicipioResponse {
 }
 
 export function StepLocation({ onBack, onFinish }: Props) {
+  const router = useRouter();
   const [distritos, setDistritos] = useState<MunicipioResponse[]>([]);
   const [selectedDistrito, setSelectedDistrito] = useState('');
   const [selectedMunicipio, setSelectedMunicipio] = useState('');
@@ -68,6 +70,8 @@ export function StepLocation({ onBack, onFinish }: Props) {
   const handleFinish = () => {
     localStorage.setItem('onboardingComplete', 'true');
     onFinish(); // continua o flow normal
+    // navega para dashboard
+    router.push('/splash');
   };
 
   // 🎯 Global: Enter → finish, Esc → back (pausa quando um Select está aberto)
