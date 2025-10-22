@@ -30,13 +30,13 @@ export function LineTabs({
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className={cn('w-full', className)}>
       {/* Cabeçalho das tabs */}
-      <TabsList className="relative flex w-full justify-center border-b border-gray-200 bg-transparent">
+      <TabsList className="relative flex w-full justify-center border-b border-gray-200 bg-transparent shadow-none">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
             value={tab.value}
             className={cn(
-              'relative px-4 py-2 text-sm font-medium transition-colors',
+              'relative px-4 py-2 text-sm font-medium shadow-none transition-colors',
               activeTab === tab.value ? 'text-green-700' : 'text-gray-400 hover:text-gray-600',
             )}
           >
