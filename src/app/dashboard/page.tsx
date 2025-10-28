@@ -2,20 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import {
-  AlarmClock,
-  BadgeHelp,
-  BellRing,
-  Check,
-  Droplets,
-  Flower2,
-  Leaf,
-  LineChart,
-  Sparkles,
-  Sun,
-  Thermometer,
-} from 'lucide-react';
-import clsx from 'clsx';
+import { Check, AlarmClock, BadgeHelp } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 
 type Task = {
@@ -139,18 +126,16 @@ export default function DashboardPage() {
     }
   }, []);
 
+  // 🔹 4️⃣ Handle toggle
+  const handleDone = (id: number) => {
+    setDoneTasks((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
+  };
+
+  // ⚠️ Condiciona apenas o conteúdo, não o hook
+  // ✅ Agora podes calcular progress em segurança
   const progress = useMemo(() => {
     return tasks.length > 0 ? Math.round((doneTasks.length / tasks.length) * 100) : 0;
   }, [tasks.length, doneTasks.length]);
-
-  const enrichedTasks = useMemo(() => {
-    if (!tasks.length) return [] as (Task & (typeof statusPalettes)[number])[];
-
-    return tasks.map((task, index) => {
-      const palette = statusPalettes[index % statusPalettes.length];
-      return { ...task, ...palette };
-    });
-  }, [tasks]);
 
   if (loading) {
     return (
@@ -160,277 +145,106 @@ export default function DashboardPage() {
     );
   }
 
-  const greeting = userName ? `Bom dia, ${userName}` : 'Bom dia, jardineiro';
-
   return (
-    <main className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-10 px-5 pt-16 pb-36">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.85)_0%,_rgba(220,252,231,0.65)_55%,_rgba(214,238,210,0.9)_100%)]" />
-      <header className="glass-card relative overflow-hidden px-6 py-8 sm:px-10">
-        <div className="absolute -top-12 right-6 h-40 w-40 rounded-full bg-gradient-to-br from-[#22c55e]/30 to-[#0ea5e9]/20 blur-2xl" />
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-3 md:max-w-xl">
-            <span className="chip-soft inline-flex items-center gap-2">
-              <Sun className="h-4 w-4 text-amber-500" />
-              {userLocation || 'O teu jardim'}
-            </span>
-            <h1 className="text-4xl leading-tight font-semibold">
-              {greeting} 🌞 — A tua horta está com ótimo aspeto!
-            </h1>
-            <p className="text-sm text-emerald-900/70">
-              A Tia Adélia analisou os teus sensores e preparou tarefas suaves para hoje. Respira
-              fundo e vamos cuidar de cada folha.
-            </p>
-          </div>
-          <div className="glass-card flex h-full min-w-[220px] flex-col justify-between rounded-3xl bg-white/80 p-6 text-center shadow-emerald-900/5">
-            <p className="text-xs tracking-[0.35em] text-emerald-500 uppercase">Progresso</p>
-            <p className="text-5xl font-semibold text-emerald-700">{progress}%</p>
-            <p className="text-xs text-emerald-900/70">
-              {doneTasks.length} de {tasks.length} tarefas concluídas
-            </p>
-          </div>
-        </div>
-      </header>
+    <main className="min-h-screen px-5 py-10 pb-28">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10">
+        <header className="flex flex-col gap-2 text-center text-emerald-950">
+          <p className="text-base font-medium tracking-wide text-emerald-700 uppercase">
+            {userLocation ? userLocation : 'O teu jardim'}
+          </p>
+          <h1 className="text-3xl font-semibold">
+            {userName ? `Olá, ${userName}!` : 'Olá, jardineiro!'}
+          </h1>
+          <p className="text-sm text-emerald-700/80">
+            Estas são as tarefas de hoje para manter cada folha fresca.
+          </p>
+        </header>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        <div className="glass-card flex flex-col gap-4 rounded-3xl p-6">
-          <div className="flex items-center gap-3">
-            <LineChart className="h-10 w-10 rounded-3xl bg-emerald-500/10 p-2 text-emerald-600" />
+        <section className="rounded-3xl border border-emerald-100 bg-white/70 p-8 shadow-sm backdrop-blur">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs tracking-[0.28em] text-emerald-500 uppercase">Crescimento</p>
-              <p className="text-lg font-semibold">A tua horta cresceu 12% este mês 🌻</p>
-            </div>
-          </div>
-          <div className="mt-4 grid gap-3">
-            {[52, 68, 74, 80, 92].map((value, index) => (
-              <div key={value} className="flex items-center gap-3 text-sm text-emerald-900/70">
-                <span className="w-10 rounded-full bg-emerald-500/20 py-1 text-center font-semibold text-emerald-700">
-                  S{index + 1}
-                </span>
-                <div className="flex-1 rounded-full bg-emerald-500/10">
-                  <div
-                    className="h-2 rounded-full bg-gradient-to-r from-emerald-500 to-sky-400"
-                    style={{ width: `${value}%` }}
-                  />
-                </div>
-                <span className="w-10 text-right font-semibold text-emerald-700">{value}%</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="glass-card flex flex-col justify-between gap-4 rounded-3xl p-6">
-          <div className="flex items-start gap-3">
-            <Sparkles className="mt-1 h-9 w-9 rounded-3xl bg-emerald-500/10 p-2 text-emerald-600" />
-            <div>
-              <p className="text-xs tracking-[0.28em] text-emerald-500 uppercase">Tia Adélia diz</p>
-              <p className="text-lg font-semibold">
-                “Boa colheita hoje, meu querido jardineiro. Cada planta tem o seu ritmo 🌱”
+              <p className="text-sm tracking-[0.2em] text-emerald-500 uppercase">Visão geral</p>
+              <h2 className="mt-2 text-2xl font-semibold text-emerald-900">
+                {progress === 100 ? 'Tudo cuidado 🌼' : 'Ainda há folhas com sede'}
+              </h2>
+              <p className="mt-1 text-sm text-emerald-700/80">
+                {doneTasks.length} de {tasks.length} tarefas concluídas
               </p>
             </div>
+            <div className="w-full max-w-sm">
+              <div className="flex items-center justify-between text-xs tracking-[0.2em] text-emerald-500 uppercase">
+                <span>Progresso</span>
+                <span>{progress}%</span>
+              </div>
+              <div className="mt-2 h-2 rounded-full bg-emerald-100">
+                <div
+                  className="h-full rounded-full bg-emerald-500 transition-all"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
           </div>
-          <button type="button" className="btn-primary self-start text-sm">
-            Falar com a Tia Adélia
-          </button>
-        </div>
-        <div className="glass-card flex flex-col gap-4 rounded-3xl p-6">
-          <p className="text-xs tracking-[0.28em] text-emerald-500 uppercase">Alertas rápidos</p>
-          <ul className="space-y-3">
-            {notifications.map((notification) => (
-              <li
-                key={notification.title}
-                className="flex gap-3 rounded-2xl bg-white/70 p-3 shadow-sm"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10">
-                  {notification.icon}
-                </div>
-                <div className="text-sm">
-                  <p className="font-semibold text-emerald-800">{notification.title}</p>
-                  <p className="text-emerald-900/70">{notification.description}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+        </section>
 
-      <section className="space-y-4">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-xs tracking-[0.3em] text-emerald-500 uppercase">Tarefas diárias</p>
-            <h2 className="text-2xl font-semibold">Plantas que pedem carinho hoje</h2>
-          </div>
-          <button type="button" className="btn-secondary text-xs tracking-[0.2em] uppercase">
-            + Adicionar planta
-          </button>
-        </div>
-        <div className="grid gap-5 lg:grid-cols-2">
-          {enrichedTasks.map((task) => {
+        <section className="grid gap-4 md:grid-cols-2">
+          {tasks.map((task) => {
             const isDone = doneTasks.includes(task.id);
             return (
               <article
                 key={task.id}
-                className={clsx(
-                  'relative overflow-hidden rounded-[28px] border border-white/40 p-6 shadow-lg shadow-emerald-900/10 transition',
-                  'bg-gradient-to-br',
-                  task.accent,
-                  isDone ? 'opacity-80 grayscale-[0.2]' : 'opacity-100',
-                )}
+                className={`flex flex-col gap-4 rounded-3xl border p-6 shadow-sm transition ${
+                  isDone
+                    ? 'border-emerald-200 bg-white/60 text-emerald-700'
+                    : 'border-emerald-100 bg-white/80 text-emerald-900 hover:border-emerald-200'
+                }`}
               >
-                <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
                 <div className="flex items-start gap-4">
-                  <div className="h-20 w-20 overflow-hidden rounded-[24px] border border-white/60">
+                  <div className="h-16 w-16 overflow-hidden rounded-2xl bg-emerald-100">
                     <Image
                       src={task.image || '/alface.jpg'}
                       alt={task.title}
-                      width={80}
-                      height={80}
+                      width={64}
+                      height={64}
                       className="h-full w-full object-cover"
                     />
                   </div>
-                  <div className="flex-1 space-y-1 text-white/90">
-                    <h3 className="text-xl font-semibold text-white">{task.title}</h3>
-                    <p className="text-sm text-white/80">{task.description || task.tip}</p>
-                    <div className="flex flex-wrap gap-2 pt-2 text-xs font-semibold">
-                      <span className="rounded-full bg-white/15 px-3 py-1 backdrop-blur">
-                        Humidade {task.moisture}%
-                      </span>
-                      <span className="rounded-full bg-white/15 px-3 py-1 backdrop-blur">
-                        {task.sun}
-                      </span>
-                      <span className="rounded-full bg-white/15 px-3 py-1 backdrop-blur">
-                        {task.temperature}ºC
-                      </span>
-                      <span className="rounded-full bg-white/15 px-3 py-1 backdrop-blur">
-                        {task.status}
-                      </span>
-                    </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold">{task.title}</h3>
+                    <p className="mt-1 text-sm text-emerald-800/70">
+                      {task.description || 'Sem notas especiais para esta planta.'}
+                    </p>
                   </div>
                 </div>
-                <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold text-emerald-900">
+
+                <div className="flex flex-wrap gap-2 text-sm">
                   <button
-                    onClick={() =>
-                      setDoneTasks((prev) =>
-                        prev.includes(task.id)
-                          ? prev.filter((t) => t !== task.id)
-                          : [...prev, task.id],
-                      )
-                    }
-                    className={clsx(
-                      'flex items-center gap-2 rounded-full px-4 py-2 backdrop-blur transition',
+                    onClick={() => handleDone(task.id)}
+                    className={`flex items-center gap-2 rounded-full px-4 py-2 transition ${
                       isDone
-                        ? 'bg-white/70 text-emerald-700'
-                        : 'bg-white text-emerald-600 hover:bg-white/90',
-                    )}
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                    }`}
                   >
-                    <Check className="h-4 w-4" /> {isDone ? 'Cuidada' : 'Marcar como regada'}
+                    <Check className="h-4 w-4" /> {isDone ? 'Cuidada' : 'Regada'}
                   </button>
                   <button
                     type="button"
-                    className="flex items-center gap-2 rounded-full bg-white/40 px-4 py-2 text-emerald-700 backdrop-blur hover:bg-white/60"
+                    className="flex items-center gap-2 rounded-full border border-emerald-200 px-4 py-2 text-emerald-700 transition hover:border-emerald-300 hover:text-emerald-800"
                   >
                     <AlarmClock className="h-4 w-4" /> Lembrar mais tarde
                   </button>
                   <button
                     type="button"
-                    className="flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-white hover:bg-white/30"
+                    className="flex items-center gap-2 rounded-full border border-rose-200 px-4 py-2 text-rose-600 transition hover:border-rose-300 hover:text-rose-700"
                   >
-                    <BadgeHelp className="h-4 w-4" /> Pedir ajuda da IA
+                    <BadgeHelp className="h-4 w-4" /> Pedir ajuda
                   </button>
                 </div>
               </article>
             );
           })}
-        </div>
-      </section>
-
-      <section className="grid gap-6 md:grid-cols-[1.2fr,0.8fr]">
-        <div className="glass-card rounded-3xl p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs tracking-[0.3em] text-emerald-500 uppercase">
-                A minha horta virtual
-              </p>
-              <h2 className="text-2xl font-semibold text-emerald-900">
-                Vista interativa do jardim
-              </h2>
-            </div>
-            <button type="button" className="btn-secondary text-xs tracking-[0.2em] uppercase">
-              Ver em tempo real
-            </button>
-          </div>
-          <div className="mt-6 grid gap-4 rounded-[28px] bg-gradient-to-br from-white/70 to-white/50 p-6 shadow-inner">
-            <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-emerald-900/70">
-              {['Horta', 'Estufa', 'Pomar', 'Ervas'].map((zone) => (
-                <span
-                  key={zone}
-                  className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2"
-                >
-                  <Leaf className="h-4 w-4 text-emerald-500" /> {zone}
-                </span>
-              ))}
-            </div>
-            <div className="relative grid gap-3 rounded-3xl bg-[url(/virtual-garden-texture.svg)] bg-cover bg-center p-6">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-500/10 via-white/40 to-amber-200/20 backdrop-blur" />
-              <div className="relative z-10 grid grid-cols-3 gap-4 text-sm font-semibold text-emerald-900/80 md:grid-cols-4">
-                {enrichedTasks.slice(0, 8).map((plant, index) => (
-                  <div
-                    key={plant.id}
-                    className="flex flex-col items-center gap-1 rounded-2xl bg-white/70 p-3 text-center shadow-sm"
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600">
-                      {index % 2 === 0 ? <Flower2 className="h-6 w-6" /> : <SproutIcon />}
-                    </div>
-                    <p>{plant.title}</p>
-                    <span className="text-xs text-emerald-900/60">{plant.status}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        <aside className="glass-card flex flex-col gap-5 rounded-3xl p-6">
-          <div className="space-y-2">
-            <p className="text-xs tracking-[0.28em] text-emerald-500 uppercase">
-              Sensores em destaque
-            </p>
-            <h3 className="text-xl font-semibold text-emerald-900">Resumo diário</h3>
-            <p className="text-sm text-emerald-900/70">
-              Dados recolhidos pelos sensores da horta nas últimas 24h. Ajusta a rega e a luz
-              conforme os indicadores.
-            </p>
-          </div>
-          <ul className="space-y-3 text-sm">
-            {[
-              { label: 'Humidade média', value: '61%', icon: <Droplets className="h-4 w-4" /> },
-              {
-                label: 'Temperatura média',
-                value: '21ºC',
-                icon: <Thermometer className="h-4 w-4" />,
-              },
-              { label: 'Horas de luz', value: '8h', icon: <Sun className="h-4 w-4" /> },
-            ].map((sensor) => (
-              <li
-                key={sensor.label}
-                className="flex items-center justify-between rounded-2xl bg-white/70 px-4 py-3 text-emerald-800 shadow-sm"
-              >
-                <span className="inline-flex items-center gap-2">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600">
-                    {sensor.icon}
-                  </span>
-                  {sensor.label}
-                </span>
-                <span className="font-semibold">{sensor.value}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-3xl bg-gradient-to-br from-emerald-500/20 to-emerald-500/10 p-5 text-sm text-emerald-900">
-            <p className="font-semibold">Recomendações da IA</p>
-            <p>
-              A planta junto à janela leste está a receber pouca luz. Considera movê-la 30 cm mais
-              para a frente.
-            </p>
-          </div>
-        </aside>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }

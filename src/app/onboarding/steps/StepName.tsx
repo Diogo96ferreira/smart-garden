@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { User } from 'lucide-react';
 
 type Props = { onNext: () => void; onBack: () => void };
 
@@ -37,69 +36,40 @@ export function StepName({ onBack, onNext }: Props) {
   }, [name, onBack, handleNext]);
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center px-6 py-16">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.85)_0%,_rgba(220,252,231,0.65)_60%,_rgba(214,238,210,0.9)_100%)]" />
-      <div className="mx-auto grid w-full max-w-4xl gap-10 rounded-[32px] bg-white/80 p-10 shadow-xl shadow-emerald-900/5 backdrop-blur md:grid-cols-[1fr,0.9fr]">
-        <div className="flex flex-col justify-between gap-10">
-          <div className="space-y-4">
-            <span className="chip-soft inline-flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Passo 1 de 6
-            </span>
-            <h2 className="text-3xl font-semibold text-emerald-900">Como devemos tratar-te?</h2>
-            <p className="text-sm text-emerald-900/70">
-              A Tia Adélia gosta de chamar cada jardineiro pelo nome. Partilha como gostas de ser
-              tratado.
-            </p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <label className="text-xs tracking-[0.28em] text-emerald-500 uppercase">
-              O teu nome
-            </label>
-            <div className="glass-card flex items-center gap-3 rounded-[24px] px-5 py-4">
-              <User className="h-5 w-5 text-emerald-500" />
-              <input
-                type="text"
-                placeholder="Ex.: João"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                className="sg-input w-full border-none bg-transparent px-0 text-lg focus-visible:shadow-none"
-              />
-            </div>
-            <p className="text-xs text-emerald-900/60">
-              Guardamos apenas para personalizar mensagens e dicas.
-            </p>
-          </div>
+    <section className="flex min-h-screen items-center justify-center px-6">
+      <div className="mx-auto flex w-full max-w-md flex-col gap-6 text-emerald-900">
+        <div className="space-y-3 text-center">
+          <p className="text-xs tracking-[0.3em] text-emerald-500 uppercase">Quem cuida</p>
+          <h2 className="text-3xl font-semibold">Como devemos tratar-te?</h2>
+          <p className="text-sm text-emerald-700/80">
+            Assim a Tia Adélia pode chamar-te pelo nome certo.
+          </p>
         </div>
-        <div className="flex flex-col justify-between gap-6 rounded-[28px] bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 p-6">
-          <div className="space-y-2 text-sm text-emerald-900/80">
-            <p className="font-semibold text-emerald-900">O que a Tia Adélia diz</p>
-            <p>
-              “Quando chamamos cada planta e jardineiro pelo nome, o carinho cresce mais rápido.”
-            </p>
-          </div>
-          <div className="grid gap-2 text-sm text-emerald-900/70">
-            <div className="flex items-center justify-between">
-              <span>Personalização do chat</span>
-              <span className="font-semibold text-emerald-700">Pronta</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Mensagens motivacionais</span>
-              <span className="font-semibold text-emerald-700">Ativas</span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between text-sm font-semibold text-emerald-800">
-            <button type="button" onClick={onBack} className="btn-secondary">
-              Voltar
-            </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              disabled={!name.trim()}
-              className="btn-primary disabled:opacity-60"
-            >
-              Continuar
-            </button>
-          </div>
+
+        <input
+          type="text"
+          placeholder="O teu nome"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          className="w-full rounded-2xl border border-emerald-200 bg-white/70 px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none"
+        />
+
+        <div className="flex items-center justify-between text-sm">
+          <button
+            type="button"
+            onClick={onBack}
+            className="rounded-full px-4 py-2 font-medium text-emerald-600 transition hover:text-emerald-800"
+          >
+            voltar
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={!name.trim()}
+            className="rounded-full bg-emerald-500 px-6 py-2 font-medium text-white transition hover:bg-emerald-600 disabled:opacity-60"
+          >
+            continuar
+          </button>
         </div>
       </div>
     </section>

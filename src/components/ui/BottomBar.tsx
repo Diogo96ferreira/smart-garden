@@ -27,8 +27,8 @@ export default function BottomBar() {
   }, [items, pathname]);
 
   return (
-    <nav className="fixed inset-x-0 bottom-4 z-40 flex justify-center">
-      <ul className="glass-card flex w-[calc(100%-2rem)] max-w-lg items-center justify-around rounded-[26px] px-5 py-3 text-emerald-800 shadow-lg shadow-emerald-900/5">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-emerald-200 bg-white/80 backdrop-blur">
+      <ul className="mx-auto flex max-w-md items-center justify-around px-4 py-3 text-emerald-700">
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
@@ -39,17 +39,12 @@ export default function BottomBar() {
                 type="button"
                 onClick={() => router.push(item.href)}
                 className={clsx(
-                  'flex flex-col items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold transition',
-                  isActive ? 'text-emerald-700' : 'text-emerald-500 hover:text-emerald-700',
+                  'flex flex-col items-center gap-1 rounded-full px-3 py-1 text-xs font-medium transition',
+                  isActive ? 'text-emerald-600' : 'text-emerald-400 hover:text-emerald-600',
                 )}
               >
                 <Icon
-                  className={clsx(
-                    'h-5 w-5 transition',
-                    isActive
-                      ? 'stroke-emerald-700 drop-shadow-[0_4px_10px_rgba(34,197,94,0.35)]'
-                      : 'stroke-emerald-400',
-                  )}
+                  className={clsx('h-5 w-5', isActive && 'fill-emerald-100 stroke-emerald-600')}
                 />
                 <span>{item.label}</span>
               </button>
