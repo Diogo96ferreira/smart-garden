@@ -1,11 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { Check, AlarmClock, BadgeHelp } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { LeafLoader } from '@/components/ui/Spinner';
 import { supabase } from '@/lib/supabaseClient';
 
 // ✅ Tipo explícito para as tarefas
@@ -21,6 +18,8 @@ export default function DashboardPage() {
   const [doneTasks, setDoneTasks] = useState<number[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState<string>('');
+  const [userLocation, setUserLocation] = useState<string>('');
 
   // 🔹 1️⃣ Fetch tasks from Supabase
   useEffect(() => {
@@ -62,132 +61,141 @@ export default function DashboardPage() {
     localStorage.setItem('doneTasks', JSON.stringify(doneTasks));
   }, [doneTasks]);
 
+  useEffect(() => {
+    const storedName = localStorage.getItem('userName');
+    const storedLocation = localStorage.getItem('userLocation');
+
+    if (storedName) setUserName(storedName);
+    if (storedLocation) {
+      try {
+        const parsed = JSON.parse(storedLocation) as { distrito?: string; municipio?: string };
+        const locationLabel = [parsed.municipio, parsed.distrito].filter(Boolean).join(', ');
+        setUserLocation(locationLabel);
+      } catch {
+        setUserLocation('');
+      }
+    }
+  }, []);
+
   // 🔹 4️⃣ Handle toggle
   const handleDone = (id: number) => {
     setDoneTasks((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
   };
 
   // ⚠️ Condiciona apenas o conteúdo, não o hook
+  // ✅ Agora podes calcular progress em segurança
+  const progress = useMemo(() => {
+    return tasks.length > 0 ? Math.round((doneTasks.length / tasks.length) * 100) : 0;
+  }, [tasks.length, doneTasks.length]);
+
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <LeafLoader />
+        <span className="h-12 w-12 animate-spin rounded-full border-2 border-emerald-500 border-t-transparent" />
       </main>
     );
   }
 
-  // ✅ Agora podes calcular progress em segurança
-  const progress = tasks.length > 0 ? Math.round((doneTasks.length / tasks.length) * 100) : 0;
-
   return (
-    <main className="min-h-screen px-6 py-8 pb-28">
-      <header className="mb-6 text-center">
-        <p className="text-lg font-medium text-green-900">Hello Diogo! 👋</p>
-        <h1 className="text-2xl font-extrabold text-green-800 sm:text-3xl">
-          Here’s what your garden needs this week 🌱
-        </h1>
-      </header>
+    <main className="min-h-screen px-5 py-10 pb-28">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10">
+        <header className="flex flex-col gap-2 text-center text-emerald-950">
+          <p className="text-base font-medium tracking-wide text-emerald-700 uppercase">
+            {userLocation ? userLocation : 'O teu jardim'}
+          </p>
+          <h1 className="text-3xl font-semibold">
+            {userName ? `Olá, ${userName}!` : 'Olá, jardineiro!'}
+          </h1>
+          <p className="text-sm text-emerald-700/80">
+            Estas são as tarefas de hoje para manter cada folha fresca.
+          </p>
+        </header>
 
-      {/* 🌤️ Garden Overview */}
-      <section className="mb-6 rounded-2xl bg-white/80 p-5 text-green-900 shadow-md">
-        <div className="mb-3 flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium">🌤️ Garden status:</p>
-            <h3 className="text-lg font-bold">
-              {progress === 100 ? 'Perfectly cared for! 🌼' : 'Healthy & hydrated'}
-            </h3>
-          </div>
-          <div className="text-right text-sm text-gray-600">
-            <p>
-              Next rain: <span className="font-medium text-green-700">Fri</span>
-            </p>
-            <p>
-              Tasks done:{' '}
-              <span className="font-medium">
-                {doneTasks.length}/{tasks.length}
-              </span>
-            </p>
-          </div>
-        </div>
-
-        {/* 🌿 Progress Bar inside the card */}
-        <div>
-          <div className="mb-1 flex items-center justify-between">
-            <span className="text-xs font-medium text-green-800">Weekly Progress</span>
-            <span className="text-xs font-semibold text-green-700">{progress}%</span>
-          </div>
-
-          <div className="h-3 w-full overflow-hidden rounded-full bg-[#E4F6E4] shadow-inner">
-            <motion.div
-              className="h-full rounded-full bg-[#2E7D32]"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 🪴 Task List */}
-      <section className="mx-auto max-w-2xl space-y-5">
-        {tasks.map((task, index) => {
-          const isDone = doneTasks.includes(task.id);
-          return (
-            <motion.div
-              key={task.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`rounded-2xl bg-white/80 p-5 shadow-md transition-all duration-300 ${
-                isDone ? 'border border-green-300 opacity-70' : ''
-              }`}
-            >
-              <div className="flex items-center gap-4">
-                <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-gray-100">
-                  <Image
-                    src={task.image || '/alface.jpg'}
-                    alt={task.title}
-                    width={64}
-                    height={64}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-lg font-semibold text-green-800">{task.title}</h4>
-                  <p className="text-sm text-gray-600">{task.description || '—'}</p>
-                </div>
+        <section className="rounded-3xl border border-emerald-100 bg-white/70 p-8 shadow-sm backdrop-blur">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-sm tracking-[0.2em] text-emerald-500 uppercase">Visão geral</p>
+              <h2 className="mt-2 text-2xl font-semibold text-emerald-900">
+                {progress === 100 ? 'Tudo cuidado 🌼' : 'Ainda há folhas com sede'}
+              </h2>
+              <p className="mt-1 text-sm text-emerald-700/80">
+                {doneTasks.length} de {tasks.length} tarefas concluídas
+              </p>
+            </div>
+            <div className="w-full max-w-sm">
+              <div className="flex items-center justify-between text-xs tracking-[0.2em] text-emerald-500 uppercase">
+                <span>Progresso</span>
+                <span>{progress}%</span>
               </div>
-
-              <div className="mt-4 flex justify-center gap-2 sm:justify-start">
-                <Button
-                  onClick={() => handleDone(task.id)}
-                  className={`flex items-center gap-1 rounded-full px-4 py-1.5 text-sm ${
-                    isDone
-                      ? 'bg-green-200 text-green-700'
-                      : 'bg-green-500 text-white hover:bg-green-600'
-                  }`}
-                >
-                  <Check className="h-4 w-4" /> {isDone ? 'Done!' : 'Done'}
-                </Button>
-
-                <Button
-                  variant="outline"
-                  className="flex items-center gap-1 rounded-full border bg-yellow-100 px-4 py-1.5 text-sm text-yellow-800 hover:bg-yellow-200"
-                >
-                  <AlarmClock className="h-4 w-4" /> Postpone
-                </Button>
-
-                <Button
-                  variant="outline"
-                  className="flex items-center gap-1 rounded-full bg-red-400 px-4 py-1.5 text-sm text-white hover:bg-red-500"
-                >
-                  <BadgeHelp className="h-4 w-4" /> How
-                </Button>
+              <div className="mt-2 h-2 rounded-full bg-emerald-100">
+                <div
+                  className="h-full rounded-full bg-emerald-500 transition-all"
+                  style={{ width: `${progress}%` }}
+                />
               </div>
-            </motion.div>
-          );
-        })}
-      </section>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid gap-4 md:grid-cols-2">
+          {tasks.map((task) => {
+            const isDone = doneTasks.includes(task.id);
+            return (
+              <article
+                key={task.id}
+                className={`flex flex-col gap-4 rounded-3xl border p-6 shadow-sm transition ${
+                  isDone
+                    ? 'border-emerald-200 bg-white/60 text-emerald-700'
+                    : 'border-emerald-100 bg-white/80 text-emerald-900 hover:border-emerald-200'
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="h-16 w-16 overflow-hidden rounded-2xl bg-emerald-100">
+                    <Image
+                      src={task.image || '/alface.jpg'}
+                      alt={task.title}
+                      width={64}
+                      height={64}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold">{task.title}</h3>
+                    <p className="mt-1 text-sm text-emerald-800/70">
+                      {task.description || 'Sem notas especiais para esta planta.'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 text-sm">
+                  <button
+                    onClick={() => handleDone(task.id)}
+                    className={`flex items-center gap-2 rounded-full px-4 py-2 transition ${
+                      isDone
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                    }`}
+                  >
+                    <Check className="h-4 w-4" /> {isDone ? 'Cuidada' : 'Regada'}
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 rounded-full border border-emerald-200 px-4 py-2 text-emerald-700 transition hover:border-emerald-300 hover:text-emerald-800"
+                  >
+                    <AlarmClock className="h-4 w-4" /> Lembrar mais tarde
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 rounded-full border border-rose-200 px-4 py-2 text-rose-600 transition hover:border-rose-300 hover:text-rose-700"
+                  >
+                    <BadgeHelp className="h-4 w-4" /> Pedir ajuda
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+      </div>
     </main>
   );
 }

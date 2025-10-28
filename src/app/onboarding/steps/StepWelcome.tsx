@@ -1,17 +1,14 @@
 'use client';
 
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 
 type Props = { onNext: () => void };
 
 export function StepWelcome({ onNext }: Props) {
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        console.log('✅ Enter pressionado → avançar');
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
         onNext();
       }
     };
@@ -21,24 +18,25 @@ export function StepWelcome({ onNext }: Props) {
   }, [onNext]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center space-y-4">
-      <h1 className="text-center text-4xl font-extrabold">Welcome to</h1>
-      <Image className="mb-6" src="/logo.svg" width={200} height={200} alt="Smart Garden logo" />
-      <p className="text-muted-foreground text-center text-lg">
-        We will take care of your garden <br />
-        with the aid of AI.
-      </p>
-      <div className="fixed bottom-12 left-0 w-full px-6">
-        <div className="mx-auto w-full">
-          <Button
-            variant="outline"
-            onClick={onNext}
-            className="btn-primary h-12 min-h-12 w-full text-base leading-none"
-          >
-            Let’s Start
-          </Button>
-        </div>
+    <section className="flex min-h-screen items-center justify-center px-6">
+      <div className="mx-auto flex max-w-md flex-col items-center gap-8 text-center text-emerald-900">
+        <span className="rounded-full border border-emerald-200 px-4 py-1 text-xs tracking-[0.3em] text-emerald-500 uppercase">
+          Smart Garden
+        </span>
+        <h1 className="text-4xl leading-tight font-semibold">
+          Cresce com a sabedoria da Tia Adélia e a magia da inteligência artificial.
+        </h1>
+        <p className="text-sm text-emerald-700/80">
+          Vamos preparar o teu espaço verde com alguns detalhes rápidos.
+        </p>
+        <button
+          type="button"
+          onClick={onNext}
+          className="rounded-full bg-emerald-500 px-8 py-3 text-sm font-medium text-white transition hover:bg-emerald-600"
+        >
+          Começar
+        </button>
       </div>
-    </div>
+    </section>
   );
 }

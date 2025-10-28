@@ -1,15 +1,9 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Loader2, Send } from 'lucide-react';
 
-// ✅ Tipo explícito do resultado da análise
 type AnalysisResult = {
   type: string;
   species: string;
@@ -25,29 +19,25 @@ export default function TiaAdeliaPage() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const [messages, setMessages] = useState<{ role: 'user' | 'model'; text: string }[]>([]);
   const [input, setInput] = useState('');
   const [chatLoading, setChatLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // === Upload e reset ===
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      setPreview(URL.createObjectURL(file));
-      setResult(null);
-      setMessages([]);
-      setError(null);
-    }
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    setPreview(URL.createObjectURL(file));
+    setResult(null);
+    setMessages([]);
+    setError(null);
   };
 
-  // === Drag & Drop ===
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files?.[0];
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files?.[0];
     if (file && file.type.startsWith('image/')) {
       setImageFile(file);
       setPreview(URL.createObjectURL(file));
@@ -57,11 +47,10 @@ export default function TiaAdeliaPage() {
     }
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
   };
 
-  // === Análise de imagem ===
   const handleAnalyze = useCallback(async () => {
     if (!imageFile) return;
     setLoading(true);
@@ -77,8 +66,10 @@ export default function TiaAdeliaPage() {
       if (data.error) throw new Error(data.error);
       setResult(data.result as AnalysisResult);
 
-      if (data.result.description) setMessages([{ role: 'model', text: data.result.description }]);
-    } catch (err: unknown) {
+      if (data.result.description) {
+        setMessages([{ role: 'model', text: data.result.description }]);
+      }
+    } catch (err) {
       if (err instanceof Error) setError(err.message);
       else setError('Ocorreu um erro desconhecido.');
     } finally {
@@ -86,14 +77,13 @@ export default function TiaAdeliaPage() {
     }
   }, [imageFile]);
 
-  // === Chat ===
   const handleSendMessage = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
+    async (event: React.FormEvent) => {
+      event.preventDefault();
       if (!input.trim() || !result?.description) return;
 
-      const userMsg = { role: 'user' as const, text: input };
-      setMessages((prev) => [...prev, userMsg]);
+      const userMessage = { role: 'user' as const, text: input };
+      setMessages((prev) => [...prev, userMessage]);
       setInput('');
       setChatLoading(true);
 
@@ -103,7 +93,7 @@ export default function TiaAdeliaPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             context: result.description,
-            question: input,
+            question: userMessage.text,
           }),
         });
 
@@ -113,13 +103,13 @@ export default function TiaAdeliaPage() {
         const reply =
           data.reply || 'Atão... não percebi bem o que quis dizer. Mostre-me lá a planta 🌿';
         setMessages((prev) => [...prev, { role: 'model', text: reply }]);
-      } catch (err: unknown) {
+      } catch (err) {
         console.error('Erro no chat:', err);
         setMessages((prev) => [
           ...prev,
           {
             role: 'model',
-            text: 'Desculpe, hoje não estou a entender bem... 🌾',
+            text: 'Desculpa, hoje não estou a perceber bem. Tenta outra vez mais logo 🌾',
           },
         ]);
       } finally {
@@ -130,172 +120,159 @@ export default function TiaAdeliaPage() {
   );
 
   return (
-    <div className="min-h-screen py-10">
-      <div className="mx-auto max-w-2xl space-y-6 px-4">
-        {/* Header */}
-        <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold text-green-800">Pergunta à Tia Adélia 🌿</h1>
-          <p className="text-gray-600">Manda uma foto e fala com a tua sábia jardineira.</p>
-        </div>
+    <main className="min-h-screen px-5 py-10 pb-24">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10">
+        <header className="space-y-3 text-center text-emerald-900">
+          <p className="text-xs tracking-[0.3em] text-emerald-500 uppercase">Diagnóstico</p>
+          <h1 className="text-3xl font-semibold">Conversa com a Tia Adélia</h1>
+          <p className="text-sm text-emerald-700/80">
+            Envia uma fotografia e descobre como cuidar melhor das tuas plantas.
+          </p>
+        </header>
 
-        {/* Upload Card */}
-        <Card>
-          <CardHeader className="mb-2">
-            <CardTitle className="mb-2">
-              <h2>Envia uma imagem</h2>
-            </CardTitle>
-            <CardDescription>Escolhe um fruto, legume ou planta.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <input
-              ref={fileInputRef}
-              id="file-upload"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-
-            {/* Área de upload */}
+        <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <div className="flex flex-col gap-6">
             <div
-              className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-green-300 bg-green-50 p-6 text-center transition-colors hover:bg-green-100"
+              className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-dashed border-emerald-300 bg-white/60 p-8 text-center text-sm text-emerald-700/80"
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onClick={() => fileInputRef.current?.click()}
             >
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
               {!preview ? (
                 <>
-                  <Button
-                    variant="outline"
-                    className="border-green-400 text-green-800 hover:bg-green-200"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      fileInputRef.current?.click();
-                    }}
+                  <button
+                    type="button"
+                    className="rounded-full border border-emerald-300 px-6 py-2 text-sm font-medium text-emerald-700 transition hover:border-emerald-400 hover:text-emerald-800"
                   >
-                    Escolher imagem
-                  </Button>
-                  <p className="text-sm text-gray-600">
-                    Arrasta uma foto ou toca no botão para carregar
-                  </p>
-                  <p className="text-xs text-gray-400">(frutos, legumes, folhas...)</p>
+                    escolher fotografia
+                  </button>
+                  <p>Clica ou arrasta uma imagem da tua planta.</p>
                 </>
               ) : (
-                <div className="flex w-full flex-col items-center gap-3">
-                  <Image
-                    src={preview}
-                    alt="preview"
-                    width={280}
-                    height={280}
-                    className="rounded-lg border border-green-200 object-cover shadow-sm"
-                  />
-                  <div className="flex gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={(e) => {
-                        e.stopPropagation();
+                <div className="flex w-full flex-col items-center gap-4">
+                  <div className="overflow-hidden rounded-2xl border border-emerald-200">
+                    <Image
+                      src={preview}
+                      alt="Pré-visualização"
+                      width={480}
+                      height={320}
+                      className="h-64 w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex gap-2 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => {
                         setPreview(null);
                         setImageFile(null);
+                        setResult(null);
+                        setMessages([]);
                       }}
-                      className="border-red-300 text-red-700 hover:bg-red-50"
+                      className="rounded-full border border-emerald-300 px-4 py-2 font-medium text-emerald-700 transition hover:border-emerald-400 hover:text-emerald-800"
                     >
-                      Remover
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        fileInputRef.current?.click();
-                      }}
-                      className="border-green-400 text-green-800 hover:bg-green-200"
+                      remover
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="rounded-full border border-emerald-300 px-4 py-2 font-medium text-emerald-700 transition hover:border-emerald-400 hover:text-emerald-800"
                     >
-                      Trocar imagem
-                    </Button>
+                      trocar
+                    </button>
                   </div>
                 </div>
               )}
             </div>
 
-            <Button
+            <button
+              type="button"
               onClick={handleAnalyze}
-              disabled={loading || !imageFile}
-              className="w-full bg-green-600 text-white hover:bg-green-700"
+              disabled={!imageFile || loading}
+              className="flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-medium text-white transition hover:bg-emerald-600 disabled:opacity-60"
             >
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {loading ? 'A analisar...' : 'Enviar para a Tia Adélia'}
-            </Button>
+              {loading && <Loader2 className="h-4 w-4 animate-spin" />} analisar imagem
+            </button>
 
-            {error && <p className="text-sm text-red-500">{error}</p>}
-          </CardContent>
-        </Card>
+            {error && (
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-600">
+                {error}
+              </div>
+            )}
 
-        {/* Chat */}
-        {result && (
-          <Card className="bg-white py-4">
-            <CardHeader>
-              <CardTitle>Pergunte à Tia Adélia</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 px-2">
-              <ScrollArea className="rounded-lg p-2">
-                {messages.map((msg, i) => (
+            {result && (
+              <div className="space-y-3 rounded-3xl border border-emerald-200 bg-white/70 p-6 text-sm text-emerald-800">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-emerald-900">Resultado</h2>
+                  <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
+                    Confiança {Math.round(result.confidence * 100)}%
+                  </span>
+                </div>
+                <p className="text-sm text-emerald-700/80">{result.description}</p>
+                <div className="grid gap-2 text-xs tracking-[0.2em] text-emerald-500 uppercase">
+                  <span>Tipo: {result.type}</span>
+                  <span>Espécie: {result.species}</span>
+                  <span>Estado: {result.ripeness}</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex min-h-[420px] flex-col rounded-3xl border border-emerald-200 bg-white/60 p-6">
+            <h2 className="text-lg font-semibold text-emerald-900">Conversa</h2>
+            <div className="mt-4 flex-1 space-y-4 overflow-y-auto pr-2 text-sm">
+              {messages.length === 0 ? (
+                <p className="rounded-2xl bg-emerald-50 p-4 text-emerald-700/80">
+                  Assim que a Tia Adélia analisar a fotografia, começa a conversa aqui.
+                </p>
+              ) : (
+                messages.map((message, index) => (
                   <div
-                    key={i}
-                    className={`mb-3 flex items-start gap-3 ${
-                      msg.role === 'user' ? 'justify-end' : 'justify-start'
-                    }`}
+                    key={index}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    {msg.role === 'model' && (
-                      <Avatar>
-                        <AvatarImage src="/avatar-adelia.jpg" />
-                        <AvatarFallback>TA</AvatarFallback>
-                      </Avatar>
-                    )}
-                    <Card
-                      className={`max-w-[75%] shadow-sm ${
-                        msg.role === 'user'
-                          ? 'rounded-br-none bg-green-600 text-white'
-                          : 'rounded-bl-none border border-green-100 bg-green-100 text-gray-800'
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                        message.role === 'user'
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-white text-emerald-900 shadow'
                       }`}
                     >
-                      <CardContent className="px-3 text-sm">{msg.text}</CardContent>
-                    </Card>
-                    {msg.role === 'user' && (
-                      <Avatar>
-                        <AvatarFallback>Tu</AvatarFallback>
-                      </Avatar>
-                    )}
+                      {message.text}
+                    </div>
                   </div>
-                ))}
-                {chatLoading && (
-                  <div className="mb-3 flex animate-pulse items-center justify-start gap-3">
-                    <Avatar>
-                      <AvatarImage src="/avatar-adelia.jpg" />
-                      <AvatarFallback>TA</AvatarFallback>
-                    </Avatar>
-                    <p className="text-sm text-gray-500 italic">Deixe-me pensar...</p>
-                  </div>
-                )}
-              </ScrollArea>
-
-              <form onSubmit={handleSendMessage} className="flex gap-2">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Pergunta algo à Tia Adélia..."
-                  disabled={chatLoading}
-                />
-                <Button
-                  type="submit"
-                  disabled={!input.trim() || chatLoading}
-                  className="bg-green-600 text-white hover:bg-green-700"
-                >
+                ))
+              )}
+            </div>
+            <form onSubmit={handleSendMessage} className="mt-4 flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Pergunta à Tia Adélia..."
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                className="flex-1 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm focus:border-emerald-400 focus:outline-none"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || chatLoading || !result}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500 text-white transition hover:bg-emerald-600 disabled:opacity-60"
+              >
+                {chatLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
                   <Send className="h-4 w-4" />
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        )}
+                )}
+              </button>
+            </form>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }
