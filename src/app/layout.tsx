@@ -1,22 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Roboto, Fredoka } from 'next/font/google';
+import { Inter, Nunito_Sans } from 'next/font/google';
 import './globals.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import BottomBar from '@/components/ui/BottomBar';
 
-const roboto = Roboto({
+const inter = Inter({
   subsets: ['latin'],
+  variable: '--font-inter',
   display: 'swap',
-  variable: '--font-roboto',
 });
 
-const fredoka = Fredoka({
+const nunito = Nunito_Sans({
   subsets: ['latin'],
-  variable: '--font-fredoka',
-  weight: ['400', '500', '700'],
+  variable: '--font-nunito',
+  display: 'swap',
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -58,8 +58,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${fredoka.variable} bg-gradient-to-b from-[#b8f3b1] via-[#def8d6] to-[#f9fff9] text-gray-900`}
+        className={`${inter.variable} ${nunito.variable} relative min-h-screen bg-[#DCFCE7] text-emerald-950`}
       >
+        <div className="pointer-events-none fixed inset-0 -z-10 opacity-90">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.8)_0%,_rgba(220,252,231,0.85)_40%,_rgba(214,238,210,0.95)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,_rgba(34,197,94,0.08)_0%,_rgba(161,98,7,0.08)_35%,_rgba(34,211,238,0.05)_100%)]" />
+        </div>
         {skipAnimation ? (
           <div className="min-h-screen">{children}</div>
         ) : enableGlobalAnimation ? (

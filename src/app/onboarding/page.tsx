@@ -1,61 +1,67 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Stepper } from '@/components/ui/Stepper';
-
-// Importa os steps individuais
+import { useMemo, useState } from 'react';
 import { StepWelcome } from './steps/StepWelcome';
 import { StepName } from './steps/StepName';
 import { StepLocation } from './steps/StepLocation';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { StepPlants } from './steps/StepPlants';
+import { StepSensors } from './steps/StepSensors';
+import { StepAI } from './steps/StepAI';
+import { StepSummary } from './steps/StepSummary';
+
+const TOTAL_STEPS = 6;
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(0);
 
-  const steps = [
-    <StepWelcome key="welcome" onNext={() => setStep(1)} />,
-    <StepName key="name" onNext={() => setStep(2)} onBack={() => setStep(0)} />,
-    <StepLocation
-      key="location"
-      onBack={() => setStep(1)}
-      onFinish={() => console.log('Onboarding Complete! 🎉')}
-    />,
-  ];
+  const stepContent = useMemo(() => {
+    switch (step) {
+      case 0:
+        return <StepWelcome onNext={() => setStep(1)} />;
+      case 1:
+        return <StepName onBack={() => setStep(0)} onNext={() => setStep(2)} />;
+      case 2:
+        return <StepLocation onBack={() => setStep(1)} onNext={() => setStep(3)} />;
+      case 3:
+        return <StepPlants onBack={() => setStep(2)} onNext={() => setStep(4)} />;
+      case 4:
+        return <StepSensors onBack={() => setStep(3)} onNext={() => setStep(5)} />;
+      case 5:
+      default:
+        return <StepAI onBack={() => setStep(4)} onNext={() => setStep(6)} />;
+    }
+  }, [step]);
+
+  if (step === 6) {
+    return (
+      <>
+        <StepSummary onBack={() => setStep(5)} />
+        <ProgressDots current={step} />
+      </>
+    );
+  }
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
-      {step !== 0 && (
-        <div className="fixed top-8 left-4">
-          <Button
-            className="btn-primary rounded-full"
-            variant="outline"
-            size="icon"
-            onClick={() => setStep(step - 1)} // volta um passo
-          >
-            <ArrowLeft />
-          </Button>
-        </div>
-      )}
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={step}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.4 }}
-          className="w-full"
-          layout="position"
-        >
-          {steps[step]}
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="fixed bottom-4 left-0 w-full">
-        <Stepper currentStep={step + 1} totalSteps={steps.length} />
-      </div>
+    <main className="relative min-h-screen bg-transparent">
+      {stepContent}
+      <ProgressDots current={step} />
     </main>
+  );
+}
+
+function ProgressDots({ current }: { current: number }) {
+  return (
+    <div className="pointer-events-none fixed bottom-10 left-0 flex w-full justify-center">
+      <div className="flex gap-2">
+        {Array.from({ length: TOTAL_STEPS + 1 }).map((_, index) => (
+          <span
+            key={`progress-${index}`}
+            className={`h-1.5 w-8 rounded-full transition ${
+              current === index ? 'bg-emerald-500' : 'bg-emerald-200'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
