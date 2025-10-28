@@ -11,60 +11,47 @@ export default function BottomBar() {
 
   const items = useMemo(
     () => [
-      { id: 'home', icon: Home, href: '/dashboard', color: '#166534' },
-      { id: 'garden', icon: Sprout, href: '/garden', color: '#166534' },
-      { id: 'ai', icon: Sparkles, href: '/ai', color: '#166534' },
-      { id: 'settings', icon: Settings, href: '/settings', color: '#166534' },
+      { id: 'home', icon: Home, href: '/dashboard', label: 'Inicio' },
+      { id: 'garden', icon: Sprout, href: '/garden', label: 'Jardim' },
+      { id: 'ai', icon: Sparkles, href: '/ai', label: 'AI' },
+      { id: 'settings', icon: Settings, href: '/settings', label: 'Definições' },
     ],
     [],
   );
 
   const active = useMemo(() => {
-    const match = items.find((i) => pathname === i.href || pathname.startsWith(`${i.href}/`));
+    const match = items.find(
+      (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+    );
     return match?.id ?? 'home';
   }, [items, pathname]);
 
-  const handleClick = (href: string) => {
-    router.push(href);
-  };
-
   return (
-    <div
-      className={clsx(
-        'fixed right-0 bottom-0 left-0 z-50 flex items-end justify-center transition-colors duration-500',
-      )}
-    >
-      <ul className="relative flex h-[60px] w-full max-w-md items-end justify-around bg-[#f9f8fa] shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-emerald-200 bg-white/80 backdrop-blur">
+      <ul className="mx-auto flex max-w-md items-center justify-around px-4 py-3 text-emerald-700">
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
 
           return (
-            <li
-              key={item.id}
-              onClick={() => handleClick(item.href)}
-              className={clsx(
-                'relative flex h-[60px] w-[60px] cursor-pointer items-center justify-center rounded-t-full transition-all duration-300',
-                isActive ? '-top-3' : 'top-0',
-              )}
-            >
-              {/* Ícone */}
-              <div
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => router.push(item.href)}
                 className={clsx(
-                  'flex h-[60px] w-[60px] items-center justify-center rounded-full transition-all duration-300',
-                  isActive ? 'text-white' : 'bg-[#f9f8fa] text-gray-400',
+                  'flex flex-col items-center gap-1 rounded-full px-3 py-1 text-xs font-medium transition',
+                  isActive ? 'text-emerald-600' : 'text-emerald-400 hover:text-emerald-600',
                 )}
-                style={{
-                  backgroundColor: '#f9f8fa',
-                  color: isActive ? item.color : '#a3a3a3',
-                }}
               >
-                <Icon className={clsx('h-6 w-6 transition-transform', isActive && 'scale-110')} />
-              </div>
+                <Icon
+                  className={clsx('h-5 w-5', isActive && 'fill-emerald-100 stroke-emerald-600')}
+                />
+                <span>{item.label}</span>
+              </button>
             </li>
           );
         })}
       </ul>
-    </div>
+    </nav>
   );
 }

@@ -5,37 +5,16 @@ import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabaseClient';
 import type { Plant } from '@/types';
-import { LeafLoader } from '@/components/ui/Spinner';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ArrowLeft, CalendarCheck2, Trash2, Upload } from 'lucide-react';
 
-type PlantFormState = {
-  name: string;
-  watering_freq: number;
-  type: 'horta' | 'pomar';
-  image_url: string;
-  last_watered: string | null;
-};
-
-const formatDate = (value: string | null) => {
+const formatDateInput = (value: string | null) => {
   if (!value) return '';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '';
   return date.toISOString().slice(0, 10);
 };
 
-const formatDisplayDate = (value: string | null) => {
-  if (!value) return 'Ainda não regaste esta planta.';
+const formatFriendlyDate = (value: string | null) => {
+  if (!value) return 'Ainda não foi registada uma rega.';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return 'Data desconhecida.';
   return date.toLocaleDateString('pt-PT', {
@@ -55,12 +34,12 @@ export default function PlantDetailPage() {
   }, [params]);
 
   const [plant, setPlant] = useState<Plant | null>(null);
-  const [form, setForm] = useState<PlantFormState>({
+  const [form, setForm] = useState({
     name: '',
     watering_freq: 3,
-    type: 'horta',
+    type: 'horta' as 'horta' | 'pomar',
     image_url: '',
-    last_watered: null,
+    last_watered: null as string | null,
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -78,7 +57,6 @@ export default function PlantDetailPage() {
           .select('*')
           .eq('id', plantId)
           .single();
-
         if (error) throw error;
         if (!data) {
           setPlant(null);
@@ -100,6 +78,7 @@ export default function PlantDetailPage() {
         });
       } catch (error) {
         console.error('Erro ao carregar a planta:', error);
+        setStatus('Não foi possível carregar esta planta.');
       } finally {
         setLoading(false);
       }
@@ -185,7 +164,6 @@ export default function PlantDetailPage() {
         .from('plants')
         .update({ last_watered: now })
         .eq('id', plantId);
-
       if (error) throw error;
 
       setForm((prev) => ({ ...prev, last_watered: now }));
@@ -199,189 +177,190 @@ export default function PlantDetailPage() {
     }
   }, [plantId]);
 
-  const handleRemoveImage = () => {
-    setForm((prev) => ({ ...prev, image_url: '' }));
-  };
+  const handleDelete = useCallback(async () => {
+    if (!plantId) return;
+    if (!confirm('Tens a certeza que queres remover esta planta?')) return;
+
+    try {
+      const { error } = await supabase.from('plants').delete().eq('id', plantId);
+      if (error) throw error;
+      router.push('/garden');
+    } catch (error) {
+      console.error('Erro ao eliminar planta:', error);
+      setStatus('Não foi possível eliminar a planta.');
+    }
+  }, [plantId, router]);
 
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <LeafLoader />
+        <span className="h-12 w-12 animate-spin rounded-full border-2 border-emerald-500 border-t-transparent" />
       </main>
     );
   }
 
-  if (!plantId || !plant) {
+  if (!plant) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
-        <p className="text-lg font-semibold text-green-800">Não encontrámos esta planta.</p>
-        <Button
-          onClick={() => router.push('/garden')}
-          className="bg-green-600 text-white hover:bg-green-700"
-        >
-          Voltar à lista
-        </Button>
+      <main className="flex min-h-screen items-center justify-center px-6">
+        <div className="rounded-3xl border border-emerald-200 bg-white/70 p-8 text-center text-sm text-emerald-800">
+          Não encontrámos esta planta.
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen px-6 py-6 pb-24">
-      <div className="mx-auto flex w-full max-w-2xl flex-col gap-6">
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="icon" onClick={() => router.back()} aria-label="Voltar">
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-2xl font-bold text-green-800">{plant.name}</h1>
-        </div>
+    <main className="min-h-screen px-5 py-10 pb-24">
+      <div className="mx-auto w-full max-w-4xl space-y-8">
+        <button
+          type="button"
+          onClick={() => router.push('/garden')}
+          className="text-sm font-medium text-emerald-600 transition hover:text-emerald-800"
+        >
+          ← voltar à lista
+        </button>
+
+        <header className="space-y-2 text-emerald-900">
+          <p className="text-xs tracking-[0.3em] text-emerald-500 uppercase">
+            {plant.type === 'pomar' ? 'Pomar' : 'Horta'}
+          </p>
+          <h1 className="text-3xl font-semibold">{plant.name}</h1>
+          <p className="text-sm text-emerald-700/80">
+            Actualiza a frequência de rega ou envia uma fotografia recente.
+          </p>
+        </header>
 
         {status && (
-          <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
             {status}
           </div>
         )}
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Ficha da planta</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="name">Nome</Label>
-                <Input
-                  id="name"
-                  value={form.name}
-                  onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-                  placeholder="Ex: Laranjeira"
+        <section className="grid gap-8 md:grid-cols-[260px_1fr]">
+          <div className="space-y-4">
+            <div className="overflow-hidden rounded-3xl border border-emerald-200 bg-white/70">
+              {form.image_url ? (
+                <Image
+                  src={form.image_url}
+                  alt={form.name}
+                  width={400}
+                  height={320}
+                  className="h-64 w-full object-cover"
                 />
-              </div>
+              ) : (
+                <div className="flex h-64 items-center justify-center text-5xl">
+                  {plant.type === 'pomar' ? '🍊' : '🌿'}
+                </div>
+              )}
+            </div>
+            <label className="flex flex-col gap-2 text-sm text-emerald-900">
+              Actualizar fotografia
+              <input
+                type="file"
+                accept="image/*"
+                onChange={onFileChange}
+                className="rounded-xl border border-dashed border-emerald-300 bg-white/70 px-3 py-2 text-sm"
+              />
+            </label>
+            {uploading && <p className="text-xs text-emerald-600">A carregar imagem...</p>}
+          </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="watering">Frequência de rega (dias)</Label>
-                <Input
-                  id="watering"
+          <div className="space-y-6">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="flex flex-col gap-2 text-sm text-emerald-900">
+                Nome
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(event) => setForm({ ...form, name: event.target.value })}
+                  className="rounded-xl border border-emerald-200 bg-white/70 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none"
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-emerald-900">
+                Frequência de rega (dias)
+                <input
                   type="number"
                   min={1}
-                  value={form.watering_freq}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      watering_freq: Number.parseInt(e.target.value, 10) || 1,
-                    }))
+                  value={form.watering_freq || ''}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      watering_freq:
+                        event.target.value === '' ? 0 : Number(event.target.value) || 0,
+                    })
                   }
+                  className="rounded-xl border border-emerald-200 bg-white/70 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none"
                 />
-              </div>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label>Zona</Label>
-                <Select
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-emerald-900">
+                Zona do jardim
+                <select
                   value={form.type}
-                  onValueChange={(value) =>
-                    setForm((prev) => ({ ...prev, type: value as 'horta' | 'pomar' }))
+                  onChange={(event) =>
+                    setForm({ ...form, type: event.target.value as 'horta' | 'pomar' })
                   }
+                  className="rounded-xl border border-emerald-200 bg-white/70 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none"
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Escolhe a zona" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="horta">🌿 Horta</SelectItem>
-                    <SelectItem value="pomar">🍊 Pomar</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="last-watered">Última rega</Label>
-                <Input
-                  id="last-watered"
+                  <option value="horta">Horta</option>
+                  <option value="pomar">Pomar</option>
+                </select>
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-emerald-900">
+                Última rega
+                <input
                   type="date"
-                  value={formatDate(form.last_watered)}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      last_watered: e.target.value ? new Date(e.target.value).toISOString() : null,
-                    }))
+                  value={formatDateInput(form.last_watered)}
+                  onChange={(event) =>
+                    setForm({ ...form, last_watered: event.target.value || null })
                   }
+                  className="rounded-xl border border-emerald-200 bg-white/70 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none"
                 />
-                <p className="text-xs text-gray-500">{formatDisplayDate(form.last_watered)}</p>
-              </div>
+              </label>
             </div>
 
-            <div className="space-y-3">
-              <Label>Fotografia</Label>
-              {form.image_url ? (
-                <div className="space-y-3">
-                  <div className="relative h-60 w-full overflow-hidden rounded-xl border">
-                    <Image src={form.image_url} alt={form.name} fill className="object-cover" />
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={handleRemoveImage}
-                      className="border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" /> Remover imagem
-                    </Button>
-                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-green-300 px-4 py-2 text-sm text-green-700 hover:bg-green-50">
-                      <Upload className="h-4 w-4" />
-                      <span>Trocar fotografia</span>
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        capture="environment"
-                        className="hidden"
-                        onChange={onFileChange}
-                        disabled={uploading}
-                      />
-                    </label>
-                  </div>
-                </div>
-              ) : (
-                <label className="flex min-h-[180px] cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-green-200 bg-green-50 p-6 text-center text-sm text-green-700 hover:bg-green-100">
-                  <Upload className="h-5 w-5" />
-                  <span>Carrega ou fotografa a planta</span>
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    capture="environment"
-                    className="hidden"
-                    onChange={onFileChange}
-                    disabled={uploading}
-                  />
-                </label>
-              )}
-              {uploading && <p className="text-xs text-gray-500">A enviar fotografia…</p>}
+            <div className="rounded-3xl border border-emerald-200 bg-white/70 p-6 text-sm text-emerald-800">
+              <p className="font-semibold text-emerald-900">Próxima rega prevista</p>
+              <p className="mt-2 text-emerald-700/80">
+                {nextWateringDate
+                  ? nextWateringDate.toLocaleDateString('pt-PT', {
+                      weekday: 'long',
+                      day: '2-digit',
+                      month: 'long',
+                    })
+                  : 'Regista a última rega para prever a próxima.'}
+              </p>
+              <p className="mt-4 text-xs tracking-[0.3em] text-emerald-500 uppercase">
+                Última rega: {formatFriendlyDate(form.last_watered)}
+              </p>
             </div>
-
-            {nextWateringDate && (
-              <div className="rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-800">
-                Próxima rega sugerida:{' '}
-                {nextWateringDate.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' })}
-              </div>
-            )}
 
             <div className="flex flex-wrap gap-3">
-              <Button
+              <button
+                type="button"
                 onClick={handleSave}
                 disabled={saving}
-                className="bg-green-600 text-white hover:bg-green-700"
+                className="rounded-full bg-emerald-500 px-6 py-2 text-sm font-medium text-white transition hover:bg-emerald-600 disabled:opacity-60"
               >
-                Guardar alterações
-              </Button>
-              <Button
-                variant="outline"
-                disabled={saving}
+                {saving ? 'A guardar...' : 'Guardar alterações'}
+              </button>
+              <button
+                type="button"
                 onClick={handleMarkWatered}
-                className="border-green-300 text-green-700 hover:bg-green-100"
+                disabled={saving}
+                className="rounded-full border border-emerald-300 px-6 py-2 text-sm font-medium text-emerald-700 transition hover:border-emerald-400 hover:text-emerald-800 disabled:opacity-60"
               >
-                <CalendarCheck2 className="mr-2 h-4 w-4" /> Regada hoje
-              </Button>
+                Registar rega agora
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="ml-auto rounded-full border border-rose-300 px-6 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-500 hover:text-white"
+              >
+                Remover planta
+              </button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </section>
       </div>
     </main>
   );
