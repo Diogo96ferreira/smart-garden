@@ -29,6 +29,6 @@ export default function OnboardingPage() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

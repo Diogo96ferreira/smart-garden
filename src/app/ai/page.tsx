@@ -188,8 +188,30 @@ export default function TiaAdeliaPage() {
                     </button>
                   </div>
                 </div>
-              )}
-            </div>
+                <div className="flex flex-wrap gap-3 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPreview(null);
+                      setImageFile(null);
+                      setResult(null);
+                      setMessages([]);
+                    }}
+                    className="btn-secondary"
+                  >
+                    Remover
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="btn-secondary"
+                  >
+                    Trocar imagem
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
             <button
               type="button"

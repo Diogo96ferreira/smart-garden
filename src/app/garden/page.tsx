@@ -168,13 +168,15 @@ export default function MyGarden() {
       const { error } = await supabase
         .from('plants')
         .update({
-          name: selectedPlant.name,
-          watering_freq: selectedPlant.watering_freq,
-          type: selectedPlant.type,
+          name: form.name.trim(),
+          image_url: form.image_url || null,
+          watering_freq: form.watering_freq,
+          type: form.type,
         })
         .eq('id', selectedPlant.id);
 
       if (error) throw error;
+
       setEditOpen(false);
       await fetchPlants();
     } catch (error) {
@@ -182,10 +184,7 @@ export default function MyGarden() {
     }
   }
 
-  async function handleDeletePlant(): Promise<void> {
-    if (!selectedPlant) return;
-    if (!confirm('Tens a certeza que queres eliminar esta planta?')) return;
-
+  async function handleDeletePlant(id: number): Promise<void> {
     try {
       const { error } = await supabase.from('plants').delete().eq('id', selectedPlant.id);
       if (error) throw error;

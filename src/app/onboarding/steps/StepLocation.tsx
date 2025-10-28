@@ -11,8 +11,7 @@ interface MunicipioResponse {
   concelhos: string[];
 }
 
-export function StepLocation({ onBack, onFinish }: Props) {
-  const router = useRouter();
+export function StepLocation({ onBack, onNext }: Props) {
   const [distritos, setDistritos] = useState<MunicipioResponse[]>([]);
   const [selectedDistrito, setSelectedDistrito] = useState('');
   const [selectedMunicipio, setSelectedMunicipio] = useState('');

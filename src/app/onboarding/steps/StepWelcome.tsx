@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
+import Image from 'next/image';
+import { Sparkles } from 'lucide-react';
 
 type Props = { onNext: () => void };
 

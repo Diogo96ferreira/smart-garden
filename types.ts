@@ -3,12 +3,17 @@ export interface ClassificationResult {
   species: string;
   description: string;
   isFruitOrVeg: boolean;
-  // FIX: Made ripeness and confidence required to align with the Gemini API response schema, which always provides these fields.
+  /**
+   * Ripeness and confidence are always provided by the Gemini classification
+   * endpoint, so we expose them as required fields instead of optional values.
+   */
   ripeness: string;
   confidence: number;
 }
 
-// FIX: Added missing RipenessResult interface to resolve the import error in services/roboflowService.ts.
+/**
+ * Represents the ripeness analysis that augments a plant classification result.
+ */
 export interface RipenessResult {
   ripeness: string;
   confidence: number;

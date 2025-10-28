@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { Check, AlarmClock, BadgeHelp } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 
-// ✅ Tipo explícito para as tarefas
 type Task = {
   id: number;
   title: string;
@@ -14,6 +13,59 @@ type Task = {
   created_at?: string;
 };
 
+const statusPalettes = [
+  {
+    accent: 'from-[#22c55e]/90 to-[#0ea5e9]/70',
+    moisture: 72,
+    sun: 'Luz filtrada',
+    temperature: 21,
+    status: 'Saudável',
+    tip: 'Mantenha rega leve e constante.',
+  },
+  {
+    accent: 'from-[#f97316]/80 to-[#fb7185]/70',
+    moisture: 44,
+    sun: 'Precisa de mais luz',
+    temperature: 19,
+    status: 'Atenção',
+    tip: 'Roda o vaso para apanhar mais sol da manhã.',
+  },
+  {
+    accent: 'from-[#14b8a6]/80 to-[#22d3ee]/70',
+    moisture: 63,
+    sun: 'Boa claridade',
+    temperature: 22,
+    status: 'Equilibrada',
+    tip: 'Ideal para colher algumas folhas jovens.',
+  },
+  {
+    accent: 'from-[#a855f7]/80 to-[#f472b6]/70',
+    moisture: 58,
+    sun: 'Precisa de sombra leve',
+    temperature: 18,
+    status: 'Serena',
+    tip: 'Pulveriza as folhas ao fim do dia.',
+  },
+];
+
+const notifications = [
+  {
+    icon: <BellRing className="h-5 w-5 text-emerald-600" />,
+    title: 'Hortelã precisa de água 💧',
+    description: 'Humidade abaixo do ideal há 6 horas.',
+  },
+  {
+    icon: <Sun className="h-5 w-5 text-amber-500" />,
+    title: 'Temperatura caiu 4°C 🌙',
+    description: 'Cobrir as plantas jovens esta noite.',
+  },
+  {
+    icon: <Sparkles className="h-5 w-5 text-sky-500" />,
+    title: 'Nova dica da Tia Adélia',
+    description: '“Cada planta aprende ao teu ritmo, meu querido.”',
+  },
+];
+
 export default function DashboardPage() {
   const [doneTasks, setDoneTasks] = useState<number[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -21,7 +73,6 @@ export default function DashboardPage() {
   const [userName, setUserName] = useState<string>('');
   const [userLocation, setUserLocation] = useState<string>('');
 
-  // 🔹 1️⃣ Fetch tasks from Supabase
   useEffect(() => {
     async function fetchTasks() {
       try {
@@ -43,7 +94,6 @@ export default function DashboardPage() {
     fetchTasks();
   }, []);
 
-  // 🔹 2️⃣ Load doneTasks from localStorage
   useEffect(() => {
     const stored = localStorage.getItem('doneTasks');
     if (stored) {
@@ -56,7 +106,6 @@ export default function DashboardPage() {
     }
   }, []);
 
-  // 🔹 3️⃣ Save doneTasks to localStorage
   useEffect(() => {
     localStorage.setItem('doneTasks', JSON.stringify(doneTasks));
   }, [doneTasks]);
@@ -198,4 +247,8 @@ export default function DashboardPage() {
       </div>
     </main>
   );
+}
+
+function SproutIcon() {
+  return <Leaf className="h-6 w-6 text-emerald-600" />;
 }
