@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
@@ -65,14 +65,39 @@ export function StepLocation({ onBack, onFinish }: Props) {
     }
   }, []);
 
+  useEffect(() => {
+    if (!distritos.length) return;
+
+    const storedLocation = localStorage.getItem('userLocation');
+    if (!storedLocation) return;
+
+    try {
+      const parsed = JSON.parse(storedLocation) as { distrito?: string; municipio?: string };
+      if (parsed.distrito && distritos.some((d) => d.distrito === parsed.distrito)) {
+        setSelectedDistrito(parsed.distrito);
+      }
+      if (parsed.municipio) {
+        setSelectedMunicipio(parsed.municipio);
+      }
+    } catch (error) {
+      console.warn('Não foi possível restaurar a localização guardada.', error);
+    }
+  }, [distritos]);
+
   const municipios = distritos.find((d) => d.distrito === selectedDistrito)?.concelhos || [];
 
-  const handleFinish = () => {
+  const handleFinish = useCallback(() => {
+    localStorage.setItem(
+      'userLocation',
+      JSON.stringify({
+        distrito: selectedDistrito,
+        municipio: selectedMunicipio,
+      }),
+    );
     localStorage.setItem('onboardingComplete', 'true');
-    onFinish(); // continua o flow normal
-    // navega para dashboard
+    onFinish();
     router.push('/splash');
-  };
+  }, [selectedDistrito, selectedMunicipio, onFinish, router]);
 
   // 🎯 Global: Enter → finish, Esc → back (pausa quando um Select está aberto)
   useEffect(() => {
@@ -81,7 +106,7 @@ export function StepLocation({ onBack, onFinish }: Props) {
 
       if (e.key === 'Enter' && selectedDistrito && selectedMunicipio) {
         e.preventDefault();
-        onFinish();
+        handleFinish();
       }
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -90,7 +115,7 @@ export function StepLocation({ onBack, onFinish }: Props) {
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [menuOpen, selectedDistrito, selectedMunicipio, onFinish, onBack]);
+  }, [menuOpen, selectedDistrito, selectedMunicipio, onBack, handleFinish]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center space-y-4 p-8">

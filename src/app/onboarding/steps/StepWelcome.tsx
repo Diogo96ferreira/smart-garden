@@ -26,7 +26,7 @@ export function StepWelcome({ onNext }: Props) {
       <Image className="mb-6" src="/logo.svg" width={200} height={200} alt="Smart Garden logo" />
       <p className="text-muted-foreground text-center text-lg">
         We will take care of your garden <br />
-        with the aid of AI.
+        with the aid of AI and the wisdom of Tia Adélia.
       </p>
       <div className="fixed bottom-12 left-0 w-full px-6">
         <div className="mx-auto w-full">

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type Props = {
   onNext: () => void;
@@ -12,7 +12,12 @@ type Props = {
 export function StepName({ onBack, onNext }: Props) {
   const [name, setName] = useState('');
 
-  const handleNext = () => {
+  useEffect(() => {
+    const storedName = localStorage.getItem('userName');
+    if (storedName) setName(storedName);
+  }, []);
+
+  const handleNext = useCallback(() => {
     if (!name.trim()) return;
 
     localStorage.setItem('userName', name);
@@ -20,7 +25,7 @@ export function StepName({ onBack, onNext }: Props) {
     console.log('✅ Nome guardado:', name);
 
     onNext();
-  };
+  }, [name, onNext]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -37,7 +42,7 @@ export function StepName({ onBack, onNext }: Props) {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [name, onNext, onBack]);
+  }, [name, onBack, handleNext]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 space-y-8 p-8">

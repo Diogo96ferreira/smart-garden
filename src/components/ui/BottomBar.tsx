@@ -1,28 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { Home, Sprout, HelpCircle, Sparkles, CalendarDays } from 'lucide-react';
+import { Home, Sprout, Settings, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function BottomBar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const items = [
-    { id: 'home', icon: Home, href: '/dashboard', color: '#166534' },
-    { id: 'garden', icon: Sprout, href: '/garden', color: '#166534' },
-    { id: 'calendar', icon: CalendarDays, href: '/calendar', color: '#166534' },
-    { id: 'ai', icon: Sparkles, href: '/ai', color: '#166534' },
-    { id: 'settings', icon: HelpCircle, href: '/settings', color: '#166534' },
-  ];
-
-  const [active, setActive] = useState(
-    items.find((i) => pathname.startsWith(i.href))?.id || 'home',
+  const items = useMemo(
+    () => [
+      { id: 'home', icon: Home, href: '/dashboard', color: '#166534' },
+      { id: 'garden', icon: Sprout, href: '/garden', color: '#166534' },
+      { id: 'ai', icon: Sparkles, href: '/ai', color: '#166534' },
+      { id: 'settings', icon: Settings, href: '/settings', color: '#166534' },
+    ],
+    [],
   );
 
-  const handleClick = (id: string, href: string) => {
-    setActive(id);
+  const active = useMemo(() => {
+    const match = items.find((i) => pathname === i.href || pathname.startsWith(`${i.href}/`));
+    return match?.id ?? 'home';
+  }, [items, pathname]);
+
+  const handleClick = (href: string) => {
     router.push(href);
   };
 
@@ -40,7 +42,7 @@ export default function BottomBar() {
           return (
             <li
               key={item.id}
-              onClick={() => handleClick(item.id, item.href)}
+              onClick={() => handleClick(item.href)}
               className={clsx(
                 'relative flex h-[60px] w-[60px] cursor-pointer items-center justify-center rounded-t-full transition-all duration-300',
                 isActive ? '-top-3' : 'top-0',

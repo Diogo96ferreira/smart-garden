@@ -13,3 +13,15 @@ export interface RipenessResult {
   ripeness: string;
   confidence: number;
 }
+
+export type GardenArea = 'horta' | 'pomar';
+
+export interface Plant {
+  id: string;
+  name: string;
+  image_url?: string | null;
+  watering_freq: number;
+  last_watered?: string | null;
+  created_at?: string;
+  type?: GardenArea;
+}

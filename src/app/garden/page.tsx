@@ -25,19 +25,11 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
-import type { PostgrestError } from '@supabase/supabase-js';
-
-type Plant = {
-  id: string;
-  name: string;
-  image_url?: string | null;
-  watering_freq: number;
-  last_watered?: string | null;
-  created_at?: string;
-  type?: 'horta' | 'pomar';
-};
+import { useRouter } from 'next/navigation';
+import type { Plant } from '@/types';
 
 export default function MyGarden() {
+  const router = useRouter();
   const [plants, setPlants] = useState<Plant[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -68,7 +60,11 @@ export default function MyGarden() {
         .order('created_at', { ascending: true });
 
       if (error) throw error;
-      setPlants(data ?? []);
+      const sanitized = (data ?? []).map((plant) => ({
+        ...plant,
+        type: plant.type === 'pomar' ? 'pomar' : 'horta',
+      })) as Plant[];
+      setPlants(sanitized);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error('Erro ao buscar plantas:', error.message);
@@ -190,7 +186,7 @@ export default function MyGarden() {
 
   // ✏️ Editar / Apagar planta
   function openEditModal(plant: Plant): void {
-    setSelectedPlant(plant);
+    setSelectedPlant({ ...plant, type: plant.type === 'pomar' ? 'pomar' : 'horta' });
     setEditOpen(true);
   }
 
@@ -249,7 +245,10 @@ export default function MyGarden() {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {list.map((p) => (
         <motion.div key={p.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Card className="relative overflow-hidden rounded-2xl shadow-sm transition-all hover:shadow-md">
+          <Card
+            className="relative cursor-pointer overflow-hidden rounded-2xl shadow-sm transition-all hover:shadow-md"
+            onClick={() => router.push(`/garden/${p.id}`)}
+          >
             {p.image_url ? (
               <div className="relative h-40 w-full">
                 <Image src={p.image_url} alt={p.name} fill className="object-cover" />
@@ -268,6 +267,9 @@ export default function MyGarden() {
             <CardContent className="space-y-1 p-4">
               <h3 className="font-semibold text-gray-800">{p.name}</h3>
               <p className="text-xs text-gray-400">💧 Rega a cada {p.watering_freq} dias</p>
+              <p className="text-xs text-gray-400">
+                {p.type === 'pomar' ? '🍊 Pomar' : '🌿 Horta'}
+              </p>
             </CardContent>
 
             {/* Botão sempre visível */}
@@ -360,6 +362,7 @@ export default function MyGarden() {
               <Input
                 type="file"
                 accept="image/*"
+                capture="environment"
                 onChange={handleImageUpload}
                 disabled={uploading || analyzing}
               />
@@ -471,7 +474,7 @@ export default function MyGarden() {
               <div>
                 <Label>Tipo</Label>
                 <Select
-                  value={selectedPlant.type}
+                  value={selectedPlant.type ?? 'horta'}
                   onValueChange={(v) =>
                     setSelectedPlant({ ...selectedPlant, type: v as 'horta' | 'pomar' })
                   }

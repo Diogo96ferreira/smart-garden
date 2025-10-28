@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Check, AlarmClock, BadgeHelp } from 'lucide-react';
@@ -21,6 +21,8 @@ export default function DashboardPage() {
   const [doneTasks, setDoneTasks] = useState<number[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState<string>('');
+  const [userLocation, setUserLocation] = useState<string>('');
 
   // 🔹 1️⃣ Fetch tasks from Supabase
   useEffect(() => {
@@ -62,12 +64,33 @@ export default function DashboardPage() {
     localStorage.setItem('doneTasks', JSON.stringify(doneTasks));
   }, [doneTasks]);
 
+  useEffect(() => {
+    const storedName = localStorage.getItem('userName');
+    const storedLocation = localStorage.getItem('userLocation');
+
+    if (storedName) setUserName(storedName);
+    if (storedLocation) {
+      try {
+        const parsed = JSON.parse(storedLocation) as { distrito?: string; municipio?: string };
+        const locationLabel = [parsed.municipio, parsed.distrito].filter(Boolean).join(', ');
+        setUserLocation(locationLabel);
+      } catch {
+        setUserLocation('');
+      }
+    }
+  }, []);
+
   // 🔹 4️⃣ Handle toggle
   const handleDone = (id: number) => {
     setDoneTasks((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
   };
 
   // ⚠️ Condiciona apenas o conteúdo, não o hook
+  // ✅ Agora podes calcular progress em segurança
+  const progress = useMemo(() => {
+    return tasks.length > 0 ? Math.round((doneTasks.length / tasks.length) * 100) : 0;
+  }, [tasks.length, doneTasks.length]);
+
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center">
@@ -76,16 +99,16 @@ export default function DashboardPage() {
     );
   }
 
-  // ✅ Agora podes calcular progress em segurança
-  const progress = tasks.length > 0 ? Math.round((doneTasks.length / tasks.length) * 100) : 0;
-
   return (
     <main className="min-h-screen px-6 py-8 pb-28">
       <header className="mb-6 text-center">
-        <p className="text-lg font-medium text-green-900">Hello Diogo! 👋</p>
+        <p className="text-lg font-medium text-green-900">
+          {userName ? `Hello ${userName}! 👋` : 'Hello gardener! 👋'}
+        </p>
         <h1 className="text-2xl font-extrabold text-green-800 sm:text-3xl">
           Here’s what your garden needs this week 🌱
         </h1>
+        {userLocation && <p className="mt-1 text-sm text-gray-600">{userLocation}</p>}
       </header>
 
       {/* 🌤️ Garden Overview */}
