@@ -14,8 +14,16 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    'bg-gradient-to-r from-[#4c6b3a] to-[#5b7f49] text-white font-semibold shadow-[0_6px_16px_rgba(76,107,58,0.28)] hover:from-[#3f5c31] hover:to-[#4c6b3a] focus-visible:ring-[rgba(76,107,58,0.45)]',
+  primary: `
+    bg-gradient-to-r from-green-400 via-green-500 to-emerald-600 
+    text-white font-semibold
+    shadow-[0_6px_16px_rgba(34,197,94,0.25)]
+    hover:from-green-500 hover:via-emerald-600 hover:to-emerald-700
+    hover:shadow-[0_8px_20px_rgba(16,185,129,0.35)]
+    active:scale-[0.97]
+    transition-all duration-300 ease-out
+    focus-visible:ring-[rgba(16,185,129,0.45)]
+  `,
   tonal: `
     bg-[var(--color-primary-soft)] 
     text-[var(--color-primary-strong)] 

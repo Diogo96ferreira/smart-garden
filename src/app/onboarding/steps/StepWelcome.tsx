@@ -1,17 +1,16 @@
 'use client';
 
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { useEffect } from 'react';
 
 type Props = { onNext: () => void };
 
 export function StepWelcome({ onNext }: Props) {
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        console.log('✅ Enter pressionado → avançar');
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
         onNext();
       }
     };
@@ -21,24 +20,34 @@ export function StepWelcome({ onNext }: Props) {
   }, [onNext]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center space-y-4">
-      <h1 className="text-center text-4xl font-extrabold">Welcome to</h1>
-      <Image className="mb-6" src="/logo.svg" width={200} height={200} alt="Smart Garden logo" />
-      <p className="text-muted-foreground text-center text-lg">
-        We will take care of your garden <br />
-        with the aid of AI.
-      </p>
-      <div className="fixed bottom-12 left-0 w-full px-6">
-        <div className="mx-auto w-full">
-          <Button
-            variant="outline"
-            onClick={onNext}
-            className="btn-primary h-12 min-h-12 w-full text-base leading-none"
-          >
-            Let’s Start
-          </Button>
-        </div>
+    <section className="mx-auto flex min-h-[calc(100vh-120px)] w-full max-w-4xl flex-col items-center justify-center gap-12 px-6 text-center">
+      <div className="w-full rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-soft)]">
+        <Image
+          src="/onboarding/tia-welcome.png"
+          width={640}
+          height={420}
+          alt="Tia Adélia à porta de casa com um cesto de legumes."
+          className="h-auto w-full rounded-[var(--radius-md)] object-cover"
+          priority
+        />
       </div>
-    </div>
+
+      <div className="flex flex-col items-center gap-4">
+        <p className="eyebrow">🪴 Step 1</p>
+        <h1 className="text-display text-4xl leading-tight sm:text-5xl">
+          Bem-vindo à Smart Garden
+        </h1>
+        <p className="max-w-2xl text-lg text-[var(--color-text-muted)] sm:text-xl">
+          A Tia Adélia vai acompanhá-lo na criação de uma horta inteligente, ligando a tradição ao
+          cuidado assistido pela tecnologia.
+        </p>
+      </div>
+
+      <div className="flex w-full max-w-sm items-center justify-center">
+        <Button variant="primary" size="lg" className="w-full text-white" onClick={onNext}>
+          🌱 Vamos começar
+        </Button>
+      </div>
+    </section>
   );
 }

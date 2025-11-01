@@ -4,53 +4,43 @@ import * as React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 
-/**
- * Tipo das tabs aceites pelo componente
- */
 export interface LineTab {
   label: string;
   value: string;
   content?: React.ReactNode;
 }
 
-/**
- * Componente genérico de Tabs com linha inferior animada
- */
-export function LineTabs({
-  tabs,
-  defaultValue,
-  className,
-}: {
+type LineTabsProps = {
   tabs: LineTab[];
   defaultValue?: string;
+  onValueChange?: (value: string) => void;
   className?: string;
-}) {
-  const [activeTab, setActiveTab] = React.useState(defaultValue || tabs[0]?.value);
+};
+
+export function LineTabs({ tabs, defaultValue, onValueChange, className }: LineTabsProps) {
+  const initialValue = defaultValue ?? tabs[0]?.value ?? '';
 
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} className={cn('w-full', className)}>
-      {/* Cabeçalho das tabs */}
-      <TabsList className="relative flex w-full justify-center border-b border-gray-200 bg-transparent shadow-none">
+    <Tabs
+      defaultValue={initialValue}
+      onValueChange={onValueChange}
+      className={cn('w-full', className)}
+    >
+      <TabsList className="flex w-full gap-6 border-b border-[var(--color-border)] bg-transparent p-0">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
             value={tab.value}
-            className={cn(
-              'relative px-4 py-2 text-sm font-medium shadow-none transition-colors',
-              activeTab === tab.value ? 'text-green-700' : 'text-gray-400 hover:text-gray-600',
-            )}
+            className="relative rounded-none px-0 pb-2 text-sm font-semibold text-[var(--color-text-muted)] transition-colors"
+            activeClassName="text-[var(--color-primary-strong)] after:absolute after:-bottom-[1px] after:left-0 after:h-[2px] after:w-full after:rounded-full after:bg-[var(--color-primary)] after:content-['']"
           >
             {tab.label}
-            {activeTab === tab.value && (
-              <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-green-500 transition-all duration-200" />
-            )}
           </TabsTrigger>
         ))}
       </TabsList>
 
-      {/* Conteúdo das tabs */}
       {tabs.map((tab) => (
-        <TabsContent key={tab.value} value={tab.value} className="pt-4">
+        <TabsContent key={tab.value} value={tab.value} className="mt-4">
           {tab.content}
         </TabsContent>
       ))}

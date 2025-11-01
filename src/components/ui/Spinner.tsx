@@ -1,12 +1,12 @@
-import Image from 'next/image';
+'use client';
 
-export function LeafLoader() {
+export function LeafLoader({ label = 'A preparar a sua horta...' }: { label?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <div className="animate-leaf relative h-16 w-16">
-        <Image src="/spinner.png" alt="Loading leaf" fill sizes="64px" className="object-contain" />
-      </div>
-      <p className="text-muted-foreground animate-pulse text-sm">Growing your garden...</p>
+    <div className="flex flex-col items-center gap-3 text-center">
+      <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary-soft)]">
+        <span className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--color-primary-strong)] border-t-transparent" />
+      </span>
+      <p className="text-sm text-[var(--color-text-muted)]">{label}</p>
     </div>
   );
 }

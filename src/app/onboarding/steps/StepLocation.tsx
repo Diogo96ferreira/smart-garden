@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,7 +17,7 @@ import { LeafLoader } from '@/components/ui/Spinner';
 
 type Props = {
   onBack: () => void;
-  onFinish: () => void;
+  onNext: () => void;
 };
 
 interface MunicipioResponse {
@@ -25,38 +25,35 @@ interface MunicipioResponse {
   concelhos: string[];
 }
 
-export function StepLocation({ onBack, onFinish }: Props) {
-  const router = useRouter();
+export function StepLocation({ onBack, onNext }: Props) {
   const [distritos, setDistritos] = useState<MunicipioResponse[]>([]);
   const [selectedDistrito, setSelectedDistrito] = useState('');
   const [selectedMunicipio, setSelectedMunicipio] = useState('');
   const [loading, setLoading] = useState(true);
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  // 🔄 GeoAPI + fallback local
   useEffect(() => {
     const fetchDistritosMunicipios = async () => {
       try {
-        const resp = await axios.get<MunicipioResponse[]>(
+        const response = await axios.get<MunicipioResponse[]>(
           'https://geoapi.pt/distritos/municipios',
           { timeout: 5000 },
         );
-        setDistritos(resp.data);
-        localStorage.setItem('geoapi_data', JSON.stringify(resp.data));
+        setDistritos(response.data);
+        localStorage.setItem('geoapi_data', JSON.stringify(response.data));
       } catch {
         try {
-          const fallbackResp = await axios.get<MunicipioResponse[]>('/data/locations.json');
-          setDistritos(fallbackResp.data);
-          localStorage.setItem('geoapi_data', JSON.stringify(fallbackResp.data));
-        } catch (fallbackErr) {
-          console.error('❌ Fallback local falhou:', fallbackErr);
+          const fallbackResponse = await axios.get<MunicipioResponse[]>('/data/locations.json');
+          setDistritos(fallbackResponse.data);
+          localStorage.setItem('geoapi_data', JSON.stringify(fallbackResponse.data));
+        } catch (fallbackError) {
+          console.error('Falha ao obter lista de distritos.', fallbackError);
         }
       } finally {
         setLoading(false);
       }
     };
-    // tenta cache primeiro (opcional)
-    const cached = localStorage.getItem('geoapi_data');
+
+    const cached = typeof window !== 'undefined' ? localStorage.getItem('geoapi_data') : null;
     if (cached) {
       setDistritos(JSON.parse(cached));
       setLoading(false);
@@ -65,69 +62,88 @@ export function StepLocation({ onBack, onFinish }: Props) {
     }
   }, []);
 
-  const municipios = distritos.find((d) => d.distrito === selectedDistrito)?.concelhos || [];
-
-  const handleFinish = () => {
-    localStorage.setItem('onboardingComplete', 'true');
-    onFinish(); // continua o flow normal
-    // navega para dashboard
-    router.push('/splash');
-  };
-
-  // 🎯 Global: Enter → finish, Esc → back (pausa quando um Select está aberto)
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (menuOpen) return;
+    if (typeof window === 'undefined') return;
+    const cachedLocation = localStorage.getItem('userLocation');
+    if (!cachedLocation) return;
+    try {
+      const parsed = JSON.parse(cachedLocation) as { distrito?: string; municipio?: string };
+      if (parsed.distrito) setSelectedDistrito(parsed.distrito);
+      if (parsed.municipio) setSelectedMunicipio(parsed.municipio);
+    } catch {
+      // ignore cache errors
+    }
+  }, []);
 
-      if (e.key === 'Enter' && selectedDistrito && selectedMunicipio) {
-        e.preventDefault();
-        onFinish();
+  const municipios = useMemo(() => {
+    return distritos.find((item) => item.distrito === selectedDistrito)?.concelhos ?? [];
+  }, [distritos, selectedDistrito]);
+
+  const handleNext = useCallback(() => {
+    if (!selectedDistrito || !selectedMunicipio) return;
+
+    localStorage.setItem(
+      'userLocation',
+      JSON.stringify({ distrito: selectedDistrito, municipio: selectedMunicipio }),
+    );
+    onNext();
+  }, [onNext, selectedDistrito, selectedMunicipio]);
+
+  useEffect(() => {
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && selectedDistrito && selectedMunicipio) {
+        event.preventDefault();
+        handleNext();
       }
-      if (e.key === 'Escape') {
-        e.preventDefault();
+      if (event.key === 'Escape') {
+        event.preventDefault();
         onBack();
       }
     };
+
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [menuOpen, selectedDistrito, selectedMunicipio, onFinish, onBack]);
+  }, [handleNext, onBack, selectedDistrito, selectedMunicipio]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center space-y-4 p-8">
-      <h2 className="text-center text-4xl font-extrabold">
-        Now tell us, where is your garden located?
-      </h2>
-      <p className="text-muted-foreground text-center text-lg">
-        This will help us provide accurate weather updates and care tips.
-      </p>
+    <section className="mx-auto flex min-h-[calc(100vh-120px)] w-full max-w-4xl flex-col items-center justify-center gap-12 px-6 text-center">
+      <div className="w-full rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-soft)]">
+        <Image
+          src="/onboarding/tia-mapa.png"
+          width={640}
+          height={420}
+          alt="Tia Adélia a segurar um mapa colorido."
+          className="h-auto w-full rounded-[var(--radius-md)] object-cover"
+        />
+      </div>
+
+      <div className="flex flex-col items-center gap-4">
+        <p className="eyebrow">🗺️ Step 3</p>
+        <h2 className="text-display text-4xl leading-tight sm:text-5xl">Onde está a sua horta?</h2>
+        <p className="max-w-2xl text-lg text-[var(--color-text-muted)] sm:text-xl">
+          Indique-nos a localização para ajustarmos previsões, alertas e sugestões de cultivo ao seu
+          clima.
+        </p>
+      </div>
 
       {loading ? (
-        <div className="flex min-h-[200px] flex-col items-center justify-center">
-          <LeafLoader />
-        </div>
+        <LeafLoader label="A recolher distritos de Portugal..." />
       ) : (
-        <>
-          {/* Distrito */}
-          <div className="select-wrapper">
-            <Label className="mb-2 text-lg">District</Label>
+        <div className="flex w-full flex-col gap-6 text-left sm:flex-row sm:justify-center">
+          <div className="flex w-full max-w-xs flex-col gap-2">
+            <Label>Distrito</Label>
             <Select
               value={selectedDistrito}
               onValueChange={(value) => {
                 setSelectedDistrito(value);
                 setSelectedMunicipio('');
               }}
-              onOpenChange={setMenuOpen}
+              placeholder="Selecione o distrito"
             >
-              <SelectTrigger className="smart-select-trigger w-[280px]">
-                <SelectValue placeholder="Select district" />
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione o distrito" />
               </SelectTrigger>
-              <SelectContent
-                side="bottom"
-                align="center"
-                className="smart-select-content"
-                // 🔑 impede o Radix de voltar a focar o Trigger quando fecha
-                onCloseAutoFocus={(e) => e.preventDefault()}
-              >
+              <SelectContent>
                 <SelectGroup>
                   {distritos.map((item) => (
                     <SelectItem key={item.distrito} value={item.distrito}>
@@ -139,50 +155,44 @@ export function StepLocation({ onBack, onFinish }: Props) {
             </Select>
           </div>
 
-          {/* Município */}
-          <div className="select-wrapper">
-            <Label className="mb-2 text-lg">City</Label>
+          <div className="flex w-full max-w-xs flex-col gap-2">
+            <Label>Concelho</Label>
             <Select
               value={selectedMunicipio}
               onValueChange={setSelectedMunicipio}
+              placeholder="Selecione o concelho"
               disabled={!selectedDistrito}
-              onOpenChange={setMenuOpen}
             >
-              <SelectTrigger className="smart-select-trigger w-[280px]">
-                <SelectValue placeholder="Select city" />
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione o concelho" />
               </SelectTrigger>
-              <SelectContent
-                side="bottom"
-                align="center"
-                className="smart-select-content"
-                // 🔑 idem
-                onCloseAutoFocus={(e) => e.preventDefault()}
-              >
+              <SelectContent>
                 <SelectGroup>
-                  {municipios.map((m) => (
-                    <SelectItem key={m} value={m}>
-                      {m}
+                  {municipios.map((municipio) => (
+                    <SelectItem key={municipio} value={municipio}>
+                      {municipio}
                     </SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
-        </>
+        </div>
       )}
 
-      {/* CTA */}
-      <div className="fixed right-0 bottom-12 left-0 px-6">
-        <div className="mx-auto max-w-md">
-          <Button
-            className="btn-primary h-12 min-h-12 w-full text-base leading-none"
-            onClick={handleFinish}
-            disabled={!selectedMunicipio}
-          >
-            Finish
-          </Button>
-        </div>
+      <div className="flex w-full max-w-md gap-3">
+        <Button variant="secondary" size="lg" className="w-full" onClick={onBack}>
+          Voltar
+        </Button>
+        <Button
+          size="lg"
+          className="w-full"
+          onClick={handleNext}
+          disabled={!selectedDistrito || !selectedMunicipio}
+        >
+          Continuar
+        </Button>
       </div>
-    </div>
+    </section>
   );
 }

@@ -1,29 +1,38 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function SplashPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => router.push('/dashboard'), 1200);
+    const timer = setTimeout(() => router.push('/dashboard'), 1500);
     return () => clearTimeout(timer);
   }, [router]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-green-100">
-      <motion.h1
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1.2, opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1, ease: 'easeOut' }}
-        className="text-4xl font-extrabold text-green-700"
+    <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[var(--color-background)] px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="space-y-4 text-center"
       >
-        <Image className="mb-6" src="/logo.svg" width={200} height={200} alt="Smart Garden logo" />
-      </motion.h1>
-    </div>
+        <p className="eyebrow text-[var(--color-primary-strong)]">A preparar a sua horta</p>
+        <h1 className="text-display text-4xl sm:text-5xl">Smart Garden</h1>
+        <p className="text-sm text-[var(--color-text-muted)] sm:text-base">
+          Estamos a carregar as previsões, sugestões e plantas favoritas. Um instante apenas.
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: '100%' }}
+        transition={{ duration: 1.2, ease: 'easeInOut' }}
+        className="h-1 w-40 rounded-full bg-[var(--color-primary)]"
+      />
+    </main>
   );
 }

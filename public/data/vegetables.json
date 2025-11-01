@@ -1,0 +1,142 @@
+[
+  {
+    "id": "banana",
+    "name": "Bananeira",
+    "wateringFrequencyDays": 4,
+    "plantingWindow": {
+      "startMonth": "Março",
+      "endMonth": "Junho"
+    },
+    "harvestWindow": {
+      "startMonth": "Outubro",
+      "endMonth": "Março"
+    },
+    "notes": "Planta tropical que requer muito sol e humidade constante."
+  },
+  {
+    "id": "laranja",
+    "name": "Laranjeira",
+    "wateringFrequencyDays": 5,
+    "plantingWindow": {
+      "startMonth": "Janeiro",
+      "endMonth": "Abril"
+    },
+    "harvestWindow": {
+      "startMonth": "Novembro",
+      "endMonth": "Março"
+    },
+    "notes": "Prefere climas amenos e rega regular durante o verão."
+  },
+  {
+    "id": "manga",
+    "name": "Mangueira",
+    "wateringFrequencyDays": 5,
+    "plantingWindow": {
+      "startMonth": "Novembro",
+      "endMonth": "Fevereiro"
+    },
+    "harvestWindow": {
+      "startMonth": "Janeiro",
+      "endMonth": "Abril"
+    },
+    "notes": "Requer calor constante e espaço para crescer."
+  },
+  {
+    "id": "abacate",
+    "name": "Abacateiro",
+    "wateringFrequencyDays": 5,
+    "plantingWindow": {
+      "startMonth": "Janeiro",
+      "endMonth": "Março"
+    },
+    "harvestWindow": {
+      "startMonth": "Setembro",
+      "endMonth": "Fevereiro"
+    },
+    "notes": "Planta de grande porte, necessita sol pleno e solo profundo."
+  },
+  {
+    "id": "ananas",
+    "name": "Ananás",
+    "wateringFrequencyDays": 4,
+    "plantingWindow": {
+      "startMonth": "Outubro",
+      "endMonth": "Dezembro"
+    },
+    "harvestWindow": {
+      "startMonth": "Setembro",
+      "endMonth": "Novembro"
+    },
+    "notes": "Planta tropical, exige boa drenagem e temperaturas acima de 20°C."
+  },
+  {
+    "id": "romã",
+    "name": "Romãzeira",
+    "wateringFrequencyDays": 5,
+    "plantingWindow": {
+      "startMonth": "Fevereiro",
+      "endMonth": "Abril"
+    },
+    "harvestWindow": {
+      "startMonth": "Agosto",
+      "endMonth": "Outubro"
+    },
+    "notes": "Adapta-se bem a climas secos e solos pobres."
+  },
+  {
+    "id": "uva",
+    "name": "Videira",
+    "wateringFrequencyDays": 5,
+    "plantingWindow": {
+      "startMonth": "Janeiro",
+      "endMonth": "Março"
+    },
+    "harvestWindow": {
+      "startMonth": "Agosto",
+      "endMonth": "Outubro"
+    },
+    "notes": "Requer poda anual e boa exposição solar."
+  },
+  {
+    "id": "limao",
+    "name": "Limoeiro",
+    "wateringFrequencyDays": 4,
+    "plantingWindow": {
+      "startMonth": "Janeiro",
+      "endMonth": "Abril"
+    },
+    "harvestWindow": {
+      "startMonth": "Novembro",
+      "endMonth": "Março"
+    },
+    "notes": "Prefere solo fértil e bem drenado; sensível ao frio."
+  },
+  {
+    "id": "tangerina",
+    "name": "Tangerineira",
+    "wateringFrequencyDays": 4,
+    "plantingWindow": {
+      "startMonth": "Janeiro",
+      "endMonth": "Abril"
+    },
+    "harvestWindow": {
+      "startMonth": "Novembro",
+      "endMonth": "Fevereiro"
+    },
+    "notes": "Requer sol pleno e adubação regular."
+  },
+  {
+    "id": "melancia-grande",
+    "name": "Melancia grande",
+    "wateringFrequencyDays": 3,
+    "plantingWindow": {
+      "startMonth": "Abril",
+      "endMonth": "Maio"
+    },
+    "harvestWindow": {
+      "startMonth": "Julho",
+      "endMonth": "Setembro"
+    },
+    "notes": "Necessita de espaço e rega profunda em climas quentes."
+  }
+]

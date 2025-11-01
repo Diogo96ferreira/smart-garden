@@ -4,8 +4,8 @@ import { FlatCompat } from "@eslint/eslintrc";
 
 const compat = new FlatCompat({ baseDirectory: import.meta.dirname });
 
-export default [
-  { ignores: ["**/.next/**", "**/node_modules/**", "dist/**"] },
+const config = [
+  { ignores: ["**/.next/**", "**/node_modules/**", "dist/**", "coverage/**", "next-env.d.ts"] },
   js.configs.recommended,
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
@@ -14,3 +14,5 @@ export default [
     },
   },
 ];
+
+export default config;

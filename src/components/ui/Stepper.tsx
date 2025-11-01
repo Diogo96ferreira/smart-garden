@@ -1,31 +1,31 @@
 'use client';
+
 import { motion } from 'framer-motion';
 
 type StepperProps = {
-  /** O step atual (começa em 1) */
   currentStep: number;
-  /** Quantos steps existem no total */
   totalSteps: number;
 };
 
 export function Stepper({ currentStep, totalSteps }: StepperProps) {
   return (
-    <div className="mt-2 flex items-center justify-center gap-3">
+    <div className="mx-auto flex w-full max-w-sm items-center gap-2 px-6 py-4">
       {Array.from({ length: totalSteps }).map((_, index) => {
         const step = index + 1;
-        const isActive = step === currentStep;
+        const isActive = step <= currentStep;
 
         return (
-          <motion.div
+          <motion.span
             key={step}
+            layout
+            initial={false}
             animate={{
-              scale: isActive ? 1.3 : 1,
-              opacity: isActive ? 1 : 0.4,
+              backgroundColor: isActive ? 'var(--color-primary)' : 'var(--color-surface-strong)',
+              flex: isActive ? 1.2 : 1,
+              opacity: isActive ? 1 : 0.6,
             }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className={`h-2 w-2 rounded-full transition-all duration-300 ${
-              isActive ? 'scale-105 bg-green-500 shadow-md shadow-green-300' : 'bg-gray-300'
-            }`}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            className="h-1.5 rounded-full"
           />
         );
       })}
