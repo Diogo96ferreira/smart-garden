@@ -1,0 +1,4273 @@
+{
+  "zonas": {
+    "ZONA 1": {
+      "distritos": [
+        "Viana do Castelo (faixa costeira)",
+        "Braga (faixa costeira)",
+        "Porto (faixa costeira)",
+        "Aveiro (faixa costeira)",
+        "Coimbra (faixa costeira)",
+        "Leiria (faixa costeira)",
+        "Lisboa",
+        "Santarém",
+        "Setúbal",
+        "Beja",
+        "Faro"
+      ],
+      "notas": "Alta produtividade; atenção a fungos no litoral norte e escassez de água no sul."
+    },
+    "ZONA 2": {
+      "distritos": [
+        "Viana do Castelo (interior)",
+        "Braga (interior)",
+        "Porto (interior)",
+        "Aveiro (interior)",
+        "Coimbra (interior)",
+        "Leiria (interior)",
+        "Viseu",
+        "Santarém",
+        "Castelo Branco",
+        "Portalegre",
+        "Évora",
+        "Beja"
+      ],
+      "notas": "Usar estufas/túneis para antecipar; rega eficiente no verão; boas para olival, amendoeira e videira."
+    },
+    "ZONA 3": {
+      "distritos": ["Vila Real", "Viseu", "Coimbra", "Castelo Branco"],
+      "notas": "Boa para culturas de folha e regadio; atenção a pragas por humidade; rotação de culturas recomendada."
+    },
+    "ZONA 4": {
+      "distritos": ["Guarda", "Bragança"],
+      "notas": "Atrasar transplantes sensíveis ao frio para maio; associar culturas (milho+feijão+abóbora)."
+    },
+    "ZONA 5": {
+      "distritos": ["Madeira", "Açores"],
+      "notas": "Favorece culturas tropicais/subtropicais; gerir drenagem por pluviosidade elevada em épocas chuvosas."
+    }
+  },
+  "calendario": {
+    "ZONA 1": {
+      "Alface repolho": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Setembro", "Outubro", "Novembro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Alface romana": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": ["Março", "Abril", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Novembro"]
+      },
+      "Alface folha de carvalho": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": ["Março", "Abril", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Novembro"]
+      },
+      "Alface iceberg": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro"],
+        "Transplante": ["Março", "Abril", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Novembro"]
+      },
+      "Tomate chucha": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Tomate coração-de-boi": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Tomate cereja": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Tomate italiano (roma)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Batata": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho"]
+      },
+      "Batata-doce": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Cenoura": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Agosto", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro"]
+      },
+      "Pastinaca (parsnip)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Salsifi": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Beterraba": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Outubro", "Novembro"]
+      },
+      "Rabanete": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Rabanete japonês": {
+        "Semeadura": ["Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Nabo": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Novembro", "Dezembro"]
+      },
+      "Cebola branca": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Cebola roxa": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Chalota": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Alho": {
+        "Semeadura": ["Outubro", "Novembro", "Dezembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Alho-francês": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Cebolinho": {
+        "Semeadura": ["Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Curgete": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Abóbora menina": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Abóbora manteiga (butternut)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Abóbora hokkaido": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Abóbora esparguete": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pepino": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Beringela": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Pimento": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Pimento padrón": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Piri-piri (malagueta)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomatillo": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Quiabo": {
+        "Semeadura": ["Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Feijão verde (vagem)": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Feijão trepador": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Ervilha": {
+        "Semeadura": ["Outubro", "Novembro", "Dezembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Fevereiro", "Março", "Abril"]
+      },
+      "Ervilha torta (mangetout)": {
+        "Semeadura": ["Outubro", "Novembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Fevereiro", "Março", "Abril"]
+      },
+      "Fava": {
+        "Semeadura": ["Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Fevereiro", "Março", "Abril"]
+      },
+      "Grão-de-bico": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Lentilha": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Soja (edamame)": {
+        "Semeadura": ["Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Brócolos": {
+        "Semeadura": ["Maio", "Junho", "Julho"],
+        "Transplante": ["Julho", "Agosto"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve-flor": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Julho", "Agosto"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve galega (tronchuda)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Março", "Abril", "Setembro", "Outubro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve roxa": {
+        "Semeadura": ["Fevereiro", "Março", "Julho"],
+        "Transplante": ["Abril", "Agosto"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve lombarda": {
+        "Semeadura": ["Fevereiro", "Março", "Julho"],
+        "Transplante": ["Abril", "Agosto"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve de Bruxelas": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Pak choi": {
+        "Semeadura": ["Março", "Abril", "Setembro", "Outubro"],
+        "Transplante": ["Abril", "Outubro"],
+        "Colheita": ["Maio", "Junho", "Novembro"]
+      },
+      "Couve chinesa (pe-tsai)": {
+        "Semeadura": ["Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Abril", "Setembro"],
+        "Colheita": ["Junho", "Julho", "Novembro"]
+      },
+      "Radicchio": {
+        "Semeadura": ["Fevereiro", "Março", "Agosto"],
+        "Transplante": ["Março", "Setembro"],
+        "Colheita": ["Maio", "Junho", "Novembro"]
+      },
+      "Endívia/Escarola": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro"],
+        "Transplante": ["Março", "Outubro"],
+        "Colheita": ["Maio", "Novembro", "Dezembro"]
+      },
+      "Chicória": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro"],
+        "Transplante": ["Março", "Outubro"],
+        "Colheita": ["Maio", "Novembro"]
+      },
+      "Rúcula": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio", "Outubro", "Novembro"]
+      },
+      "Acelga": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Março", "Abril", "Setembro"],
+        "Colheita": ["Maio", "Junho", "Outubro", "Novembro"]
+      },
+      "Agrião": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Novembro", "Dezembro"]
+      },
+      "Canónigos": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Novembro", "Dezembro"]
+      },
+      "Beldroega": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Azedinha (sorrel)": {
+        "Semeadura": ["Março", "Abril", "Setembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Outubro", "Novembro"]
+      },
+      "Funcho (bolbo)": {
+        "Semeadura": ["Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Abril", "Setembro"],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Aipo (aipo-cheiro)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Aipo-rábano (céleri-rave)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Topinambo (jerusalem artichoke)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Espargo (garras)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março"],
+        "Colheita": ["Março", "Abril"]
+      },
+      "Alcachofra": {
+        "Semeadura": ["Março"],
+        "Transplante": ["Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Cardo": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Dezembro", "Janeiro"]
+      },
+      "Ruibarbo": {
+        "Semeadura": ["Março"],
+        "Transplante": ["Outubro"],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Chuchu (sechium)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Fisális (physalis/cape gooseberry)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Milho doce": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Sorgo doce (caseiro)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Salsa (perene)": {
+        "Semeadura": ["Março", "Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Coentros": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Outubro", "Novembro"]
+      },
+      "Hortelã (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Manjericão": {
+        "Semeadura": ["Março", "Abril", "Maio"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Orégãos (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Tomilho (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Alecrim (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Loureiro (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Novembro"],
+        "Colheita": ["Ano inteiro com podas leves"]
+      },
+      "Sálvia (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Cebolinho-alho (alho-nirá)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Morango": {
+        "Semeadura": [],
+        "Transplante": ["Setembro", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Junho"]
+      },
+      "Framboesa": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Maio", "Junho", "Julho", "Setembro", "Outubro"]
+      },
+      "Amora (silvestre/cultivar)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Mirtilo": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Junho", "Julho", "Agosto"]
+      },
+      "Groselha": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Maio", "Junho", "Julho"]
+      },
+      "Kiwi (gold/verde)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Videira (uva de mesa)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Maracujá (sul/ilhas)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Bananeira (ilhas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Maio"],
+        "Colheita": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaieira (ilhas)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Abacateiro (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Outubro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março"]
+      },
+      "Manga (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Maio"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Figueira": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Pereira (inclui nashi)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Macieira (Gala/Fuji)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Citrinos (laranjeira/tangerineira/limoeiro)": {
+        "Semeadura": [],
+        "Transplante": ["Outubro", "Novembro", "Fevereiro", "Março"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro", "Março"]
+      },
+      "Diospiro": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Romãzeira": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Marmeleiro": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Ameixeira": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Pessegueiro/Nectarina": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Junho", "Julho", "Agosto"]
+      },
+      "Cerejeira": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Nespereira": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Abril", "Maio"]
+      },
+      "Oliveira (azeitona)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Novembro"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Nogueira (noz)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Amendoeira": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Castanheiro": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Aveleira (avelã)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pistácio": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Medronheiro": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Dióspiro roxo (var.)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Maracujá-roxo (trepadeira)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Kiwi hardy (actinidia arguta)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Janeiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Trigo (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Cevada (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Aveia (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Centeio (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Milhete (milho-painço)": {
+        "Semeadura": ["Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Quinoa": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Trigo-sarraceno": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Arroz (canteiro inundado)": {
+        "Semeadura": ["Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Melão": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Melancia": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Pepino limão": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Kiwi pepino (pepino-doce)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Pimento (doce) italiano": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Pimento california wonder": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Shishito": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Anaheim": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Poblano": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Ancho (poblano seco)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Pasilla (chilaca seco)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Guajillo (mirasol seco)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "New Mexico (Hatch)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Jalapeño": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Chipotle (jalapeño fumado)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Serrano": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Cayenne (malagueta longa)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Malagueta portuguesa": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Peperoncini": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Espelette (Piment d'Espelette)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Aji Amarillo": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Aji Lemon Drop": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Aji Cristal": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Habanero laranja": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Habanero chocolate": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Scotch Bonnet": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Carolina Reaper": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pimenta biquinho": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Pimenta-de-cheiro": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Cumari (do Pará)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      }
+    },
+    "ZONA 2": {
+      "Alface repolho": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Setembro", "Outubro", "Novembro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Alface romana": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": ["Março", "Abril", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Novembro"]
+      },
+      "Alface folha de carvalho": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": ["Março", "Abril", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Novembro"]
+      },
+      "Alface iceberg": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro"],
+        "Transplante": ["Março", "Abril", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Novembro"]
+      },
+      "Tomate chucha": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate coração-de-boi": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate cereja": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate italiano (roma)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Batata": {
+        "Semeadura": ["Fevereiro", "Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto"]
+      },
+      "Batata-doce": {
+        "Semeadura": [],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Cenoura": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Agosto", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro"]
+      },
+      "Pastinaca (parsnip)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Salsifi": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Beterraba": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Outubro", "Novembro"]
+      },
+      "Rabanete": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Rabanete japonês": {
+        "Semeadura": ["Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Nabo": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Novembro", "Dezembro"]
+      },
+      "Cebola branca": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Cebola roxa": {
+        "Semeadura": ["Janeiro", "Fevereiro"],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Chalota": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Alho": {
+        "Semeadura": ["Outubro", "Novembro", "Dezembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Alho-francês": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Cebolinho": {
+        "Semeadura": ["Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Curgete": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Abóbora menina": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Abóbora manteiga (butternut)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Abóbora hokkaido": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Abóbora esparguete": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pepino": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Beringela": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento padrón": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Piri-piri (malagueta)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Tomatillo": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Quiabo": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Feijão verde (vagem)": {
+        "Semeadura": ["Maio", "Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Feijão trepador": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Ervilha": {
+        "Semeadura": ["Outubro", "Novembro", "Dezembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Fevereiro", "Março", "Abril"]
+      },
+      "Ervilha torta (mangetout)": {
+        "Semeadura": ["Outubro", "Novembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Fevereiro", "Março", "Abril"]
+      },
+      "Fava": {
+        "Semeadura": ["Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Fevereiro", "Março", "Abril"]
+      },
+      "Grão-de-bico": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Lentilha": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Soja (edamame)": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Brócolos": {
+        "Semeadura": ["Maio", "Junho", "Julho"],
+        "Transplante": ["Julho", "Agosto"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve-flor": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Julho", "Agosto"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve galega (tronchuda)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Março", "Abril", "Setembro", "Outubro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve roxa": {
+        "Semeadura": ["Fevereiro", "Março", "Julho"],
+        "Transplante": ["Abril", "Agosto"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve lombarda": {
+        "Semeadura": ["Fevereiro", "Março", "Julho"],
+        "Transplante": ["Abril", "Agosto"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve de Bruxelas": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Pak choi": {
+        "Semeadura": ["Abril", "Maio", "Outubro", "Novembro"],
+        "Transplante": ["Maio", "Novembro"],
+        "Colheita": ["Junho", "Julho", "Dezembro"]
+      },
+      "Couve chinesa (pe-tsai)": {
+        "Semeadura": ["Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Maio", "Outubro"],
+        "Colheita": ["Julho", "Agosto", "Dezembro"]
+      },
+      "Radicchio": {
+        "Semeadura": ["Fevereiro", "Março", "Agosto"],
+        "Transplante": ["Março", "Setembro"],
+        "Colheita": ["Maio", "Junho", "Novembro"]
+      },
+      "Endívia/Escarola": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro"],
+        "Transplante": ["Março", "Outubro"],
+        "Colheita": ["Maio", "Novembro", "Dezembro"]
+      },
+      "Chicória": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro"],
+        "Transplante": ["Março", "Outubro"],
+        "Colheita": ["Maio", "Novembro"]
+      },
+      "Rúcula": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio", "Outubro", "Novembro"]
+      },
+      "Acelga": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Março", "Abril", "Setembro"],
+        "Colheita": ["Maio", "Junho", "Outubro", "Novembro"]
+      },
+      "Agrião": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Novembro", "Dezembro"]
+      },
+      "Canónigos": {
+        "Semeadura": ["Fevereiro", "Março", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Novembro", "Dezembro"]
+      },
+      "Beldroega": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Azedinha (sorrel)": {
+        "Semeadura": ["Março", "Abril", "Setembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Outubro", "Novembro"]
+      },
+      "Funcho (bolbo)": {
+        "Semeadura": ["Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Abril", "Setembro"],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Aipo (aipo-cheiro)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Aipo-rábano (céleri-rave)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Topinambo (jerusalem artichoke)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Espargo (garras)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março"],
+        "Colheita": ["Março", "Abril"]
+      },
+      "Alcachofra": {
+        "Semeadura": ["Março"],
+        "Transplante": ["Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Cardo": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Dezembro", "Janeiro"]
+      },
+      "Ruibarbo": {
+        "Semeadura": ["Março"],
+        "Transplante": ["Outubro"],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Chuchu (sechium)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Fisális (physalis/cape gooseberry)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Milho doce": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Sorgo doce (caseiro)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Salsa (perene)": {
+        "Semeadura": ["Março", "Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Coentros": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Outubro", "Novembro"]
+      },
+      "Hortelã (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Manjericão": {
+        "Semeadura": ["Março", "Abril", "Maio"],
+        "Transplante": ["Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Orégãos (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Tomilho (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Alecrim (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Loureiro (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Novembro"],
+        "Colheita": ["Ano inteiro com podas leves"]
+      },
+      "Sálvia (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Cebolinho-alho (alho-nirá)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Morango": {
+        "Semeadura": [],
+        "Transplante": ["Outubro", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Julho"]
+      },
+      "Framboesa": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Outubro", "Novembro"]
+      },
+      "Amora (silvestre/cultivar)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Mirtilo": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Groselha": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho", "Agosto"]
+      },
+      "Kiwi (gold/verde)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Videira (uva de mesa)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Maracujá (sul/ilhas)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Bananeira (ilhas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaieira (ilhas)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Abacateiro (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril"]
+      },
+      "Manga (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Figueira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pereira (inclui nashi)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Macieira (Gala/Fuji)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Citrinos (laranjeira/tangerineira/limoeiro)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Março", "Abril"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março", "Abril"]
+      },
+      "Diospiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Romãzeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Marmeleiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Ameixeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Pessegueiro/Nectarina": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Cerejeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Nespereira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Oliveira (azeitona)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Dezembro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Nogueira (noz)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Amendoeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Castanheiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Aveleira (avelã)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pistácio": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Medronheiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Dióspiro roxo (var.)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Maracujá-roxo (trepadeira)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Kiwi hardy (actinidia arguta)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Trigo (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Cevada (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Aveia (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Centeio (horta)": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Milhete (milho-painço)": {
+        "Semeadura": ["Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Quinoa": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Trigo-sarraceno": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Arroz (canteiro inundado)": {
+        "Semeadura": ["Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Melão": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Melancia": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Pepino limão": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Kiwi pepino (pepino-doce)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pimento (doce) italiano": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento california wonder": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Shishito": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Anaheim": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Poblano": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Ancho (poblano seco)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Pasilla (chilaca seco)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Guajillo (mirasol seco)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "New Mexico (Hatch)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Jalapeño": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Chipotle (jalapeño fumado)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Serrano": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Cayenne (malagueta longa)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Malagueta portuguesa": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Peperoncini": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Espelette (Piment d'Espelette)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Aji Amarillo": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Aji Lemon Drop": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Aji Cristal": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Habanero laranja": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Habanero chocolate": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Scotch Bonnet": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Carolina Reaper": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pimenta biquinho": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Pimenta-de-cheiro": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Cumari (do Pará)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      }
+    },
+    "ZONA 3": {
+      "Alface repolho": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": ["Março", "Abril", "Maio", "Novembro", "Dezembro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Alface romana": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Dezembro"]
+      },
+      "Alface folha de carvalho": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Dezembro"]
+      },
+      "Alface iceberg": {
+        "Semeadura": ["Março", "Abril", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Dezembro"]
+      },
+      "Tomate chucha": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate coração-de-boi": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate cereja": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate italiano (roma)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Batata": {
+        "Semeadura": ["Fevereiro", "Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto"]
+      },
+      "Batata-doce": {
+        "Semeadura": [],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Cenoura": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho", "Dezembro", "Janeiro"]
+      },
+      "Pastinaca (parsnip)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Salsifi": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Beterraba": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Novembro", "Dezembro"]
+      },
+      "Rabanete": {
+        "Semeadura": ["Março", "Abril", "Maio", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Rabanete japonês": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Dezembro", "Janeiro"]
+      },
+      "Nabo": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Dezembro", "Janeiro"]
+      },
+      "Cebola branca": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Cebola roxa": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Chalota": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Alho": {
+        "Semeadura": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Alho-francês": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Cebolinho": {
+        "Semeadura": ["Março", "Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Curgete": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Abóbora menina": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Abóbora manteiga (butternut)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Abóbora hokkaido": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Abóbora esparguete": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pepino": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Beringela": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento padrón": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Piri-piri (malagueta)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Tomatillo": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Quiabo": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Feijão verde (vagem)": {
+        "Semeadura": ["Maio", "Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Feijão trepador": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Ervilha": {
+        "Semeadura": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Ervilha torta (mangetout)": {
+        "Semeadura": ["Novembro", "Dezembro", "Fevereiro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Fava": {
+        "Semeadura": ["Novembro", "Dezembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Grão-de-bico": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Lentilha": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Soja (edamame)": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Brócolos": {
+        "Semeadura": ["Junho", "Julho", "Agosto"],
+        "Transplante": ["Agosto", "Setembro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve-flor": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": ["Agosto", "Setembro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve galega (tronchuda)": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Outubro", "Novembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março"]
+      },
+      "Couve roxa": {
+        "Semeadura": ["Março", "Abril", "Agosto"],
+        "Transplante": ["Maio", "Setembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve lombarda": {
+        "Semeadura": ["Março", "Abril", "Agosto"],
+        "Transplante": ["Maio", "Setembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve de Bruxelas": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Julho", "Agosto"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Pak choi": {
+        "Semeadura": ["Abril", "Maio", "Outubro", "Novembro"],
+        "Transplante": ["Maio", "Novembro"],
+        "Colheita": ["Junho", "Julho", "Dezembro"]
+      },
+      "Couve chinesa (pe-tsai)": {
+        "Semeadura": ["Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Maio", "Outubro"],
+        "Colheita": ["Julho", "Agosto", "Dezembro"]
+      },
+      "Radicchio": {
+        "Semeadura": ["Março", "Abril", "Setembro"],
+        "Transplante": ["Abril", "Outubro"],
+        "Colheita": ["Junho", "Julho", "Dezembro"]
+      },
+      "Endívia/Escarola": {
+        "Semeadura": ["Março", "Abril", "Outubro"],
+        "Transplante": ["Abril", "Novembro"],
+        "Colheita": ["Junho", "Dezembro", "Janeiro"]
+      },
+      "Chicória": {
+        "Semeadura": ["Março", "Abril", "Outubro"],
+        "Transplante": ["Abril", "Novembro"],
+        "Colheita": ["Junho", "Dezembro"]
+      },
+      "Rúcula": {
+        "Semeadura": ["Março", "Abril", "Maio", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro"]
+      },
+      "Acelga": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Outubro"],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Agrião": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Dezembro", "Janeiro"]
+      },
+      "Canónigos": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Dezembro", "Janeiro"]
+      },
+      "Beldroega": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Azedinha (sorrel)": {
+        "Semeadura": ["Abril", "Maio", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Funcho (bolbo)": {
+        "Semeadura": ["Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Maio", "Outubro"],
+        "Colheita": ["Julho", "Agosto", "Dezembro", "Janeiro"]
+      },
+      "Aipo (aipo-cheiro)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Aipo-rábano (céleri-rave)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Topinambo (jerusalem artichoke)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Espargo (garras)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Abril", "Maio"]
+      },
+      "Alcachofra": {
+        "Semeadura": ["Abril"],
+        "Transplante": ["Novembro", "Dezembro"],
+        "Colheita": ["Abril", "Maio", "Junho"]
+      },
+      "Cardo": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Janeiro", "Fevereiro"]
+      },
+      "Ruibarbo": {
+        "Semeadura": ["Abril"],
+        "Transplante": ["Novembro"],
+        "Colheita": ["Abril", "Maio", "Junho"]
+      },
+      "Chuchu (sechium)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Fisális (physalis/cape gooseberry)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Milho doce": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Sorgo doce (caseiro)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Salsa (perene)": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Coentros": {
+        "Semeadura": ["Abril", "Maio", "Junho", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Hortelã (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Manjericão": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Orégãos (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomilho (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Alecrim (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Loureiro (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Dezembro"],
+        "Colheita": ["Ano inteiro com podas leves"]
+      },
+      "Sálvia (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Cebolinho-alho (alho-nirá)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Morango": {
+        "Semeadura": [],
+        "Transplante": ["Outubro", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Julho"]
+      },
+      "Framboesa": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Outubro", "Novembro"]
+      },
+      "Amora (silvestre/cultivar)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Mirtilo": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Groselha": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho", "Agosto"]
+      },
+      "Kiwi (gold/verde)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Videira (uva de mesa)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Maracujá (sul/ilhas)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Bananeira (ilhas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaieira (ilhas)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Abacateiro (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril"]
+      },
+      "Manga (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Figueira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pereira (inclui nashi)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Macieira (Gala/Fuji)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Citrinos (laranjeira/tangerineira/limoeiro)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Março", "Abril"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março", "Abril"]
+      },
+      "Diospiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Romãzeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Marmeleiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Ameixeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Pessegueiro/Nectarina": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Cerejeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Nespereira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Oliveira (azeitona)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Dezembro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Nogueira (noz)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Amendoeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Castanheiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Aveleira (avelã)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pistácio": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Medronheiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Dióspiro roxo (var.)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Maracujá-roxo (trepadeira)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Kiwi hardy (actinidia arguta)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Trigo (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Cevada (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Aveia (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Centeio (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Milhete (milho-painço)": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Quinoa": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Trigo-sarraceno": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Arroz (canteiro inundado)": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Melão": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Melancia": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Pepino limão": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Kiwi pepino (pepino-doce)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pimento (doce) italiano": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento california wonder": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Shishito": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Anaheim": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Poblano": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Ancho (poblano seco)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Pasilla (chilaca seco)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Guajillo (mirasol seco)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "New Mexico (Hatch)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Jalapeño": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Chipotle (jalapeño fumado)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Serrano": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Cayenne (malagueta longa)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Malagueta portuguesa": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Peperoncini": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Espelette (Piment d'Espelette)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Aji Amarillo": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Aji Lemon Drop": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Aji Cristal": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Habanero laranja": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Habanero chocolate": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Scotch Bonnet": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Carolina Reaper": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pimenta biquinho": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Pimenta-de-cheiro": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Cumari (do Pará)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      }
+    },
+    "ZONA 4": {
+      "Alface repolho": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": ["Março", "Abril", "Maio", "Novembro", "Dezembro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Alface romana": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Dezembro"]
+      },
+      "Alface folha de carvalho": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Dezembro"]
+      },
+      "Alface iceberg": {
+        "Semeadura": ["Março", "Abril", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Dezembro"]
+      },
+      "Tomate chucha": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Tomate coração-de-boi": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Tomate cereja": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Tomate italiano (roma)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Batata": {
+        "Semeadura": ["Março", "Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Batata-doce": {
+        "Semeadura": [],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Cenoura": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho", "Dezembro", "Janeiro"]
+      },
+      "Pastinaca (parsnip)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Salsifi": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Beterraba": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Novembro", "Dezembro"]
+      },
+      "Rabanete": {
+        "Semeadura": ["Março", "Abril", "Maio", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Rabanete japonês": {
+        "Semeadura": ["Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Dezembro", "Janeiro"]
+      },
+      "Nabo": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Dezembro", "Janeiro"]
+      },
+      "Cebola branca": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Cebola roxa": {
+        "Semeadura": ["Fevereiro", "Março"],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Agosto", "Setembro"]
+      },
+      "Chalota": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Alho": {
+        "Semeadura": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Alho-francês": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro", "Janeiro"]
+      },
+      "Cebolinho": {
+        "Semeadura": ["Março", "Abril", "Maio"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Curgete": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Abóbora menina": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Abóbora manteiga (butternut)": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Abóbora hokkaido": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Abóbora esparguete": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Pepino": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Beringela": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Pimento": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Pimento padrón": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Piri-piri (malagueta)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Tomatillo": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Quiabo": {
+        "Semeadura": ["Julho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Feijão verde (vagem)": {
+        "Semeadura": ["Junho", "Julho", "Agosto"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Feijão trepador": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Ervilha": {
+        "Semeadura": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Ervilha torta (mangetout)": {
+        "Semeadura": ["Novembro", "Dezembro", "Fevereiro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Fava": {
+        "Semeadura": ["Novembro", "Dezembro", "Janeiro"],
+        "Transplante": [],
+        "Colheita": ["Março", "Abril", "Maio"]
+      },
+      "Grão-de-bico": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Lentilha": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Soja (edamame)": {
+        "Semeadura": ["Julho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Brócolos": {
+        "Semeadura": ["Junho", "Julho", "Agosto"],
+        "Transplante": ["Agosto", "Setembro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve-flor": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": ["Agosto", "Setembro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve galega (tronchuda)": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Outubro", "Novembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março"]
+      },
+      "Couve roxa": {
+        "Semeadura": ["Março", "Abril", "Agosto"],
+        "Transplante": ["Maio", "Setembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve lombarda": {
+        "Semeadura": ["Março", "Abril", "Agosto"],
+        "Transplante": ["Maio", "Setembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve de Bruxelas": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Julho", "Agosto"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Pak choi": {
+        "Semeadura": ["Maio", "Junho", "Novembro", "Dezembro"],
+        "Transplante": ["Junho", "Dezembro"],
+        "Colheita": ["Julho", "Agosto", "Janeiro"]
+      },
+      "Couve chinesa (pe-tsai)": {
+        "Semeadura": ["Maio", "Junho", "Outubro", "Novembro"],
+        "Transplante": ["Junho", "Novembro"],
+        "Colheita": ["Agosto", "Setembro", "Janeiro"]
+      },
+      "Radicchio": {
+        "Semeadura": ["Março", "Abril", "Setembro"],
+        "Transplante": ["Abril", "Outubro"],
+        "Colheita": ["Junho", "Julho", "Dezembro"]
+      },
+      "Endívia/Escarola": {
+        "Semeadura": ["Março", "Abril", "Outubro"],
+        "Transplante": ["Abril", "Novembro"],
+        "Colheita": ["Junho", "Dezembro", "Janeiro"]
+      },
+      "Chicória": {
+        "Semeadura": ["Março", "Abril", "Outubro"],
+        "Transplante": ["Abril", "Novembro"],
+        "Colheita": ["Junho", "Dezembro"]
+      },
+      "Rúcula": {
+        "Semeadura": ["Março", "Abril", "Maio", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Novembro", "Dezembro"]
+      },
+      "Acelga": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Outubro"],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Agrião": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Dezembro", "Janeiro"]
+      },
+      "Canónigos": {
+        "Semeadura": ["Março", "Abril", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Dezembro", "Janeiro"]
+      },
+      "Beldroega": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Azedinha (sorrel)": {
+        "Semeadura": ["Abril", "Maio", "Outubro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Funcho (bolbo)": {
+        "Semeadura": ["Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Maio", "Outubro"],
+        "Colheita": ["Julho", "Agosto", "Dezembro", "Janeiro"]
+      },
+      "Aipo (aipo-cheiro)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Maio", "Junho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Aipo-rábano (céleri-rave)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Topinambo (jerusalem artichoke)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Espargo (garras)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril"],
+        "Colheita": ["Abril", "Maio"]
+      },
+      "Alcachofra": {
+        "Semeadura": ["Abril"],
+        "Transplante": ["Novembro", "Dezembro"],
+        "Colheita": ["Abril", "Maio", "Junho"]
+      },
+      "Cardo": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Janeiro", "Fevereiro"]
+      },
+      "Ruibarbo": {
+        "Semeadura": ["Abril"],
+        "Transplante": ["Novembro"],
+        "Colheita": ["Abril", "Maio", "Junho"]
+      },
+      "Chuchu (sechium)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Fisális (physalis/cape gooseberry)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Milho doce": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Sorgo doce (caseiro)": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Salsa (perene)": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Coentros": {
+        "Semeadura": ["Abril", "Maio", "Junho", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Novembro", "Dezembro"]
+      },
+      "Hortelã (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Manjericão": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Orégãos (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomilho (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Alecrim (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Loureiro (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Dezembro"],
+        "Colheita": ["Ano inteiro com podas leves"]
+      },
+      "Sálvia (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Cebolinho-alho (alho-nirá)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Morango": {
+        "Semeadura": [],
+        "Transplante": ["Outubro", "Novembro"],
+        "Colheita": ["Maio", "Junho", "Julho"]
+      },
+      "Framboesa": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Outubro", "Novembro"]
+      },
+      "Amora (silvestre/cultivar)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Mirtilo": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Groselha": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho", "Agosto"]
+      },
+      "Kiwi (gold/verde)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Videira (uva de mesa)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Maracujá (sul/ilhas)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Bananeira (ilhas)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaieira (ilhas)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Abacateiro (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio", "Novembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril"]
+      },
+      "Manga (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Junho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Figueira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Pereira (inclui nashi)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Macieira (Gala/Fuji)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Citrinos (laranjeira/tangerineira/limoeiro)": {
+        "Semeadura": [],
+        "Transplante": ["Novembro", "Dezembro", "Março", "Abril"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março", "Abril"]
+      },
+      "Diospiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Romãzeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Marmeleiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Ameixeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Pessegueiro/Nectarina": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Julho", "Agosto", "Setembro"]
+      },
+      "Cerejeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro", "Março"],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Nespereira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Maio", "Junho"]
+      },
+      "Oliveira (azeitona)": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Dezembro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Nogueira (noz)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Amendoeira": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Castanheiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Aveleira (avelã)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pistácio": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Medronheiro": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Dióspiro roxo (var.)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Maracujá-roxo (trepadeira)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Kiwi hardy (actinidia arguta)": {
+        "Semeadura": [],
+        "Transplante": ["Dezembro", "Janeiro", "Fevereiro"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Trigo (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Cevada (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Aveia (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho"]
+      },
+      "Centeio (horta)": {
+        "Semeadura": ["Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto"]
+      },
+      "Milhete (milho-painço)": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Quinoa": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Trigo-sarraceno": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro"]
+      },
+      "Arroz (canteiro inundado)": {
+        "Semeadura": ["Junho"],
+        "Transplante": [],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Melão": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Melancia": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Pepino limão": {
+        "Semeadura": ["Junho", "Julho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Kiwi pepino (pepino-doce)": {
+        "Semeadura": ["Maio", "Junho"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro"]
+      },
+      "Pimento (doce) italiano": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Pimento california wonder": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Shishito": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Junho", "Julho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Anaheim": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Poblano": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Ancho (poblano seco)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Pasilla (chilaca seco)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Guajillo (mirasol seco)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "New Mexico (Hatch)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Jalapeño": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Chipotle (jalapeño fumado)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Serrano": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Cayenne (malagueta longa)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Malagueta portuguesa": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Peperoncini": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Espelette (Piment d'Espelette)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Aji Amarillo": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Aji Lemon Drop": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Aji Cristal": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Habanero laranja": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Habanero chocolate": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Scotch Bonnet": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Carolina Reaper": {
+        "Semeadura": ["Março", "Abril"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Novembro", "Dezembro"]
+      },
+      "Pimenta biquinho": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Pimenta-de-cheiro": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Cumari (do Pará)": {
+        "Semeadura": ["Abril", "Maio"],
+        "Transplante": ["Julho"],
+        "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      }
+    },
+    "ZONA 5": {
+      "Alface repolho": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ],
+        "Transplante": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ],
+        "Colheita": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Alface romana": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio", "Junho", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Alface folha de carvalho": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio", "Junho", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Alface iceberg": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Agosto", "Setembro", "Outubro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio", "Junho", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Tomate chucha": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate coração-de-boi": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate cereja": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomate italiano (roma)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Batata": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto"]
+      },
+      "Batata-doce": {
+        "Semeadura": [],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Cenoura": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Janeiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Pastinaca (parsnip)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Salsifi": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Beterraba": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Rabanete": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Rabanete japonês": {
+        "Semeadura": ["Agosto", "Setembro", "Outubro", "Novembro"],
+        "Transplante": [],
+        "Colheita": ["Janeiro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Nabo": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Janeiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Cebola branca": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Cebola roxa": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Chalota": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto"]
+      },
+      "Alho": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho"]
+      },
+      "Alho-francês": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Janeiro", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Cebolinho": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Curgete": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Abóbora menina": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Abóbora manteiga (butternut)": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Abóbora hokkaido": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Abóbora esparguete": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pepino": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Beringela": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento padrón": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Piri-piri (malagueta)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Tomatillo": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Quiabo": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Feijão verde (vagem)": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho", "Julho"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Feijão trepador": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Ervilha": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"]
+      },
+      "Ervilha torta (mangetout)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"]
+      },
+      "Fava": {
+        "Semeadura": ["Janeiro", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"]
+      },
+      "Grão-de-bico": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Lentilha": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": [],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Soja (edamame)": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Brócolos": {
+        "Semeadura": ["Abril", "Maio", "Junho", "Julho", "Agosto"],
+        "Transplante": ["Junho", "Julho", "Agosto", "Setembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve-flor": {
+        "Semeadura": ["Abril", "Maio", "Junho", "Julho"],
+        "Transplante": ["Junho", "Julho", "Agosto", "Setembro"],
+        "Colheita": ["Janeiro", "Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve galega (tronchuda)": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro"
+        ],
+        "Transplante": [
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve roxa": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Junho", "Julho", "Agosto"],
+        "Transplante": ["Março", "Abril", "Maio", "Julho", "Agosto", "Setembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve lombarda": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Junho", "Julho", "Agosto"],
+        "Transplante": ["Março", "Abril", "Maio", "Julho", "Agosto", "Setembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve de Bruxelas": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": ["Maio", "Junho", "Julho", "Agosto"],
+        "Colheita": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Pak choi": {
+        "Semeadura": [
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": ["Março", "Abril", "Maio", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve chinesa (pe-tsai)": {
+        "Semeadura": [
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro"
+        ],
+        "Transplante": ["Março", "Abril", "Maio", "Agosto", "Setembro", "Outubro"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Radicchio": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Julho", "Agosto", "Setembro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro", "Outubro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Endívia/Escarola": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Agosto", "Setembro", "Outubro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Janeiro", "Abril", "Maio", "Junho", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Chicória": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Agosto", "Setembro", "Outubro"],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Rúcula": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Acelga": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro"
+        ],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio", "Agosto", "Setembro", "Outubro"],
+        "Colheita": [
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Agrião": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Janeiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Canónigos": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Janeiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Beldroega": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Azedinha (sorrel)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio", "Agosto", "Setembro", "Outubro"],
+        "Transplante": [],
+        "Colheita": [
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Funcho (bolbo)": {
+        "Semeadura": [
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro"
+        ],
+        "Transplante": ["Março", "Abril", "Maio", "Agosto", "Setembro", "Outubro"],
+        "Colheita": [
+          "Janeiro",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Aipo (aipo-cheiro)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Aipo-rábano (céleri-rave)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Topinambo (jerusalem artichoke)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Colheita": ["Janeiro", "Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Espargo (garras)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Colheita": ["Fevereiro", "Março", "Abril", "Maio"]
+      },
+      "Alcachofra": {
+        "Semeadura": ["Fevereiro", "Março", "Abril"],
+        "Transplante": ["Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Fevereiro", "Março", "Abril", "Maio", "Junho"]
+      },
+      "Cardo": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Janeiro", "Fevereiro", "Novembro", "Dezembro"]
+      },
+      "Ruibarbo": {
+        "Semeadura": ["Fevereiro", "Março", "Abril"],
+        "Transplante": ["Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Fevereiro", "Março", "Abril", "Maio", "Junho"]
+      },
+      "Chuchu (sechium)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Fisális (physalis/cape gooseberry)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Milho doce": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Sorgo doce (caseiro)": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Salsa (perene)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Coentros": {
+        "Semeadura": [
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Transplante": [],
+        "Colheita": [
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ]
+      },
+      "Hortelã (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Manjericão": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio", "Junho"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Orégãos (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Tomilho (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Alecrim (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Loureiro (mudas)": {
+        "Semeadura": [],
+        "Transplante": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ],
+        "Colheita": ["Ano inteiro com podas leves"]
+      },
+      "Sálvia (mudas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Cebolinho-alho (alho-nirá)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Morango": {
+        "Semeadura": [],
+        "Transplante": ["Agosto", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Março", "Abril", "Maio", "Junho", "Julho"]
+      },
+      "Framboesa": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Amora (silvestre/cultivar)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Mirtilo": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Groselha": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho", "Agosto"]
+      },
+      "Kiwi (gold/verde)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Videira (uva de mesa)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Maracujá (sul/ilhas)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Bananeira (ilhas)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaieira (ilhas)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Abacateiro (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Fevereiro", "Março", "Abril", "Maio", "Setembro", "Outubro", "Novembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril", "Novembro", "Dezembro"]
+      },
+      "Manga (sul)": {
+        "Semeadura": [],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Figueira": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Pereira (inclui nashi)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Macieira (Gala/Fuji)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Citrinos (laranjeira/tangerineira/limoeiro)": {
+        "Semeadura": [],
+        "Transplante": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Abril", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Diospiro": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Romãzeira": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Marmeleiro": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Ameixeira": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto"]
+      },
+      "Pessegueiro/Nectarina": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro"]
+      },
+      "Cerejeira": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho"]
+      },
+      "Nespereira": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Março", "Abril", "Maio", "Junho"]
+      },
+      "Oliveira (azeitona)": {
+        "Semeadura": [],
+        "Transplante": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ],
+        "Colheita": ["Janeiro", "Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Nogueira (noz)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Amendoeira": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Castanheiro": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Aveleira (avelã)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Novembro", "Dezembro"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pistácio": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Novembro", "Dezembro"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Medronheiro": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Janeiro", "Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Dióspiro roxo (var.)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Setembro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Maracujá-roxo (trepadeira)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Kiwi hardy (actinidia arguta)": {
+        "Semeadura": [],
+        "Transplante": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Trigo (horta)": {
+        "Semeadura": ["Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho"]
+      },
+      "Cevada (horta)": {
+        "Semeadura": ["Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho"]
+      },
+      "Aveia (horta)": {
+        "Semeadura": ["Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Abril", "Maio", "Junho", "Julho"]
+      },
+      "Centeio (horta)": {
+        "Semeadura": ["Setembro", "Outubro", "Novembro", "Dezembro"],
+        "Transplante": [],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto"]
+      },
+      "Milhete (milho-painço)": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Quinoa": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Trigo-sarraceno": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Arroz (canteiro inundado)": {
+        "Semeadura": ["Abril", "Maio", "Junho"],
+        "Transplante": [],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Melão": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Melancia": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Pepino limão": {
+        "Semeadura": ["Março", "Abril", "Maio", "Junho"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Kiwi pepino (pepino-doce)": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Maio"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Pimento (doce) italiano": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimento california wonder": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Shishito": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Março", "Abril", "Maio", "Junho"],
+        "Colheita": ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Anaheim": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Poblano": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Ancho (poblano seco)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pasilla (chilaca seco)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Guajillo (mirasol seco)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "New Mexico (Hatch)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Jalapeño": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Chipotle (jalapeño fumado)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Serrano": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Cayenne (malagueta longa)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Malagueta portuguesa": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Peperoncini": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Espelette (Piment d'Espelette)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Junho", "Julho", "Agosto", "Setembro", "Outubro"]
+      },
+      "Aji Amarillo": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Aji Lemon Drop": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Aji Cristal": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Habanero laranja": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Habanero chocolate": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Scotch Bonnet": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Carolina Reaper": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Dezembro"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimenta biquinho": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Pimenta-de-cheiro": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Cumari (do Pará)": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Transplante": ["Abril", "Maio", "Junho"],
+        "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      }
+    }
+  }
+}

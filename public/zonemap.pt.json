@@ -1,0 +1,140 @@
+{
+  "Viana do Castelo": {
+    "ZONA 1": ["Caminha", "Viana do Castelo"],
+    "ZONA 2": [
+      "Vila Nova de Cerveira",
+      "Valença",
+      "Monção",
+      "Melgaço",
+      "Paredes de Coura",
+      "Ponte de Lima",
+      "Ponte da Barca",
+      "Arcos de Valdevez"
+    ]
+  },
+  "Braga": {
+    "ZONA 1": ["Esposende", "Barcelos"],
+    "ZONA 2": [
+      "Braga",
+      "Guimarães",
+      "Fafe",
+      "Amares",
+      "Vila Verde",
+      "Terras de Bouro",
+      "Vieira do Minho",
+      "Póvoa de Lanhoso",
+      "Celorico de Basto"
+    ]
+  },
+  "Porto": {
+    "ZONA 1": [
+      "Matosinhos",
+      "Porto",
+      "Vila Nova de Gaia",
+      "Vila do Conde",
+      "Póvoa de Varzim",
+      "Espinho",
+      "Maia"
+    ],
+    "ZONA 2": [
+      "Gondomar",
+      "Valongo",
+      "Trofa",
+      "Santo Tirso",
+      "Paredes",
+      "Penafiel",
+      "Lousada",
+      "Paços de Ferreira",
+      "Felgueiras",
+      "Amarante",
+      "Baião"
+    ]
+  },
+  "Aveiro": {
+    "ZONA 1": ["Ovar", "Murtosa", "Ílhavo", "Aveiro", "Vagos", "Estarreja"],
+    "ZONA 2": [
+      "Águeda",
+      "Anadia",
+      "Oliveira do Bairro",
+      "Sever do Vouga",
+      "Vale de Cambra",
+      "Albergaria-a-Velha",
+      "Arouca",
+      "Santa Maria da Feira",
+      "Castelo de Paiva"
+    ]
+  },
+  "Coimbra": {
+    "ZONA 1": ["Figueira da Foz", "Mira", "Cantanhede", "Montemor-o-Velho"],
+    "ZONA 2": [
+      "Coimbra",
+      "Condeixa-a-Nova",
+      "Soure",
+      "Mealhada",
+      "Penacova",
+      "Miranda do Corvo",
+      "Vila Nova de Poiares",
+      "Lousã",
+      "Penela"
+    ]
+  },
+  "Leiria": {
+    "ZONA 1": [
+      "Marinha Grande",
+      "Nazaré",
+      "Peniche",
+      "Óbidos",
+      "Caldas da Rainha",
+      "Bombarral",
+      "Lourinhã",
+      "Pombal",
+      "Leiria"
+    ],
+    "ZONA 2": [
+      "Porto de Mós",
+      "Batalha",
+      "Alcobaça",
+      "Ansião",
+      "Figueiró dos Vinhos",
+      "Pedrógão Grande",
+      "Castanheira de Pera"
+    ]
+  },
+  "Santarém": {
+    "ZONA 1": [
+      "Benavente",
+      "Salvaterra de Magos",
+      "Almeirim",
+      "Alpiarça",
+      "Chamusca",
+      "Golegã",
+      "Coruche",
+      "Rio Maior"
+    ],
+    "ZONA 2": [
+      "Santarém",
+      "Tomar",
+      "Torres Novas",
+      "Ourém",
+      "Abrantes",
+      "Mação",
+      "Ferreira do Zêzere",
+      "Constância",
+      "Vila Nova da Barquinha",
+      "Sardoal",
+      "Alcanena"
+    ]
+  },
+  "Beja": {
+    "ZONA 1": [
+      "Odemira",
+      "Almodôvar",
+      "Ourique",
+      "Castro Verde",
+      "Aljustrel",
+      "Ferreira do Alentejo",
+      "Vidigueira"
+    ],
+    "ZONA 2": ["Beja", "Moura", "Serpa", "Mértola", "Barrancos", "Cuba"]
+  }
+}

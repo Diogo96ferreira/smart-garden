@@ -3,10 +3,10 @@
 import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Loader2, SendHorizonal } from 'lucide-react';
+import clsx from 'clsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar } from '@/components/ui/avatar';
 
 type AnalysisResult = {
@@ -128,8 +128,18 @@ export default function TiaAdeliaPage() {
     [input, result?.description],
   );
 
+  const showChat = messages.length > 0;
+  const hasAnalysis = Boolean(result);
+  const hasImageLoaded = Boolean(preview || imageFile);
+  const shouldLockScroll = !hasImageLoaded && !hasAnalysis && !showChat;
+
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-10 px-6 py-14">
+    <main
+      className={clsx(
+        'mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pt-4',
+        shouldLockScroll ? 'justify-start overflow-hidden' : 'pb-6',
+      )}
+    >
       <header className="space-y-3 text-left">
         <p className="eyebrow">Diagnóstico inteligente</p>
         <h1 className="text-display text-3xl sm:text-4xl">Fale com a Tia Adélia</h1>
@@ -141,9 +151,9 @@ export default function TiaAdeliaPage() {
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <Card>
-          <CardHeader className="space-y-2">
+          <CardHeader className="gap-4 space-y-2">
             <CardTitle>Diagnóstico por fotografia</CardTitle>
-            <CardDescription>
+            <CardDescription className="pb-2">
               Analisamos automaticamente a planta para sugerir cuidados e alertas relevantes.
             </CardDescription>
           </CardHeader>
@@ -226,43 +236,19 @@ export default function TiaAdeliaPage() {
                 {error}
               </p>
             )}
-
-            {result && (
-              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5 text-left">
-                <h3 className="text-base font-semibold text-[var(--color-text)]">
-                  Resultado preliminar
-                </h3>
-                <ul className="mt-3 space-y-2 text-sm text-[var(--color-text-muted)]">
-                  <li>
-                    <strong className="text-[var(--color-text)]">Tipo:</strong> {result.type}
-                  </li>
-                  <li>
-                    <strong className="text-[var(--color-text)]">Espécie:</strong> {result.species}
-                  </li>
-                  <li>
-                    <strong className="text-[var(--color-text)]">Estado:</strong> {result.ripeness}
-                  </li>
-                  <li>
-                    <strong className="text-[var(--color-text)]">Confiança:</strong>{' '}
-                    {(result.confidence * 100).toFixed(0)}%
-                  </li>
-                </ul>
-              </div>
-            )}
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader className="space-y-2">
-            <CardTitle>Conversar com a Tia Adélia</CardTitle>
-            <CardDescription>
-              Continue a conversa com base no diagnóstico: peça conselhos sobre tratamento, colheita
-              ou cuidados gerais.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex h-full flex-col gap-6">
-            <ScrollArea className="flex-1 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
-              <div className="space-y-4">
+        {messages.length > 0 && (
+          <Card>
+            <CardHeader className="space-y-2">
+              <CardTitle>Conversar com a Tia Adélia</CardTitle>
+              <CardDescription>
+                Continue a conversa com base no diagnóstico: peça conselhos sobre tratamento,
+                colheita ou cuidados gerais.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-6">
+              <div className="space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
                 {messages.map((message, index) => (
                   <div
                     key={`${message.role}-${index}`}
@@ -290,28 +276,28 @@ export default function TiaAdeliaPage() {
                   </div>
                 )}
               </div>
-            </ScrollArea>
 
-            <form onSubmit={handleSendMessage} className="flex flex-col gap-3 sm:flex-row">
-              <Input
-                placeholder="Pergunte algo à Tia Adélia..."
-                value={input}
-                onChange={(event) => setInput(event.target.value)}
-                disabled={chatLoading || !result}
-                className="sm:flex-1"
-              />
-              <Button
-                type="submit"
-                variant="primary"
-                icon={<SendHorizonal className="h-4 w-4" />}
-                disabled={chatLoading || !input.trim()}
-                className="w-full sm:w-auto"
-              >
-                Enviar
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+              <form onSubmit={handleSendMessage} className="flex flex-col gap-3 sm:flex-row">
+                <Input
+                  placeholder="Pergunte algo à Tia Adélia..."
+                  value={input}
+                  onChange={(event) => setInput(event.target.value)}
+                  disabled={chatLoading || !result}
+                  className="sm:flex-1"
+                />
+                <Button
+                  type="submit"
+                  variant="primary"
+                  icon={<SendHorizonal className="h-4 w-4" />}
+                  disabled={chatLoading || !input.trim()}
+                  className="w-full sm:w-auto"
+                >
+                  Enviar
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </main>
   );

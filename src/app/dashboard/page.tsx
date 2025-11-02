@@ -1,8 +1,10 @@
 'use client';
 
+import type { ComponentType } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import clsx from 'clsx';
 import { CheckCircle2, Clock3, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LeafLoader } from '@/components/ui/Spinner';
@@ -192,21 +194,15 @@ export default function DashboardPage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-1 items-center justify-end gap-2">
-                    <Button
-                      variant={isDone ? 'tonal' : 'primary'}
-                      size="sm"
-                      icon={<CheckCircle2 className="h-4 w-4" />}
+                  <div className="flex flex-1 items-center justify-end gap-3">
+                    <TaskActionButton
+                      label={isDone ? 'Desmarcar tarefa' : 'Marcar tarefa como concluída'}
+                      icon={CheckCircle2}
+                      active={isDone}
                       onClick={() => handleToggleTask(task.id)}
-                    >
-                      {isDone ? 'Concluída' : 'Marcar como feita'}
-                    </Button>
-                    <Button variant="secondary" size="sm" icon={<Clock3 className="h-4 w-4" />}>
-                      Adiar
-                    </Button>
-                    <Button variant="ghost" size="sm" icon={<HelpCircle className="h-4 w-4" />}>
-                      Como fazer
-                    </Button>
+                    />
+                    <TaskActionButton label="Adiar tarefa" icon={Clock3} />
+                    <TaskActionButton label="Como fazer" icon={HelpCircle} />
                   </div>
                 </div>
               </motion.div>
@@ -257,5 +253,40 @@ function SuggestionCard({
         {actionLabel}
       </Button>
     </div>
+  );
+}
+
+type IconComponent = ComponentType<{ className?: string }>;
+
+function TaskActionButton({
+  label,
+  icon: Icon,
+  active,
+  onClick,
+  disabled,
+}: {
+  label: string;
+  icon: IconComponent;
+  active?: boolean;
+  onClick?: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      disabled={disabled}
+      className={clsx(
+        'flex h-10 w-10 items-center justify-center rounded-full border text-[var(--color-text-muted)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
+        active
+          ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-[0_6px_14px_rgba(16,185,129,0.25)]'
+          : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary-strong)]',
+        disabled && 'cursor-not-allowed opacity-50',
+      )}
+    >
+      <Icon className="h-5 w-5" />
+      <span className="sr-only">{label}</span>
+    </button>
   );
 }
