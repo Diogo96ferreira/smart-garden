@@ -88,8 +88,8 @@ export default function SettingsPage() {
       </header>
 
       {/* Idioma */}
-      <section className="space-y-3 rounded-xl border bg-white p-4">
-        <h2 className="inline-flex items-center gap-2 font-medium">
+      <section className="space-y-3 rounded-xl bg-white p-4 shadow-sm">
+        <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
           <Globe className="h-4 w-4" /> Idioma
         </h2>
         <div className="grid grid-cols-2 gap-2">
@@ -100,7 +100,7 @@ export default function SettingsPage() {
             <button
               key={opt.v}
               onClick={() => setLocale(opt.v as Settings['locale'])}
-              className={`rounded-lg border px-3 py-2 text-sm ${settings.locale === opt.v ? 'border-gray-300 bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
+              className={`rounded-lg px-3 py-2 text-sm shadow-sm ${settings.locale === opt.v ? 'shadow-sm-gray-300 bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
             >
               {opt.label}
             </button>
@@ -109,8 +109,8 @@ export default function SettingsPage() {
       </section>
 
       {/* Tema */}
-      <section className="space-y-3 rounded-xl border bg-white p-4">
-        <h2 className="inline-flex items-center gap-2 font-medium">Tema</h2>
+      <section className="space-y-3 rounded-xl bg-white p-4 shadow-sm">
+        <h2 className="inline-flex items-center gap-2 pb-2 font-medium">Tema</h2>
         <div className="grid grid-cols-3 gap-2">
           {[
             { v: 'system', label: 'Sistema', icon: <Laptop className="h-4 w-4" /> },
@@ -120,7 +120,7 @@ export default function SettingsPage() {
             <button
               key={opt.v}
               onClick={() => setTheme(opt.v as Settings['theme'])}
-              className={`inline-flex items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm ${settings.theme === opt.v ? 'border-gray-300 bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
+              className={`inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm shadow-sm ${settings.theme === opt.v ? 'shadow-sm-gray-300 bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
             >
               {opt.icon} {opt.label}
             </button>
@@ -129,15 +129,15 @@ export default function SettingsPage() {
       </section>
 
       {/* Perfil de IA */}
-      <section className="space-y-3 rounded-xl border bg-white p-4">
-        <h2 className="inline-flex items-center gap-2 font-medium">
+      <section className="space-y-3 rounded-xl bg-white p-4 shadow-sm">
+        <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
           <Bot className="h-4 w-4" /> Perfil de IA
         </h2>
-        <div className="grid gap-2">
+        <div className="grid gap-4">
           {AI_PROFILES.map((p) => (
             <label
               key={p.id}
-              className="flex cursor-pointer items-start gap-3 rounded-lg border p-3 hover:bg-gray-50"
+              className="flex cursor-pointer items-start gap-3 rounded-sm p-3 shadow-sm hover:bg-gray-50"
             >
               <input
                 type="radio"
@@ -156,15 +156,15 @@ export default function SettingsPage() {
       </section>
 
       {/* Relatório de tarefas */}
-      <section className="space-y-3 rounded-xl border bg-white p-4">
-        <h2 className="inline-flex items-center gap-2 font-medium">
+      <section className="space-y-3 rounded-xl bg-white p-4 shadow-sm">
+        <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
           <FileText className="h-4 w-4" /> Relatório de tarefas
         </h2>
         <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
           <select
             value={settings.reportRange ?? DEFAULT_SETTINGS.reportRange}
             onChange={(e) => setRange(e.target.value as ReportRange)}
-            className="rounded-lg border px-3 py-2 text-sm"
+            className="rounded-lg px-3 py-2 text-sm shadow-sm"
           >
             {RANGES.map((r) => (
               <option key={r.id} value={r.id}>
@@ -174,15 +174,11 @@ export default function SettingsPage() {
           </select>
           <button
             onClick={onGenerateReport}
-            className="inline-flex items-center justify-center gap-2 rounded-lg border bg-white px-3 py-2 text-sm hover:bg-gray-50"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-3 py-2 text-sm shadow-sm hover:bg-gray-50"
           >
             <Download className="h-4 w-4" /> Gerar relatório
           </button>
         </div>
-        <p className="text-xs text-gray-500">
-          Dica: se já tiveres um endpoint, troca o gerador local por{' '}
-          <code>fetch(&quot;/api/report?range=...&quot;)</code>.
-        </p>
       </section>
     </main>
   );

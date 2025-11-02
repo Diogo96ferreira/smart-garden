@@ -96,6 +96,22 @@ export default function GanttChart({
   const todayLeft = todayLeftPx(nameColWidth, cellWidth);
   const minWidthPx = nameColWidth + MONTHS.length * cellWidth;
 
+  // 👉 manter a linha de hoje sempre visível ao entrar
+  const scrollRef = React.useRef<HTMLDivElement | null>(null);
+  React.useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // Tentar centrar a linha “hoje” no viewport
+    const target = Math.max(
+      0,
+      Math.min(todayLeft - el.clientWidth / 2, el.scrollWidth - el.clientWidth),
+    );
+
+    // Smooth scroll
+    el.scrollTo({ left: target, behavior: 'smooth' });
+  }, [todayLeft]);
+
   const HeaderGrid = ({ transparent = false }: { transparent?: boolean }) => (
     <div
       className={`grid ${transparent ? 'text-transparent select-none' : 'text-gray-700'} bg-white text-xs font-medium dark:!bg-white`}
@@ -123,7 +139,11 @@ export default function GanttChart({
       <div
         className={`relative w-full max-w-[93vw] rounded-xl border border-gray-200 bg-white text-gray-900 shadow-sm dark:!border-gray-200 dark:!bg-white dark:!text-gray-900 ${className}`}
       >
-        <div className="relative overflow-x-auto overflow-y-auto" style={{ maxHeight }}>
+        <div
+          ref={scrollRef}
+          className="relative overflow-x-auto overflow-y-auto"
+          style={{ maxHeight }}
+        >
           <div className="relative bg-white dark:!bg-white" style={containerStyle}>
             {/* header sticky */}
             <div
@@ -135,11 +155,11 @@ export default function GanttChart({
 
             {/* Linha Hoje */}
             <div
-              className="pointer-events-none absolute top-0 bottom-0 z-[20]"
+              className="pointer-events-none absolute top-0 bottom-0 z-[20] transition-[left] duration-700 ease-out"
               style={{ left: todayLeft }}
             >
               <div className="h-full w-0 border-l-2 border-[var(--color-primary)]"></div>
-              <div className="absolute -top-3 -left-1 h-5 w-5 rounded-full bg-rose-500"></div>
+              <div className="absolute -top-3 -left-1 h-5 w-5 animate-pulse rounded-full bg-rose-500"></div>
             </div>
 
             <Rows
