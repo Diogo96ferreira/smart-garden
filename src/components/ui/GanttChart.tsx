@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Sprout, Shovel, ShoppingBasket } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export type Month =
   | 'Janeiro'
@@ -15,41 +16,103 @@ export type Month =
   | 'Setembro'
   | 'Outubro'
   | 'Novembro'
-  | 'Dezembro';
-
-export const MONTHS: Month[] = [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril',
-  'Maio',
-  'Junho',
-  'Julho',
-  'Agosto',
-  'Setembro',
-  'Outubro',
-  'Novembro',
-  'Dezembro',
-];
+  | 'Dezembro'
+  | 'January'
+  | 'February'
+  | 'March'
+  | 'April'
+  | 'May'
+  | 'June'
+  | 'July'
+  | 'August'
+  | 'September'
+  | 'October'
+  | 'November'
+  | 'December';
 
 export type ActionKey = 'Semeadura' | 'Transplante' | 'Colheita';
 export type CropEntry = Partial<Record<ActionKey, string[]>>;
 export type ZoneData = Record<string, CropEntry>;
 type StickyMode = 'inside' | 'page';
 
-// 🔧 Tipo para permitir CSS custom properties sem usar `any`
 type CSSVars = React.CSSProperties & Record<`--${string}`, string | number>;
 
-const monthIdx = (m: Month) => MONTHS.indexOf(m);
-const onlyMonths = (arr?: string[]): Month[] =>
-  (arr ?? []).filter((m): m is Month => MONTHS.includes(m as Month));
-const maskFor = (months: Month[]) => {
+// Helper: dado um array de meses, devolve um array de 12 booleanos
+const maskFor = (months: Month[], locale: 'pt' | 'en') => {
+  const monthsList =
+    locale === 'en'
+      ? [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ]
+      : [
+          'Janeiro',
+          'Fevereiro',
+          'Março',
+          'Abril',
+          'Maio',
+          'Junho',
+          'Julho',
+          'Agosto',
+          'Setembro',
+          'Outubro',
+          'Novembro',
+          'Dezembro',
+        ];
+
   const m = Array(12).fill(false);
   months.forEach((mm) => {
-    m[monthIdx(mm)] = true;
+    const idx = monthsList.indexOf(mm);
+    if (idx !== -1) m[idx] = true;
   });
   return m;
 };
+
+const onlyMonths = (arr?: string[], locale: 'pt' | 'en'): Month[] => {
+  if (!arr) return [];
+  const validMonths =
+    locale === 'en'
+      ? [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ]
+      : [
+          'Janeiro',
+          'Fevereiro',
+          'Março',
+          'Abril',
+          'Maio',
+          'Junho',
+          'Julho',
+          'Agosto',
+          'Setembro',
+          'Outubro',
+          'Novembro',
+          'Dezembro',
+        ];
+  return arr.filter((m): m is Month => validMonths.includes(m as Month));
+};
+
 const todayLeftPx = (nameColWidth: number, cellWidth: number) => {
   const now = new Date();
   const m = now.getMonth();
@@ -84,44 +147,73 @@ export default function GanttChart({
   maxHeight = 70 * 16,
   className = '',
 }: Props) {
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1]?.startsWith('en') ? 'en' : 'pt';
+
+  const MONTHS =
+    locale === 'en'
+      ? [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ]
+      : [
+          'Janeiro',
+          'Fevereiro',
+          'Março',
+          'Abril',
+          'Maio',
+          'Junho',
+          'Julho',
+          'Agosto',
+          'Setembro',
+          'Outubro',
+          'Novembro',
+          'Dezembro',
+        ];
+
   const crops = React.useMemo(
     () =>
       Object.keys(data)
-        .sort((a, b) => a.localeCompare(b, 'pt'))
+        .sort((a, b) => a.localeCompare(b, locale))
         .filter((n) => !search || n.toLowerCase().includes(search.toLowerCase())),
-    [data, search],
+    [data, search, locale],
   );
 
   const HEADER_H = 34;
   const todayLeft = todayLeftPx(nameColWidth, cellWidth);
   const minWidthPx = nameColWidth + MONTHS.length * cellWidth;
 
-  // 👉 manter a linha de hoje sempre visível ao entrar
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   React.useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-
-    // Tentar centrar a linha “hoje” no viewport
     const target = Math.max(
       0,
       Math.min(todayLeft - el.clientWidth / 2, el.scrollWidth - el.clientWidth),
     );
-
-    // Smooth scroll
     el.scrollTo({ left: target, behavior: 'smooth' });
   }, [todayLeft]);
 
   const HeaderGrid = ({ transparent = false }: { transparent?: boolean }) => (
     <div
-      className={`grid ${transparent ? 'text-transparent select-none' : 'text-gray-700'} bg-white text-xs font-medium dark:!bg-white`}
+      className={`grid ${transparent ? 'text-transparent select-none' : 'text-[color:var(--color-text)]'} bg-[var(--color-surface)] text-xs font-medium`}
       style={{ gridTemplateColumns: `${nameColWidth}px repeat(12, ${cellWidth}px)` }}
     >
       <div
-        className={`sticky left-0 z-[90] bg-white px-3 py-2 shadow-[1px_0_0_0_rgba(0,0,0,0.08)] dark:!bg-white`}
+        className={`sticky left-0 z-[90] bg-[var(--color-surface)] px-3 py-2 shadow-[1px_0_0_0_rgba(0,0,0,0.08)]`}
         style={{ width: nameColWidth }}
       >
-        Cultura
+        {locale === 'en' ? 'Crop' : 'Cultura'}
       </div>
       {MONTHS.map((m) => (
         <div key={m} className="z-[60] px-2 py-2 text-center">
@@ -132,22 +224,20 @@ export default function GanttChart({
   );
 
   if (stickyMode === 'inside') {
-    // 🔧 Se quiseres mesmo usar CSS vars (ex.: noutros estilos), usa o tipo CSSVars:
     const containerStyle: CSSVars = { minWidth: `${minWidthPx}px` };
 
     return (
       <div
-        className={`relative w-full max-w-[93vw] rounded-xl border border-gray-200 bg-white text-gray-900 shadow-sm dark:!border-gray-200 dark:!bg-white dark:!text-gray-900 ${className}`}
+        className={`relative w-full max-w-[93vw] rounded-xl border border-[color:var(--color-border)] bg-[var(--color-surface)] text-[color:var(--color-text)] shadow-sm ${className}`}
       >
         <div
           ref={scrollRef}
           className="relative overflow-x-auto overflow-y-auto"
           style={{ maxHeight }}
         >
-          <div className="relative bg-white dark:!bg-white" style={containerStyle}>
-            {/* header sticky */}
+          <div className="relative bg-[var(--color-surface)]" style={containerStyle}>
             <div
-              className="sticky top-0 isolate z-[75] border-b border-gray-200 bg-white/90 backdrop-blur dark:!border-gray-200 dark:!bg-white/90"
+              className="sticky top-0 isolate z-[75] border-b border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 backdrop-blur"
               style={{ height: HEADER_H }}
             >
               <HeaderGrid />
@@ -171,6 +261,8 @@ export default function GanttChart({
               cellWidth={cellWidth}
               stickyFirstRow={stickyFirstRow}
               headerH={HEADER_H}
+              locale={locale}
+              MONTHS={MONTHS}
             />
           </div>
         </div>
@@ -178,7 +270,6 @@ export default function GanttChart({
     );
   }
 
-  // (modo "page" não usado aqui)
   return null;
 }
 
@@ -191,6 +282,8 @@ function Rows({
   cellWidth,
   stickyFirstRow,
   headerH,
+  locale,
+  MONTHS,
 }: {
   data: ZoneData;
   crops: string[];
@@ -200,19 +293,25 @@ function Rows({
   cellWidth: number;
   stickyFirstRow: boolean;
   headerH: number;
+  locale: 'pt' | 'en';
+  MONTHS: string[];
 }) {
   return (
-    <div className="z-[40] divide-y divide-gray-100 dark:!divide-gray-100">
+    <div className="z-[40] divide-y divide-[color:var(--color-border)]">
       {crops.map((crop, idx) => {
         const entry = data[crop] || {};
+        // Permitir que leia tanto PT quanto EN no JSON
         const masks = {
-          Semeadura: maskFor(onlyMonths(entry.Semeadura)),
-          Transplante: maskFor(onlyMonths(entry.Transplante)),
-          Colheita: maskFor(onlyMonths(entry.Colheita)),
+          Semeadura: maskFor(onlyMonths(entry.Semeadura ?? entry.Sowing, locale), locale),
+          Transplante: maskFor(
+            onlyMonths(entry.Transplante ?? entry.Transplant ?? entry.Transplanting, locale),
+            locale,
+          ),
+          Colheita: maskFor(onlyMonths(entry.Colheita ?? entry.Harvest, locale), locale),
         };
 
         const isStickyRow = stickyFirstRow && idx === 0;
-        const rowStickyClass = isStickyRow ? 'sticky bg-white dark:!bg-white' : '';
+        const rowStickyClass = isStickyRow ? 'sticky bg-[var(--color-surface)]' : '';
         const rowStickyStyle = isStickyRow ? ({ top: headerH } as React.CSSProperties) : undefined;
 
         return (
@@ -221,15 +320,16 @@ function Rows({
             className="grid items-center"
             style={{ gridTemplateColumns: `${nameColWidth}px repeat(12, ${cellWidth}px)` }}
           >
-            {/* 1ª coluna fixa */}
             <div
-              className={`sticky left-0 z-[40] flex items-center bg-white px-3 shadow-[1px_0_0_0_rgba(0,0,0,0.06)] dark:!bg-white ${rowStickyClass}`}
+              className={`sticky left-0 z-[40] flex items-center bg-[var(--color-surface)] px-3 shadow-[1px_0_0_0_rgba(0,0,0,0.06)] ${rowStickyClass}`}
               style={{ height: rowHeight, width: nameColWidth, ...rowStickyStyle }}
             >
-              <span className="text-xs font-medium whitespace-pre-wrap text-gray-900">{crop}</span>
+              <span className="text-xs font-medium whitespace-pre-wrap text-[color:var(--color-text)]">
+                {' '}
+                {locale === 'en' ? crop : crop}
+              </span>
             </div>
 
-            {/* células dos meses */}
             {MONTHS.map((m, colIdx) => {
               const hasS = actions.includes('Semeadura') && masks.Semeadura[colIdx];
               const hasT = actions.includes('Transplante') && masks.Transplante[colIdx];
@@ -237,7 +337,7 @@ function Rows({
               return (
                 <div
                   key={m}
-                  className={`relative border-l border-gray-200 dark:!border-gray-200 ${rowStickyClass}`}
+                  className={`relative border-l border-[color:var(--color-border)] ${rowStickyClass}`}
                   style={{ height: rowHeight, ...rowStickyStyle }}
                 >
                   {hasS && (

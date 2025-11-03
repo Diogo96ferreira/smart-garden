@@ -25,6 +25,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { supabase } from '@/lib/supabaseClient';
+import { useTranslation } from '@/lib/useTranslation';
+import { usePathname } from 'next/navigation';
 
 type Plant = {
   id: string;
@@ -51,6 +53,10 @@ const INITIAL_FORM: FormState = {
 };
 
 export default function GardenPage() {
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1] || 'pt';
+  const t = useTranslation(locale);
+
   const [plants, setPlants] = useState<Plant[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'horta' | 'pomar'>('horta');
@@ -109,12 +115,15 @@ export default function GardenPage() {
           result: {
             gardenType?: string;
             message?: string;
+            type?: string;
           };
         } = await response.json();
 
-        if (dataAI.result.gardenType === 'pomar') {
-          setForm((current) => ({ ...current, type: 'pomar' }));
-        }
+        setForm((current) => ({
+          ...current,
+          type: (dataAI.result.gardenType as 'horta' | 'pomar') ?? current.type,
+          name: current.name.trim() ? current.name : (dataAI.result.type ?? current.name),
+        }));
         setAiComment(dataAI.result.message ?? null);
       }
     } catch (error) {
@@ -191,7 +200,7 @@ export default function GardenPage() {
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <LeafLoader label="A preparar a sua coleção de plantas..." />
+        <LeafLoader label={t('garden.loading')} />
       </main>
     );
   }
@@ -200,11 +209,10 @@ export default function GardenPage() {
     <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-8 px-6 py-12">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow">A minha horta</p>
-          <h1 className="text-display text-3xl sm:text-4xl">Cuidados diários e registos</h1>
+          <p className="eyebrow">{t('garden.title')}</p>
+          <h1 className="text-display text-3xl sm:text-4xl">{t('garden.subtitle')}</h1>
           <p className="mt-2 max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
-            Acompanhe as plantas que vivem consigo. Registe novas espécies, ajuste frequências de
-            rega e mantenha um histórico organizado entre horta e pomar.
+            {t('garden.description')}
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -217,15 +225,15 @@ export default function GardenPage() {
               setAddOpen(true);
             }}
           >
-            Adicionar planta
+            {t('garden.addPlant')}
           </Button>
         </div>
       </div>
 
       <LineTabs
         tabs={[
-          { value: 'horta', label: 'Horta', content: null },
-          { value: 'pomar', label: 'Pomar', content: null },
+          { value: 'horta', label: t('garden.horta'), content: null },
+          { value: 'pomar', label: t('garden.pomar'), content: null },
         ]}
         defaultValue={activeTab}
         onValueChange={(value) => setActiveTab((value as 'horta' | 'pomar') ?? 'horta')}
@@ -235,9 +243,9 @@ export default function GardenPage() {
       <section className="space-y-6">
         {filteredPlants.length === 0 ? (
           <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-12 text-center shadow-[var(--shadow-soft)]">
-            <h2 className="text-display text-2xl">Nada por aqui ainda</h2>
+            <h2 className="text-display text-2xl">{t('garden.emptyTitle')}</h2>
             <p className="mt-3 text-sm text-[var(--color-text-muted)]">
-              Adicione uma nova planta para começar a acompanhar ciclos de rega e colheita.
+              {t('garden.emptyDescription')}
             </p>
             <Button
               variant="primary"
@@ -249,7 +257,7 @@ export default function GardenPage() {
                 setAddOpen(true);
               }}
             >
-              Registar planta
+              {t('garden.registerPlant')}
             </Button>
           </div>
         ) : (
@@ -271,7 +279,7 @@ export default function GardenPage() {
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-sm text-[var(--color-text-muted)]">
-                      Sem imagem
+                      {t('garden.noImage')}
                     </div>
                   )}
                 </div>
@@ -279,7 +287,7 @@ export default function GardenPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-[var(--color-text)]">{plant.name}</h3>
                     <p className="text-sm text-[var(--color-text-muted)]">
-                      Regar a cada {plant.watering_freq} dias
+                      {t('garden.waterEvery').replace('{{days}}', plant.watering_freq.toString())}
                     </p>
                   </div>
                   <Button
@@ -291,7 +299,7 @@ export default function GardenPage() {
                       setEditOpen(true);
                     }}
                   >
-                    Editar
+                    {t('garden.edit')}
                   </Button>
                 </div>
               </motion.div>
@@ -300,15 +308,16 @@ export default function GardenPage() {
         )}
       </section>
 
+      {/* Diálogo Adicionar */}
       <Dialog open={addOpen} onOpenChange={setAddOpen}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Adicionar nova planta</DialogTitle>
+            <DialogTitle>{t('garden.addNew')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <Label>Nome</Label>
+                <Label>{t('garden.name')}</Label>
                 <Input
                   placeholder="Ex.: Tomate cereja"
                   value={form.name}
@@ -316,7 +325,7 @@ export default function GardenPage() {
                 />
               </div>
               <div>
-                <Label>Frequência de rega (dias)</Label>
+                <Label>{t('garden.wateringFrequency')}</Label>
                 <Input
                   type="number"
                   min={1}
@@ -330,18 +339,18 @@ export default function GardenPage() {
                 />
               </div>
               <div>
-                <Label>Tipo</Label>
+                <Label>{t('garden.type')}</Label>
                 <Select
                   value={form.type}
                   onValueChange={(value) => setForm({ ...form, type: value as 'horta' | 'pomar' })}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tipo" />
+                    <SelectValue placeholder={t('garden.type')} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="horta">Horta</SelectItem>
-                      <SelectItem value="pomar">Pomar</SelectItem>
+                      <SelectItem value="horta">{t('garden.horta')}</SelectItem>
+                      <SelectItem value="pomar">{t('garden.pomar')}</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -349,7 +358,7 @@ export default function GardenPage() {
             </div>
 
             <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4 text-center">
-              <Label className="mb-2 block text-center">Fotografia</Label>
+              <Label className="mb-2 block text-center">{t('garden.photo')}</Label>
               <input
                 type="file"
                 accept="image/*"
@@ -357,11 +366,13 @@ export default function GardenPage() {
                 className="w-full cursor-pointer rounded-[var(--radius-md)] border border-dashed border-[var(--color-border)] bg-white p-3 text-sm text-[var(--color-text-muted)]"
               />
               {uploading && (
-                <p className="mt-2 text-xs text-[var(--color-text-muted)]">A carregar imagem...</p>
+                <p className="mt-2 text-xs text-[var(--color-text-muted)]">
+                  {t('garden.uploading')}
+                </p>
               )}
               {analyzing && (
                 <p className="mt-2 text-xs text-[var(--color-text-muted)]">
-                  A analisar a planta...
+                  {t('garden.analyzing')}
                 </p>
               )}
               {preview && (
@@ -385,25 +396,26 @@ export default function GardenPage() {
 
           <DialogFooter>
             <Button variant="secondary" onClick={() => setAddOpen(false)}>
-              Cancelar
+              {t('garden.cancel')}
             </Button>
             <Button onClick={handleAddPlant} disabled={!form.name.trim()}>
-              Guardar planta
+              {t('garden.savePlant')}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
+      {/* Diálogo Editar */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Editar planta</DialogTitle>
+            <DialogTitle>{t('garden.editPlant')}</DialogTitle>
           </DialogHeader>
 
           {selectedPlant && (
             <div className="space-y-4">
               <div>
-                <Label>Nome</Label>
+                <Label>{t('garden.name')}</Label>
                 <Input
                   value={selectedPlant.name}
                   onChange={(event) =>
@@ -413,7 +425,7 @@ export default function GardenPage() {
               </div>
 
               <div>
-                <Label>Frequência de rega (dias)</Label>
+                <Label>{t('garden.wateringFrequency')}</Label>
                 <Input
                   type="number"
                   min={1}
@@ -428,7 +440,7 @@ export default function GardenPage() {
               </div>
 
               <div>
-                <Label>Tipo</Label>
+                <Label>{t('garden.type')}</Label>
                 <Select
                   value={selectedPlant.type}
                   onValueChange={(value) =>
@@ -436,12 +448,12 @@ export default function GardenPage() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tipo" />
+                    <SelectValue placeholder={t('garden.type')} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="horta">Horta</SelectItem>
-                      <SelectItem value="pomar">Pomar</SelectItem>
+                      <SelectItem value="horta">{t('garden.horta')}</SelectItem>
+                      <SelectItem value="pomar">{t('garden.pomar')}</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -451,9 +463,9 @@ export default function GardenPage() {
 
           <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-between">
             <Button variant="destructive" onClick={handleDeletePlant}>
-              Eliminar
+              {t('garden.delete')}
             </Button>
-            <Button onClick={handleUpdatePlant}>Guardar alterações</Button>
+            <Button onClick={handleUpdatePlant}>{t('garden.saveChanges')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

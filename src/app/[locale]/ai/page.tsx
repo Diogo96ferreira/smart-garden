@@ -8,6 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
+import { usePathname } from 'next/navigation';
+import { useTranslation } from '@/lib/useTranslation';
 
 type AnalysisResult = {
   type: string;
@@ -31,6 +33,9 @@ export default function TiaAdeliaPage() {
   const [chatLoading, setChatLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const pathname = usePathname();
+  const locale = pathname.startsWith('/en') ? 'en' : 'pt';
+  const t = useTranslation(locale);
 
   const resetState = () => {
     setResult(null);
@@ -76,11 +81,11 @@ export default function TiaAdeliaPage() {
         setMessages([{ role: 'model', text: data.result.description as string }]);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocorreu um erro desconhecido.');
+      setError(err instanceof Error ? err.message : t('ai.errors.unknown'));
     } finally {
       setLoading(false);
     }
-  }, [imageFile]);
+  }, [imageFile, t]);
 
   const handleSendMessage = useCallback(
     async (event: React.FormEvent) => {
@@ -109,7 +114,7 @@ export default function TiaAdeliaPage() {
           ...prev,
           {
             role: 'model',
-            text: data.reply ?? 'Aqui está o que descobri sobre a sua planta!',
+            text: data.reply ?? t('ai.messages.defaultReply'),
           },
         ]);
       } catch (err) {
@@ -118,14 +123,14 @@ export default function TiaAdeliaPage() {
           ...prev,
           {
             role: 'model',
-            text: 'Não consegui responder agora. Tente novamente dentro de instantes.',
+            text: t('ai.errors.chatFail'),
           },
         ]);
       } finally {
         setChatLoading(false);
       }
     },
-    [input, result?.description],
+    [input, result?.description, t],
   );
 
   const showChat = messages.length > 0;
@@ -141,21 +146,18 @@ export default function TiaAdeliaPage() {
       )}
     >
       <header className="space-y-3 text-left">
-        <p className="eyebrow">Diagnóstico inteligente</p>
-        <h1 className="text-display text-3xl sm:text-4xl">Fale com a Tia Adélia</h1>
+        <p className="eyebrow">{t('ai.header.eyebrow')}</p>
+        <h1 className="text-display text-3xl sm:text-4xl">{t('ai.header.title')}</h1>
         <p className="max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
-          Carregue uma fotografia da planta para receber um diagnóstico imediato e peça conselhos
-          personalizados sobre rega, poda ou colheita.
+          {t('ai.header.subtitle')}
         </p>
       </header>
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <Card>
           <CardHeader className="gap-4 space-y-2">
-            <CardTitle>Diagnóstico por fotografia</CardTitle>
-            <CardDescription className="pb-2">
-              Analisamos automaticamente a planta para sugerir cuidados e alertas relevantes.
-            </CardDescription>
+            <CardTitle>{t('ai.photo.title')}</CardTitle>
+            <CardDescription className="pb-2">{t('ai.photo.desc')}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-7">
             <div
@@ -167,7 +169,7 @@ export default function TiaAdeliaPage() {
                 <div className="flex flex-col items-center gap-4">
                   <Image
                     src={preview}
-                    alt="Pré-visualização"
+                    alt={t('ai.photo.previewAlt')}
                     width={320}
                     height={320}
                     className="rounded-[var(--radius-md)] object-cover shadow-[var(--shadow-soft)]"
@@ -181,10 +183,10 @@ export default function TiaAdeliaPage() {
                         resetState();
                       }}
                     >
-                      Remover
+                      {t('ai.photo.remove')}
                     </Button>
                     <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
-                      Trocar imagem
+                      {t('ai.photo.change')}
                     </Button>
                   </div>
                 </div>
@@ -201,14 +203,14 @@ export default function TiaAdeliaPage() {
                   </div>
                   <div className="space-y-1">
                     <p className="text-base font-semibold text-[var(--color-text)]">
-                      Arraste uma fotografia ou escolha no dispositivo
+                      {t('ai.photo.dragTitle')}
                     </p>
                     <p className="text-sm text-[var(--color-text-muted)]">
-                      Aceitamos folhas, frutos, sementes e flores.
+                      {t('ai.photo.dragSubtitle')}
                     </p>
                   </div>
                   <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
-                    Escolher fotografia
+                    {t('ai.photo.choose')}
                   </Button>
                   <input
                     ref={fileInputRef}
@@ -228,7 +230,7 @@ export default function TiaAdeliaPage() {
               disabled={loading || !imageFile}
               icon={loading ? <Loader2 className="h-4 w-4 animate-spin" /> : undefined}
             >
-              {loading ? 'A analisar...' : 'Analisar fotografia'}
+              {loading ? t('ai.photo.analyzing') : t('ai.photo.analyze')}
             </Button>
 
             {error && (
@@ -238,14 +240,12 @@ export default function TiaAdeliaPage() {
             )}
           </CardContent>
         </Card>
+
         {messages.length > 0 && (
           <Card>
             <CardHeader className="space-y-2">
-              <CardTitle>Conversar com a Tia Adélia</CardTitle>
-              <CardDescription>
-                Continue a conversa com base no diagnóstico: peça conselhos sobre tratamento,
-                colheita ou cuidados gerais.
-              </CardDescription>
+              <CardTitle>{t('ai.chat.title')}</CardTitle>
+              <CardDescription>{t('ai.chat.desc')}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
               <div className="space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
@@ -272,14 +272,14 @@ export default function TiaAdeliaPage() {
                 {chatLoading && (
                   <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
                     <Avatar src="/avatar-adelia.jpg" alt="Tia Adélia" />
-                    <p>A pensar...</p>
+                    <p>{t('ai.chat.thinking')}</p>
                   </div>
                 )}
               </div>
 
               <form onSubmit={handleSendMessage} className="flex flex-col gap-3 sm:flex-row">
                 <Input
-                  placeholder="Pergunte algo à Tia Adélia..."
+                  placeholder={t('ai.chat.placeholder')}
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   disabled={chatLoading || !result}
@@ -292,7 +292,7 @@ export default function TiaAdeliaPage() {
                   disabled={chatLoading || !input.trim()}
                   className="w-full sm:w-auto"
                 >
-                  Enviar
+                  {t('ai.chat.send')}
                 </Button>
               </form>
             </CardContent>

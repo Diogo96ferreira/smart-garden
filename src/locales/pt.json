@@ -1,0 +1,193 @@
+{
+  "app": {
+    "name": "Smart Garden",
+    "welcome": "Bem-vindo à Smart Garden 🌱",
+    "loading": "A carregar...",
+    "noData": "Sem dados disponíveis.",
+    "error": "Ocorreu um erro. Tenta novamente."
+  },
+  "common": {
+    "today": "Hoje",
+    "crop": "Cultura",
+    "zone": "Zona",
+    "actions": "Ações",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Apagar",
+    "confirm": "Confirmar",
+    "edit": "Editar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Seguinte",
+    "finish": "Concluir"
+  },
+  "tabs": {
+    "sowing": "Semeadura",
+    "transplant": "Transplante",
+    "harvest": "Colheita",
+    "overview": "Visão Geral",
+    "history": "Histórico"
+  },
+  "calendar": {
+    "loading": "A carregar calendário…",
+    "title": "Planeador de culturas",
+    "filters": "Filtros",
+    "sow": "Semear",
+    "transplant": "Transplantar",
+    "harvest": "Colher",
+    "search": "Pesquisar cultura…"
+  },
+  "dashboard": {
+    "thisWeek": "Esta semana",
+    "greeting": "Olá, {{name}}! Vamos cuidar da sua horta.",
+    "intro": "Acompanhe as tarefas prioritárias para manter as plantas felizes. A cada ação concluída, a Smart Garden ajusta as recomendações seguintes.",
+    "summary": "Resumo",
+    "progressTitle": "A sua horta está no bom caminho",
+    "completed": "Cumpriu {{done}} de {{total}} tarefas desta semana. Continue assim!",
+    "weeklyProgress": "Progresso semanal",
+    "nextWatering": "Próxima rega",
+    "weather": "Clima previsto",
+    "newSuggestions": "Novas sugestões",
+    "mulch": {
+      "title": "Coloque cobertura morta",
+      "desc": "Ajuda a reter humidade e protege as raízes em dias quentes."
+    },
+    "nightWatering": {
+      "title": "Reveja a rega noturna",
+      "desc": "A rega ao fim do dia evita a evaporação excessiva."
+    },
+    "seeHow": "Ver como",
+    "adjust": "Ajustar horários",
+    "carePlan": "Plano de cuidados",
+    "completedShort": "concluídas",
+    "noDescription": "Sem descrição disponível.",
+    "unmark": "Desmarcar tarefa",
+    "markDone": "Marcar tarefa como concluída",
+    "delay": "Adiar tarefa",
+    "howTo": "Como fazer",
+    "generateTasks": "Gerar tarefas",
+    "generating": "A gerar...",
+    "syncTasks": "Sincronizar"
+  },
+  "garden": {
+    "title": "A minha horta",
+    "subtitle": "Cuidados diários e registos",
+    "description": "Acompanhe as plantas que vivem consigo. Registe novas espécies, ajuste frequências de rega e mantenha um histórico organizado entre horta e pomar.",
+    "addPlant": "Adicionar planta",
+    "registerPlant": "Registar planta",
+    "emptyTitle": "Nada por aqui ainda",
+    "emptyDescription": "Adicione uma nova planta para começar a acompanhar ciclos de rega e colheita.",
+    "wateringFrequency": "Frequência de rega (dias)",
+    "type": "Tipo",
+    "name": "Nome",
+    "photo": "Fotografia",
+    "cancel": "Cancelar",
+    "savePlant": "Guardar planta",
+    "saveChanges": "Guardar alterações",
+    "delete": "Eliminar",
+    "analyzing": "A analisar a imagem...",
+    "uploading": "A carregar imagem...",
+    "noImage": "Sem imagem",
+    "waterEvery": "Regar a cada {{days}} dias",
+    "addNew": "Adicionar nova planta",
+    "editPlant": "Editar planta",
+    "horta": "Horta",
+    "pomar": "Pomar",
+    "edit": "Editar",
+    "loading": "A carregar a horta..."
+  },
+  "settings": {
+    "title": "Definições",
+    "theme": "Tema",
+    "language": "Idioma",
+    "zone": "Zona",
+    "saveSuccess": "Definições guardadas com sucesso.",
+    "report": {
+      "title": "Relatório de Tarefas",
+      "range": {
+        "1w": "1 semana",
+        "2w": "2 semanas",
+        "1m": "1 mês",
+        "all": "Sempre"
+      },
+      "generate": "Gerar relatório"
+    },
+    "themeOptions": {
+      "system": "Sistema",
+      "light": "Claro",
+      "dark": "Escuro"
+    },
+    "languageOptions": {
+      "pt": "Português (PT)",
+      "en": "English (US)"
+    }
+  },
+  "ai": {
+    "title": "Perfil de IA",
+    "profiles": {
+      "tia-adelia": {
+        "label": "Tia Adélia",
+        "desc": "Conselhos práticos em linguagem simples, focados na horta caseira."
+      },
+      "eng-agronomo": {
+        "label": "Eng. Agrónomo",
+        "desc": "Explicações técnicas e fundamentadas com boas práticas agronómicas."
+      },
+      "mestre-horta": {
+        "label": "Mestre da Horta",
+        "desc": "Equilíbrio entre prática e teoria, com dicas sazonais e de planeamento."
+      },
+      "professor-paciente": {
+        "label": "Professor Paciente",
+        "desc": "Explica passo a passo, com calma, ideal para iniciantes."
+      }
+    },
+    "header": {
+      "eyebrow": "Diagnóstico inteligente",
+      "title": "Fale com a Tia Adélia",
+      "subtitle": "Carregue uma fotografia da planta para receber um diagnóstico imediato e peça conselhos personalizados sobre rega, poda ou colheita."
+    },
+    "photo": {
+      "title": "Diagnóstico por fotografia",
+      "desc": "Analisamos automaticamente a planta para sugerir cuidados e alertas relevantes.",
+      "previewAlt": "Pré-visualização",
+      "remove": "Remover",
+      "change": "Trocar imagem",
+      "dragTitle": "Arraste uma fotografia ou escolha no dispositivo",
+      "dragSubtitle": "Aceitamos folhas, frutos, sementes e flores.",
+      "choose": "Escolher fotografia",
+      "analyze": "Analisar fotografia",
+      "analyzing": "A analisar..."
+    },
+    "chat": {
+      "title": "Conversar com a Tia Adélia",
+      "desc": "Continue a conversa com base no diagnóstico: peça conselhos sobre tratamento, colheita ou cuidados gerais.",
+      "placeholder": "Pergunte algo à Tia Adélia...",
+      "thinking": "A pensar...",
+      "send": "Enviar"
+    },
+    "errors": {
+      "unknown": "Ocorreu um erro desconhecido.",
+      "chatFail": "Não consegui responder agora. Tente novamente dentro de instantes."
+    },
+    "messages": {
+      "defaultReply": "Aqui está o que descobri sobre a sua planta!"
+    }
+  },
+  "onboarding": {
+    "title": "Bem-vindo à Smart Garden 🌿",
+    "subtitle": "Vamos configurar a tua horta passo a passo.",
+    "next": "Seguinte",
+    "back": "Anterior",
+    "finish": "Concluir"
+  },
+  "splash": {
+    "welcome": "Bem-vindo de volta 🌿",
+    "loading": "A preparar o teu jardim..."
+  },
+  "notifications": {
+    "newTask": "Nova tarefa disponível",
+    "harvestReminder": "Lembra-te de colher as tuas culturas!",
+    "taskCompleted": "Tarefa concluída"
+  }
+}

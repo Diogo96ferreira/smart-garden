@@ -1,0 +1,4167 @@
+{
+  "zones": {
+    "ZONE 1": {
+      "districts": [
+        "Viana do Castelo (coastal)",
+        "Braga (coastal)",
+        "Porto (coastal)",
+        "Aveiro (coastal)",
+        "Coimbra (coastal)",
+        "Leiria (coastal)",
+        "Lisbon",
+        "Santarem",
+        "Setubal",
+        "Beja",
+        "Faro"
+      ],
+      "notes": "High productivity; watch for fungi on the northern coast and water scarcity in the south."
+    },
+    "ZONE 2": {
+      "districts": [
+        "Viana do Castelo (inland)",
+        "Braga (inland)",
+        "Porto (inland)",
+        "Aveiro (inland)",
+        "Coimbra (inland)",
+        "Leiria (inland)",
+        "Viseu",
+        "Santarem",
+        "Castelo Branco",
+        "Portalegre",
+        "Evora",
+        "Beja"
+      ],
+      "notes": "Use greenhouses/tunnels to start early; efficient irrigation in summer; good for olive, almond and grapevine."
+    },
+    "ZONE 3": {
+      "districts": ["Vila Real", "Viseu", "Coimbra", "Castelo Branco"],
+      "notes": "Good for leafy and irrigated crops; monitor humidity-related pests; crop rotation recommended."
+    },
+    "ZONE 4": {
+      "districts": ["Guarda", "Braganca"],
+      "notes": "Delay cold-sensitive transplants until May; use companion planting (corn+bean+pumpkin)."
+    },
+    "ZONE 5": {
+      "districts": ["Madeira", "Azores"],
+      "notes": "Favors tropical/subtropical crops; manage drainage due to high rainfall in rainy periods."
+    }
+  },
+  "calendar": {
+    "ZONE 1": {
+      "Butterhead lettuce": {
+        "Sowing": ["January", "February", "March", "September", "October", "November"],
+        "Transplant": ["February", "March", "April", "October", "November"],
+        "Harvest": ["March", "April", "May", "October", "November", "December"]
+      },
+      "Romaine lettuce": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": ["March", "April", "October"],
+        "Harvest": ["April", "May", "November"]
+      },
+      "Oak leaf lettuce": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": ["March", "April", "October"],
+        "Harvest": ["April", "May", "November"]
+      },
+      "Iceberg lettuce": {
+        "Sowing": ["February", "March", "September"],
+        "Transplant": ["March", "April", "October"],
+        "Harvest": ["April", "May", "November"]
+      },
+      "Plum tomato": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Oxheart tomato": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Cherry tomato": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Roma tomato": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Potato": {
+        "Sowing": ["January", "February", "March"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July"]
+      },
+      "Sweet potato": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["September", "October"]
+      },
+      "Carrot": {
+        "Sowing": ["January", "February", "March", "August", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "November", "December"]
+      },
+      "Parsnip": {
+        "Sowing": ["February", "March"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Salsify": {
+        "Sowing": ["February", "March"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Beet": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "October", "November"]
+      },
+      "Radish": {
+        "Sowing": ["February", "March", "April", "September", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May", "October", "November", "December"]
+      },
+      "Daikon radish": {
+        "Sowing": ["September", "October"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Turnip": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "November", "December"]
+      },
+      "White onion": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["March", "April"],
+        "Harvest": ["July", "August"]
+      },
+      "Red onion": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["March", "April"],
+        "Harvest": ["July", "August"]
+      },
+      "Shallot": {
+        "Sowing": [],
+        "Transplant": ["February", "March"],
+        "Harvest": ["June", "July"]
+      },
+      "Garlic": {
+        "Sowing": ["October", "November", "December", "January"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Leek": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Chives": {
+        "Sowing": ["February", "March", "April"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Zucchini": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May"],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Menina squash": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Butternut squash": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Hokkaido squash": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Spaghetti squash": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Cucumber": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Eggplant": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Bell pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Padrón pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Piri-piri (bird's eye chile)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Tomatillo": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September"]
+      },
+      "Okra": {
+        "Sowing": ["May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Green bean (snap)": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Pole bean": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Pea": {
+        "Sowing": ["October", "November", "December", "January"],
+        "Transplant": [],
+        "Harvest": ["February", "March", "April"]
+      },
+      "Snow pea (mangetout)": {
+        "Sowing": ["October", "November", "January"],
+        "Transplant": [],
+        "Harvest": ["February", "March", "April"]
+      },
+      "Fava bean": {
+        "Sowing": ["October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["February", "March", "April"]
+      },
+      "Chickpea": {
+        "Sowing": ["February", "March"],
+        "Transplant": [],
+        "Harvest": ["July", "August"]
+      },
+      "Lentil": {
+        "Sowing": ["February", "March"],
+        "Transplant": [],
+        "Harvest": ["July", "August"]
+      },
+      "Soybean (edamame)": {
+        "Sowing": ["May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Broccoli": {
+        "Sowing": ["May", "June", "July"],
+        "Transplant": ["July", "August"],
+        "Harvest": ["October", "November", "December", "January"]
+      },
+      "Cauliflower": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["July", "August"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Portuguese cabbage (tronchuda)": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": ["March", "April", "September", "October"],
+        "Harvest": ["November", "December", "January", "February"]
+      },
+      "Red cabbage": {
+        "Sowing": ["February", "March", "July"],
+        "Transplant": ["April", "August"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Savoy cabbage": {
+        "Sowing": ["February", "March", "July"],
+        "Transplant": ["April", "August"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Brussels sprouts": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Pak choi (bok choy)": {
+        "Sowing": ["March", "April", "September", "October"],
+        "Transplant": ["April", "October"],
+        "Harvest": ["May", "June", "November"]
+      },
+      "Chinese cabbage (pe-tsai)": {
+        "Sowing": ["March", "April", "August", "September"],
+        "Transplant": ["April", "September"],
+        "Harvest": ["June", "July", "November"]
+      },
+      "Radicchio": {
+        "Sowing": ["February", "March", "August"],
+        "Transplant": ["March", "September"],
+        "Harvest": ["May", "June", "November"]
+      },
+      "Endive/Escarole": {
+        "Sowing": ["February", "March", "September"],
+        "Transplant": ["March", "October"],
+        "Harvest": ["May", "November", "December"]
+      },
+      "Chicory": {
+        "Sowing": ["February", "March", "September"],
+        "Transplant": ["March", "October"],
+        "Harvest": ["May", "November"]
+      },
+      "Arugula": {
+        "Sowing": ["February", "March", "April", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May", "October", "November"]
+      },
+      "Swiss chard": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": ["March", "April", "September"],
+        "Harvest": ["May", "June", "October", "November"]
+      },
+      "Watercress": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "November", "December"]
+      },
+      "Mache (lamb's lettuce)": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "November", "December"]
+      },
+      "Purslane": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Sorrel": {
+        "Sowing": ["March", "April", "September"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "October", "November"]
+      },
+      "Fennel (bulb)": {
+        "Sowing": ["March", "April", "August", "September"],
+        "Transplant": ["April", "September"],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Celery (stalk)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Celeriac (celery root)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Jerusalem artichoke (sunchoke)": {
+        "Sowing": [],
+        "Transplant": ["February", "March"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Asparagus (crowns)": {
+        "Sowing": [],
+        "Transplant": ["February", "March"],
+        "Harvest": ["March", "April"]
+      },
+      "Artichoke": {
+        "Sowing": ["March"],
+        "Transplant": ["October", "November"],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Cardoon": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["December", "January"]
+      },
+      "Rhubarb": {
+        "Sowing": ["March"],
+        "Transplant": ["October"],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Chayote (sechium)": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Physalis (cape gooseberry)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Sweet corn": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Sweet sorghum (homegrown)": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Parsley (perennial)": {
+        "Sowing": ["March", "April", "May"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Cilantro": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "October", "November"]
+      },
+      "Mint (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Basil": {
+        "Sowing": ["March", "April", "May"],
+        "Transplant": ["May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Oregano (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Thyme (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Rosemary (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Bay laurel (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "November"],
+        "Harvest": ["Ano inteiro com podas leves"]
+      },
+      "Sage (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Garlic chives (nira)": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Strawberry": {
+        "Sowing": [],
+        "Transplant": ["September", "October"],
+        "Harvest": ["April", "May", "June"]
+      },
+      "Raspberry": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["May", "June", "July", "September", "October"]
+      },
+      "Blackberry (wild/cultivar)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Blueberry": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["June", "July", "August"]
+      },
+      "Currant": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["May", "June", "July"]
+      },
+      "Kiwi (gold/green)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Grapevine (table grape)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["August", "September"]
+      },
+      "Passion fruit (south/islands)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Banana plant (islands)": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "May"],
+        "Harvest": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaya tree (islands)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Avocado tree (south)": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "October"],
+        "Harvest": ["December", "January", "February", "March"]
+      },
+      "Mango (south)": {
+        "Sowing": [],
+        "Transplant": ["May"],
+        "Harvest": ["September", "October"]
+      },
+      "Fig tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["August", "September"]
+      },
+      "Pear tree (incl. Asian pear)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["August", "September"]
+      },
+      "Apple tree (Gala/Fuji)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Citrus (orange/mandarin/lemon)": {
+        "Sowing": [],
+        "Transplant": ["October", "November", "February", "March"],
+        "Harvest": ["November", "December", "January", "February", "March"]
+      },
+      "Persimmon": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Pomegranate tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Quince tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Plum tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["June", "July"]
+      },
+      "Peach/Nectarine tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["June", "July", "August"]
+      },
+      "Cherry tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January", "February"],
+        "Harvest": ["May", "June"]
+      },
+      "Loquat tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["April", "May"]
+      },
+      "Olive tree": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "November"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Walnut tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["September", "October"]
+      },
+      "Almond tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["August", "September"]
+      },
+      "Chestnut tree": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["October", "November"]
+      },
+      "Hazelnut tree (hazelnut)": {
+        "Sowing": [],
+        "Transplant": ["December", "January"],
+        "Harvest": ["September", "October"]
+      },
+      "Pistachio": {
+        "Sowing": [],
+        "Transplant": ["December", "January"],
+        "Harvest": ["September", "October"]
+      },
+      "Strawberry tree (Arbutus)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Purple persimmon (var.)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["October", "November"]
+      },
+      "Purple passion fruit (vine)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Hardy kiwi (actinidia arguta)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "January"],
+        "Harvest": ["September", "October"]
+      },
+      "Wheat (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Barley (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Oat (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Rye (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Millet (proso millet)": {
+        "Sowing": ["May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Quinoa": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Buckwheat": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Rice (flooded bed)": {
+        "Sowing": ["May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Melon": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Watermelon": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Lemon cucumber": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Pepino melon (melon pear)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September"]
+      },
+      "Italian sweet pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "California Wonder bell pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Shishito": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Anaheim pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Poblano": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Ancho (dried poblano)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Pasilla (dried chilaca)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Guajillo (dried mirasol)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Hatch chile (New Mexico)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Jalapeño": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Chipotle (smoked jalapeño)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Serrano": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Cayenne (long hot pepper)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Portuguese malagueta pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Peperoncini": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Espelette pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Aji Amarillo": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Aji Lemon Drop": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Aji Cristal": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Orange habanero": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Chocolate habanero": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Scotch Bonnet": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["September", "October"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["September", "October"]
+      },
+      "Carolina Reaper": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["May"],
+        "Harvest": ["September", "October"]
+      },
+      "Biquinho pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Brazilian fragrant pepper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Cumari (Brazil)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["August", "September", "October"]
+      }
+    },
+    "ZONE 2": {
+      "Butterhead lettuce": {
+        "Sowing": ["January", "February", "March", "September", "October", "November"],
+        "Transplant": ["February", "March", "April", "October", "November"],
+        "Harvest": ["March", "April", "May", "October", "November", "December"]
+      },
+      "Romaine lettuce": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": ["March", "April", "October"],
+        "Harvest": ["April", "May", "November"]
+      },
+      "Oak leaf lettuce": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": ["March", "April", "October"],
+        "Harvest": ["April", "May", "November"]
+      },
+      "Iceberg lettuce": {
+        "Sowing": ["February", "March", "September"],
+        "Transplant": ["March", "April", "October"],
+        "Harvest": ["April", "May", "November"]
+      },
+      "Plum tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Oxheart tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Cherry tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Roma tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Potato": {
+        "Sowing": ["February", "March", "April"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August"]
+      },
+      "Sweet potato": {
+        "Sowing": [],
+        "Transplant": ["May", "June"],
+        "Harvest": ["October", "November"]
+      },
+      "Carrot": {
+        "Sowing": ["January", "February", "March", "August", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "November", "December"]
+      },
+      "Parsnip": {
+        "Sowing": ["February", "March"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Salsify": {
+        "Sowing": ["February", "March"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Beet": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "October", "November"]
+      },
+      "Radish": {
+        "Sowing": ["February", "March", "April", "September", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May", "October", "November", "December"]
+      },
+      "Daikon radish": {
+        "Sowing": ["September", "October"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Turnip": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "November", "December"]
+      },
+      "White onion": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["March", "April"],
+        "Harvest": ["July", "August"]
+      },
+      "Red onion": {
+        "Sowing": ["January", "February"],
+        "Transplant": ["March", "April"],
+        "Harvest": ["July", "August"]
+      },
+      "Shallot": {
+        "Sowing": [],
+        "Transplant": ["February", "March"],
+        "Harvest": ["June", "July"]
+      },
+      "Garlic": {
+        "Sowing": ["October", "November", "December", "January"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Leek": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Chives": {
+        "Sowing": ["February", "March", "April"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Zucchini": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Menina squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Butternut squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Hokkaido squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Spaghetti squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Cucumber": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Eggplant": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Bell pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Padrón pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Piri-piri (bird's eye chile)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Tomatillo": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October"]
+      },
+      "Okra": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Green bean (snap)": {
+        "Sowing": ["May", "June", "July"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Pole bean": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Pea": {
+        "Sowing": ["October", "November", "December", "January"],
+        "Transplant": [],
+        "Harvest": ["February", "March", "April"]
+      },
+      "Snow pea (mangetout)": {
+        "Sowing": ["October", "November", "January"],
+        "Transplant": [],
+        "Harvest": ["February", "March", "April"]
+      },
+      "Fava bean": {
+        "Sowing": ["October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["February", "March", "April"]
+      },
+      "Chickpea": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Lentil": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Soybean (edamame)": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Broccoli": {
+        "Sowing": ["May", "June", "July"],
+        "Transplant": ["July", "August"],
+        "Harvest": ["October", "November", "December", "January"]
+      },
+      "Cauliflower": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["July", "August"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Portuguese cabbage (tronchuda)": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": ["March", "April", "September", "October"],
+        "Harvest": ["November", "December", "January", "February"]
+      },
+      "Red cabbage": {
+        "Sowing": ["February", "March", "July"],
+        "Transplant": ["April", "August"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Savoy cabbage": {
+        "Sowing": ["February", "March", "July"],
+        "Transplant": ["April", "August"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Brussels sprouts": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Pak choi (bok choy)": {
+        "Sowing": ["April", "May", "October", "November"],
+        "Transplant": ["May", "November"],
+        "Harvest": ["June", "July", "December"]
+      },
+      "Chinese cabbage (pe-tsai)": {
+        "Sowing": ["April", "May", "September", "October"],
+        "Transplant": ["May", "October"],
+        "Harvest": ["July", "August", "December"]
+      },
+      "Radicchio": {
+        "Sowing": ["February", "March", "August"],
+        "Transplant": ["March", "September"],
+        "Harvest": ["May", "June", "November"]
+      },
+      "Endive/Escarole": {
+        "Sowing": ["February", "March", "September"],
+        "Transplant": ["March", "October"],
+        "Harvest": ["May", "November", "December"]
+      },
+      "Chicory": {
+        "Sowing": ["February", "March", "September"],
+        "Transplant": ["March", "October"],
+        "Harvest": ["May", "November"]
+      },
+      "Arugula": {
+        "Sowing": ["February", "March", "April", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May", "October", "November"]
+      },
+      "Swiss chard": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": ["March", "April", "September"],
+        "Harvest": ["May", "June", "October", "November"]
+      },
+      "Watercress": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "November", "December"]
+      },
+      "Mache (lamb's lettuce)": {
+        "Sowing": ["February", "March", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "November", "December"]
+      },
+      "Purslane": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Sorrel": {
+        "Sowing": ["March", "April", "September"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "October", "November"]
+      },
+      "Fennel (bulb)": {
+        "Sowing": ["March", "April", "August", "September"],
+        "Transplant": ["April", "September"],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Celery (stalk)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Celeriac (celery root)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["May"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Jerusalem artichoke (sunchoke)": {
+        "Sowing": [],
+        "Transplant": ["February", "March"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Asparagus (crowns)": {
+        "Sowing": [],
+        "Transplant": ["February", "March"],
+        "Harvest": ["March", "April"]
+      },
+      "Artichoke": {
+        "Sowing": ["March"],
+        "Transplant": ["October", "November"],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Cardoon": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May"],
+        "Harvest": ["December", "January"]
+      },
+      "Rhubarb": {
+        "Sowing": ["March"],
+        "Transplant": ["October"],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Chayote (sechium)": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Physalis (cape gooseberry)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Sweet corn": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Sweet sorghum (homegrown)": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Parsley (perennial)": {
+        "Sowing": ["March", "April", "May"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Cilantro": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "October", "November"]
+      },
+      "Mint (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Basil": {
+        "Sowing": ["March", "April", "May"],
+        "Transplant": ["May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Oregano (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Thyme (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Rosemary (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Bay laurel (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "November"],
+        "Harvest": ["Ano inteiro com podas leves"]
+      },
+      "Sage (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Garlic chives (nira)": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Strawberry": {
+        "Sowing": [],
+        "Transplant": ["October", "November"],
+        "Harvest": ["May", "June", "July"]
+      },
+      "Raspberry": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July", "August", "October", "November"]
+      },
+      "Blackberry (wild/cultivar)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Blueberry": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Currant": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July", "August"]
+      },
+      "Kiwi (gold/green)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["November", "December"]
+      },
+      "Grapevine (table grape)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Passion fruit (south/islands)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Banana plant (islands)": {
+        "Sowing": [],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaya tree (islands)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Avocado tree (south)": {
+        "Sowing": [],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["January", "February", "March", "April"]
+      },
+      "Mango (south)": {
+        "Sowing": [],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Fig tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["September", "October"]
+      },
+      "Pear tree (incl. Asian pear)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["September", "October"]
+      },
+      "Apple tree (Gala/Fuji)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Citrus (orange/mandarin/lemon)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "March", "April"],
+        "Harvest": ["December", "January", "February", "March", "April"]
+      },
+      "Persimmon": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["November", "December"]
+      },
+      "Pomegranate tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Quince tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Plum tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August"]
+      },
+      "Peach/Nectarine tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Cherry tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July"]
+      },
+      "Loquat tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["May", "June"]
+      },
+      "Olive tree": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "December"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Walnut tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Almond tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Chestnut tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December"]
+      },
+      "Hazelnut tree (hazelnut)": {
+        "Sowing": [],
+        "Transplant": ["January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Pistachio": {
+        "Sowing": [],
+        "Transplant": ["January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Strawberry tree (Arbutus)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Purple persimmon (var.)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December"]
+      },
+      "Purple passion fruit (vine)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Hardy kiwi (actinidia arguta)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Wheat (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Barley (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Oat (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June"]
+      },
+      "Rye (garden)": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Millet (proso millet)": {
+        "Sowing": ["May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Quinoa": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Buckwheat": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Rice (flooded bed)": {
+        "Sowing": ["May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Melon": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Watermelon": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Lemon cucumber": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Pepino melon (melon pear)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October"]
+      },
+      "Italian sweet pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "California Wonder bell pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Shishito": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Anaheim pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Poblano": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Ancho (dried poblano)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Pasilla (dried chilaca)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Guajillo (dried mirasol)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Hatch chile (New Mexico)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Jalapeño": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Chipotle (smoked jalapeño)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Serrano": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Cayenne (long hot pepper)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Portuguese malagueta pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Peperoncini": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Espelette pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Aji Amarillo": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Aji Lemon Drop": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Aji Cristal": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Orange habanero": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Chocolate habanero": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Scotch Bonnet": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Carolina Reaper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Biquinho pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Brazilian fragrant pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Cumari (Brazil)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      }
+    },
+    "ZONE 3": {
+      "Butterhead lettuce": {
+        "Sowing": ["February", "March", "April", "October", "November", "December"],
+        "Transplant": ["March", "April", "May", "November", "December"],
+        "Harvest": ["April", "May", "June", "November", "December", "January"]
+      },
+      "Romaine lettuce": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["May", "June", "December"]
+      },
+      "Oak leaf lettuce": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["May", "June", "December"]
+      },
+      "Iceberg lettuce": {
+        "Sowing": ["March", "April", "October"],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["May", "June", "December"]
+      },
+      "Plum tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Oxheart tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Cherry tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Roma tomato": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Potato": {
+        "Sowing": ["February", "March", "April"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August"]
+      },
+      "Sweet potato": {
+        "Sowing": [],
+        "Transplant": ["May", "June"],
+        "Harvest": ["October", "November"]
+      },
+      "Carrot": {
+        "Sowing": ["February", "March", "April", "September", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "December", "January"]
+      },
+      "Parsnip": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Salsify": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Beet": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "November", "December"]
+      },
+      "Radish": {
+        "Sowing": ["March", "April", "May", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "November", "December", "January"]
+      },
+      "Daikon radish": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["December", "January"]
+      },
+      "Turnip": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "December", "January"]
+      },
+      "White onion": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["August", "September"]
+      },
+      "Red onion": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["August", "September"]
+      },
+      "Shallot": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["July", "August"]
+      },
+      "Garlic": {
+        "Sowing": ["November", "December", "January", "February"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Leek": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["October", "November", "December", "January"]
+      },
+      "Chives": {
+        "Sowing": ["March", "April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Zucchini": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Menina squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Butternut squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Hokkaido squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Spaghetti squash": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Cucumber": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Eggplant": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Bell pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Padrón pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Piri-piri (bird's eye chile)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Tomatillo": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October"]
+      },
+      "Okra": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Green bean (snap)": {
+        "Sowing": ["May", "June", "July"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Pole bean": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Pea": {
+        "Sowing": ["November", "December", "January", "February"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Snow pea (mangetout)": {
+        "Sowing": ["November", "December", "February"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Fava bean": {
+        "Sowing": ["November", "December", "January"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Chickpea": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Lentil": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["August", "September"]
+      },
+      "Soybean (edamame)": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Broccoli": {
+        "Sowing": ["June", "July", "August"],
+        "Transplant": ["August", "September"],
+        "Harvest": ["November", "December", "January", "February"]
+      },
+      "Cauliflower": {
+        "Sowing": ["June", "July"],
+        "Transplant": ["August", "September"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Portuguese cabbage (tronchuda)": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": ["April", "May", "October", "November"],
+        "Harvest": ["December", "January", "February", "March"]
+      },
+      "Red cabbage": {
+        "Sowing": ["March", "April", "August"],
+        "Transplant": ["May", "September"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Savoy cabbage": {
+        "Sowing": ["March", "April", "August"],
+        "Transplant": ["May", "September"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Brussels sprouts": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["July", "August"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Pak choi (bok choy)": {
+        "Sowing": ["April", "May", "October", "November"],
+        "Transplant": ["May", "November"],
+        "Harvest": ["June", "July", "December"]
+      },
+      "Chinese cabbage (pe-tsai)": {
+        "Sowing": ["April", "May", "September", "October"],
+        "Transplant": ["May", "October"],
+        "Harvest": ["July", "August", "December"]
+      },
+      "Radicchio": {
+        "Sowing": ["March", "April", "September"],
+        "Transplant": ["April", "October"],
+        "Harvest": ["June", "July", "December"]
+      },
+      "Endive/Escarole": {
+        "Sowing": ["March", "April", "October"],
+        "Transplant": ["April", "November"],
+        "Harvest": ["June", "December", "January"]
+      },
+      "Chicory": {
+        "Sowing": ["March", "April", "October"],
+        "Transplant": ["April", "November"],
+        "Harvest": ["June", "December"]
+      },
+      "Arugula": {
+        "Sowing": ["March", "April", "May", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "November", "December"]
+      },
+      "Swiss chard": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": ["April", "May", "October"],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Watercress": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "December", "January"]
+      },
+      "Mache (lamb's lettuce)": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "December", "January"]
+      },
+      "Purslane": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Sorrel": {
+        "Sowing": ["April", "May", "October"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Fennel (bulb)": {
+        "Sowing": ["April", "May", "September", "October"],
+        "Transplant": ["May", "October"],
+        "Harvest": ["July", "August", "December", "January"]
+      },
+      "Celery (stalk)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Celeriac (celery root)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Jerusalem artichoke (sunchoke)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Asparagus (crowns)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["April", "May"]
+      },
+      "Artichoke": {
+        "Sowing": ["April"],
+        "Transplant": ["November", "December"],
+        "Harvest": ["April", "May", "June"]
+      },
+      "Cardoon": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["January", "February"]
+      },
+      "Rhubarb": {
+        "Sowing": ["April"],
+        "Transplant": ["November"],
+        "Harvest": ["April", "May", "June"]
+      },
+      "Chayote (sechium)": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Physalis (cape gooseberry)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Sweet corn": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Sweet sorghum (homegrown)": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Parsley (perennial)": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Cilantro": {
+        "Sowing": ["April", "May", "June", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Mint (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Basil": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Oregano (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Thyme (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Rosemary (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Bay laurel (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "December"],
+        "Harvest": ["Ano inteiro com podas leves"]
+      },
+      "Sage (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Garlic chives (nira)": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Strawberry": {
+        "Sowing": [],
+        "Transplant": ["October", "November"],
+        "Harvest": ["May", "June", "July"]
+      },
+      "Raspberry": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July", "August", "October", "November"]
+      },
+      "Blackberry (wild/cultivar)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Blueberry": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Currant": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July", "August"]
+      },
+      "Kiwi (gold/green)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["November", "December"]
+      },
+      "Grapevine (table grape)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Passion fruit (south/islands)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Banana plant (islands)": {
+        "Sowing": [],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaya tree (islands)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Avocado tree (south)": {
+        "Sowing": [],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["January", "February", "March", "April"]
+      },
+      "Mango (south)": {
+        "Sowing": [],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Fig tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["September", "October"]
+      },
+      "Pear tree (incl. Asian pear)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["September", "October"]
+      },
+      "Apple tree (Gala/Fuji)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Citrus (orange/mandarin/lemon)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "March", "April"],
+        "Harvest": ["December", "January", "February", "March", "April"]
+      },
+      "Persimmon": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["November", "December"]
+      },
+      "Pomegranate tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Quince tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Plum tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August"]
+      },
+      "Peach/Nectarine tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Cherry tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July"]
+      },
+      "Loquat tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["May", "June"]
+      },
+      "Olive tree": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "December"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Walnut tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Almond tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Chestnut tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December"]
+      },
+      "Hazelnut tree (hazelnut)": {
+        "Sowing": [],
+        "Transplant": ["January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Pistachio": {
+        "Sowing": [],
+        "Transplant": ["January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Strawberry tree (Arbutus)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Purple persimmon (var.)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December"]
+      },
+      "Purple passion fruit (vine)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Hardy kiwi (actinidia arguta)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Wheat (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Barley (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Oat (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Rye (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["July", "August"]
+      },
+      "Millet (proso millet)": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Quinoa": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Buckwheat": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Rice (flooded bed)": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Melon": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Watermelon": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Lemon cucumber": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Pepino melon (melon pear)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October"]
+      },
+      "Italian sweet pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "California Wonder bell pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Shishito": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Anaheim pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Poblano": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Ancho (dried poblano)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Pasilla (dried chilaca)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Guajillo (dried mirasol)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Hatch chile (New Mexico)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Jalapeño": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Chipotle (smoked jalapeño)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Serrano": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Cayenne (long hot pepper)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Portuguese malagueta pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Peperoncini": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Espelette pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Aji Amarillo": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Aji Lemon Drop": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Aji Cristal": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Orange habanero": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Chocolate habanero": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Scotch Bonnet": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Carolina Reaper": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Biquinho pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Brazilian fragrant pepper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Cumari (Brazil)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["September", "October", "November"]
+      }
+    },
+    "ZONE 4": {
+      "Butterhead lettuce": {
+        "Sowing": ["February", "March", "April", "October", "November", "December"],
+        "Transplant": ["March", "April", "May", "November", "December"],
+        "Harvest": ["April", "May", "June", "November", "December", "January"]
+      },
+      "Romaine lettuce": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["May", "June", "December"]
+      },
+      "Oak leaf lettuce": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["May", "June", "December"]
+      },
+      "Iceberg lettuce": {
+        "Sowing": ["March", "April", "October"],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["May", "June", "December"]
+      },
+      "Plum tomato": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Oxheart tomato": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Cherry tomato": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Roma tomato": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Potato": {
+        "Sowing": ["March", "April", "May"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Sweet potato": {
+        "Sowing": [],
+        "Transplant": ["June", "July"],
+        "Harvest": ["November", "December"]
+      },
+      "Carrot": {
+        "Sowing": ["February", "March", "April", "September", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "December", "January"]
+      },
+      "Parsnip": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October"]
+      },
+      "Salsify": {
+        "Sowing": ["March", "April"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Beet": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "November", "December"]
+      },
+      "Radish": {
+        "Sowing": ["March", "April", "May", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "November", "December", "January"]
+      },
+      "Daikon radish": {
+        "Sowing": ["October", "November"],
+        "Transplant": [],
+        "Harvest": ["December", "January"]
+      },
+      "Turnip": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "December", "January"]
+      },
+      "White onion": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["August", "September"]
+      },
+      "Red onion": {
+        "Sowing": ["February", "March"],
+        "Transplant": ["April", "May"],
+        "Harvest": ["August", "September"]
+      },
+      "Shallot": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["July", "August"]
+      },
+      "Garlic": {
+        "Sowing": ["November", "December", "January", "February"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Leek": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["October", "November", "December", "January"]
+      },
+      "Chives": {
+        "Sowing": ["March", "April", "May"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Zucchini": {
+        "Sowing": ["June", "July"],
+        "Transplant": ["July"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Menina squash": {
+        "Sowing": ["June", "July"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Butternut squash": {
+        "Sowing": ["June", "July"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Hokkaido squash": {
+        "Sowing": ["June", "July"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Spaghetti squash": {
+        "Sowing": ["June", "July"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Cucumber": {
+        "Sowing": ["June", "July"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Eggplant": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Bell pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Padrón pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Piri-piri (bird's eye chile)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Tomatillo": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November"]
+      },
+      "Okra": {
+        "Sowing": ["July"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Green bean (snap)": {
+        "Sowing": ["June", "July", "August"],
+        "Transplant": [],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Pole bean": {
+        "Sowing": ["June", "July"],
+        "Transplant": [],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Pea": {
+        "Sowing": ["November", "December", "January", "February"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Snow pea (mangetout)": {
+        "Sowing": ["November", "December", "February"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Fava bean": {
+        "Sowing": ["November", "December", "January"],
+        "Transplant": [],
+        "Harvest": ["March", "April", "May"]
+      },
+      "Chickpea": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Lentil": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Soybean (edamame)": {
+        "Sowing": ["July"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Broccoli": {
+        "Sowing": ["June", "July", "August"],
+        "Transplant": ["August", "September"],
+        "Harvest": ["November", "December", "January", "February"]
+      },
+      "Cauliflower": {
+        "Sowing": ["June", "July"],
+        "Transplant": ["August", "September"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Portuguese cabbage (tronchuda)": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": ["April", "May", "October", "November"],
+        "Harvest": ["December", "January", "February", "March"]
+      },
+      "Red cabbage": {
+        "Sowing": ["March", "April", "August"],
+        "Transplant": ["May", "September"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Savoy cabbage": {
+        "Sowing": ["March", "April", "August"],
+        "Transplant": ["May", "September"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Brussels sprouts": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["July", "August"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Pak choi (bok choy)": {
+        "Sowing": ["May", "June", "November", "December"],
+        "Transplant": ["June", "December"],
+        "Harvest": ["July", "August", "January"]
+      },
+      "Chinese cabbage (pe-tsai)": {
+        "Sowing": ["May", "June", "October", "November"],
+        "Transplant": ["June", "November"],
+        "Harvest": ["August", "September", "January"]
+      },
+      "Radicchio": {
+        "Sowing": ["March", "April", "September"],
+        "Transplant": ["April", "October"],
+        "Harvest": ["June", "July", "December"]
+      },
+      "Endive/Escarole": {
+        "Sowing": ["March", "April", "October"],
+        "Transplant": ["April", "November"],
+        "Harvest": ["June", "December", "January"]
+      },
+      "Chicory": {
+        "Sowing": ["March", "April", "October"],
+        "Transplant": ["April", "November"],
+        "Harvest": ["June", "December"]
+      },
+      "Arugula": {
+        "Sowing": ["March", "April", "May", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "November", "December"]
+      },
+      "Swiss chard": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": ["April", "May", "October"],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Watercress": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "December", "January"]
+      },
+      "Mache (lamb's lettuce)": {
+        "Sowing": ["March", "April", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "December", "January"]
+      },
+      "Purslane": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Sorrel": {
+        "Sowing": ["April", "May", "October"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Fennel (bulb)": {
+        "Sowing": ["April", "May", "September", "October"],
+        "Transplant": ["May", "October"],
+        "Harvest": ["July", "August", "December", "January"]
+      },
+      "Celery (stalk)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["May", "June"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Celeriac (celery root)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Jerusalem artichoke (sunchoke)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Asparagus (crowns)": {
+        "Sowing": [],
+        "Transplant": ["March", "April"],
+        "Harvest": ["April", "May"]
+      },
+      "Artichoke": {
+        "Sowing": ["April"],
+        "Transplant": ["November", "December"],
+        "Harvest": ["April", "May", "June"]
+      },
+      "Cardoon": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["January", "February"]
+      },
+      "Rhubarb": {
+        "Sowing": ["April"],
+        "Transplant": ["November"],
+        "Harvest": ["April", "May", "June"]
+      },
+      "Chayote (sechium)": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Physalis (cape gooseberry)": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Sweet corn": {
+        "Sowing": ["June", "July"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Sweet sorghum (homegrown)": {
+        "Sowing": ["June", "July"],
+        "Transplant": [],
+        "Harvest": ["November", "December"]
+      },
+      "Parsley (perennial)": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Cilantro": {
+        "Sowing": ["April", "May", "June", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "November", "December"]
+      },
+      "Mint (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Basil": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": ["June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Oregano (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Thyme (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Rosemary (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Bay laurel (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "December"],
+        "Harvest": ["Ano inteiro com podas leves"]
+      },
+      "Sage (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["April", "May"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Garlic chives (nira)": {
+        "Sowing": ["April", "May"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Strawberry": {
+        "Sowing": [],
+        "Transplant": ["October", "November"],
+        "Harvest": ["May", "June", "July"]
+      },
+      "Raspberry": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July", "August", "October", "November"]
+      },
+      "Blackberry (wild/cultivar)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Blueberry": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Currant": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July", "August"]
+      },
+      "Kiwi (gold/green)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["November", "December"]
+      },
+      "Grapevine (table grape)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Passion fruit (south/islands)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Banana plant (islands)": {
+        "Sowing": [],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaya tree (islands)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Avocado tree (south)": {
+        "Sowing": [],
+        "Transplant": ["April", "May", "November"],
+        "Harvest": ["January", "February", "March", "April"]
+      },
+      "Mango (south)": {
+        "Sowing": [],
+        "Transplant": ["June"],
+        "Harvest": ["October", "November"]
+      },
+      "Fig tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["September", "October"]
+      },
+      "Pear tree (incl. Asian pear)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["September", "October"]
+      },
+      "Apple tree (Gala/Fuji)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Citrus (orange/mandarin/lemon)": {
+        "Sowing": [],
+        "Transplant": ["November", "December", "March", "April"],
+        "Harvest": ["December", "January", "February", "March", "April"]
+      },
+      "Persimmon": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["November", "December"]
+      },
+      "Pomegranate tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Quince tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["October", "November"]
+      },
+      "Plum tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August"]
+      },
+      "Peach/Nectarine tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["July", "August", "September"]
+      },
+      "Cherry tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February", "March"],
+        "Harvest": ["June", "July"]
+      },
+      "Loquat tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["May", "June"]
+      },
+      "Olive tree": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "December"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Walnut tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Almond tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["September", "October"]
+      },
+      "Chestnut tree": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December"]
+      },
+      "Hazelnut tree (hazelnut)": {
+        "Sowing": [],
+        "Transplant": ["January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Pistachio": {
+        "Sowing": [],
+        "Transplant": ["January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Strawberry tree (Arbutus)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Purple persimmon (var.)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["November", "December"]
+      },
+      "Purple passion fruit (vine)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Hardy kiwi (actinidia arguta)": {
+        "Sowing": [],
+        "Transplant": ["December", "January", "February"],
+        "Harvest": ["October", "November"]
+      },
+      "Wheat (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Barley (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Oat (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["June", "July"]
+      },
+      "Rye (garden)": {
+        "Sowing": ["November", "December"],
+        "Transplant": [],
+        "Harvest": ["July", "August"]
+      },
+      "Millet (proso millet)": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Quinoa": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Buckwheat": {
+        "Sowing": ["May", "June"],
+        "Transplant": [],
+        "Harvest": ["September", "October"]
+      },
+      "Rice (flooded bed)": {
+        "Sowing": ["June"],
+        "Transplant": [],
+        "Harvest": ["October", "November"]
+      },
+      "Melon": {
+        "Sowing": ["June", "July"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Watermelon": {
+        "Sowing": ["June", "July"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Lemon cucumber": {
+        "Sowing": ["June", "July"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Pepino melon (melon pear)": {
+        "Sowing": ["May", "June"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November"]
+      },
+      "Italian sweet pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "California Wonder bell pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Shishito": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["June", "July"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Anaheim pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Poblano": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Ancho (dried poblano)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Pasilla (dried chilaca)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Guajillo (dried mirasol)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Hatch chile (New Mexico)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Jalapeño": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Chipotle (smoked jalapeño)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Serrano": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Cayenne (long hot pepper)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Portuguese malagueta pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Peperoncini": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Espelette pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["September", "October", "November"]
+      },
+      "Aji Amarillo": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Aji Lemon Drop": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Aji Cristal": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Orange habanero": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Chocolate habanero": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Scotch Bonnet": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["November", "December"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["November", "December"]
+      },
+      "Carolina Reaper": {
+        "Sowing": ["March", "April"],
+        "Transplant": ["July"],
+        "Harvest": ["November", "December"]
+      },
+      "Biquinho pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Brazilian fragrant pepper": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      },
+      "Cumari (Brazil)": {
+        "Sowing": ["April", "May"],
+        "Transplant": ["July"],
+        "Harvest": ["October", "November", "December"]
+      }
+    },
+    "ZONE 5": {
+      "Butterhead lettuce": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        "Transplant": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        "Harvest": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "September",
+          "October",
+          "November",
+          "December"
+        ]
+      },
+      "Romaine lettuce": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": ["February", "March", "April", "May", "September", "October", "November"],
+        "Harvest": ["March", "April", "May", "June", "October", "November", "December"]
+      },
+      "Oak leaf lettuce": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": ["February", "March", "April", "May", "September", "October", "November"],
+        "Harvest": ["March", "April", "May", "June", "October", "November", "December"]
+      },
+      "Iceberg lettuce": {
+        "Sowing": ["January", "February", "March", "April", "August", "September", "October"],
+        "Transplant": ["February", "March", "April", "May", "September", "October", "November"],
+        "Harvest": ["March", "April", "May", "June", "October", "November", "December"]
+      },
+      "Plum tomato": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Oxheart tomato": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Cherry tomato": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Roma tomato": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Potato": {
+        "Sowing": ["January", "February", "March", "April", "December"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July", "August"]
+      },
+      "Sweet potato": {
+        "Sowing": [],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Carrot": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        "Transplant": [],
+        "Harvest": [
+          "January",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "October",
+          "November",
+          "December"
+        ]
+      },
+      "Parsnip": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Salsify": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": [],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Beet": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "July",
+          "August",
+          "September",
+          "October"
+        ],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "August", "September", "October", "November", "December"]
+      },
+      "Radish": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        "Transplant": [],
+        "Harvest": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "September",
+          "October",
+          "November",
+          "December"
+        ]
+      },
+      "Daikon radish": {
+        "Sowing": ["August", "September", "October", "November"],
+        "Transplant": [],
+        "Harvest": ["January", "October", "November", "December"]
+      },
+      "Turnip": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": [],
+        "Harvest": ["January", "March", "April", "May", "June", "October", "November", "December"]
+      },
+      "White onion": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["February", "March", "April", "May"],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Red onion": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["February", "March", "April", "May"],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Shallot": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "April"],
+        "Harvest": ["May", "June", "July", "August"]
+      },
+      "Garlic": {
+        "Sowing": ["January", "February", "September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July"]
+      },
+      "Leek": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["January", "August", "September", "October", "November", "December"]
+      },
+      "Chives": {
+        "Sowing": ["January", "February", "March", "April", "May"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October"]
+      },
+      "Zucchini": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Menina squash": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Butternut squash": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Hokkaido squash": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Spaghetti squash": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Cucumber": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Eggplant": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Bell pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Padrón pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Piri-piri (bird's eye chile)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Tomatillo": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Okra": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Green bean (snap)": {
+        "Sowing": ["March", "April", "May", "June", "July"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Pole bean": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Pea": {
+        "Sowing": ["January", "February", "September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["January", "February", "March", "April", "May"]
+      },
+      "Snow pea (mangetout)": {
+        "Sowing": ["January", "February", "September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["January", "February", "March", "April", "May"]
+      },
+      "Fava bean": {
+        "Sowing": ["January", "September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["January", "February", "March", "April", "May"]
+      },
+      "Chickpea": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Lentil": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": [],
+        "Harvest": ["June", "July", "August", "September"]
+      },
+      "Soybean (edamame)": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Broccoli": {
+        "Sowing": ["April", "May", "June", "July", "August"],
+        "Transplant": ["June", "July", "August", "September"],
+        "Harvest": ["January", "February", "September", "October", "November", "December"]
+      },
+      "Cauliflower": {
+        "Sowing": ["April", "May", "June", "July"],
+        "Transplant": ["June", "July", "August", "September"],
+        "Harvest": ["January", "September", "October", "November", "December"]
+      },
+      "Portuguese cabbage (tronchuda)": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "July",
+          "August",
+          "September",
+          "October"
+        ],
+        "Transplant": [
+          "February",
+          "March",
+          "April",
+          "May",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Harvest": ["January", "February", "March", "October", "November", "December"]
+      },
+      "Red cabbage": {
+        "Sowing": ["January", "February", "March", "April", "June", "July", "August"],
+        "Transplant": ["March", "April", "May", "July", "August", "September"],
+        "Harvest": ["January", "February", "October", "November", "December"]
+      },
+      "Savoy cabbage": {
+        "Sowing": ["January", "February", "March", "April", "June", "July", "August"],
+        "Transplant": ["March", "April", "May", "July", "August", "September"],
+        "Harvest": ["January", "February", "October", "November", "December"]
+      },
+      "Brussels sprouts": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": ["May", "June", "July", "August"],
+        "Harvest": ["January", "February", "October", "November", "December"]
+      },
+      "Pak choi (bok choy)": {
+        "Sowing": [
+          "February",
+          "March",
+          "April",
+          "May",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": ["March", "April", "May", "September", "October", "November"],
+        "Harvest": ["April", "May", "June", "July", "October", "November", "December"]
+      },
+      "Chinese cabbage (pe-tsai)": {
+        "Sowing": ["February", "March", "April", "May", "July", "August", "September", "October"],
+        "Transplant": ["March", "April", "May", "August", "September", "October"],
+        "Harvest": ["May", "June", "July", "August", "October", "November", "December"]
+      },
+      "Radicchio": {
+        "Sowing": ["January", "February", "March", "April", "July", "August", "September"],
+        "Transplant": ["February", "March", "April", "August", "September", "October"],
+        "Harvest": ["April", "May", "June", "July", "October", "November", "December"]
+      },
+      "Endive/Escarole": {
+        "Sowing": ["January", "February", "March", "April", "August", "September", "October"],
+        "Transplant": ["February", "March", "April", "September", "October", "November"],
+        "Harvest": ["January", "April", "May", "June", "October", "November", "December"]
+      },
+      "Chicory": {
+        "Sowing": ["January", "February", "March", "April", "August", "September", "October"],
+        "Transplant": ["February", "March", "April", "September", "October", "November"],
+        "Harvest": ["April", "May", "June", "October", "November", "December"]
+      },
+      "Arugula": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": [],
+        "Harvest": [
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "September",
+          "October",
+          "November",
+          "December"
+        ]
+      },
+      "Swiss chard": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "July",
+          "August",
+          "September",
+          "October"
+        ],
+        "Transplant": ["February", "March", "April", "May", "August", "September", "October"],
+        "Harvest": ["April", "May", "June", "July", "September", "October", "November", "December"]
+      },
+      "Watercress": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": [],
+        "Harvest": ["January", "March", "April", "May", "June", "October", "November", "December"]
+      },
+      "Mache (lamb's lettuce)": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": [],
+        "Harvest": ["January", "March", "April", "May", "June", "October", "November", "December"]
+      },
+      "Purslane": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Sorrel": {
+        "Sowing": ["February", "March", "April", "May", "August", "September", "October"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July", "September", "October", "November", "December"]
+      },
+      "Fennel (bulb)": {
+        "Sowing": ["February", "March", "April", "May", "July", "August", "September", "October"],
+        "Transplant": ["March", "April", "May", "August", "September", "October"],
+        "Harvest": ["January", "May", "June", "July", "August", "October", "November", "December"]
+      },
+      "Celery (stalk)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Celeriac (celery root)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["August", "September", "October", "November", "December"]
+      },
+      "Jerusalem artichoke (sunchoke)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "April"],
+        "Harvest": ["January", "September", "October", "November", "December"]
+      },
+      "Asparagus (crowns)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "April"],
+        "Harvest": ["February", "March", "April", "May"]
+      },
+      "Artichoke": {
+        "Sowing": ["February", "March", "April"],
+        "Transplant": ["September", "October", "November", "December"],
+        "Harvest": ["February", "March", "April", "May", "June"]
+      },
+      "Cardoon": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["January", "February", "November", "December"]
+      },
+      "Rhubarb": {
+        "Sowing": ["February", "March", "April"],
+        "Transplant": ["September", "October", "November"],
+        "Harvest": ["February", "March", "April", "May", "June"]
+      },
+      "Chayote (sechium)": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Physalis (cape gooseberry)": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Sweet corn": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Sweet sorghum (homegrown)": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Parsley (perennial)": {
+        "Sowing": ["February", "March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October", "November"]
+      },
+      "Cilantro": {
+        "Sowing": [
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July", "September", "October", "November", "December"]
+      },
+      "Mint (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "April", "May"],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October", "November"]
+      },
+      "Basil": {
+        "Sowing": ["February", "March", "April", "May", "June"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["May", "June", "July", "August", "September", "October", "November"]
+      },
+      "Oregano (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "April", "May"],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October"]
+      },
+      "Thyme (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "April", "May"],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October"]
+      },
+      "Rosemary (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "April", "May"],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October"]
+      },
+      "Bay laurel (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "April", "October", "November", "December"],
+        "Harvest": ["Ano inteiro com podas leves"]
+      },
+      "Sage (seedlings)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "April", "May"],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October"]
+      },
+      "Garlic chives (nira)": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Strawberry": {
+        "Sowing": [],
+        "Transplant": ["August", "September", "October", "November"],
+        "Harvest": ["March", "April", "May", "June", "July"]
+      },
+      "Raspberry": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["April", "May", "June", "July", "August", "September", "October", "November"]
+      },
+      "Blackberry (wild/cultivar)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Blueberry": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Currant": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["April", "May", "June", "July", "August"]
+      },
+      "Kiwi (gold/green)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Grapevine (table grape)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Passion fruit (south/islands)": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Banana plant (islands)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "April", "May", "June"],
+        "Harvest": ["Ano inteiro com picos em Inverno"]
+      },
+      "Papaya tree (islands)": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["Ano inteiro, picos Verão-Outono"]
+      },
+      "Avocado tree (south)": {
+        "Sowing": [],
+        "Transplant": ["February", "March", "April", "May", "September", "October", "November"],
+        "Harvest": ["January", "February", "March", "April", "November", "December"]
+      },
+      "Mango (south)": {
+        "Sowing": [],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Fig tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Pear tree (incl. Asian pear)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Apple tree (Gala/Fuji)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Citrus (orange/mandarin/lemon)": {
+        "Sowing": [],
+        "Transplant": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        "Harvest": ["January", "February", "March", "April", "October", "November", "December"]
+      },
+      "Persimmon": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Pomegranate tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Quince tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Plum tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["May", "June", "July", "August"]
+      },
+      "Peach/Nectarine tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["May", "June", "July", "August", "September"]
+      },
+      "Cherry tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "October", "November", "December"],
+        "Harvest": ["April", "May", "June", "July"]
+      },
+      "Loquat tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["March", "April", "May", "June"]
+      },
+      "Olive tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "March", "April", "October", "November", "December"],
+        "Harvest": ["January", "September", "October", "November", "December"]
+      },
+      "Walnut tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Almond tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Chestnut tree": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Hazelnut tree (hazelnut)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "November", "December"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Pistachio": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "November", "December"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Strawberry tree (Arbutus)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["January", "September", "October", "November", "December"]
+      },
+      "Purple persimmon (var.)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["September", "October", "November", "December"]
+      },
+      "Purple passion fruit (vine)": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Hardy kiwi (actinidia arguta)": {
+        "Sowing": [],
+        "Transplant": ["January", "February", "October", "November", "December"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Wheat (garden)": {
+        "Sowing": ["September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July"]
+      },
+      "Barley (garden)": {
+        "Sowing": ["September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July"]
+      },
+      "Oat (garden)": {
+        "Sowing": ["September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["April", "May", "June", "July"]
+      },
+      "Rye (garden)": {
+        "Sowing": ["September", "October", "November", "December"],
+        "Transplant": [],
+        "Harvest": ["May", "June", "July", "August"]
+      },
+      "Millet (proso millet)": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Quinoa": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Buckwheat": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Rice (flooded bed)": {
+        "Sowing": ["April", "May", "June"],
+        "Transplant": [],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Melon": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Watermelon": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Lemon cucumber": {
+        "Sowing": ["March", "April", "May", "June"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Pepino melon (melon pear)": {
+        "Sowing": ["February", "March", "April", "May"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October"]
+      },
+      "Italian sweet pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "California Wonder bell pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Shishito": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["March", "April", "May", "June"],
+        "Harvest": ["May", "June", "July", "August", "September", "October"]
+      },
+      "Anaheim pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Poblano": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Ancho (dried poblano)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Pasilla (dried chilaca)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Guajillo (dried mirasol)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Hatch chile (New Mexico)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Jalapeño": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Chipotle (smoked jalapeño)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Serrano": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Cayenne (long hot pepper)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Portuguese malagueta pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Peperoncini": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October", "November"]
+      },
+      "Espelette pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Hungarian Wax (banana pepper)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["June", "July", "August", "September", "October"]
+      },
+      "Aji Amarillo": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Aji Lemon Drop": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Aji Cristal": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Orange habanero": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Chocolate habanero": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Scotch Bonnet": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Bhut Jolokia (Ghost Pepper)": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Trinidad Moruga Scorpion": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Carolina Reaper": {
+        "Sowing": ["January", "February", "March", "December"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["August", "September", "October", "November"]
+      },
+      "Biquinho pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Brazilian fragrant pepper": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Cumari (Brazil)": {
+        "Sowing": ["January", "February", "March", "April"],
+        "Transplant": ["April", "May", "June"],
+        "Harvest": ["July", "August", "September", "October", "November"]
+      }
+    }
+  }
+}

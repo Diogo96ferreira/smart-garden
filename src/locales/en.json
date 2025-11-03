@@ -1,0 +1,193 @@
+{
+  "app": {
+    "name": "Smart Garden",
+    "welcome": "Welcome to Smart Garden 🌱",
+    "loading": "Loading...",
+    "noData": "No data available.",
+    "error": "Something went wrong. Please try again."
+  },
+  "common": {
+    "today": "Today",
+    "crop": "Crop",
+    "zone": "Zone",
+    "actions": "Actions",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish"
+  },
+  "tabs": {
+    "sowing": "Sowing",
+    "transplant": "Transplant",
+    "harvest": "Harvest",
+    "overview": "Overview",
+    "history": "History"
+  },
+  "calendar": {
+    "loading": "Loading calendar…",
+    "title": "Vegetable Planner",
+    "filters": "Filters",
+    "sow": "Sow",
+    "transplant": "Transplant",
+    "harvest": "Harvest",
+    "search": "Search crop…"
+  },
+  "dashboard": {
+    "thisWeek": "This week",
+    "greeting": "Hello, {{name}}! Let's take care of your garden.",
+    "intro": "Keep track of the priority tasks to keep your plants happy. Every completed action helps Smart Garden adjust future recommendations.",
+    "summary": "Summary",
+    "progressTitle": "Your garden is on the right track",
+    "completed": "You've completed {{done}} out of {{total}} tasks this week. Keep it up!",
+    "weeklyProgress": "Weekly progress",
+    "nextWatering": "Next watering",
+    "weather": "Weather forecast",
+    "newSuggestions": "New suggestions",
+    "mulch": {
+      "title": "Add mulch cover",
+      "desc": "Helps retain moisture and protects roots during hot days."
+    },
+    "nightWatering": {
+      "title": "Review evening watering",
+      "desc": "Watering at the end of the day reduces evaporation."
+    },
+    "seeHow": "See how",
+    "adjust": "Adjust schedule",
+    "carePlan": "Care plan",
+    "completedShort": "completed",
+    "noDescription": "No description available.",
+    "unmark": "Unmark task",
+    "markDone": "Mark as done",
+    "delay": "Delay task",
+    "howTo": "How to",
+    "generateTasks": "Generate tasks",
+    "generating": "Generating...",
+    "syncTasks": "Sync"
+  },
+  "garden": {
+    "title": "My garden",
+    "subtitle": "Daily care and records",
+    "description": "Track the plants that live with you. Register new species, adjust watering frequency, and keep an organized history between garden and orchard.",
+    "addPlant": "Add plant",
+    "registerPlant": "Register plant",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "Add a new plant to start tracking watering and harvest cycles.",
+    "wateringFrequency": "Watering frequency (days)",
+    "type": "Type",
+    "name": "Name",
+    "photo": "Photo",
+    "cancel": "Cancel",
+    "savePlant": "Save plant",
+    "saveChanges": "Save changes",
+    "delete": "Delete",
+    "analyzing": "Analyzing image...",
+    "uploading": "Uploading image...",
+    "noImage": "No image",
+    "waterEvery": "Water every {{days}} days",
+    "addNew": "Add new plant",
+    "editPlant": "Edit plant",
+    "horta": "Garden",
+    "pomar": "Orchard",
+    "edit": "Edit",
+    "loading": "Loading your garden..."
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "zone": "Zone",
+    "saveSuccess": "Settings saved successfully.",
+    "report": {
+      "title": "Task Report",
+      "range": {
+        "1w": "1 week",
+        "2w": "2 weeks",
+        "1m": "1 month",
+        "all": "All time"
+      },
+      "generate": "Generate report"
+    },
+    "themeOptions": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "languageOptions": {
+      "pt": "Portuguese (PT)",
+      "en": "English (US)"
+    }
+  },
+  "ai": {
+    "title": "AI Profile",
+    "profiles": {
+      "tia-adelia": {
+        "label": "Aunt Adelia",
+        "desc": "Practical, down-to-earth advice in simple language for home gardens."
+      },
+      "eng-agronomo": {
+        "label": "Agricultural Engineer",
+        "desc": "Technical, evidence-based explanations with best agronomic practices."
+      },
+      "mestre-horta": {
+        "label": "Garden Master",
+        "desc": "Balanced practical + theoretical guidance with seasonal and planning tips."
+      },
+      "professor-paciente": {
+        "label": "Patient Professor",
+        "desc": "Step-by-step and calm explanations — great for beginners."
+      }
+    },
+    "header": {
+      "eyebrow": "Smart diagnosis",
+      "title": "Talk to Aunt Adélia",
+      "subtitle": "Upload a photo of your plant to get an instant diagnosis and personalized advice on watering, pruning or harvesting."
+    },
+    "photo": {
+      "title": "Photo diagnosis",
+      "desc": "We automatically analyze your plant to suggest care and alerts.",
+      "previewAlt": "Preview",
+      "remove": "Remove",
+      "change": "Change image",
+      "dragTitle": "Drag a photo or choose from your device",
+      "dragSubtitle": "We accept leaves, fruits, seeds and flowers.",
+      "choose": "Choose photo",
+      "analyze": "Analyze photo",
+      "analyzing": "Analyzing..."
+    },
+    "chat": {
+      "title": "Chat with Aunt Adélia",
+      "desc": "Continue the conversation based on the diagnosis: ask for tips about treatment, harvest or general care.",
+      "placeholder": "Ask Aunt Adélia something...",
+      "thinking": "Thinking...",
+      "send": "Send"
+    },
+    "errors": {
+      "unknown": "An unknown error occurred.",
+      "chatFail": "I couldn't answer right now. Please try again in a moment."
+    },
+    "messages": {
+      "defaultReply": "Here's what I found about your plant!"
+    }
+  },
+  "onboarding": {
+    "title": "Welcome to Smart Garden 🌿",
+    "subtitle": "Let's set up your garden step by step.",
+    "next": "Next",
+    "back": "Back",
+    "finish": "Finish"
+  },
+  "splash": {
+    "welcome": "Welcome back 🌿",
+    "loading": "Preparing your garden..."
+  },
+  "notifications": {
+    "newTask": "New task available",
+    "harvestReminder": "Remember to harvest your crops!",
+    "taskCompleted": "Task completed"
+  }
+}
