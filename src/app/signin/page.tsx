@@ -16,9 +16,16 @@ export default function SignInPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // If already signed in, bounce to next
+    // If already signed in, bounce to intended destination
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) router.replace(next);
+      if (data.session) {
+        let dest = next;
+        try {
+          const sp = new URLSearchParams(window.location.search);
+          dest = sp.get('next') || next;
+        } catch {}
+        router.replace(dest);
+      }
     });
   }, [next, router]);
 
@@ -52,10 +59,15 @@ export default function SignInPage() {
     try {
       const storedLocale =
         typeof window !== 'undefined' ? localStorage.getItem('app.locale') || 'pt' : 'pt';
+      let dest = next || `/${storedLocale}/dashboard`;
+      try {
+        const sp = new URLSearchParams(window.location.search);
+        dest = sp.get('next') || dest;
+      } catch {}
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/signin?next=/${storedLocale}/dashboard`,
+          redirectTo: `${window.location.origin}/signin?next=${encodeURIComponent(dest)}`,
         },
       });
       if (error) throw error;
