@@ -47,10 +47,11 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    const locale = url.pathname.split('/')[1] === 'en' ? 'en' : 'pt';
-    url.pathname = '/signin';
-    url.searchParams.set('next', `/${locale}/dashboard`);
-    return NextResponse.redirect(url);
+    const dest = `${url.pathname}${url.search ?? ''}`;
+    const signin = req.nextUrl.clone();
+    signin.pathname = '/signin';
+    signin.searchParams.set('next', dest);
+    return NextResponse.redirect(signin);
   }
 
   return res;

@@ -27,6 +27,17 @@ export default function SignUpPage() {
         router.replace(dest);
       }
     });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        let dest = next;
+        try {
+          const sp = new URLSearchParams(window.location.search);
+          dest = sp.get('next') || next;
+        } catch {}
+        router.replace(dest);
+      }
+    });
+    return () => sub.subscription?.unsubscribe?.();
   }, [next, router]);
 
   useEffect(() => {
