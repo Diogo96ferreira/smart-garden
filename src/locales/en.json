@@ -127,19 +127,19 @@
     "profiles": {
       "tia-adelia": {
         "label": "Aunt Adelia",
-        "desc": "Practical, down-to-earth advice in simple language for home gardens."
+        "desc": "Practical, down-to-earth advice in simple language."
       },
-      "eng-agronomo": {
-        "label": "Agricultural Engineer",
-        "desc": "Technical, evidence-based explanations with best agronomic practices."
+      "eng-pedro": {
+        "label": "Engineer Pedro",
+        "desc": "Professional tone and objective, technical recommendations."
       },
-      "mestre-horta": {
-        "label": "Garden Master",
-        "desc": "Balanced practical + theoretical guidance with seasonal and planning tips."
+      "diogo-campos": {
+        "label": "Diogo Campos",
+        "desc": "Friendly, accessible tips for growing, watering and harvesting."
       },
-      "professor-paciente": {
-        "label": "Patient Professor",
-        "desc": "Step-by-step and calm explanations — great for beginners."
+      "agro-core": {
+        "label": "AGRO-CORE v1.0",
+        "desc": "Objective, concise analysis with a technical tone."
       }
     },
     "header": {

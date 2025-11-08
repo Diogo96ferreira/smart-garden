@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from '@/lib/useTranslation';
+import { useSettings } from '@/hooks/useSettings';
 
 type AnalysisResult = {
   type: string;
@@ -36,6 +37,7 @@ export default function TiaAdeliaPage() {
   const pathname = usePathname();
   const locale = pathname.startsWith('/en') ? 'en' : 'pt';
   const t = useTranslation(locale);
+  const { settings } = useSettings();
 
   const resetState = () => {
     setResult(null);
@@ -71,6 +73,8 @@ export default function TiaAdeliaPage() {
     try {
       const form = new FormData();
       form.append('file', imageFile);
+      form.append('profile', settings.aiProfile || 'tia-adelia');
+      form.append('locale', locale);
 
       const res = await fetch('/api/analyze-image', { method: 'POST', body: form });
       const data = await res.json();
@@ -85,7 +89,7 @@ export default function TiaAdeliaPage() {
     } finally {
       setLoading(false);
     }
-  }, [imageFile, t]);
+  }, [imageFile, t, locale, settings.aiProfile]);
 
   const handleSendMessage = useCallback(
     async (event: React.FormEvent) => {
@@ -104,6 +108,8 @@ export default function TiaAdeliaPage() {
           body: JSON.stringify({
             context: result.description,
             question,
+            profile: settings.aiProfile || 'tia-adelia',
+            locale,
           }),
         });
 
@@ -130,7 +136,7 @@ export default function TiaAdeliaPage() {
         setChatLoading(false);
       }
     },
-    [input, result?.description, t],
+    [input, result?.description, t, locale, settings.aiProfile],
   );
 
   const showChat = messages.length > 0;

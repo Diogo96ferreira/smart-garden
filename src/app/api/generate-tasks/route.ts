@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { buildTasksSystemPrompt, type AIPersona } from '@/lib/aiPersonas';
 import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';
 import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
 import {
@@ -117,13 +118,18 @@ function matchPlantFromTextShared(
   return plants.find((plant) => plant.id === matched.id) ?? null;
 }
 
-async function aiTasks(plants: Plant[], locale: Locale): Promise<GeneratedTask[]> {
+async function aiTasks(
+  plants: Plant[],
+  locale: Locale,
+  persona: AIPersona,
+): Promise<GeneratedTask[]> {
   if (!ai) return [];
 
   const today = new Date().toISOString().slice(0, 10);
   const localeName = locale === 'en' ? 'English (United States)' : 'Portugues (Portugal)';
   const system = `You are an expert kitchen garden/orchard assistant. Output strictly and only a compact JSON array of tasks.
-Each task has: {"title": string, "description": string} in the requested locale. Avoid extra fields or commentary.`;
+Each task has: {"title": string, "description": string} in the requested locale. Avoid extra fields or commentary.
+${buildTasksSystemPrompt(persona, locale as 'pt' | 'en')}`;
 
   const content = `Locale: ${localeName}
 Today: ${today}
@@ -214,13 +220,16 @@ export async function POST(req: Request) {
       location,
       resetAll,
       horizonDays,
+      profile,
     } = (await req.json().catch(() => ({}))) as {
       locale?: string;
       location?: UserLocation | null;
       resetAll?: boolean;
       horizonDays?: number;
+      profile?: AIPersona;
     };
     const locale: 'pt' | 'en' = rawLocale?.toLowerCase().startsWith('en') ? 'en' : 'pt';
+    const persona: AIPersona = (profile as AIPersona) || 'tia-adelia';
 
     const { data: plants, error: plantsError } = await supabase
       .from('plants')
@@ -266,7 +275,7 @@ export async function POST(req: Request) {
         Number.isFinite(horizonDays as number) ? (horizonDays as number) : 0,
       ),
     });
-    const aiGenerated = (horizonDays ?? 0) > 0 ? [] : await aiTasks(plantList, locale);
+    const aiGenerated = (horizonDays ?? 0) > 0 ? [] : await aiTasks(plantList, locale, persona);
 
     // Normalize day for dedupe (AI tasks may not include due_date)
     const todayStr = new Date().toISOString().slice(0, 10);

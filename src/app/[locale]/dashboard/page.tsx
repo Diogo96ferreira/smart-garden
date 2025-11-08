@@ -222,10 +222,22 @@ export default function DashboardPage() {
             }
           } catch {}
         }
+        // Include the selected AI persona to influence task phrasing when AI is used
         await fetch('/api/generate-tasks', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ locale, location }),
+          body: JSON.stringify({
+            locale,
+            location,
+            profile: (() => {
+              try {
+                const rawSettings = localStorage.getItem('garden.settings.v1');
+                if (rawSettings)
+                  return (JSON.parse(rawSettings).aiProfile as string) || 'tia-adelia';
+              } catch {}
+              return 'tia-adelia';
+            })(),
+          }),
         });
         // Fetch weather note to explain adjustments (with localStorage cache until midnight)
         try {

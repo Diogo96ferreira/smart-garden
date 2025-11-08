@@ -27,6 +27,10 @@ export default function SettingsPage() {
   const router = useRouter();
   const locale = pathname.startsWith('/en') ? 'en' : 'pt';
   const t = useTranslation(locale);
+  const l = (key: string, fallback: string) => {
+    const v = t(key);
+    return v === key ? fallback : v;
+  };
 
   // Helpers
   const setTheme = (v: Settings['theme']) => save({ theme: v });
@@ -55,23 +59,42 @@ export default function SettingsPage() {
   const AI_PROFILES = [
     {
       id: 'tia-adelia',
-      label: t('ai.profiles.tia-adelia.label'),
-      desc: t('ai.profiles.tia-adelia.desc'),
+      label: l('ai.profiles.tia-adelia.label', locale === 'en' ? 'Aunt Adelia' : 'Tia Adélia'),
+      desc: l(
+        'ai.profiles.tia-adelia.desc',
+        locale === 'en'
+          ? 'Practical advice in simple language.'
+          : 'Conselhos práticos em linguagem simples.',
+      ),
     },
     {
-      id: 'eng-agronomo',
-      label: t('ai.profiles.eng-agronomo.label'),
-      desc: t('ai.profiles.eng-agronomo.desc'),
+      id: 'eng-pedro',
+      label: l(
+        'ai.profiles.eng-pedro.label',
+        locale === 'en' ? 'Engineer Pedro' : 'Engenheiro Pedro',
+      ),
+      desc: l(
+        'ai.profiles.eng-pedro.desc',
+        locale === 'en'
+          ? 'Professional tone with objective recommendations.'
+          : 'Tom profissional e recomendações objetivas.',
+      ),
     },
     {
-      id: 'mestre-horta',
-      label: t('ai.profiles.mestre-horta.label'),
-      desc: t('ai.profiles.mestre-horta.desc'),
+      id: 'diogo-campos',
+      label: l('ai.profiles.diogo-campos.label', 'Diogo Campos'),
+      desc: l(
+        'ai.profiles.diogo-campos.desc',
+        locale === 'en' ? 'Friendly and accessible tips.' : 'Leve e simpático, dicas acessíveis.',
+      ),
     },
     {
-      id: 'professor-paciente',
-      label: t('ai.profiles.professor-paciente.label'),
-      desc: t('ai.profiles.professor-paciente.desc'),
+      id: 'agro-core',
+      label: l('ai.profiles.agro-core.label', 'AGRO-CORE v1.0'),
+      desc: l(
+        'ai.profiles.agro-core.desc',
+        locale === 'en' ? 'Objective, concise analysis.' : 'Análise objetiva e concisa.',
+      ),
     },
   ];
 

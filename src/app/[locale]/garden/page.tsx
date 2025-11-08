@@ -111,6 +111,14 @@ export default function GardenPage() {
       setAnalyzing(true);
       const formData = new FormData();
       formData.append('file', file);
+      try {
+        const rawSettings = localStorage.getItem('garden.settings.v1');
+        if (rawSettings) {
+          const { aiProfile } = JSON.parse(rawSettings) as { aiProfile?: string };
+          if (aiProfile) formData.append('profile', aiProfile);
+        }
+      } catch {}
+      formData.append('locale', locale);
       const response = await fetch('/api/build-plant', { method: 'POST', body: formData });
       if (response.ok) {
         const dataAI: {

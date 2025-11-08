@@ -1,5 +1,5 @@
 // lib/settings.ts
-export type AIProfile = 'tia-adelia' | 'eng-agronomo' | 'mestre-horta' | 'professor-paciente';
+export type AIProfile = 'tia-adelia' | 'eng-pedro' | 'diogo-campos' | 'agro-core';
 export type ReportRange = '1w' | '2w' | '1m' | 'all';
 
 export type Settings = {
