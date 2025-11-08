@@ -56,6 +56,14 @@ export default function TiaAdeliaPage() {
             ? 'Aunt Adelia'
             : 'Tia Adélia';
 
+  const avatarSrc =
+    persona === 'eng-pedro'
+      ? '/avatar-pedro.jpg'
+      : persona === 'diogo-campos'
+        ? '/avatar-diogo.jpg'
+        : persona === 'agro-core'
+          ? '/avatar-bot.jpg'
+          : '/avatar-adelia.jpg';
   const resetState = () => {
     setResult(null);
     setMessages([]);
@@ -217,7 +225,7 @@ export default function TiaAdeliaPage() {
                 <>
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
                     <Image
-                      src="/avatar-adelia.jpg"
+                      src={avatarSrc}
                       alt={personaName}
                       width={48}
                       height={48}
@@ -302,7 +310,7 @@ export default function TiaAdeliaPage() {
               <div className="min-h-[180px] space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
                 {messages.length === 0 ? (
                   <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
-                    <Avatar src="/avatar-adelia.jpg" alt={personaName} />
+                    <Avatar src={avatarSrc} alt={personaName} />
                     <p>
                       {locale === 'en'
                         ? 'Upload a photo to start the conversation.'
@@ -315,9 +323,7 @@ export default function TiaAdeliaPage() {
                       key={`${message.role}-${index}`}
                       className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
-                      {message.role === 'model' && (
-                        <Avatar src="/avatar-adelia.jpg" alt={personaName} />
-                      )}
+                      {message.role === 'model' && <Avatar src={avatarSrc} alt={personaName} />}
                       <div
                         className={`max-w-[75%] rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-sm ${
                           message.role === 'user'
@@ -338,7 +344,7 @@ export default function TiaAdeliaPage() {
                 )}
                 {chatLoading && (
                   <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
-                    <Avatar src="/avatar-adelia.jpg" alt={personaName} />
+                    <Avatar src={avatarSrc} alt={personaName} />
                     <p>{t('ai.chat.thinking')}</p>
                   </div>
                 )}
