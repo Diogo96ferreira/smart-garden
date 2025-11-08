@@ -32,13 +32,35 @@ export default function HomeRedirect() {
     const locale = resolveLocale();
 
     // Primeiro garantir que o utilizador está autenticado
-    supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(async ({ data }) => {
       const isAuthed = Boolean(data.session);
       if (!isAuthed) {
         router.replace(`/signin?next=/${locale}/onboarding`);
         return;
       }
-      const target = hasCompletedOnboarding ? '/dashboard' : '/onboarding';
+
+      // Verdade server-side: se não houver plantas, força onboarding
+      let forceOnboarding = false;
+      try {
+        const userId = data.session?.user?.id;
+        if (userId) {
+          const res = await supabase
+            .from('plants')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .limit(1);
+          const count = typeof res.count === 'number' ? res.count : 0;
+          forceOnboarding = count === 0;
+        }
+      } catch {
+        // se a contagem falhar, usa flag local
+      }
+
+      const target = forceOnboarding
+        ? '/onboarding'
+        : hasCompletedOnboarding
+          ? '/dashboard'
+          : '/onboarding';
       router.replace(`/${locale}${target}`);
     });
   }, [router]);
