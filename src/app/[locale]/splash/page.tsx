@@ -2,15 +2,17 @@
 
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function SplashPage() {
   const router = useRouter();
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1] || 'pt';
 
   useEffect(() => {
-    const timer = setTimeout(() => router.push('/dashboard'), 1500);
+    const timer = setTimeout(() => router.push(`/${locale}/dashboard`), 1500);
     return () => clearTimeout(timer);
-  }, [router]);
+  }, [router, locale]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[var(--color-background)] px-6">

@@ -81,29 +81,38 @@ export default function SettingsPage() {
     { id: 'all', label: t('settings.report.range.all') },
   ];
 
-  const onGenerateReport = React.useCallback(() => {
-    const range = settings.reportRange ?? '1w';
-    let data: unknown = [];
+  const onGenerateReport = React.useCallback(async () => {
+    const range = settings.reportRange ?? '1m';
+    const days = range === '1w' ? 7 : range === '2w' ? 14 : range === '1m' ? 31 : 31;
     try {
-      const raw = localStorage.getItem('taskLog');
-      data = raw ? JSON.parse(raw) : [];
-    } catch (err) {
-      void err;
-    }
-    const payload = {
-      generatedAt: new Date().toISOString(),
-      range,
-      locale: settings.locale,
-      items: data,
-    };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = Object.assign(document.createElement('a'), {
-      href: url,
-      download: `relatorio-tarefas-${range}-${new Date().toISOString().slice(0, 10)}.json`,
-    });
+      const locale = settings.locale === 'en-US' ? 'en' : 'pt';
+      let location: { distrito?: string; municipio?: string } | undefined;
+      try {
+        const rawUL = localStorage.getItem('userLocation');
+        if (rawUL) location = JSON.parse(rawUL);
+      } catch {}
+      if (!location) {
+        try {
+          const rawSettings = localStorage.getItem('garden.settings.v1');
+          if (rawSettings) {
+            const parsed = JSON.parse(rawSettings);
+            if (parsed && typeof parsed === 'object' && parsed.userLocation)
+              location = parsed.userLocation;
+          }
+        } catch {}
+      }
+      await fetch('/api/generate-tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ locale, location, horizonDays: days }),
+      });
+    } catch {}
+
+    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}`;
+    const a = Object.assign(document.createElement('a'), { href: url, download: '' });
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    a.remove();
   }, [settings.reportRange, settings.locale]);
 
   return (
@@ -190,7 +199,7 @@ export default function SettingsPage() {
                 type="radio"
                 name="aiProfile"
                 checked={(settings.aiProfile ?? DEFAULT_SETTINGS.aiProfile) === p.id}
-                onChange={() => setAI(p.id)}
+                onChange={() => setAI(p.id as AIProfile)}
                 className="mt-1"
               />
               <div>

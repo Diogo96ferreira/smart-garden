@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import type { ComponentType } from 'react';
-import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import clsx from 'clsx';
@@ -29,15 +30,16 @@ export default function DashboardPage() {
   const locale = pathname.split('/')[1] || 'pt';
   const t = useTranslation(locale);
 
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]); // pending
   const [doneThisWeek, setDoneThisWeek] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('Jardineiro');
   const [plants, setPlants] = useState<PlantLite[]>([]);
+  const [_weekTotal, setWeekTotal] = useState(0);
+  const [_weekDone, setWeekDone] = useState(0);
   const [plim, setPlim] = useState(false);
+  const [weatherNote, setWeatherNote] = useState<string | null>(null);
   const allDoneRef = useRef(false);
-
-  // controla o "Tudo concluído!"
   useEffect(() => {
     const total = tasks.length + doneThisWeek.length;
     const allDone = total > 0 && tasks.length === 0;
@@ -50,32 +52,105 @@ export default function DashboardPage() {
     if (!allDone) allDoneRef.current = false;
   }, [tasks.length, doneThisWeek.length]);
 
-  // lê o nome do utilizador guardado
   useEffect(() => {
     const storedName = localStorage.getItem('userName');
     if (storedName) setUserName(storedName);
   }, []);
 
-  // range da semana
-  const getWeekRange = useCallback(() => {
+  // Week helpers
+  const getWeekRange = () => {
     const now = new Date();
     const d = new Date(now);
     d.setHours(0, 0, 0, 0);
-    const day = (d.getDay() + 6) % 7;
+    const day = (d.getDay() + 6) % 7; // Monday=0
     const start = new Date(d);
     start.setDate(d.getDate() - day);
     const end = new Date(start);
     end.setDate(start.getDate() + 7);
     return { start: start.toISOString(), end: end.toISOString() };
-  }, []);
+  };
+
+  const refreshWeekStats = async () => {
+    const { data: auth } = await supabase.auth.getUser();
+    const userId = auth.user?.id;
+    if (!userId) return;
+    const { start, end } = getWeekRange();
+    const totalQ = await supabase
+      .from('tasks')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', userId)
+      .gte('created_at', start)
+      .lt('created_at', end);
+    const total = totalQ.count ?? 0;
+    const doneQ = await supabase
+      .from('tasks')
+      .select('id', { count: 'exact', head: true })
+      .eq('done', true)
+      .eq('user_id', userId)
+      .gte('done_at', start)
+      .lt('done_at', end);
+    const done = doneQ.count ?? 0;
+    setWeekTotal(total);
+    setWeekDone(done);
+  };
 
   const progress = useMemo(() => {
     const total = tasks.length + doneThisWeek.length;
     if (!total) return 0;
-    return Math.min(100, Math.round((doneThisWeek.length / total) * 100));
+    return Math.max(0, Math.min(100, Math.round((doneThisWeek.length / total) * 100)));
   }, [tasks.length, doneThisWeek.length]);
 
-  const refreshTasks = useCallback(async () => {
+  // Initial fetch
+  useEffect(() => {
+    async function fetchTasks() {
+      try {
+        const { data: auth } = await supabase.auth.getUser();
+        const userId = auth.user?.id;
+        if (!userId) return setLoading(false);
+        const { start, end } = getWeekRange();
+        const [pQ, dQ] = await Promise.all([
+          supabase
+            .from('tasks')
+            .select('*')
+            .eq('done', false)
+            .eq('user_id', userId)
+            .gte('created_at', start)
+            .lt('created_at', end)
+            .order('created_at', { ascending: true }),
+          supabase
+            .from('tasks')
+            .select('*')
+            .eq('done', true)
+            .eq('user_id', userId)
+            .gte('done_at', start)
+            .lt('done_at', end)
+            .order('done_at', { ascending: true }),
+        ]);
+        setTasks((pQ.data as Task[]) ?? []);
+        setDoneThisWeek((dQ.data as Task[]) ?? []);
+      } catch (error) {
+        console.error('Erro ao carregar tarefas:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTasks();
+  }, []);
+
+  // Plants for images
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data, error } = await supabase.from('plants').select('id,name,image_url');
+        if (error) throw error;
+        setPlants((data as PlantLite[]) ?? []);
+      } catch (err) {
+        console.warn('Falha a carregar plantas para imagens:', err);
+      }
+    })();
+  }, []);
+
+  const refreshTasks = async () => {
     const { start, end } = getWeekRange();
     const [pQ, dQ] = await Promise.all([
       supabase
@@ -93,43 +168,98 @@ export default function DashboardPage() {
         .lt('done_at', end)
         .order('done_at', { ascending: true }),
     ]);
-    setTasks(pQ.data ?? []);
-    setDoneThisWeek(dQ.data ?? []);
-  }, [getWeekRange]);
+    setTasks((pQ.data as Task[]) ?? []);
+    setDoneThisWeek((dQ.data as Task[]) ?? []);
+  };
 
-  // Fetch inicial
-  useEffect(() => {
-    refreshTasks().finally(() => setLoading(false));
-  }, [refreshTasks]);
-
-  // plantas (imagens)
+  // Soft loading: sync tasks for today and refresh
   useEffect(() => {
     (async () => {
       try {
-        const { data, error } = await supabase.from('plants').select('id,name,image_url');
-        if (error) throw error;
-        setPlants(data ?? []);
-      } catch (err) {
-        console.warn('Falha a carregar plantas para imagens:', err);
-      }
-    })();
-  }, []);
-
-  // sincroniza tasks do servidor
-  useEffect(() => {
-    (async () => {
-      try {
+        // Try to include user location from localStorage to enable weather-aware scheduling
+        let location: { distrito?: string; municipio?: string } | undefined;
+        try {
+          const rawUL = localStorage.getItem('userLocation');
+          if (rawUL) location = JSON.parse(rawUL);
+        } catch {}
+        if (!location) {
+          try {
+            const rawSettings = localStorage.getItem('garden.settings.v1');
+            if (rawSettings) {
+              const parsed = JSON.parse(rawSettings);
+              if (parsed && typeof parsed === 'object' && parsed.userLocation)
+                location = parsed.userLocation;
+            }
+          } catch {}
+        }
         await fetch('/api/generate-tasks', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ locale }),
+          body: JSON.stringify({ locale, location }),
         });
+        // Fetch weather note to explain adjustments (with localStorage cache until midnight)
+        try {
+          const normalize = (s?: string) =>
+            (s || '')
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/\p{Diacritic}/gu, '')
+              .replace(/\s+/g, ' ')
+              .trim();
+          const locKey = location
+            ? `${normalize(location.distrito)}|${normalize(location.municipio)}`
+            : 'none';
+          const cacheKey = `weather.note.v2:${locale}:${locKey}`;
+
+          // try cache
+          try {
+            const cachedRaw = localStorage.getItem(cacheKey);
+            if (cachedRaw) {
+              const cached = JSON.parse(cachedRaw) as { note?: string; expiresAt?: string };
+              const expires = cached?.expiresAt ? new Date(cached.expiresAt) : null;
+              if (expires && expires.getTime() > Date.now() && typeof cached.note === 'string') {
+                setWeatherNote(cached.note);
+              } else {
+                localStorage.removeItem(cacheKey);
+              }
+            }
+          } catch {}
+
+          // fetch only if we have no valid cached note
+          if (!localStorage.getItem(cacheKey)) {
+            const res = await fetch('/api/weather', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ locale, location }),
+            });
+            const data = await res.json().catch(() => null);
+            if (data && typeof data.note === 'string') {
+              setWeatherNote(data.note);
+              // compute next midnight local time
+              const now = new Date();
+              const expiresAt = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate() + 1,
+                0,
+                0,
+                0,
+                0,
+              );
+              try {
+                localStorage.setItem(
+                  cacheKey,
+                  JSON.stringify({ note: data.note, expiresAt: expiresAt.toISOString() }),
+                );
+              } catch {}
+            }
+          }
+        } catch {}
         await refreshTasks();
-      } catch (err) {
-        console.warn('generate-tasks sync failed', err);
-      }
+        await refreshWeekStats();
+      } catch {}
     })();
-  }, [locale, refreshTasks]);
+  }, []);
 
   const handleCompleteTask = async (task: Task) => {
     try {
@@ -150,14 +280,14 @@ export default function DashboardPage() {
           }
         }
       }
-
       await supabase
         .from('tasks')
         .update({ done: true, done_at: new Date().toISOString() })
         .eq('id', task.id);
-
+      // Optimistic: move card (shared layout)
       setTasks((prev) => prev.filter((t) => t.id !== task.id));
       setDoneThisWeek((prev) => [...prev, { ...task }]);
+      await refreshWeekStats();
     } catch (err) {
       console.error('Erro ao concluir tarefa:', err);
     }
@@ -173,6 +303,7 @@ export default function DashboardPage() {
         .update({ created_at: next.toISOString(), done: false })
         .eq('id', task.id);
       setTasks((prev) => prev.filter((t) => t.id !== task.id));
+      await refreshWeekStats();
     } catch (err) {
       console.error('Erro ao adiar tarefa:', err);
     }
@@ -186,13 +317,16 @@ export default function DashboardPage() {
       .replace(/\s+/g, ' ')
       .trim();
 
+  // No client backfill: tasks are always generated from server with plant_id
+
   const imageForTask = (task: Task): string | null => {
     if (task.image) return task.image;
     if (task.plant_id) {
       const p = plants.find((x) => x.id === task.plant_id);
       if (p?.image_url) return p.image_url;
     }
-    const tt = norm(`${task.title} ${task.description ?? ''}`);
+    const t = `${task.title} ${task.description ?? ''}`;
+    const tt = norm(t);
     let best: string | null = null;
     let bestLen = 0;
     for (const p of plants) {
@@ -216,7 +350,6 @@ export default function DashboardPage() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-10 px-6 py-12">
-      {/* Header */}
       <header className="space-y-2">
         <p className="eyebrow text-left">{t('dashboard.thisWeek')}</p>
         <h1 className="text-display text-3xl sm:text-4xl">
@@ -227,13 +360,194 @@ export default function DashboardPage() {
         </p>
       </header>
 
-      {/* resto igual ao teu código */}
-      {/* ... */}
+      <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="rounded-[var(--radius-lg)] bg-linear-to-br from-[var(--color-primary)] via-[#3f9260] to-[#2d6f45] p-8 text-white shadow-[var(--shadow-soft)]">
+          <p className="text-sm tracking-wider text-white/70 uppercase">{t('dashboard.summary')}</p>
+          <h2 className="mt-2 text-3xl leading-tight font-semibold">
+            {t('dashboard.progressTitle')}
+          </h2>
+          <p className="mt-4 max-w-md text-sm text-white/80">
+            {t('dashboard.completed')
+              .replace('{{done}}', doneThisWeek.length.toString())
+              .replace('{{total}}', (tasks.length + doneThisWeek.length).toString())}
+          </p>
+          <div className="mt-6 flex flex-col gap-4">
+            <div>
+              <div className="flex items-center justify-between text-sm text-white/70">
+                <span>{t('dashboard.weeklyProgress')}</span>
+                <span>{progress}%</span>
+              </div>
+              <div className="mt-2 h-2 rounded-full bg-white/25">
+                <motion.div
+                  className="h-full rounded-full bg-white"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.6, ease: 'easeOut' }}
+                />
+              </div>
+            </div>
+            {weatherNote && (
+              <div className="mt-2 flex items-start gap-3 rounded-[var(--radius-md)] bg-white/10 p-3 text-sm leading-snug">
+                <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-white/80" />
+                <p className="text-white/90">{weatherNote}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <aside className="rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-soft)]">
+          <p className="eyebrow">{t('dashboard.newSuggestions')}</p>
+          <div className="mt-6 space-y-4">
+            <SuggestionCard
+              title={t('dashboard.mulch.title')}
+              description={t('dashboard.mulch.desc')}
+              actionLabel={t('dashboard.seeHow')}
+            />
+            <SuggestionCard
+              title={t('dashboard.nightWatering.title')}
+              description={t('dashboard.nightWatering.desc')}
+              actionLabel={t('dashboard.adjust')}
+            />
+          </div>
+        </aside>
+      </section>
+
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-display text-2xl">{t('dashboard.carePlan')}</h2>
+          <p className="text-sm text-[var(--color-text-muted)]">
+            {doneThisWeek.length}/{tasks.length + doneThisWeek.length}{' '}
+            {t('dashboard.completedShort')}
+          </p>
+        </div>
+
+        <LayoutGroup id="tasks-group">
+          {/* Pending */}
+          <div className="space-y-4">
+            <AnimatePresence initial={false} mode="popLayout">
+              {tasks.map((task, index) => (
+                <motion.div
+                  key={task.id}
+                  layout
+                  layoutId={`task-${task.id}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20, scale: 0.98 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 40,
+                    mass: 0.7,
+                    delay: index * 0.02,
+                  }}
+                  className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-soft)]"
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <div className="flex items-center gap-4">
+                      <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
+                        <Image
+                          src={imageForTask(task) || '/tomato.jpg'}
+                          alt={task.title}
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="text-lg font-semibold text-[var(--color-text)]">
+                          {task.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                          {task.description || t('dashboard.noDescription')}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-1 items-center justify-end gap-3">
+                      <TaskActionButton
+                        label={t('dashboard.markDone')}
+                        icon={CheckCircle2}
+                        onClick={() => handleCompleteTask(task)}
+                      />
+                      <TaskActionButton
+                        label={t('dashboard.delay')}
+                        icon={Clock3}
+                        onClick={() => handlePostponeTask(task)}
+                      />
+                      <TaskActionButton label={t('dashboard.howTo')} icon={HelpCircle} />
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          {/* Completed */}
+          {Boolean(doneThisWeek.length) && (
+            <div className="mt-6 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase">
+                <div className="h-px flex-1 bg-[var(--color-border)]" />
+                <span>{t('dashboard.completedShort')}</span>
+                <div className="h-px flex-1 bg-[var(--color-border)]" />
+              </div>
+              <div className="space-y-3">
+                <AnimatePresence initial={false} mode="popLayout">
+                  {doneThisWeek.map((task) => (
+                    <motion.div
+                      key={`done-${task.id}`}
+                      layout
+                      layoutId={`task-${task.id}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 opacity-70 saturate-50"
+                    >
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="h-5 w-5 text-[var(--color-primary)]" />
+                        <div>
+                          <div className="text-sm font-medium text-[var(--color-text)]">
+                            {task.title}
+                          </div>
+                          <div className="text-xs text-[var(--color-text-muted)]">
+                            {task.description || t('dashboard.noDescription')}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </div>
+          )}
+        </LayoutGroup>
+      </section>
+
+      <AnimatePresence>
+        {plim && (
+          <motion.div
+            key="plim"
+            className="pointer-events-none fixed inset-0 z-[100] flex items-start justify-center pt-20"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+          >
+            <div className="relative rounded-full bg-[var(--color-surface)]/95 px-4 py-2 shadow-[0_12px_32px_rgba(0,0,0,0.25)] ring-2 ring-[var(--color-primary)]/40">
+              <div className="flex items-center gap-2 text-[var(--color-primary-strong)]">
+                <Sparkles className="h-5 w-5" />
+                <span className="text-sm font-semibold">
+                  {locale.startsWith('en') ? 'All tasks done!' : 'Tudo conclu�do!'}
+                </span>
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div className="pointer-events-none absolute -inset-6 animate-ping rounded-full border-2 border-[var(--color-primary)]/25" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
 
-// === Components ===
 function SuggestionCard({
   title,
   description,

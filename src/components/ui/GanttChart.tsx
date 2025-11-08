@@ -31,7 +31,9 @@ export type Month =
   | 'December';
 
 export type ActionKey = 'Semeadura' | 'Transplante' | 'Colheita';
-export type CropEntry = Partial<Record<ActionKey, string[]>>;
+export type CropEntry = Partial<
+  Record<ActionKey | 'Sowing' | 'Transplant' | 'Transplanting' | 'Harvest', string[]>
+>;
 export type ZoneData = Record<string, CropEntry>;
 type StickyMode = 'inside' | 'page';
 
@@ -78,7 +80,7 @@ const maskFor = (months: Month[], locale: 'pt' | 'en') => {
   return m;
 };
 
-const onlyMonths = (arr?: string[], locale: 'pt' | 'en'): Month[] => {
+const onlyMonths = (arr: string[] | undefined, locale: 'pt' | 'en' = 'pt'): Month[] => {
   if (!arr) return [];
   const validMonths =
     locale === 'en'

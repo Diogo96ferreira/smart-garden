@@ -20,6 +20,20 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Weather‑Aware Watering (New)
+
+- The dashboard now sends your location (if set during onboarding) to `/api/generate-tasks`.
+- The server uses Open‑Meteo (no API key required) to fetch recent rain and sunshine, then:
+  - Skips creating watering tasks for today if it rained ≥ 5 mm yesterday.
+  - Adjusts effective watering frequency dynamically:
+    - More rain → water less often (increase interval).
+    - More sun/heat → water more often (decrease interval).
+
+Notes:
+
+- Location is read from `localStorage` key `userLocation` (and falls back to `garden.settings.v1` → `userLocation`).
+- If location is unavailable, watering behavior remains unchanged.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

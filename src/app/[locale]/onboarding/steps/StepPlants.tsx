@@ -43,14 +43,115 @@ export function StepPlants({ onBack, onNext }: Props) {
     let active = true;
     async function load() {
       try {
-        const response = await fetch('/data/vegetables.json');
-        if (!response.ok) throw new Error(`Falha ao carregar dados (${response.status})`);
-        const payload = (await response.json()) as Vegetable[];
+        // Base: calendário público (servido a partir de /public)
+        const [calRes, extraRes] = await Promise.all([
+          fetch('/calendario.pt.json'),
+          fetch('/plants.catalog.pt.json').catch(() => new Response('[]', { status: 200 })),
+        ]);
+        if (!calRes.ok) throw new Error(`Falha ao carregar calendario (${calRes.status})`);
+        type CalEntry = {
+          Semeadura?: string[];
+          Semeia?: string[];
+          Semear?: string[];
+          Colheita?: string[];
+        };
+        type CalendarJson = { calendario?: Record<string, Record<string, CalEntry>> };
+        const cal = (await calRes.json()) as CalendarJson;
+        let extras: Partial<Vegetable>[] = [];
+        try {
+          if (extraRes && extraRes.ok) extras = (await extraRes.json()) as Partial<Vegetable>[];
+        } catch {}
+
+        // Extrair nomes únicos do calendário
+        const zonas: Array<Record<string, CalEntry>> = cal?.calendario
+          ? (Object.values(cal.calendario) as Array<Record<string, CalEntry>>)
+          : [];
+        const nomes = new Set<string>();
+        for (const zona of zonas) {
+          for (const nome of Object.keys(zona)) {
+            nomes.add(String(nome));
+          }
+        }
+
+        // Transformar em catálogo mínimo
+        const monthsOrder = [
+          'Janeiro',
+          'Fevereiro',
+          'Março',
+          'Abril',
+          'Maio',
+          'Junho',
+          'Julho',
+          'Agosto',
+          'Setembro',
+          'Outubro',
+          'Novembro',
+          'Dezembro',
+        ];
+        const monthIdx = (m: string) => monthsOrder.indexOf(m);
+
+        const vegetablesFromCal: Vegetable[] = [];
+        for (const nome of nomes) {
+          // Encontrar qualquer registo para apanhar janelas
+          let semeadura: string[] | undefined;
+          let colheita: string[] | undefined;
+          for (const zona of zonas) {
+            const e = zona[nome] as CalEntry | undefined;
+            if (e) {
+              semeadura ||= e['Semeadura'] || e['Semeia'] || e['Semear'];
+              colheita ||= e['Colheita'];
+            }
+            if (semeadura && colheita) break;
+          }
+          const sow = Array.isArray(semeadura) && semeadura.length ? semeadura : ['Março'];
+          const harv = Array.isArray(colheita) && colheita.length ? colheita : ['Julho'];
+          const sowSorted = [...sow].sort((a, b) => monthIdx(a) - monthIdx(b));
+          const harvSorted = [...harv].sort((a, b) => monthIdx(a) - monthIdx(b));
+          const id = nome
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/\p{Diacritic}/gu, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$|--+/g, '');
+          vegetablesFromCal.push({
+            id,
+            name: nome,
+            wateringFrequencyDays: 3,
+            plantingWindow: { startMonth: sowSorted[0], endMonth: sowSorted[sowSorted.length - 1] },
+            harvestWindow: {
+              startMonth: harvSorted[0],
+              endMonth: harvSorted[harvSorted.length - 1],
+            },
+          });
+        }
+
+        // Mesclar extras (se houver), deduplicando por id
+        const extrasMapped: Vegetable[] = Array.isArray(extras)
+          ? extras.map((e) => ({
+              id: String(e.id ?? e.name)
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/\p{Diacritic}/gu, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$|--+/g, ''),
+              name: String(e.name ?? ''),
+              wateringFrequencyDays: Number(e.wateringFrequencyDays ?? 3),
+              plantingWindow: e.plantingWindow ?? { startMonth: 'Março', endMonth: 'Abril' },
+              harvestWindow: e.harvestWindow ?? { startMonth: 'Julho', endMonth: 'Setembro' },
+            }))
+          : [];
+
+        const map = new Map<string, Vegetable>();
+        for (const v of [...vegetablesFromCal, ...extrasMapped]) {
+          if (!map.has(v.id)) map.set(v.id, v);
+        }
+        const finalList = Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
+
         if (active) {
-          setCatalogue(payload);
+          setCatalogue(finalList);
           setCatalogueError(null);
         }
-      } catch {
+      } catch (_e) {
         if (active) setCatalogueError('Nao foi possivel carregar a lista de plantas.');
       } finally {
         if (active) setLoadingCatalogue(false);

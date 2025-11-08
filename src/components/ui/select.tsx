@@ -133,19 +133,21 @@ export function SelectContent({ className, children, ...props }: SelectContentPr
   const contentRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
+    if (!context) return;
+    const ctx = context;
     function handleClickOutside(event: MouseEvent) {
       if (!contentRef.current) return;
       if (!contentRef.current.contains(event.target as Node)) {
-        context.setOpen(false);
+        ctx.setOpen(false);
       }
     }
-    if (context.open) {
+    if (ctx.open) {
       document.addEventListener('mousedown', handleClickOutside);
     }
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [context]);
 
-  if (!context.open) return null;
+  if (!context || !context.open) return null;
 
   return (
     <div

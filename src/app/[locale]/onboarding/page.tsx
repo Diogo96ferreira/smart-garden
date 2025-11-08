@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Stepper } from '@/components/ui/Stepper';
@@ -16,11 +16,13 @@ import { StepReady } from './steps/StepReady';
 export default function OnboardingPage() {
   const [step, setStep] = useState(0);
   const router = useRouter();
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1] || 'pt';
 
   const handleFinish = useCallback(() => {
     localStorage.setItem('onboardingComplete', 'true');
-    router.push('/splash');
-  }, [router]);
+    router.push(`/${locale}/splash`);
+  }, [router, locale]);
 
   const steps = useMemo(
     () => [
@@ -40,8 +42,8 @@ export default function OnboardingPage() {
         <div className="absolute top-6 left-6 z-10">
           <Button
             variant="secondary"
-            size="icon"
-            className="rounded-full"
+            size="sm"
+            className="h-10 w-10 rounded-full p-0"
             onClick={() => setStep((current) => Math.max(0, current - 1))}
             aria-label="Voltar"
           >

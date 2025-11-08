@@ -76,7 +76,7 @@ async function analyzeWithGroq(file: File): Promise<ClassificationResult> {
         role: 'user',
         content: [
           { type: 'text', text: PROMPT },
-          { type: 'image_url', image_url: `data:${file.type};base64,${base64}` },
+          { type: 'image_url', image_url: { url: `data:${file.type};base64,${base64}` } },
         ],
       },
     ],

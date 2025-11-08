@@ -3,7 +3,9 @@ import pt from '../locales/pt.json';
 import en from '../locales/en.json';
 
 // Estrutura do dicionário: cada valor pode ser string ou outro dicionário
-export type Dict = Record<string, string | Dict>;
+export interface Dict {
+  [key: string]: string | Dict;
+}
 
 // Dicionários disponíveis
 const DICTS: Record<'pt' | 'en', Dict> = {

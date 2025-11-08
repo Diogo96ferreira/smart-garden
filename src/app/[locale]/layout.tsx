@@ -1,16 +1,14 @@
-import { ReactNode } from 'react';
+// src/app/[locale]/layout.tsx
 import LocaleLayoutClient from './LocaleLayoutClient';
 
 type LocaleParams = {
-  children: ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
+  children: React.ReactNode;
 };
 
-export default function LocaleLayout({ children, params }: LocaleParams) {
-  const locale = params.locale === 'en' ? 'en' : 'pt';
-  return <LocaleLayoutClient locale={locale}>{children}</LocaleLayoutClient>;
-}
+export default async function LocaleLayout({ children, params }: LocaleParams) {
+  const { locale } = await params;
+  const normLocale = locale === 'en' ? 'en' : 'pt';
 
-export function generateStaticParams() {
-  return [{ locale: 'pt' }, { locale: 'en' }];
+  return <LocaleLayoutClient locale={normLocale}>{children}</LocaleLayoutClient>;
 }

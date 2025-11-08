@@ -64,9 +64,9 @@ export function useSettings() {
   const toggle = React.useCallback(
     (key: BoolKeys) => {
       save((s) => {
-        const current = s[key] as boolean;
+        const current = Boolean((s as Record<string, unknown>)[key as string]);
         // devolvemos só o patch, tipado, sem `any`
-        return { [key]: !current } as Partial<Settings>;
+        return { [key as string]: !current } as Partial<Settings>;
       });
     },
     [save],
