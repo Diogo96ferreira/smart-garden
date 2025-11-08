@@ -43,7 +43,9 @@ export default function DashboardPage() {
   const [weatherNote, setWeatherNote] = useState<string | null>(null);
   const allDoneRef = useRef(false);
 
-  const loadingText = locale.startsWith('en') ? 'Preparing your plan…' : 'A preparar o teu plano…';
+  const loadingText = locale.startsWith('en')
+    ? 'Preparing your plan...'
+    : 'A preparar o teu plano...';
   useEffect(() => {
     const total = tasks.length + doneThisWeek.length;
     const allDone = total > 0 && tasks.length === 0;
@@ -404,7 +406,7 @@ export default function DashboardPage() {
     return (
       <main className="flex min-h-screen items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <LeafLoader />
+          <LeafLoader label={loadingText} />
           <p className="text-sm text-[var(--color-text-muted)]" role="status" aria-live="polite">
             {loadingText}
           </p>

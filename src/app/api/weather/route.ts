@@ -6,12 +6,12 @@ function makeNote(locale: 'pt' | 'en', opts: { skipToday: boolean; delta: number
   if (skipToday) {
     return locale === 'en'
       ? "It's been raining in your area — no need to water today. Check back tomorrow; if needed, you'll see it in tasks."
-      : 'tem chovido na tua zona, nao precisamos de regar hoje. volta amanhã e se for preciso terás nas tarefas';
+      : 'Tem chovido na tua zona, não precisamos de regar hoje. Volta amanhã e se for preciso terás nas tarefas';
   }
   if (delta < 0) {
     return locale === 'en'
       ? "It's very hot — we will bring watering forward."
-      : 'está muito quente, temos de antecipar as regas';
+      : 'Está muito quente, temos de antecipar as regas';
   }
   return '';
 }

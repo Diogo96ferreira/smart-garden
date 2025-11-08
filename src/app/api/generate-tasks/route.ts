@@ -268,11 +268,29 @@ export async function POST(req: Request) {
     });
     const aiGenerated = (horizonDays ?? 0) > 0 ? [] : await aiTasks(plantList, locale);
 
+    // Normalize day for dedupe (AI tasks may not include due_date)
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const dayOf = (t: { due_date?: string | null }) =>
+      t.due_date ? t.due_date.slice(0, 10) : todayStr;
+
+    // Avoid AI duplicating rule-based tasks for the same plant/action/day
+    const baseKeys = new Set(
+      baseTasks.map((t) => {
+        const action = parseActionKey(t.title, locale);
+        return `${t.plant_id ?? 'null'}|${action}|${dayOf(t)}`;
+      }),
+    );
+    const aiFiltered = aiGenerated.filter((t) => {
+      const action = parseActionKey(t.title, locale);
+      const key = `${t.plant_id ?? 'null'}|${action}|${dayOf(t)}`;
+      return !baseKeys.has(key);
+    });
+
     // Deduplicate within this batch
     const inBatchSeen = new Set<string>();
-    const candidates = [...baseTasks, ...aiGenerated].filter((task) => {
+    const candidates = [...baseTasks, ...aiFiltered].filter((task) => {
       const action = parseActionKey(task.title, locale);
-      const key = `${task.plant_id ?? 'null'}|${action}|${task.due_date ?? ''}|${(task.title || '').toLowerCase()}`;
+      const key = `${task.plant_id ?? 'null'}|${action}|${dayOf(task)}`;
       if (inBatchSeen.has(key)) return false;
       inBatchSeen.add(key);
       return true;
@@ -285,16 +303,21 @@ export async function POST(req: Request) {
     // Prevent any overlap: consult all pending tasks instead of just today's
     const { data: pending, error: pendingError } = await supabase
       .from('tasks')
-      .select('title,plant_id,done,due_date')
+      .select('title,plant_id,done,due_date,created_at')
       .eq('user_id', user.id)
       .eq('done', false);
     if (pendingError) throw pendingError;
 
     const existingKeys = new Set(
       (pending ?? []).map(
-        (row: { title?: string | null; plant_id?: string | null; due_date?: string | null }) => {
+        (row: {
+          title?: string | null;
+          plant_id?: string | null;
+          due_date?: string | null;
+          created_at?: string | null;
+        }) => {
           const action = parseActionKey(row.title ?? '', locale);
-          const day = (row.due_date ?? '').slice(0, 10);
+          const day = (row.due_date || row.created_at || '').slice(0, 10);
           return `${row.plant_id ?? 'null'}|${action}|${day}`;
         },
       ),
@@ -307,7 +330,7 @@ export async function POST(req: Request) {
 
     const unique = candidates.filter((task) => {
       const action = parseActionKey(task.title, locale);
-      const day = (task.due_date ?? '').slice(0, 10);
+      const day = dayOf(task);
       const key = `${task.plant_id ?? 'null'}|${action}|${day}`;
       if (existingKeys.has(key)) return false;
       if (!task.plant_id) {
