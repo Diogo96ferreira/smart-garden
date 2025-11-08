@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
@@ -38,6 +38,23 @@ export default function TiaAdeliaPage() {
   const locale = pathname.startsWith('/en') ? 'en' : 'pt';
   const t = useTranslation(locale);
   const { settings } = useSettings();
+  const persona = (settings.aiProfile || 'tia-adelia') as
+    | 'tia-adelia'
+    | 'eng-pedro'
+    | 'diogo-campos'
+    | 'agro-core';
+  const personaName =
+    persona === 'eng-pedro'
+      ? locale === 'en'
+        ? 'Engineer Pedro'
+        : 'Engenheiro Pedro'
+      : persona === 'diogo-campos'
+        ? 'Diogo Campos'
+        : persona === 'agro-core'
+          ? 'AGRO-CORE v1.0'
+          : locale === 'en'
+            ? 'Aunt Adelia'
+            : 'Tia Adélia';
 
   const resetState = () => {
     setResult(null);
@@ -147,7 +164,7 @@ export default function TiaAdeliaPage() {
   return (
     <main
       className={clsx(
-        'mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pt-4',
+        'mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-4',
         shouldLockScroll ? 'justify-start overflow-hidden' : 'pb-6',
       )}
     >
@@ -160,7 +177,7 @@ export default function TiaAdeliaPage() {
       </header>
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <Card>
+        <Card className="self-start">
           <CardHeader className="gap-4 space-y-2">
             <CardTitle>{t('ai.photo.title')}</CardTitle>
             <CardDescription className="pb-2">{t('ai.photo.desc')}</CardDescription>
@@ -201,7 +218,7 @@ export default function TiaAdeliaPage() {
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
                     <Image
                       src="/avatar-adelia.jpg"
-                      alt="Tia Adélia"
+                      alt={personaName}
                       width={48}
                       height={48}
                       className="rounded-full"
@@ -244,40 +261,84 @@ export default function TiaAdeliaPage() {
                 {error}
               </p>
             )}
+
+            {result && (
+              <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
+                <p className="mb-2 text-sm font-semibold text-[var(--color-text)]">
+                  {locale === 'en' ? 'Analysis Summary' : 'Resumo da análise'}
+                </p>
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                  <dt className="text-[var(--color-text-muted)]">
+                    {locale === 'en' ? 'Type' : 'Tipo'}
+                  </dt>
+                  <dd className="text-[var(--color-text)]">{result.type}</dd>
+                  <dt className="text-[var(--color-text-muted)]">
+                    {locale === 'en' ? 'Species' : 'Espécie'}
+                  </dt>
+                  <dd className="text-[var(--color-text)]">{result.species}</dd>
+                  <dt className="text-[var(--color-text-muted)]">
+                    {locale === 'en' ? 'Ripeness' : 'Maturação'}
+                  </dt>
+                  <dd className="text-[var(--color-text)]">{result.ripeness}</dd>
+                  <dt className="text-[var(--color-text-muted)]">
+                    {locale === 'en' ? 'Confidence' : 'Confiança'}
+                  </dt>
+                  <dd className="text-[var(--color-text)]">
+                    {Math.round((result.confidence ?? 0) * 100)}%
+                  </dd>
+                </dl>
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        {messages.length > 0 && (
+        <div className="self-start lg:sticky lg:top-24">
           <Card>
             <CardHeader className="space-y-2">
               <CardTitle>{t('ai.chat.title')}</CardTitle>
               <CardDescription>{t('ai.chat.desc')}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
-              <div className="space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
-                {messages.map((message, index) => (
-                  <div
-                    key={`${message.role}-${index}`}
-                    className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    {message.role === 'model' && (
-                      <Avatar src="/avatar-adelia.jpg" alt="Tia Adélia" />
-                    )}
-                    <div
-                      className={`max-w-[75%] rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-sm ${
-                        message.role === 'user'
-                          ? 'bg-[var(--color-primary)] text-white'
-                          : 'bg-white text-[var(--color-text)]'
-                      }`}
-                    >
-                      {message.text}
-                    </div>
-                    {message.role === 'user' && <Avatar fallback="Tu" alt="Utilizador" />}
+              <div className="min-h-[180px] space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
+                {messages.length === 0 ? (
+                  <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
+                    <Avatar src="/avatar-adelia.jpg" alt={personaName} />
+                    <p>
+                      {locale === 'en'
+                        ? 'Upload a photo to start the conversation.'
+                        : 'Carrega uma fotografia para começar a conversa.'}
+                    </p>
                   </div>
-                ))}
+                ) : (
+                  messages.map((message, index) => (
+                    <div
+                      key={`${message.role}-${index}`}
+                      className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      {message.role === 'model' && (
+                        <Avatar src="/avatar-adelia.jpg" alt={personaName} />
+                      )}
+                      <div
+                        className={`max-w-[75%] rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-sm ${
+                          message.role === 'user'
+                            ? 'bg-[var(--color-primary)] text-white'
+                            : 'bg-white text-[var(--color-text)]'
+                        }`}
+                      >
+                        {message.text}
+                      </div>
+                      {message.role === 'user' && (
+                        <Avatar
+                          fallback={locale === 'en' ? 'You' : 'Tu'}
+                          alt={locale === 'en' ? 'User' : 'Utilizador'}
+                        />
+                      )}
+                    </div>
+                  ))
+                )}
                 {chatLoading && (
                   <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
-                    <Avatar src="/avatar-adelia.jpg" alt="Tia Adélia" />
+                    <Avatar src="/avatar-adelia.jpg" alt={personaName} />
                     <p>{t('ai.chat.thinking')}</p>
                   </div>
                 )}
@@ -295,7 +356,7 @@ export default function TiaAdeliaPage() {
                   type="submit"
                   variant="primary"
                   icon={<SendHorizonal className="h-4 w-4" />}
-                  disabled={chatLoading || !input.trim()}
+                  disabled={chatLoading || !input.trim() || !result}
                   className="w-full sm:w-auto"
                 >
                   {t('ai.chat.send')}
@@ -303,7 +364,7 @@ export default function TiaAdeliaPage() {
               </form>
             </CardContent>
           </Card>
-        )}
+        </div>
       </div>
     </main>
   );
