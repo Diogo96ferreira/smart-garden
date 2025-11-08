@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/lib/supabaseClient';
 import { LeafLoader } from '@/components/ui/Spinner';
 import { Search, X } from 'lucide-react';
 
@@ -189,11 +190,35 @@ export function StepPlants({ onBack, onNext }: Props) {
     setSelectedIds((current) => current.filter((item) => item !== id));
   }, []);
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback(async () => {
     if (!selectedIds.length) return;
     localStorage.setItem('userPlants', JSON.stringify(selectedIds));
+
+    try {
+      const { data: auth } = await supabase.auth.getUser();
+      const userId = auth.user?.id;
+      if (userId) {
+        const existing = await supabase.from('plants').select('id,name').eq('user_id', userId);
+        const existingNames = new Set(
+          (existing.data ?? []).map((p: { name?: string | null }) =>
+            (p.name || '').toLowerCase().trim(),
+          ),
+        );
+        const toInsert = selectedIds
+          .map((id) => catalogue.find((v) => v.id === id))
+          .filter((v): v is Vegetable => Boolean(v))
+          .filter((v) => !existingNames.has(v.name.toLowerCase().trim()))
+          .map((v) => ({
+            name: v.name,
+            watering_freq: Math.max(1, Math.min(60, v.wateringFrequencyDays || 3)),
+            type: 'horta',
+          }));
+        if (toInsert.length) await supabase.from('plants').insert(toInsert);
+      }
+    } catch {}
+
     onNext();
-  }, [onNext, selectedIds]);
+  }, [catalogue, onNext, selectedIds]);
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
@@ -223,7 +248,7 @@ export function StepPlants({ onBack, onNext }: Props) {
   const suggestions = useMemo(() => {
     if (!catalogue.length) return [] as Vegetable[];
     const pool = catalogue.filter((veg) => !selectedIds.includes(veg.id));
-    if (!searchTerm.trim()) return pool.slice(0, 10);
+    if (!searchTerm.trim()) return pool;
     const term = searchTerm.trim().toLowerCase();
     return pool
       .filter(
@@ -232,7 +257,7 @@ export function StepPlants({ onBack, onNext }: Props) {
           veg.id.toLowerCase().includes(term) ||
           veg.notes?.toLowerCase().includes(term),
       )
-      .slice(0, 10);
+      .slice(0, 50);
   }, [catalogue, searchTerm, selectedIds]);
 
   const showSuggestions = inputFocused && !loadingCatalogue;
@@ -271,7 +296,10 @@ export function StepPlants({ onBack, onNext }: Props) {
             leadingIcon={<Search className="h-4 w-4" />}
             placeholder="Exemplo: Tomate cereja, Manjericao, Morango..."
             value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
+            onChange={(event) => {
+              setSearchTerm(event.target.value);
+              setInputFocused(true);
+            }}
             onFocus={() => setInputFocused(true)}
             onBlur={() => setTimeout(() => setInputFocused(false), 120)}
           />
