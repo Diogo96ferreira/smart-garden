@@ -55,7 +55,6 @@ export default function TiaAdeliaPage() {
           : locale === 'en'
             ? 'Aunt Adelia'
             : 'Tia Adélia';
-
   const avatarSrc =
     persona === 'eng-pedro'
       ? '/avatar-pedro.jpg'
@@ -64,6 +63,10 @@ export default function TiaAdeliaPage() {
         : persona === 'agro-core'
           ? '/avatar-bot.jpg'
           : '/avatar-adelia.jpg';
+  const titleText = locale === 'en' ? `Talk to ${personaName}` : `Fale com ${personaName}`;
+  const chatTitle = locale === 'en' ? `Chat with ${personaName}` : `Conversar com ${personaName}`;
+  const chatPlaceholder =
+    locale === 'en' ? `Ask ${personaName} something...` : `Pergunte algo à ${personaName}...`;
   const resetState = () => {
     setResult(null);
     setMessages([]);
@@ -178,7 +181,7 @@ export default function TiaAdeliaPage() {
     >
       <header className="space-y-3 text-left">
         <p className="eyebrow">{t('ai.header.eyebrow')}</p>
-        <h1 className="text-display text-3xl sm:text-4xl">{t('ai.header.title')}</h1>
+        <h1 className="text-display text-3xl sm:text-4xl">{titleText}</h1>
         <p className="max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
           {t('ai.header.subtitle')}
         </p>
@@ -303,7 +306,7 @@ export default function TiaAdeliaPage() {
         <div className="self-start lg:sticky lg:top-24">
           <Card>
             <CardHeader className="space-y-2">
-              <CardTitle>{t('ai.chat.title')}</CardTitle>
+              <CardTitle>{chatTitle}</CardTitle>
               <CardDescription>{t('ai.chat.desc')}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
@@ -352,7 +355,7 @@ export default function TiaAdeliaPage() {
 
               <form onSubmit={handleSendMessage} className="flex flex-col gap-3 sm:flex-row">
                 <Input
-                  placeholder={t('ai.chat.placeholder')}
+                  placeholder={chatPlaceholder}
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   disabled={chatLoading || !result}
