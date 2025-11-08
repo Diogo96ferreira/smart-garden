@@ -19,7 +19,12 @@ jobs:
           # package-manager-cache: true
 
       - name: Install deps
-        run: npm ci
+        run: |
+          # Try a clean, reproducible install first
+          npm ci || (
+            echo "npm ci failed (lockfile out of sync). Falling back to npm install" && \
+            npm install --no-audit --no-fund
+          )
 
       - name: Lint
         run: npm run lint

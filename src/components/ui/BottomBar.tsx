@@ -45,45 +45,84 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
   }, [currentPath, items]);
 
   return (
-    <nav
-      aria-label="Main navigation"
-      className="fixed inset-x-0 bottom-0 z-50 flex items-end justify-center transition-colors duration-500"
-    >
-      <ul className="relative flex h-[60px] w-full max-w-md items-end justify-around border-t border-[color:var(--color-border)] bg-[var(--color-surface)] shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
-        {items.map((item) => {
-          const Icon = item.icon;
-          const isActive = item.id === activeId;
+    <>
+      {/* Mobile bottom bar */}
+      <nav
+        aria-label="Main navigation"
+        className="fixed inset-x-0 bottom-0 z-50 flex items-end justify-center transition-colors duration-500 md:hidden"
+      >
+        <ul className="relative flex h-[60px] w-full max-w-md items-end justify-around border-t border-[color:var(--color-border)] bg-[var(--color-surface)] shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
+          {items.map((item) => {
+            const Icon = item.icon;
+            const isActive = item.id === activeId;
 
-          return (
-            <li
-              key={item.id}
-              className={clsx(
-                'relative flex h-[60px] w-[60px] items-center justify-center rounded-t-full transition-all duration-300',
-                isActive ? '-top-3' : 'top-0',
-              )}
-            >
-              <Link
-                href={item.href}
-                aria-label={item.label}
-                aria-current={isActive ? 'page' : undefined}
+            return (
+              <li
+                key={item.id}
                 className={clsx(
-                  'flex h-[60px] w-[60px] items-center justify-center rounded-full transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
-                  isActive
-                    ? 'shadow-[0_6px_14px_rgba(16,185,129,0.25)]'
-                    : 'text-[color:var(--color-text-muted)] hover:text-[var(--color-primary-strong)]',
+                  'relative flex h-[60px] w-[60px] items-center justify-center rounded-t-full transition-all duration-300',
+                  isActive ? '-top-3' : 'top-0',
                 )}
-                style={{
-                  backgroundColor: 'var(--color-surface)',
-                  color: isActive ? item.color : 'var(--color-text-muted)',
-                }}
               >
-                <Icon className={clsx('h-6 w-6 transition-transform', isActive && 'scale-110')} />
-                <span className="sr-only">{item.label}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+                <Link
+                  href={item.href}
+                  aria-label={item.label}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={clsx(
+                    'flex h-[60px] w-[60px] items-center justify-center rounded-full transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
+                    isActive
+                      ? 'shadow-[0_6px_14px_rgba(16,185,129,0.25)]'
+                      : 'text-[color:var(--color-text-muted)] hover:text-[var(--color-primary-strong)]',
+                  )}
+                  style={{
+                    backgroundColor: 'var(--color-surface)',
+                    color: isActive ? item.color : 'var(--color-text-muted)',
+                  }}
+                >
+                  <Icon className={clsx('h-6 w-6 transition-transform', isActive && 'scale-110')} />
+                  <span className="sr-only">{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* Desktop sidebar */}
+      <nav
+        aria-label="Main navigation"
+        className="hidden md:fixed md:inset-y-0 md:left-6 md:z-40 md:flex md:flex-col md:justify-center"
+      >
+        <ul className="flex max-h-[80vh] flex-col gap-2 rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 p-2 shadow-[0_8px_24px_rgba(0,0,0,0.12)] backdrop-blur">
+          {items.map((item) => {
+            const Icon = item.icon;
+            const isActive = item.id === activeId;
+            return (
+              <li key={item.id}>
+                <Link
+                  href={item.href}
+                  aria-label={item.label}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={clsx(
+                    'group flex items-center gap-3 rounded-xl px-3 py-2 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
+                    isActive
+                      ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)]'
+                      : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary-strong)]',
+                  )}
+                >
+                  <Icon
+                    className={clsx('h-5 w-5 flex-none', isActive && 'scale-105')}
+                    style={{ color: isActive ? item.color : undefined }}
+                  />
+                  <span className="hidden text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-primary-strong)] xl:inline">
+                    {item.label}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </>
   );
 }

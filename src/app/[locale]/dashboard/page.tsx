@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import type { ComponentType } from 'react';
@@ -8,6 +8,7 @@ import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import clsx from 'clsx';
 import { CheckCircle2, Clock3, HelpCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SupportCard from '@/components/SupportCard';
 import { LeafLoader } from '@/components/ui/Spinner';
 import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
@@ -604,7 +605,7 @@ export default function DashboardPage() {
               <div className="flex items-center gap-2 text-[var(--color-primary-strong)]">
                 <Sparkles className="h-5 w-5" />
                 <span className="text-sm font-semibold">
-                  {locale.startsWith('en') ? 'All tasks done!' : 'Tudo conclu�do!'}
+                  {locale.startsWith('en') ? 'All tasks done!' : 'Tudo concluï¿½do!'}
                 </span>
                 <Sparkles className="h-5 w-5" />
               </div>
@@ -672,44 +673,6 @@ function TaskActionButton({
   );
 }
 
-function SupportCard({ locale }: { locale: string }) {
-  const isEN = locale.startsWith('en');
-  const title = isEN ? 'Enjoying Smart Garden?' : 'Gostas da Smart Garden?';
-  const line2 = isEN ? 'This app is free and ad-free 🌿' : 'A app é gratuita e sem anúncios 🌿';
-  const line3 = isEN
-    ? 'Tips help keep the servers running and new features growing.'
-    : 'Se te tem sido útil, podes deixar uma pequena contribuição para ajudar a manter o projeto a crescer.';
-  const line4 = isEN
-    ? 'No pressure — only if you find it useful 💚'
-    : '💚 Só se quiseres, e sempre com gratidão.';
-  const cta = isEN ? 'Support on Ko‑fi' : 'Apoiar no Ko‑fi';
-  const href = process.env.NEXT_PUBLIC_KOFI_URL || 'https://ko-fi.com/diogoferreira25145';
-
-  return (
-    <section
-      aria-label={title}
-      className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]/60 p-4 shadow-[var(--shadow-soft)]"
-    >
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
-          <p className="font-semibold text-[var(--color-text)]">{title}</p>
-          <p className="text-sm text-[var(--color-text-muted)]">{line2}</p>
-          <p className="text-sm text-[var(--color-text-muted)]">{line3}</p>
-          <p className="text-sm text-[var(--color-text-muted)]">{line4}</p>
-        </div>
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-10 items-center justify-center rounded-full border border-[var(--color-primary)] px-5 text-sm font-medium text-[var(--color-primary-strong)] hover:bg-[var(--color-primary-soft)] focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none"
-        >
-          {cta}
-        </a>
-      </div>
-    </section>
-  );
-}
-
 type Suggestion = {
   id: string;
   title: string;
@@ -764,7 +727,7 @@ function SuggestionsPanel({
     return (
       <div className="mt-6 flex items-center justify-center py-6">
         <LeafLoader
-          label={locale.startsWith('en') ? 'Loading suggestions…' : 'A carregar sugestões…'}
+          label={locale.startsWith('en') ? 'Loading suggestionsâ€¦' : 'A carregar sugestÃµesâ€¦'}
         />
       </div>
     );
@@ -773,7 +736,7 @@ function SuggestionsPanel({
   if (!items.length) {
     return (
       <div className="mt-6 text-sm text-[var(--color-text-muted)]">
-        {locale.startsWith('en') ? 'No suggestions right now.' : 'Sem sugestões para já.'}
+        {locale.startsWith('en') ? 'No suggestions right now.' : 'Sem sugestÃµes para jÃ¡.'}
       </div>
     );
   }
@@ -808,7 +771,7 @@ function SuggestionsPanel({
                 variant="secondary"
                 onClick={() => (window.location.href = `/${locale}/calendar`)}
               >
-                {locale.startsWith('en') ? 'Open Calendar' : 'Abrir Calendário'}
+                {locale.startsWith('en') ? 'Open Calendar' : 'Abrir CalendÃ¡rio'}
               </Button>
             ) : null}
             <Button size="sm" variant="ghost" onClick={() => dismiss(s.id)}>
