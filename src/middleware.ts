@@ -7,12 +7,14 @@ const PROTECTED_PREFIXES = [
   '/pt/settings',
   '/pt/calendar',
   '/pt/ai',
+  '/pt/onboarding',
   '/pt/reports',
   '/en/dashboard',
   '/en/garden',
   '/en/settings',
   '/en/calendar',
   '/en/ai',
+  '/en/onboarding',
   '/en/reports',
 ];
 

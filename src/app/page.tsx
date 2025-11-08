@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { DEFAULT_SETTINGS, SETTINGS_KEY } from '@/lib/settings';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function HomeRedirect() {
   const router = useRouter();
@@ -29,8 +30,17 @@ export default function HomeRedirect() {
 
     const hasCompletedOnboarding = localStorage.getItem('onboardingComplete') === 'true';
     const locale = resolveLocale();
-    const target = hasCompletedOnboarding ? '/dashboard' : '/onboarding';
-    router.replace(`/${locale}${target}`);
+
+    // Primeiro garantir que o utilizador está autenticado
+    supabase.auth.getSession().then(({ data }) => {
+      const isAuthed = Boolean(data.session);
+      if (!isAuthed) {
+        router.replace(`/signin?next=/${locale}/onboarding`);
+        return;
+      }
+      const target = hasCompletedOnboarding ? '/dashboard' : '/onboarding';
+      router.replace(`/${locale}${target}`);
+    });
   }, [router]);
 
   return null;
