@@ -9,8 +9,8 @@ export interface ClassificationResult {
   message: string;
 }
 
-const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY as string });
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY as string });
+// NOTE: avoid initializing AI clients at module scope to prevent build-time errors
+// when env vars are not set in CI. Clients are created lazily inside functions.
 
 const fileToGenerativePart = async (file: File) => {
   const bytes = await file.arrayBuffer();
@@ -39,6 +39,9 @@ Regras:
 `;
 
 async function analyzeWithGemini(file: File): Promise<ClassificationResult> {
+  const geminiKey = process.env.GEMINI_API_KEY;
+  if (!geminiKey) throw new Error('GEMINI_API_KEY is missing');
+  const gemini = new GoogleGenAI({ apiKey: geminiKey });
   const imagePart = await fileToGenerativePart(file);
 
   const response = await gemini.models.generateContent({
@@ -66,6 +69,9 @@ async function analyzeWithGemini(file: File): Promise<ClassificationResult> {
 }
 
 async function analyzeWithGroq(file: File): Promise<ClassificationResult> {
+  const groqKey = process.env.GROQ_API_KEY;
+  if (!groqKey) throw new Error('GROQ_API_KEY is missing');
+  const groq = new Groq({ apiKey: groqKey });
   const bytes = await file.arrayBuffer();
   const base64 = Buffer.from(bytes).toString('base64');
 
