@@ -154,6 +154,25 @@ export default function DashboardPage() {
     })();
   }, []);
 
+  // Keep task images in sync with Garden updates using realtime
+  useEffect(() => {
+    const channel = supabase
+      .channel('plants-updates')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'plants' }, async () => {
+        try {
+          const { data, error } = await supabase.from('plants').select('id,name,image_url');
+          if (!error) setPlants((data as PlantLite[]) ?? []);
+        } catch {}
+      })
+      .subscribe();
+
+    return () => {
+      try {
+        supabase.removeChannel(channel);
+      } catch {}
+    };
+  }, []);
+
   const refreshTasks = async () => {
     const { start, end } = getWeekRange();
     const [pQ, dQ] = await Promise.all([
@@ -358,7 +377,7 @@ export default function DashboardPage() {
   // No client backfill: tasks are always generated from server with plant_id
 
   const imageForTask = (task: Task): string | null => {
-    const placeholder = '/logo.svg';
+    const placeholder = '/spinner.png';
     // If the task is linked to a plant, prefer that image or placeholder
     if (task.plant_id) {
       const p = plants.find((x) => x.id === task.plant_id);
@@ -492,7 +511,7 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-4">
                       <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
                         <Image
-                          src={imageForTask(task) || '/logo.svg'}
+                          src={imageForTask(task) || '/spinner.png'}
                           alt={task.title}
                           fill
                           sizes="80px"

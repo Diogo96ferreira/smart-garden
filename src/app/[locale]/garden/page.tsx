@@ -280,8 +280,8 @@ export default function GardenPage() {
                   ) : (
                     <div className="flex h-full items-center justify-center p-6">
                       <Image
-                        src="/logo.svg"
-                        alt="Smart Garden"
+                        src="/spinner.png"
+                        alt="Loading"
                         width={96}
                         height={96}
                         className="opacity-70"
