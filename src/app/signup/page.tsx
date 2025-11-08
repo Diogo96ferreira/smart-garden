@@ -17,8 +17,11 @@ export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(async ({ data }) => {
       if (data.session) {
+        try {
+          await fetch('/api/ensure-profile', { method: 'POST' });
+        } catch {}
         let dest = next;
         try {
           const sp = new URLSearchParams(window.location.search);
@@ -29,6 +32,9 @@ export default function SignUpPage() {
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
+        try {
+          fetch('/api/ensure-profile', { method: 'POST' });
+        } catch {}
         let dest = next;
         try {
           const sp = new URLSearchParams(window.location.search);

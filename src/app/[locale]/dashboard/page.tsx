@@ -33,6 +33,8 @@ export default function DashboardPage() {
   const [tasks, setTasks] = useState<Task[]>([]); // pending
   const [doneThisWeek, setDoneThisWeek] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [awaitingTasks, setAwaitingTasks] = useState(false);
+  const pollStartedRef = useRef(false);
   const [userName, setUserName] = useState('Jardineiro');
   const [plants, setPlants] = useState<PlantLite[]>([]);
   const [_weekTotal, setWeekTotal] = useState(0);
@@ -40,6 +42,8 @@ export default function DashboardPage() {
   const [plim, setPlim] = useState(false);
   const [weatherNote, setWeatherNote] = useState<string | null>(null);
   const allDoneRef = useRef(false);
+
+  const loadingText = locale.startsWith('en') ? 'Preparing your plan…' : 'A preparar o teu plano…';
   useEffect(() => {
     const total = tasks.length + doneThisWeek.length;
     const allDone = total > 0 && tasks.length === 0;
@@ -168,14 +172,18 @@ export default function DashboardPage() {
         .lt('done_at', end)
         .order('done_at', { ascending: true }),
     ]);
-    setTasks((pQ.data as Task[]) ?? []);
-    setDoneThisWeek((dQ.data as Task[]) ?? []);
+    const pending = (pQ.data as Task[]) ?? [];
+    const done = (dQ.data as Task[]) ?? [];
+    setTasks(pending);
+    setDoneThisWeek(done);
+    return { pendingCount: pending.length, doneCount: done.length };
   };
 
-  // Soft loading: sync tasks for today and refresh
+  // Soft loading: trigger server task generation, then refresh counts
   useEffect(() => {
     (async () => {
       try {
+        setAwaitingTasks(true);
         // Try to include user location from localStorage to enable weather-aware scheduling
         let location: { distrito?: string; municipio?: string } | undefined;
         try {
@@ -257,9 +265,39 @@ export default function DashboardPage() {
         } catch {}
         await refreshTasks();
         await refreshWeekStats();
-      } catch {}
+      } catch {
+      } finally {
+        // Keep awaitingTasks true for a short poll window handled below
+      }
     })();
   }, []);
+
+  // Poll for tasks to appear after generation, for up to ~12s
+  useEffect(() => {
+    const total = tasks.length + doneThisWeek.length;
+    if (total > 0) {
+      setAwaitingTasks(false);
+      return;
+    }
+    if (pollStartedRef.current) return;
+    pollStartedRef.current = true;
+    setAwaitingTasks(true);
+
+    let attempts = 0;
+    const maxAttempts = 12; // ~12s at 1s interval
+    const iv = setInterval(async () => {
+      attempts += 1;
+      const { pendingCount, doneCount } = await refreshTasks();
+      if (pendingCount + doneCount > 0 || attempts >= maxAttempts) {
+        clearInterval(iv);
+        setAwaitingTasks(false);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(iv);
+    };
+  }, [tasks.length, doneThisWeek.length]);
 
   const handleCompleteTask = async (task: Task) => {
     try {
@@ -320,11 +358,14 @@ export default function DashboardPage() {
   // No client backfill: tasks are always generated from server with plant_id
 
   const imageForTask = (task: Task): string | null => {
-    if (task.image) return task.image;
+    const placeholder = '/logo.svg';
+    // If the task is linked to a plant, prefer that image or placeholder
     if (task.plant_id) {
       const p = plants.find((x) => x.id === task.plant_id);
-      if (p?.image_url) return p.image_url;
+      return p?.image_url || placeholder;
     }
+    // Otherwise, try task-provided image, then best match, then placeholder
+    if (task.image) return task.image;
     const t = `${task.title} ${task.description ?? ''}`;
     const tt = norm(t);
     let best: string | null = null;
@@ -337,13 +378,18 @@ export default function DashboardPage() {
         bestLen = n.length;
       }
     }
-    return best;
+    return best || placeholder;
   };
 
-  if (loading) {
+  if (loading || awaitingTasks) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <LeafLoader />
+        <div className="flex flex-col items-center gap-4">
+          <LeafLoader />
+          <p className="text-sm text-[var(--color-text-muted)]" role="status" aria-live="polite">
+            {loadingText}
+          </p>
+        </div>
       </main>
     );
   }
@@ -446,7 +492,7 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-4">
                       <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
                         <Image
-                          src={imageForTask(task) || '/tomato.jpg'}
+                          src={imageForTask(task) || '/logo.svg'}
                           alt={task.title}
                           fill
                           sizes="80px"

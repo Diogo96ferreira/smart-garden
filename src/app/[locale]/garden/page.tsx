@@ -278,8 +278,14 @@ export default function GardenPage() {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-[var(--color-text-muted)]">
-                      {t('garden.noImage')}
+                    <div className="flex h-full items-center justify-center p-6">
+                      <Image
+                        src="/logo.svg"
+                        alt="Smart Garden"
+                        width={96}
+                        height={96}
+                        className="opacity-70"
+                      />
                     </div>
                   )}
                 </div>
