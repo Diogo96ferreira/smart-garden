@@ -149,6 +149,9 @@ export function StepPlants({ onBack, onNext }: Props) {
         const finalList = Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
 
         if (active) {
+          try {
+            sessionStorage.setItem('onboarding.catalogue', JSON.stringify(finalList));
+          } catch {}
           setCatalogue(finalList);
           setCatalogueError(null);
         }
@@ -215,7 +218,9 @@ export function StepPlants({ onBack, onNext }: Props) {
           }));
         if (toInsert.length) {
           const payload = userId ? toInsert.map((p) => ({ ...p, user_id: userId })) : toInsert;
-          await supabase.from('plants').insert(payload);
+          await supabase
+            .from('plants')
+            .upsert(payload, { onConflict: 'user_id,name', ignoreDuplicates: true });
         }
       }
     } catch {}

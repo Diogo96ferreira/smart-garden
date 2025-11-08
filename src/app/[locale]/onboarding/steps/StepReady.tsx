@@ -3,6 +3,7 @@
 import { useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/lib/supabaseClient';
 
 type Props = {
   onBack: () => void;
@@ -10,7 +11,41 @@ type Props = {
 };
 
 export function StepReady({ onBack, onFinish }: Props) {
-  const handleFinish = useCallback(() => {
+  const handleFinish = useCallback(async () => {
+    try {
+      const raw = localStorage.getItem('userPlants');
+      if (raw) {
+        const ids = JSON.parse(raw) as string[];
+        const { data: auth } = await supabase.auth.getUser();
+        const userId = auth.user?.id;
+        if (userId && Array.isArray(ids) && ids.length) {
+          const catalogueRaw = sessionStorage.getItem('onboarding.catalogue');
+          if (catalogueRaw) {
+            const list = JSON.parse(catalogueRaw) as {
+              id: string;
+              name: string;
+              wateringFrequencyDays?: number;
+            }[];
+            const payload = ids
+              .map((id) => list.find((v) => v.id === id))
+              .filter((v): v is { id: string; name: string; wateringFrequencyDays?: number } =>
+                Boolean(v),
+              )
+              .map((v) => ({
+                user_id: userId,
+                name: v.name,
+                type: 'horta',
+                watering_freq: Math.max(1, Math.min(60, Number(v.wateringFrequencyDays ?? 3))),
+              }));
+            if (payload.length) {
+              await supabase
+                .from('plants')
+                .upsert(payload, { onConflict: 'user_id,name', ignoreDuplicates: true });
+            }
+          }
+        }
+      }
+    } catch {}
     onFinish();
   }, [onFinish]);
 

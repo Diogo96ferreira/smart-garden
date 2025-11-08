@@ -6,6 +6,7 @@ import { useSettings } from '@/hooks/useSettings';
 import { type Settings, DEFAULT_SETTINGS, type AIProfile, type ReportRange } from '@/lib/settings';
 import { useTranslation } from '@/lib/useTranslation';
 import { Settings2, Globe, Sun, Moon, Laptop, Bot, FileText, Download } from 'lucide-react';
+import LogoutButton from '@/components/LogoutButton';
 
 function useApplyTheme(theme: Settings['theme']) {
   React.useEffect(() => {
@@ -121,6 +122,7 @@ export default function SettingsPage() {
         <h1 className="inline-flex items-center gap-2 text-xl font-semibold">
           <Settings2 className="h-5 w-5" /> {t('settings.title')}
         </h1>
+        <LogoutButton />
       </header>
 
       {/* Idioma */}
