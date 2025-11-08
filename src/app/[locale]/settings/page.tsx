@@ -85,31 +85,7 @@ export default function SettingsPage() {
   const onGenerateReport = React.useCallback(async () => {
     const range = settings.reportRange ?? '1m';
     const days = range === '1w' ? 7 : range === '2w' ? 14 : range === '1m' ? 31 : 31;
-    try {
-      const locale = settings.locale === 'en-US' ? 'en' : 'pt';
-      let location: { distrito?: string; municipio?: string } | undefined;
-      try {
-        const rawUL = localStorage.getItem('userLocation');
-        if (rawUL) location = JSON.parse(rawUL);
-      } catch {}
-      if (!location) {
-        try {
-          const rawSettings = localStorage.getItem('garden.settings.v1');
-          if (rawSettings) {
-            const parsed = JSON.parse(rawSettings);
-            if (parsed && typeof parsed === 'object' && parsed.userLocation)
-              location = parsed.userLocation;
-          }
-        } catch {}
-      }
-      await fetch('/api/generate-tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ locale, location, horizonDays: days }),
-      });
-    } catch {}
-
-    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}`;
+    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}&format=pdf`;
     const a = Object.assign(document.createElement('a'), { href: url, download: '' });
     document.body.appendChild(a);
     a.click();
