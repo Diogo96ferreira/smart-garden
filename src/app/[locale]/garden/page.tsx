@@ -68,6 +68,8 @@ export default function GardenPage() {
   const [uploading, setUploading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [aiComment, setAiComment] = useState<string | null>(null);
+  const [editUploading, setEditUploading] = useState(false);
+  const [editPreview, setEditPreview] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPlants();
@@ -134,6 +136,29 @@ export default function GardenPage() {
     }
   }
 
+  async function handleEditImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file || !selectedPlant) return;
+
+    try {
+      setEditUploading(true);
+      const fileName = `${crypto.randomUUID()}-${file.name}`;
+      const { error: uploadError } = await supabase.storage.from('plants').upload(fileName, file);
+      if (uploadError) throw uploadError;
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('plants').getPublicUrl(fileName);
+
+      setEditPreview(publicUrl);
+      setSelectedPlant({ ...selectedPlant, image_url: publicUrl });
+    } catch (error) {
+      console.error('Erro ao carregar nova fotografia:', error);
+    } finally {
+      setEditUploading(false);
+    }
+  }
+
   async function handleAddPlant() {
     if (!form.name.trim()) return;
     try {
@@ -155,17 +180,18 @@ export default function GardenPage() {
 
   async function handleUpdatePlant() {
     if (!selectedPlant) return;
-    const { id, name, type, watering_freq } = selectedPlant;
+    const { id, name, type, watering_freq, image_url } = selectedPlant;
     try {
       const { error } = await supabase
         .from('plants')
-        .update({ name, type, watering_freq })
+        .update({ name, type, watering_freq, image_url })
         .eq('id', id);
       if (error) throw error;
 
       await fetchPlants();
       setEditOpen(false);
       setSelectedPlant(null);
+      setEditPreview(null);
     } catch (error) {
       console.error('Erro ao atualizar planta:', error);
     }
@@ -463,6 +489,42 @@ export default function GardenPage() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4 text-center">
+                <Label className="mb-2 block text-center">{t('garden.photo')}</Label>
+                <div className="flex w-full flex-col items-center gap-3">
+                  <div className="relative h-24 w-24 overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-surface)]">
+                    {editPreview || selectedPlant.image_url ? (
+                      <Image
+                        src={editPreview || (selectedPlant.image_url as string)}
+                        alt={selectedPlant.name}
+                        fill
+                        sizes="96px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <Image
+                        src="/spinner.png"
+                        alt="Sem imagem"
+                        fill
+                        sizes="96px"
+                        className="object-contain p-4 opacity-70"
+                      />
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleEditImageUpload}
+                    className="w-full cursor-pointer rounded-[var(--radius-md)] border border-dashed border-[var(--color-border)] bg-white p-3 text-sm text-[var(--color-text-muted)]"
+                  />
+                  {editUploading && (
+                    <p className="text-xs text-[var(--color-text-muted)]">
+                      {t('garden.uploading')}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )}
