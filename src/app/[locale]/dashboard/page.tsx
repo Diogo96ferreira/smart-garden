@@ -402,18 +402,7 @@ export default function DashboardPage() {
     return best || placeholder;
   };
 
-  if (loading || awaitingTasks) {
-    return (
-      <main className="flex min-h-screen items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <LeafLoader label={loadingText} />
-          <p className="text-sm text-[var(--color-text-muted)]" role="status" aria-live="polite">
-            {loadingText}
-          </p>
-        </div>
-      </main>
-    );
-  }
+  const tasksLoading = loading || awaitingTasks;
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-10 px-6 py-12">
@@ -464,18 +453,24 @@ export default function DashboardPage() {
 
         <aside className="rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-soft)]">
           <p className="eyebrow">{t('dashboard.newSuggestions')}</p>
-          <div className="mt-6 space-y-4">
-            <SuggestionCard
-              title={t('dashboard.mulch.title')}
-              description={t('dashboard.mulch.desc')}
-              actionLabel={t('dashboard.seeHow')}
-            />
-            <SuggestionCard
-              title={t('dashboard.nightWatering.title')}
-              description={t('dashboard.nightWatering.desc')}
-              actionLabel={t('dashboard.adjust')}
-            />
-          </div>
+          <SuggestionsPanel
+            locale={locale}
+            onAddTask={async (s) => {
+              try {
+                const { data: auth } = await supabase.auth.getUser();
+                const userId = auth.user?.id;
+                if (!userId) return;
+                await supabase.from('tasks').insert({
+                  title: s.title,
+                  description: s.description ?? null,
+                  user_id: userId,
+                  plant_id: s.plant_id ?? null,
+                });
+                await refreshTasks();
+                await refreshWeekStats();
+              } catch {}
+            }}
+          />
         </aside>
       </section>
 
@@ -487,105 +482,110 @@ export default function DashboardPage() {
             {t('dashboard.completedShort')}
           </p>
         </div>
-
-        <LayoutGroup id="tasks-group">
-          {/* Pending */}
-          <div className="space-y-4">
-            <AnimatePresence initial={false} mode="popLayout">
-              {tasks.map((task, index) => (
-                <motion.div
-                  key={task.id}
-                  layout
-                  layoutId={`task-${task.id}`}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20, scale: 0.98 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 500,
-                    damping: 40,
-                    mass: 0.7,
-                    delay: index * 0.02,
-                  }}
-                  className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-soft)]"
-                >
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                    <div className="flex items-center gap-4">
-                      <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
-                        <Image
-                          src={imageForTask(task) || '/spinner.png'}
-                          alt={task.title}
-                          fill
-                          sizes="80px"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="text-left">
-                        <h3 className="text-lg font-semibold text-[var(--color-text)]">
-                          {task.title}
-                        </h3>
-                        <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-                          {task.description || t('dashboard.noDescription')}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-1 items-center justify-end gap-3">
-                      <TaskActionButton
-                        label={t('dashboard.markDone')}
-                        icon={CheckCircle2}
-                        onClick={() => handleCompleteTask(task)}
-                      />
-                      <TaskActionButton
-                        label={t('dashboard.delay')}
-                        icon={Clock3}
-                        onClick={() => handlePostponeTask(task)}
-                      />
-                      <TaskActionButton label={t('dashboard.howTo')} icon={HelpCircle} />
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+        {tasksLoading ? (
+          <div className="flex items-center justify-center py-10">
+            <LeafLoader label={loadingText} />
           </div>
-
-          {/* Completed */}
-          {Boolean(doneThisWeek.length) && (
-            <div className="mt-6 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase">
-                <div className="h-px flex-1 bg-[var(--color-border)]" />
-                <span>{t('dashboard.completedShort')}</span>
-                <div className="h-px flex-1 bg-[var(--color-border)]" />
-              </div>
-              <div className="space-y-3">
-                <AnimatePresence initial={false} mode="popLayout">
-                  {doneThisWeek.map((task) => (
-                    <motion.div
-                      key={`done-${task.id}`}
-                      layout
-                      layoutId={`task-${task.id}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 opacity-70 saturate-50"
-                    >
-                      <div className="flex items-center gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-[var(--color-primary)]" />
-                        <div>
-                          <div className="text-sm font-medium text-[var(--color-text)]">
+        ) : (
+          <LayoutGroup id="tasks-group">
+            {/* Pending */}
+            <div className="space-y-4">
+              <AnimatePresence initial={false} mode="popLayout">
+                {tasks.map((task, index) => (
+                  <motion.div
+                    key={task.id}
+                    layout
+                    layoutId={`task-${task.id}`}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20, scale: 0.98 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 40,
+                      mass: 0.7,
+                      delay: index * 0.02,
+                    }}
+                    className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-soft)]"
+                  >
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                      <div className="flex items-center gap-4">
+                        <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
+                          <Image
+                            src={imageForTask(task) || '/spinner.png'}
+                            alt={task.title}
+                            fill
+                            sizes="80px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="text-left">
+                          <h3 className="text-lg font-semibold text-[var(--color-text)]">
                             {task.title}
-                          </div>
-                          <div className="text-xs text-[var(--color-text-muted)]">
+                          </h3>
+                          <p className="mt-1 text-sm text-[var(--color-text-muted)]">
                             {task.description || t('dashboard.noDescription')}
-                          </div>
+                          </p>
                         </div>
                       </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
+
+                      <div className="flex flex-1 items-center justify-end gap-3">
+                        <TaskActionButton
+                          label={t('dashboard.markDone')}
+                          icon={CheckCircle2}
+                          onClick={() => handleCompleteTask(task)}
+                        />
+                        <TaskActionButton
+                          label={t('dashboard.delay')}
+                          icon={Clock3}
+                          onClick={() => handlePostponeTask(task)}
+                        />
+                        <TaskActionButton label={t('dashboard.howTo')} icon={HelpCircle} />
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
-          )}
-        </LayoutGroup>
+
+            {/* Completed */}
+            {Boolean(doneThisWeek.length) && (
+              <div className="mt-6 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase">
+                  <div className="h-px flex-1 bg-[var(--color-border)]" />
+                  <span>{t('dashboard.completedShort')}</span>
+                  <div className="h-px flex-1 bg-[var(--color-border)]" />
+                </div>
+                <div className="space-y-3">
+                  <AnimatePresence initial={false} mode="popLayout">
+                    {doneThisWeek.map((task) => (
+                      <motion.div
+                        key={`done-${task.id}`}
+                        layout
+                        layoutId={`task-${task.id}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 opacity-70 saturate-50"
+                      >
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-[var(--color-primary)]" />
+                          <div>
+                            <div className="text-sm font-medium text-[var(--color-text)]">
+                              {task.title}
+                            </div>
+                            <div className="text-xs text-[var(--color-text-muted)]">
+                              {task.description || t('dashboard.noDescription')}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
+            )}
+          </LayoutGroup>
+        )}
       </section>
 
       <AnimatePresence>
@@ -667,5 +667,116 @@ function TaskActionButton({
       <Icon className="h-5 w-5" />
       <span className="sr-only">{label}</span>
     </button>
+  );
+}
+
+type Suggestion = {
+  id: string;
+  title: string;
+  description?: string;
+  action?: 'create_task' | 'open_garden' | 'open_calendar';
+  plant_id?: string | null;
+};
+
+function SuggestionsPanel({
+  locale,
+  onAddTask,
+}: {
+  locale: string;
+  onAddTask: (s: Suggestion) => Promise<void> | void;
+}) {
+  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState<Suggestion[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/suggestions?locale=${encodeURIComponent(locale)}`);
+        const json = (await res.json().catch(() => ({}))) as { suggestions?: Suggestion[] };
+        const dismissedRaw = localStorage.getItem('suggestions.dismissed.v1');
+        const dismissed = new Set<string>(
+          (dismissedRaw ? JSON.parse(dismissedRaw) : []) as string[],
+        );
+        if (!cancelled) {
+          setItems((json.suggestions ?? []).filter((s) => !dismissed.has(s.id)));
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  const dismiss = (id: string) => {
+    setItems((prev) => prev.filter((s) => s.id !== id));
+    try {
+      const dismissedRaw = localStorage.getItem('suggestions.dismissed.v1');
+      const dismissed = new Set<string>((dismissedRaw ? JSON.parse(dismissedRaw) : []) as string[]);
+      dismissed.add(id);
+      localStorage.setItem('suggestions.dismissed.v1', JSON.stringify(Array.from(dismissed)));
+    } catch {}
+  };
+
+  if (loading) {
+    return (
+      <div className="mt-6 flex items-center justify-center py-6">
+        <LeafLoader
+          label={locale.startsWith('en') ? 'Loading suggestions…' : 'A carregar sugestões…'}
+        />
+      </div>
+    );
+  }
+
+  if (!items.length) {
+    return (
+      <div className="mt-6 text-sm text-[var(--color-text-muted)]">
+        {locale.startsWith('en') ? 'No suggestions right now.' : 'Sem sugestões para já.'}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-6 space-y-4">
+      {items.map((s) => (
+        <div
+          key={s.id}
+          className="rounded-[var(--radius-md)] border border-[var(--color-border)] p-4"
+        >
+          <h3 className="font-semibold text-[var(--color-text)]">{s.title}</h3>
+          {s.description && (
+            <p className="mt-2 text-sm text-[var(--color-text-muted)]">{s.description}</p>
+          )}
+          <div className="mt-3 flex items-center gap-2">
+            {s.action === 'create_task' ? (
+              <Button size="sm" onClick={() => onAddTask(s)}>
+                {locale.startsWith('en') ? 'Add to plan' : 'Adicionar ao plano'}
+              </Button>
+            ) : s.action === 'open_garden' ? (
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => (window.location.href = `/${locale}/garden`)}
+              >
+                {locale.startsWith('en') ? 'Open Garden' : 'Abrir Garden'}
+              </Button>
+            ) : s.action === 'open_calendar' ? (
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => (window.location.href = `/${locale}/calendar`)}
+              >
+                {locale.startsWith('en') ? 'Open Calendar' : 'Abrir Calendário'}
+              </Button>
+            ) : null}
+            <Button size="sm" variant="ghost" onClick={() => dismiss(s.id)}>
+              {locale.startsWith('en') ? 'Dismiss' : 'Ignorar'}
+            </Button>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
