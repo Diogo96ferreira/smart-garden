@@ -213,7 +213,10 @@ export function StepPlants({ onBack, onNext }: Props) {
             watering_freq: Math.max(1, Math.min(60, v.wateringFrequencyDays || 3)),
             type: 'horta',
           }));
-        if (toInsert.length) await supabase.from('plants').insert(toInsert);
+        if (toInsert.length) {
+          const payload = userId ? toInsert.map((p) => ({ ...p, user_id: userId })) : toInsert;
+          await supabase.from('plants').insert(payload);
+        }
       }
     } catch {}
 
