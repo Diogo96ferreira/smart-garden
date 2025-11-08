@@ -17,32 +17,36 @@ export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data }) => {
-      if (data.session) {
-        try {
-          await fetch('/api/ensure-profile', { method: 'POST' });
-        } catch {}
-        let dest = next;
-        try {
-          const sp = new URLSearchParams(window.location.search);
-          dest = sp.get('next') || next;
-        } catch {}
-        router.replace(dest);
-      }
-    });
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        try {
-          fetch('/api/ensure-profile', { method: 'POST' });
-        } catch {}
-        let dest = next;
-        try {
-          const sp = new URLSearchParams(window.location.search);
-          dest = sp.get('next') || next;
-        } catch {}
-        router.replace(dest);
-      }
-    });
+    supabase.auth
+      .getSession()
+      .then(async ({ data }: { data: { session: { user?: { id?: string } } | null } }) => {
+        if (data.session) {
+          try {
+            await fetch('/api/ensure-profile', { method: 'POST' });
+          } catch {}
+          let dest = next;
+          try {
+            const sp = new URLSearchParams(window.location.search);
+            dest = sp.get('next') || next;
+          } catch {}
+          router.replace(dest);
+        }
+      });
+    const { data: sub } = supabase.auth.onAuthStateChange(
+      (_event: unknown, session: { user?: { id?: string } } | null) => {
+        if (session) {
+          try {
+            fetch('/api/ensure-profile', { method: 'POST' });
+          } catch {}
+          let dest = next;
+          try {
+            const sp = new URLSearchParams(window.location.search);
+            dest = sp.get('next') || next;
+          } catch {}
+          router.replace(dest);
+        }
+      },
+    );
     return () => sub.subscription?.unsubscribe?.();
   }, [next, router]);
 
