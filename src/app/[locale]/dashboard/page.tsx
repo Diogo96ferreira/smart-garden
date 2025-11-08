@@ -8,7 +8,7 @@ import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import clsx from 'clsx';
 import { CheckCircle2, Clock3, HelpCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SupportCard from '@/components/SupportCard';
+import SupportCard from '@/components/ui/SupportCard';
 import { LeafLoader } from '@/components/ui/Spinner';
 import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
@@ -739,7 +739,7 @@ function SuggestionsPanel({
     return (
       <div className="mt-6 flex items-center justify-center py-6">
         <LeafLoader
-          label={locale.startsWith('en') ? 'Loading suggestionsâ€¦' : 'A carregar sugestÃµesâ€¦'}
+          label={locale.startsWith('en') ? 'Loading suggestions' : 'A carregar sugestões'}
         />
       </div>
     );
@@ -748,7 +748,7 @@ function SuggestionsPanel({
   if (!items.length) {
     return (
       <div className="mt-6 text-sm text-[var(--color-text-muted)]">
-        {locale.startsWith('en') ? 'No suggestions right now.' : 'Sem sugestÃµes para jÃ¡.'}
+        {locale.startsWith('en') ? 'No suggestions right now.' : 'Sem sugestões para já'}
       </div>
     );
   }
@@ -783,7 +783,7 @@ function SuggestionsPanel({
                 variant="secondary"
                 onClick={() => (window.location.href = `/${locale}/calendar`)}
               >
-                {locale.startsWith('en') ? 'Open Calendar' : 'Abrir CalendÃ¡rio'}
+                {locale.startsWith('en') ? 'Open Calendar' : 'Abrir Calendário'}
               </Button>
             ) : null}
             <Button size="sm" variant="ghost" onClick={() => dismiss(s.id)}>

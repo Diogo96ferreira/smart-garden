@@ -32,6 +32,8 @@ export default function TiaAdeliaPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [chatLoading, setChatLoading] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
@@ -76,6 +78,7 @@ export default function TiaAdeliaPage() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
+    setUploading(true);
     setImageFile(file);
     setPreview(URL.createObjectURL(file));
     resetState();
@@ -83,8 +86,10 @@ export default function TiaAdeliaPage() {
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setDragActive(false);
     const file = event.dataTransfer.files?.[0];
     if (file && file.type.startsWith('image/')) {
+      setUploading(true);
       setImageFile(file);
       setPreview(URL.createObjectURL(file));
       resetState();
@@ -196,7 +201,12 @@ export default function TiaAdeliaPage() {
           <CardContent className="flex flex-col gap-7">
             <div
               className="flex flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-8 text-center"
-              onDragOver={(event) => event.preventDefault()}
+              onDragEnter={() => setDragActive(true)}
+              onDragOver={(event) => {
+                event.preventDefault();
+                setDragActive(true);
+              }}
+              onDragLeave={() => setDragActive(false)}
               onDrop={handleDrop}
             >
               {preview ? (
@@ -206,6 +216,7 @@ export default function TiaAdeliaPage() {
                     alt={t('ai.photo.previewAlt')}
                     width={320}
                     height={320}
+                    onLoadingComplete={() => setUploading(false)}
                     className="rounded-[var(--radius-md)] object-cover shadow-[var(--shadow-soft)]"
                   />
                   <div className="flex flex-wrap justify-center gap-3">
@@ -261,8 +272,8 @@ export default function TiaAdeliaPage() {
               size="lg"
               className="w-full"
               onClick={handleAnalyze}
-              disabled={loading || !imageFile}
-              icon={loading ? <Loader2 className="h-4 w-4 animate-spin" /> : undefined}
+              disabled={loading || uploading || dragActive || !imageFile}
+              icon={loading || uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : undefined}
             >
               {loading ? t('ai.photo.analyzing') : t('ai.photo.analyze')}
             </Button>
@@ -303,77 +314,79 @@ export default function TiaAdeliaPage() {
           </CardContent>
         </Card>
 
-        <div className="self-start lg:sticky lg:top-24">
-          <Card>
-            <CardHeader className="space-y-2">
-              <CardTitle>{chatTitle}</CardTitle>
-              <CardDescription>{t('ai.chat.desc')}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-6">
-              <div className="min-h-[180px] space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
-                {messages.length === 0 ? (
-                  <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
-                    <Avatar src={avatarSrc} alt={personaName} />
-                    <p>
-                      {locale === 'en'
-                        ? 'Upload a photo to start the conversation.'
-                        : 'Carrega uma fotografia para começar a conversa.'}
-                    </p>
-                  </div>
-                ) : (
-                  messages.map((message, index) => (
-                    <div
-                      key={`${message.role}-${index}`}
-                      className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      {message.role === 'model' && <Avatar src={avatarSrc} alt={personaName} />}
-                      <div
-                        className={`max-w-[75%] rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-sm ${
-                          message.role === 'user'
-                            ? 'bg-[var(--color-primary)] text-white'
-                            : 'bg-white text-[var(--color-text)]'
-                        }`}
-                      >
-                        {message.text}
-                      </div>
-                      {message.role === 'user' && (
-                        <Avatar
-                          fallback={locale === 'en' ? 'You' : 'Tu'}
-                          alt={locale === 'en' ? 'User' : 'Utilizador'}
-                        />
-                      )}
+        {hasAnalysis && (
+          <div className="self-start lg:sticky lg:top-24">
+            <Card>
+              <CardHeader className="space-y-2">
+                <CardTitle>{chatTitle}</CardTitle>
+                <CardDescription>{t('ai.chat.desc')}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-6">
+                <div className="min-h-[180px] space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
+                  {messages.length === 0 ? (
+                    <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
+                      <Avatar src={avatarSrc} alt={personaName} />
+                      <p>
+                        {locale === 'en'
+                          ? 'Upload a photo to start the conversation.'
+                          : 'Carrega uma fotografia para começar a conversa.'}
+                      </p>
                     </div>
-                  ))
-                )}
-                {chatLoading && (
-                  <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
-                    <Avatar src={avatarSrc} alt={personaName} />
-                    <p>{t('ai.chat.thinking')}</p>
-                  </div>
-                )}
-              </div>
+                  ) : (
+                    messages.map((message, index) => (
+                      <div
+                        key={`${message.role}-${index}`}
+                        className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                      >
+                        {message.role === 'model' && <Avatar src={avatarSrc} alt={personaName} />}
+                        <div
+                          className={`max-w-[75%] rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-sm ${
+                            message.role === 'user'
+                              ? 'bg-[var(--color-primary)] text-white'
+                              : 'bg-white text-[var(--color-text)]'
+                          }`}
+                        >
+                          {message.text}
+                        </div>
+                        {message.role === 'user' && (
+                          <Avatar
+                            fallback={locale === 'en' ? 'You' : 'Tu'}
+                            alt={locale === 'en' ? 'User' : 'Utilizador'}
+                          />
+                        )}
+                      </div>
+                    ))
+                  )}
+                  {chatLoading && (
+                    <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
+                      <Avatar src={avatarSrc} alt={personaName} />
+                      <p>{t('ai.chat.thinking')}</p>
+                    </div>
+                  )}
+                </div>
 
-              <form onSubmit={handleSendMessage} className="flex flex-col gap-3 sm:flex-row">
-                <Input
-                  placeholder={chatPlaceholder}
-                  value={input}
-                  onChange={(event) => setInput(event.target.value)}
-                  disabled={chatLoading || !result}
-                  className="sm:flex-1"
-                />
-                <Button
-                  type="submit"
-                  variant="primary"
-                  icon={<SendHorizonal className="h-4 w-4" />}
-                  disabled={chatLoading || !input.trim() || !result}
-                  className="w-full sm:w-auto"
-                >
-                  {t('ai.chat.send')}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+                <form onSubmit={handleSendMessage} className="flex flex-col gap-3 sm:flex-row">
+                  <Input
+                    placeholder={chatPlaceholder}
+                    value={input}
+                    onChange={(event) => setInput(event.target.value)}
+                    disabled={chatLoading || !result}
+                    className="sm:flex-1"
+                  />
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    icon={<SendHorizonal className="h-4 w-4" />}
+                    disabled={chatLoading || !input.trim() || !result}
+                    className="w-full sm:w-auto"
+                  >
+                    {t('ai.chat.send')}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </main>
   );

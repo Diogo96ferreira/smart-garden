@@ -19,19 +19,17 @@ type BoolKeys = {
 }[keyof Settings];
 
 export function useSettings() {
-  const [settings, setSettings] = React.useState<Settings>(DEFAULT_SETTINGS);
-
-  // load once
-  React.useEffect(() => {
+  // Lazy init from localStorage to avoid initial flicker
+  const [settings, setSettings] = React.useState<Settings>(() => {
+    if (typeof window === 'undefined') return DEFAULT_SETTINGS;
     try {
-      const raw = localStorage.getItem(SETTINGS_KEY);
-      setSettings(raw ? mergeSettings(raw) : DEFAULT_SETTINGS);
+      const raw = window.localStorage.getItem(SETTINGS_KEY);
+      return raw ? mergeSettings(raw) : DEFAULT_SETTINGS;
     } catch (err) {
-      // localStorage inacessível (SSR/privacidade)
       void err;
-      setSettings(DEFAULT_SETTINGS);
+      return DEFAULT_SETTINGS;
     }
-  }, []);
+  });
 
   // save helper
   const save = React.useCallback(
