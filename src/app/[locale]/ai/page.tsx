@@ -220,12 +220,12 @@ export default function TiaAdeliaPage() {
                 </div>
               ) : (
                 <>
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
+                  <div className="flex h-[65px] w-[65px] items-center justify-center rounded-full bg-white shadow-sm">
                     <Image
                       src={avatarSrc}
                       alt={personaName}
-                      width={48}
-                      height={48}
+                      width={65}
+                      height={65}
                       className="rounded-full"
                     />
                   </div>
@@ -308,7 +308,7 @@ export default function TiaAdeliaPage() {
                 <div className="min-h-[180px] space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
                   {messages.length === 0 ? (
                     <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
-                      <Avatar src={avatarSrc} alt={personaName} />
+                      <Avatar size={65} src={avatarSrc} alt={personaName} />
                       <p>
                         {locale === 'en'
                           ? 'Upload a photo to start the conversation.'
@@ -321,7 +321,9 @@ export default function TiaAdeliaPage() {
                         key={`${message.role}-${index}`}
                         className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                       >
-                        {message.role === 'model' && <Avatar src={avatarSrc} alt={personaName} />}
+                        {message.role === 'model' && (
+                          <Avatar size={65} src={avatarSrc} alt={personaName} />
+                        )}
                         <div
                           className={`max-w-[75%] rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-sm ${
                             message.role === 'user'
@@ -333,6 +335,7 @@ export default function TiaAdeliaPage() {
                         </div>
                         {message.role === 'user' && (
                           <Avatar
+                            size={65}
                             fallback={locale === 'en' ? 'You' : 'Tu'}
                             alt={locale === 'en' ? 'User' : 'Utilizador'}
                           />
@@ -342,7 +345,7 @@ export default function TiaAdeliaPage() {
                   )}
                   {chatLoading && (
                     <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
-                      <Avatar src={avatarSrc} alt={personaName} />
+                      <Avatar size={65} src={avatarSrc} alt={personaName} />
                       <p>{t('ai.chat.thinking')}</p>
                     </div>
                   )}
