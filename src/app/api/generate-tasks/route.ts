@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const runtime = 'nodejs';
 import { GoogleGenAI } from '@google/genai';
 import { buildTasksSystemPrompt, type AIPersona } from '@/lib/aiPersonas';
 import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';

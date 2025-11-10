@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI, Type } from '@google/genai';
 import { buildAnalyzeImagePrompt, normalizeLocale, type AIPersona } from '@/lib/aiPersonas';
+export const runtime = 'nodejs';
 
 export interface ClassificationResult {
   type: string;
@@ -14,6 +15,19 @@ export interface ClassificationResult {
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = GEMINI_API_KEY ? new GoogleGenAI({ apiKey: GEMINI_API_KEY }) : null;
 
+// Minimal in-memory IP-based rate limiter
+const IMG_RATE = new Map<string, { count: number; resetAt: number }>();
+function rateLimit(ip: string, max = 10, windowMs = 60_000) {
+  const now = Date.now();
+  const entry = IMG_RATE.get(ip);
+  if (!entry || now > entry.resetAt) {
+    IMG_RATE.set(ip, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  entry.count++;
+  return entry.count <= max;
+}
+
 const fileToGenerativePart = async (file: File) => {
   const bytes = await file.arrayBuffer();
   return {
@@ -26,12 +40,23 @@ const fileToGenerativePart = async (file: File) => {
 
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || '0.0.0.0';
+    if (!rateLimit(String(ip))) {
+      return NextResponse.json({ error: 'rate_limited' }, { status: 429 });
+    }
     const formData = await req.formData();
     const file = formData.get('file') as File | null;
     const profile = formData.get('profile') as string | null as AIPersona | null;
     const locale = normalizeLocale((formData.get('locale') as string | null) || 'pt');
     if (!file) {
       return NextResponse.json({ error: 'Nenhuma imagem enviada.' }, { status: 400 });
+    }
+    if (!file.type || !file.type.startsWith('image/')) {
+      return NextResponse.json({ error: 'Tipo de ficheiro inválido.' }, { status: 400 });
+    }
+    const MAX_SIZE = 4_000_000; // 4MB
+    if (typeof file.size === 'number' && file.size > MAX_SIZE) {
+      return NextResponse.json({ error: 'Imagem demasiado grande (max 4MB).' }, { status: 413 });
     }
 
     if (!ai) {

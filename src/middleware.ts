@@ -1,22 +1,17 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 
-const PROTECTED_PREFIXES = [
-  '/pt/dashboard',
-  '/pt/garden',
-  '/pt/settings',
-  '/pt/calendar',
-  '/pt/ai',
-  '/pt/onboarding',
-  '/pt/reports',
-  '/en/dashboard',
-  '/en/garden',
-  '/en/settings',
-  '/en/calendar',
-  '/en/ai',
-  '/en/onboarding',
-  '/en/reports',
-];
+const LOCALES = ['pt', 'en'] as const;
+const SECTIONS = [
+  'dashboard',
+  'garden',
+  'settings',
+  'calendar',
+  'ai',
+  'onboarding',
+  'reports',
+] as const;
+const PROTECTED_PREFIXES = LOCALES.flatMap((l) => SECTIONS.map((s) => `/${l}/${s}`));
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
@@ -50,7 +45,7 @@ export async function middleware(req: NextRequest) {
     const dest = `${url.pathname}${url.search ?? ''}`;
     const signin = req.nextUrl.clone();
     signin.pathname = '/signin';
-    signin.searchParams.set('next', dest);
+    signin.searchParams.set('next', encodeURIComponent(dest));
     return NextResponse.redirect(signin);
   }
 

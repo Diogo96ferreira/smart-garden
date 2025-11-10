@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import BottomBar from '@/components/ui/BottomBar';
+import { LocaleContextProvider } from '@/lib/useLocale';
 import { SETTINGS_KEY, DEFAULT_SETTINGS, type Settings } from '@/lib/settings';
 
 const ROUTES_WITHOUT_BAR = ['/onboarding', '/splash'];
@@ -60,9 +61,11 @@ export default function LocaleLayoutClient({ children, locale }: LocaleLayoutCli
   }, []);
 
   return (
-    <div className="app-shell">
-      {children}
-      {!hideBottomBar && <BottomBar locale={locale} currentPath={pathname} />}
-    </div>
+    <LocaleContextProvider value={locale}>
+      <div className="app-shell">
+        {children}
+        {!hideBottomBar && <BottomBar locale={locale} currentPath={pathname} />}
+      </div>
+    </LocaleContextProvider>
   );
 }

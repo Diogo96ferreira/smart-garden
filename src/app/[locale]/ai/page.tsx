@@ -11,6 +11,9 @@ import { Avatar } from '@/components/ui/avatar';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from '@/lib/useTranslation';
 import { useSettings } from '@/hooks/useSettings';
+import { useLocale } from '@/lib/useLocale';
+import { getPersonaMeta } from '@/features/ai/personaMeta';
+import type { AIPersona } from '@/lib/aiPersonas';
 
 type AnalysisResult = {
   type: string;
@@ -37,38 +40,17 @@ export default function TiaAdeliaPage() {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
-  const locale = pathname.startsWith('/en') ? 'en' : 'pt';
+  const locale = useLocale();
   const t = useTranslation(locale);
   const { settings } = useSettings();
-  const persona = (settings.aiProfile || 'tia-adelia') as
-    | 'tia-adelia'
-    | 'eng-pedro'
-    | 'diogo-campos'
-    | 'agro-core';
-  const personaName =
-    persona === 'eng-pedro'
-      ? locale === 'en'
-        ? 'Engineer Pedro'
-        : 'Engenheiro Pedro'
-      : persona === 'diogo-campos'
-        ? 'Diogo Campos'
-        : persona === 'agro-core'
-          ? 'AGRO-CORE v1.0'
-          : locale === 'en'
-            ? 'Aunt Adelia'
-            : 'Tia Adélia';
-  const avatarSrc =
-    persona === 'eng-pedro'
-      ? '/avatar-pedro.jpg'
-      : persona === 'diogo-campos'
-        ? '/avatar-diogo.jpg'
-        : persona === 'agro-core'
-          ? '/avatar-bot.jpg'
-          : '/avatar-adelia.jpg';
+  const persona = (settings.aiProfile || 'tia-adelia') as AIPersona;
+  const meta = getPersonaMeta(persona, locale);
+  const personaName = meta.displayName;
+  const avatarSrc = meta.avatar;
   const titleText = locale === 'en' ? `Talk to ${personaName}` : `Fale com ${personaName}`;
   const chatTitle = locale === 'en' ? `Chat with ${personaName}` : `Conversar com ${personaName}`;
   const chatPlaceholder =
-    locale === 'en' ? `Ask ${personaName} something...` : `Pergunte algo à ${personaName}...`;
+    locale === 'en' ? `Ask ${personaName} something...` : `Pergunte algo \u00E0 ${personaName}...`;
   const resetState = () => {
     setResult(null);
     setMessages([]);
@@ -216,6 +198,7 @@ export default function TiaAdeliaPage() {
                     alt={t('ai.photo.previewAlt')}
                     width={320}
                     height={320}
+                    unoptimized
                     onLoadingComplete={() => setUploading(false)}
                     className="rounded-[var(--radius-md)] object-cover shadow-[var(--shadow-soft)]"
                   />
@@ -287,7 +270,7 @@ export default function TiaAdeliaPage() {
             {result && (
               <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
                 <p className="mb-2 text-sm font-semibold text-[var(--color-text)]">
-                  {locale === 'en' ? 'Analysis Summary' : 'Resumo da análise'}
+                  {locale === 'en' ? 'Analysis Summary' : 'Resumo da an\u00E1lise'}
                 </p>
                 <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                   <dt className="text-[var(--color-text-muted)]">
@@ -295,15 +278,15 @@ export default function TiaAdeliaPage() {
                   </dt>
                   <dd className="text-[var(--color-text)]">{result.type}</dd>
                   <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Species' : 'Espécie'}
+                    {locale === 'en' ? 'Species' : 'Esp\\u00E9cie'}
                   </dt>
                   <dd className="text-[var(--color-text)]">{result.species}</dd>
                   <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Ripeness' : 'Maturação'}
+                    {locale === 'en' ? 'Ripeness' : 'Matura\\u00E7\\u00E3o'}
                   </dt>
                   <dd className="text-[var(--color-text)]">{result.ripeness}</dd>
                   <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Confidence' : 'Confiança'}
+                    {locale === 'en' ? 'Confidence' : 'Confian\\u00E7a'}
                   </dt>
                   <dd className="text-[var(--color-text)]">
                     {Math.round((result.confidence ?? 0) * 100)}%
@@ -329,7 +312,7 @@ export default function TiaAdeliaPage() {
                       <p>
                         {locale === 'en'
                           ? 'Upload a photo to start the conversation.'
-                          : 'Carrega uma fotografia para começar a conversa.'}
+                          : 'Carrega uma fotografia para come\u00E7ar a conversa.'}
                       </p>
                     </div>
                   ) : (
@@ -343,7 +326,7 @@ export default function TiaAdeliaPage() {
                           className={`max-w-[75%] rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-sm ${
                             message.role === 'user'
                               ? 'bg-[var(--color-primary)] text-white'
-                              : 'bg-white text-[var(--color-text)]'
+                              : 'bg-white text-[var(--color-text-on-light)]'
                           }`}
                         >
                           {message.text}

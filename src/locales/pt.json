@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Smart Garden",
-    "welcome": "Bem-vindo à Smart Garden 🌱",
+    "welcome": "Bem-vindo ao Smart Garden",
     "loading": "A carregar...",
     "noData": "Sem dados disponíveis.",
     "error": "Ocorreu um erro. Tenta novamente."
@@ -10,7 +10,7 @@
     "today": "Hoje",
     "crop": "Cultura",
     "zone": "Zona",
-    "actions": "Ações",
+    "actions": "a\u00E7\u00F5es",
     "save": "Guardar",
     "cancel": "Cancelar",
     "delete": "Apagar",
@@ -25,44 +25,44 @@
     "sowing": "Semeadura",
     "transplant": "Transplante",
     "harvest": "Colheita",
-    "overview": "Visão Geral",
+    "overview": "Vis\u00E3o Geral",
     "history": "Histórico"
   },
   "calendar": {
-    "loading": "A carregar calendário…",
+    "loading": "A carregar calendário...",
     "title": "Planeador de culturas",
     "filters": "Filtros",
     "sow": "Semear",
     "transplant": "Transplantar",
     "harvest": "Colher",
-    "search": "Pesquisar cultura…"
+    "search": "Pesquisar cultura..."
   },
   "dashboard": {
     "thisWeek": "Esta semana",
-    "greeting": "Olá, {{name}}! Vamos cuidar da sua horta.",
-    "intro": "Acompanhe as tarefas prioritárias para manter as plantas felizes. A cada ação concluída, a Smart Garden ajusta as recomendações seguintes.",
+    "greeting": "Ol\u00E1, {{name}}! Vamos cuidar da tua horta.",
+    "intro": "Acompanha as tarefas priorit\u00E1rias para manter as plantas felizes. A cada a\u00E7\u00E3o conclu\u00EDda, a Smart Garden ajusta as recomenda\u00E7\u00F5es seguintes.",
     "summary": "Resumo",
-    "progressTitle": "A sua horta está no bom caminho",
-    "completed": "Cumpriu {{done}} de {{total}} tarefas desta semana. Continue assim!",
+    "progressTitle": "A tua horta está no bom caminho",
+    "completed": "Concluíste {{done}} de {{total}} tarefas esta semana. Continua!",
     "weeklyProgress": "Progresso semanal",
-    "nextWatering": "Próxima rega",
+    "nextWatering": "Pr\u00F3xima rega",
     "weather": "Clima previsto",
     "newSuggestions": "Novas sugestões",
     "mulch": {
-      "title": "Coloque cobertura morta",
-      "desc": "Ajuda a reter humidade e protege as raízes em dias quentes."
+      "title": "Coloca cobertura morta",
+      "desc": "Ajuda a reter humidade e protege as ra\u00EDzes em dias quentes."
     },
     "nightWatering": {
-      "title": "Reveja a rega noturna",
-      "desc": "A rega ao fim do dia evita a evaporação excessiva."
+      "title": "Rever rega ao fim do dia",
+      "desc": "A rega ao final do dia reduz a evapora\u00E7\u00E3o."
     },
     "seeHow": "Ver como",
     "adjust": "Ajustar horários",
     "carePlan": "Plano de cuidados",
-    "completedShort": "concluídas",
-    "noDescription": "Sem descrição disponível.",
+    "completedShort": "conclu\u00EDdas",
+    "noDescription": "Sem descri\u00E7\u00E3o disponível.",
     "unmark": "Desmarcar tarefa",
-    "markDone": "Marcar tarefa como concluída",
+    "markDone": "Marcar como conclu\u00EDda",
     "delay": "Adiar tarefa",
     "howTo": "Como fazer",
     "generateTasks": "Gerar tarefas",
@@ -72,18 +72,18 @@
   "garden": {
     "title": "A minha horta",
     "subtitle": "Cuidados diários e registos",
-    "description": "Acompanhe as plantas que vivem consigo. Registe novas espécies, ajuste frequências de rega e mantenha um histórico organizado entre horta e pomar.",
+    "description": "Acompanha as plantas que vivem contigo. Regista novas esp\u00E9cies, ajusta Frequ\u00EAncias de rega e mantém um histórico organizado entre horta e pomar.",
     "addPlant": "Adicionar planta",
     "registerPlant": "Registar planta",
     "emptyTitle": "Nada por aqui ainda",
-    "emptyDescription": "Adicione uma nova planta para começar a acompanhar ciclos de rega e colheita.",
-    "wateringFrequency": "Frequência de rega (dias)",
+    "emptyDescription": "Adiciona uma nova planta para começares a acompanhar ciclos de rega e colheita.",
+    "wateringFrequency": "Frequ\u00EAncia de rega (dias)",
     "type": "Tipo",
     "name": "Nome",
     "photo": "Fotografia",
     "cancel": "Cancelar",
     "savePlant": "Guardar planta",
-    "saveChanges": "Guardar alterações",
+    "saveChanges": "Guardar altera\u00E7\u00F5es",
     "delete": "Eliminar",
     "analyzing": "A analisar a imagem...",
     "uploading": "A carregar imagem...",
@@ -118,7 +118,7 @@
       "dark": "Escuro"
     },
     "languageOptions": {
-      "pt": "Português (PT)",
+      "pt": "Portugu\u00EAs (PT)",
       "en": "English (US)"
     }
   },
@@ -129,31 +129,31 @@
         "label": "Tia Adélia",
         "desc": "Conselhos práticos em linguagem simples, focados na horta caseira."
       },
-      "eng-agronomo": {
-        "label": "Eng. Agrónomo",
-        "desc": "Explicações técnicas e fundamentadas com boas práticas agronómicas."
+      "eng-pedro": {
+        "label": "Engenheiro Pedro",
+        "desc": "Tom profissional e recomenda\u00E7\u00F5es objetivas."
       },
-      "mestre-horta": {
-        "label": "Mestre da Horta",
-        "desc": "Equilíbrio entre prática e teoria, com dicas sazonais e de planeamento."
+      "diogo-campos": {
+        "label": "Diogo Campos",
+        "desc": "Dicas acessíveis e simpáticas para cuidar, regar e colher."
       },
-      "professor-paciente": {
-        "label": "Professor Paciente",
-        "desc": "Explica passo a passo, com calma, ideal para iniciantes."
+      "agro-core": {
+        "label": "AGRO-CORE v1.0",
+        "desc": "An\u00E1lise objetiva e concisa com tom técnico."
       }
     },
     "header": {
-      "eyebrow": "Diagnóstico inteligente",
+      "eyebrow": "Diagn\u00F3stico inteligente",
       "title": "Fale com a Tia Adélia",
-      "subtitle": "Carregue uma fotografia da planta para receber um diagnóstico imediato e peça conselhos personalizados sobre rega, poda ou colheita."
+      "subtitle": "Carrega uma fotografia da planta para obter um Diagn\u00F3stico imediato e conselhos personalizados sobre rega, poda ou colheita."
     },
     "photo": {
-      "title": "Diagnóstico por fotografia",
+      "title": "Diagn\u00F3stico por fotografia",
       "desc": "Analisamos automaticamente a planta para sugerir cuidados e alertas relevantes.",
-      "previewAlt": "Pré-visualização",
+      "previewAlt": "Pré-visualiza\u00E7\u00E3o",
       "remove": "Remover",
       "change": "Trocar imagem",
-      "dragTitle": "Arraste uma fotografia ou escolha no dispositivo",
+      "dragTitle": "Arrasta uma fotografia ou escolhe do dispositivo",
       "dragSubtitle": "Aceitamos folhas, frutos, sementes e flores.",
       "choose": "Escolher fotografia",
       "analyze": "Analisar fotografia",
@@ -161,33 +161,33 @@
     },
     "chat": {
       "title": "Conversar com a Tia Adélia",
-      "desc": "Continue a conversa com base no diagnóstico: peça conselhos sobre tratamento, colheita ou cuidados gerais.",
-      "placeholder": "Pergunte algo à Tia Adélia...",
+      "desc": "Continua a conversa com base no Diagn\u00F3stico: pede conselhos sobre tratamento, colheita ou cuidados gerais.",
+      "placeholder": "Pergunta algo à Tia Adélia...",
       "thinking": "A pensar...",
       "send": "Enviar"
     },
     "errors": {
       "unknown": "Ocorreu um erro desconhecido.",
-      "chatFail": "Não consegui responder agora. Tente novamente dentro de instantes."
+      "chatFail": "N\u00E3o consegui responder agora. Tenta novamente dentro de instantes."
     },
     "messages": {
-      "defaultReply": "Aqui está o que descobri sobre a sua planta!"
+      "defaultReply": "Aqui está o que descobri sobre a tua planta!"
     }
   },
   "onboarding": {
-    "title": "Bem-vindo à Smart Garden 🌿",
+    "title": "Bem-vindo ao Smart Garden",
     "subtitle": "Vamos configurar a tua horta passo a passo.",
     "next": "Seguinte",
     "back": "Anterior",
     "finish": "Concluir"
   },
   "splash": {
-    "welcome": "Bem-vindo de volta 🌿",
+    "welcome": "Bem-vindo de volta",
     "loading": "A preparar o teu jardim..."
   },
   "notifications": {
     "newTask": "Nova tarefa disponível",
     "harvestReminder": "Lembra-te de colher as tuas culturas!",
-    "taskCompleted": "Tarefa concluída"
+    "taskCompleted": "Tarefa conclu\u00EDda"
   }
 }

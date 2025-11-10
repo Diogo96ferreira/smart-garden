@@ -31,7 +31,7 @@ export default function HomeRedirect() {
     const hasCompletedOnboarding = localStorage.getItem('onboardingComplete') === 'true';
     const locale = resolveLocale();
 
-    // Primeiro garantir que o utilizador está autenticado
+    // Primeiro garantir que o utilizador estÃ¡ autenticado
     supabase.auth
       .getSession()
       .then(async ({ data }: { data: { session: { user?: { id?: string } } | null } }) => {

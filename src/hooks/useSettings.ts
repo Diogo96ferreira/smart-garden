@@ -31,6 +31,20 @@ export function useSettings() {
     }
   });
 
+  // Cross-tab sync: update when SETTINGS_KEY changes in other tabs
+  React.useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === SETTINGS_KEY) {
+        try {
+          const value = e.newValue ?? '';
+          setSettings(value ? mergeSettings(value) : DEFAULT_SETTINGS);
+        } catch {}
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
   // save helper
   const save = React.useCallback(
     (updater: Partial<Settings> | ((s: Settings) => Partial<Settings>)) => {

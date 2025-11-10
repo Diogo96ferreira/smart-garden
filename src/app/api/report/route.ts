@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const runtime = 'nodejs';
 import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
 import PDFDocument from 'pdfkit';
 import { parseActionKey, type Locale } from '@/lib/nameMatching';

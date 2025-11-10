@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { buildChatSystemPrompt, normalizeLocale, type AIPersona } from '@/lib/aiPersonas';
+export const runtime = 'nodejs';
+
+// Minimal in-memory IP-based rate limiter (best-effort per server instance)
+const RATE_BUCKET = new Map<string, { count: number; resetAt: number }>();
+function rateLimit(ip: string, max = 15, windowMs = 60_000) {
+  const now = Date.now();
+  const entry = RATE_BUCKET.get(ip);
+  if (!entry || now > entry.resetAt) {
+    RATE_BUCKET.set(ip, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  entry.count++;
+  return entry.count <= max;
+}
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY as string });
 
@@ -9,6 +23,10 @@ export async function POST(req: Request) {
     const { context, question, profile, locale: rawLocale } = await req.json();
     const locale = normalizeLocale(rawLocale || 'pt');
     const persona: AIPersona = (profile as AIPersona) || 'tia-adelia';
+    const ip = req.headers.get('x-forwarded-for') || '0.0.0.0';
+    if (!rateLimit(ip)) {
+      return NextResponse.json({ error: 'rate_limited' }, { status: 429 });
+    }
 
     if (!question || !context) {
       return NextResponse.json(

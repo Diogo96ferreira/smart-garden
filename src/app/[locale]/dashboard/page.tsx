@@ -14,6 +14,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
 import { isWateringTask } from '@/lib/nameMatching';
 import { usePathname } from 'next/navigation';
+import { useLocale } from '@/lib/useLocale';
 
 type Task = {
   id: string | number;
@@ -28,7 +29,7 @@ type PlantLite = { id: string; name: string; image_url?: string | null };
 
 export default function DashboardPage() {
   const pathname = usePathname();
-  const locale = pathname.split('/')[1] || 'pt';
+  const locale = useLocale();
   const t = useTranslation(locale);
 
   const [tasks, setTasks] = useState<Task[]>([]); // pending

@@ -9,24 +9,23 @@ type SupabaseBrowserClient = ReturnType<typeof createBrowserClient>;
 let supabase: any;
 
 if (!supabaseUrl || !supabaseKey) {
-  // During SSR/build, we don't want to crash the import if envs are not present.
-  // Export a lightweight proxy that throws only if actually used server-side.
-  if (typeof window === 'undefined') {
-    supabase = new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(
-            'Supabase client not configured. Define NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.',
-          );
-        },
+  // Do not crash import; expose a proxy that throws on use with a clear message
+  const message =
+    'Supabase client not configured. Define NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.';
+
+  supabase = new Proxy(
+    {},
+    {
+      get() {
+        // Surface as runtime error when actually used
+        throw new Error(message);
       },
-    ) as unknown as SupabaseBrowserClient;
-  } else {
-    // In the browser, fail fast so developers notice missing envs.
-    throw new Error(
-      'Missing Supabase configuration. Please define NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.',
-    );
+    },
+  ) as unknown as SupabaseBrowserClient;
+  if (typeof window !== 'undefined') {
+    // Help developers notice in browser without breaking import
+
+    console.error(message);
   }
 } else {
   // Browser client that keeps auth cookies in sync with the server (middleware)

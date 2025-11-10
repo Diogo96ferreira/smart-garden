@@ -34,10 +34,16 @@ export function useTranslation(locale: string) {
   const norm: 'pt' | 'en' = locale?.toLowerCase().startsWith('en') ? 'en' : 'pt';
   const dict = DICTS[norm];
 
+  const hasMojibake = (s: string) => /[�ǭǜǦǸ]|Ã|Â/.test(s);
+
   return (key: string): string => {
     const val = get(dict, key);
     if (process.env.NODE_ENV !== 'production' && val === undefined) {
       console.warn(`[i18n] missing key "${key}" for locale "${norm}"`);
+    }
+    if (typeof val === 'string' && hasMojibake(val)) {
+      const enVal = get(DICTS.en, key);
+      return (typeof enVal === 'string' ? enVal : val) ?? key;
     }
     return val ?? key;
   };

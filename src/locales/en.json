@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Smart Garden",
-    "welcome": "Welcome to Smart Garden 🌱",
+    "welcome": "Welcome to Smart Garden",
     "loading": "Loading...",
     "noData": "No data available.",
     "error": "Something went wrong. Please try again."
@@ -29,13 +29,13 @@
     "history": "History"
   },
   "calendar": {
-    "loading": "Loading calendar…",
+    "loading": "Loading calendar...",
     "title": "Vegetable Planner",
     "filters": "Filters",
     "sow": "Sow",
     "transplant": "Transplant",
     "harvest": "Harvest",
-    "search": "Search crop…"
+    "search": "Search crop..."
   },
   "dashboard": {
     "thisWeek": "This week",
@@ -175,14 +175,14 @@
     }
   },
   "onboarding": {
-    "title": "Welcome to Smart Garden 🌿",
+    "title": "Welcome to Smart Garden",
     "subtitle": "Let's set up your garden step by step.",
     "next": "Next",
     "back": "Back",
     "finish": "Finish"
   },
   "splash": {
-    "welcome": "Welcome back 🌿",
+    "welcome": "Welcome back",
     "loading": "Preparing your garden..."
   },
   "notifications": {

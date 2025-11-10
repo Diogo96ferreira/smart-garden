@@ -18,7 +18,7 @@ export default function SignInPage() {
   useEffect(() => {
     // If already signed in, bounce to intended destination
     supabase.auth
-      .getSession()
+      .getsession()
       .then(async ({ data }: { data: { session: { user?: { id?: string } } | null } }) => {
         if (data.session) {
           try {
