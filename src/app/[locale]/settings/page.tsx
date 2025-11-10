@@ -37,7 +37,7 @@ export default function SettingsPage() {
   const setAI = (v: AIProfile) => save({ aiProfile: v } as Partial<Settings>);
   const setRange = (v: ReportRange) => save({ reportRange: v } as Partial<Settings>);
 
-  // âœ… FunÃ§Ã£o para mudar idioma
+  // Função para mudar idioma
   const handleChangeLanguage = (v: Settings['locale']) => {
     save({ locale: v });
 
@@ -49,7 +49,6 @@ export default function SettingsPage() {
       parts.splice(1, 0, nextLocale);
     }
 
-    // (Opcional) persistir cookie
     document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`;
 
     router.push(parts.join('/'));
@@ -59,12 +58,12 @@ export default function SettingsPage() {
   const AI_PROFILES = [
     {
       id: 'tia-adelia',
-      label: l('ai.profiles.tia-adelia.label', locale === 'en' ? 'Aunt Adelia' : 'Tia AdÃ©lia'),
+      label: l('ai.profiles.tia-adelia.label', locale === 'en' ? 'Aunt Adelia' : 'Tia Adélia'),
       desc: l(
         'ai.profiles.tia-adelia.desc',
         locale === 'en'
           ? 'Practical advice in simple language.'
-          : 'Conselhos prÃ¡ticos em linguagem simples.',
+          : 'Conselhos práticos em linguagem simples.',
       ),
     },
     {
@@ -77,7 +76,7 @@ export default function SettingsPage() {
         'ai.profiles.eng-pedro.desc',
         locale === 'en'
           ? 'Professional tone with objective recommendations.'
-          : 'Tom profissional e recomendaÃ§Ãµes objetivas.',
+          : 'Tom profissional e recomendações objetivas.',
       ),
     },
     {
@@ -85,7 +84,7 @@ export default function SettingsPage() {
       label: l('ai.profiles.diogo-campos.label', 'Diogo Campos'),
       desc: l(
         'ai.profiles.diogo-campos.desc',
-        locale === 'en' ? 'Friendly and accessible tips.' : 'Leve e simpÃ¡tico, dicas acessÃ­veis.',
+        locale === 'en' ? 'Friendly and accessible tips.' : 'Leve e simpático, dicas acessíveis.',
       ),
     },
     {
@@ -93,7 +92,7 @@ export default function SettingsPage() {
       label: l('ai.profiles.agro-core.label', 'AGRO-CORE v1.0'),
       desc: l(
         'ai.profiles.agro-core.desc',
-        locale === 'en' ? 'Objective, concise analysis.' : 'AnÃ¡lise objetiva e concisa.',
+        locale === 'en' ? 'Objective, concise analysis.' : 'Análise objetiva e concisa.',
       ),
     },
   ];
@@ -163,6 +162,35 @@ export default function SettingsPage() {
             </div>
           </section>
 
+          {/* Idioma */}
+          <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+            <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
+              <Globe className="h-4 w-4" /> {t('settings.language')}
+            </h2>
+            <div className="grid grid-cols-2 gap-2 sm:max-w-md">
+              <button
+                onClick={() => handleChangeLanguage('pt-PT')}
+                className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
+                  (settings.locale ?? DEFAULT_SETTINGS.locale) === 'pt-PT'
+                    ? 'bg-[var(--color-surface-muted)]'
+                    : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
+                }`}
+              >
+                {t('settings.languageOptions.pt')}
+              </button>
+              <button
+                onClick={() => handleChangeLanguage('en-US')}
+                className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
+                  (settings.locale ?? DEFAULT_SETTINGS.locale) === 'en-US'
+                    ? 'bg-[var(--color-surface-muted)]'
+                    : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
+                }`}
+              >
+                {t('settings.languageOptions.en')}
+              </button>
+            </div>
+          </section>
+
           {/* Perfil de IA */}
           <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
             <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
@@ -190,7 +218,7 @@ export default function SettingsPage() {
             </div>
           </section>
 
-          {/* RelatÃ³rio de tarefas */}
+          {/* Relatório de tarefas */}
           <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
             <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
               <FileText className="h-4 w-4" /> {t('settings.report.title')}
@@ -216,7 +244,7 @@ export default function SettingsPage() {
             </div>
           </section>
         </div>
-        <div className="space-y-6 self-start lg:sticky lg:top-24">{/* Perfil de IA */}</div>
+        <div className="space-y-6 self-start lg:sticky lg:top-24"></div>
       </div>
     </main>
   );

@@ -39,6 +39,39 @@ type StickyMode = 'inside' | 'page';
 
 type CSSVars = React.CSSProperties & Record<`--${string}`, string | number>;
 
+// Normalize PT month spellings (handles corrupted encodings) to canonical labels
+const normalizeMonth = (m: string): Month | null => {
+  const s = m.normalize('NFC');
+  const map: Record<string, Month> = {
+    Janeiro: 'Janeiro',
+    Fevereiro: 'Fevereiro',
+    Março: 'Março',
+    'Mar��o': 'Março',
+    Abril: 'Abril',
+    Maio: 'Maio',
+    Junho: 'Junho',
+    Julho: 'Julho',
+    Agosto: 'Agosto',
+    Setembro: 'Setembro',
+    Outubro: 'Outubro',
+    Novembro: 'Novembro',
+    Dezembro: 'Dezembro',
+    January: 'January',
+    February: 'February',
+    March: 'March',
+    April: 'April',
+    May: 'May',
+    June: 'June',
+    July: 'July',
+    August: 'August',
+    September: 'September',
+    October: 'October',
+    November: 'November',
+    December: 'December',
+  };
+  return (map as any)[s] ?? null;
+};
+
 // Helper: dado um array de meses, devolve um array de 12 booleanos
 const maskFor = (months: Month[], locale: 'pt' | 'en') => {
   const monthsList =
@@ -74,7 +107,8 @@ const maskFor = (months: Month[], locale: 'pt' | 'en') => {
 
   const m = Array(12).fill(false);
   months.forEach((mm) => {
-    const idx = monthsList.indexOf(mm);
+    const canon = normalizeMonth(mm) as Month;
+    const idx = canon ? monthsList.indexOf(canon) : -1;
     if (idx !== -1) m[idx] = true;
   });
   return m;
@@ -112,7 +146,9 @@ const onlyMonths = (arr: string[] | undefined, locale: 'pt' | 'en' = 'pt'): Mont
           'Novembro',
           'Dezembro',
         ];
-  return arr.filter((m): m is Month => validMonths.includes(m as Month));
+  return arr
+    .map((m) => normalizeMonth(m))
+    .filter((m): m is Month => Boolean(m) && validMonths.includes(m as Month));
 };
 
 const todayLeftPx = (nameColWidth: number, cellWidth: number) => {
@@ -183,13 +219,36 @@ export default function GanttChart({
           'Dezembro',
         ];
 
-  const crops = React.useMemo(
-    () =>
-      Object.keys(data)
-        .sort((a, b) => a.localeCompare(b, locale))
-        .filter((n) => !search || n.toLowerCase().includes(search.toLowerCase())),
-    [data, search, locale],
-  );
+  const crops = React.useMemo(() => {
+    const all = Object.keys(data).sort((a, b) => a.localeCompare(b, locale));
+    if (!search) return all;
+
+    const norm = (s: string) =>
+      s
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim();
+    const q = norm(search);
+
+    // Alias PT: map common queries to canonical crop names
+    const SEARCH_ALIASES_PT: Record<string, string[]> = {
+      'couve coracao': ['Couve lombarda', 'Couve galega (tronchuda)'],
+      'couve coração': ['Couve lombarda', 'Couve galega (tronchuda)'],
+      'coracao de boi': ['Tomate coração-de-boi', 'Tomate coração-de-boi', 'Tomate coraçao-de-boi'],
+      'coraçao de boi': ['Tomate coração-de-boi'],
+    };
+
+    const aliasHits = new Set<string>();
+    const isPt = locale === 'pt';
+    if (isPt) {
+      for (const [k, targets] of Object.entries(SEARCH_ALIASES_PT)) {
+        if (q.includes(k)) targets.forEach((t) => aliasHits.add(t));
+      }
+    }
+
+    return all.filter((n) => norm(n).includes(q) || aliasHits.has(n));
+  }, [data, search, locale]);
 
   const HEADER_H = 34;
   const todayLeft = todayLeftPx(nameColWidth, cellWidth);
