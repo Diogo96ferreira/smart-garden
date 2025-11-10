@@ -233,10 +233,11 @@ export default function GanttChart({
 
     // Alias PT: map common queries to canonical crop names
     const SEARCH_ALIASES_PT: Record<string, string[]> = {
-      'couve coracao': ['Couve lombarda', 'Couve galega (tronchuda)'],
-      'couve coração': ['Couve lombarda', 'Couve galega (tronchuda)'],
-      'coracao de boi': ['Tomate coração-de-boi', 'Tomate coração-de-boi', 'Tomate coraçao-de-boi'],
-      'coraçao de boi': ['Tomate coração-de-boi'],
+      // Show explicit "Couve Coração - ..." display entries (added to JSON)
+      'couve coracao': ['Couve Coração - Lombarda', 'Couve Coração - Galega'],
+      'couve coração': ['Couve Coração - Lombarda', 'Couve Coração - Galega'],
+      // Tomato: rely on normalization; map without accent-only variants
+      'coracao de boi': ['Tomate coração-de-boi'],
     };
 
     const aliasHits = new Set<string>();

@@ -827,6 +827,16 @@
         "Semeadura": ["Fevereiro", "Março"],
         "Transplante": ["Maio"],
         "Colheita": ["Agosto", "Setembro", "Outubro"]
+      },
+      "Couve Coração - Lombarda": {
+        "Semeadura": ["Fevereiro", "Março", "Julho"],
+        "Transplante": ["Abril", "Agosto"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve Coração - Galega": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Março", "Abril", "Setembro", "Outubro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"]
       }
     },
     "ZONA 2": {
@@ -1609,6 +1619,16 @@
         "Semeadura": ["Março", "Abril"],
         "Transplante": ["Junho"],
         "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Couve Coração - Lombarda": {
+        "Semeadura": ["Fevereiro", "Março", "Julho"],
+        "Transplante": ["Abril", "Agosto"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro"]
+      },
+      "Couve Coração - Galega": {
+        "Semeadura": ["Fevereiro", "Março", "Abril", "Agosto", "Setembro"],
+        "Transplante": ["Março", "Abril", "Setembro", "Outubro"],
+        "Colheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro"]
       }
     },
     "ZONA 3": {
@@ -2391,6 +2411,16 @@
         "Semeadura": ["Março", "Abril"],
         "Transplante": ["Junho"],
         "Colheita": ["Setembro", "Outubro", "Novembro"]
+      },
+      "Couve Coração - Lombarda": {
+        "Semeadura": ["Março", "Abril", "Agosto"],
+        "Transplante": ["Maio", "Setembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve Coração - Galega": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Outubro", "Novembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março"]
       }
     },
     "ZONA 4": {
@@ -3173,6 +3203,16 @@
         "Semeadura": ["Abril", "Maio"],
         "Transplante": ["Julho"],
         "Colheita": ["Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve Coração - Lombarda": {
+        "Semeadura": ["Março", "Abril", "Agosto"],
+        "Transplante": ["Maio", "Setembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro"]
+      },
+      "Couve Coração - Galega": {
+        "Semeadura": ["Março", "Abril", "Maio", "Setembro", "Outubro"],
+        "Transplante": ["Abril", "Maio", "Outubro", "Novembro"],
+        "Colheita": ["Dezembro", "Janeiro", "Fevereiro", "Março"]
       }
     },
     "ZONA 5": {
@@ -4267,6 +4307,35 @@
         "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril"],
         "Transplante": ["Abril", "Maio", "Junho"],
         "Colheita": ["Julho", "Agosto", "Setembro", "Outubro", "Novembro"]
+      },
+      "Couve Coração - Lombarda": {
+        "Semeadura": ["Janeiro", "Fevereiro", "Março", "Abril", "Junho", "Julho", "Agosto"],
+        "Transplante": ["Março", "Abril", "Maio", "Julho", "Agosto", "Setembro"],
+        "Colheita": ["Janeiro", "Fevereiro", "Outubro", "Novembro", "Dezembro"]
+      },
+      "Couve Coração - Galega": {
+        "Semeadura": [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro"
+        ],
+        "Transplante": [
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro"
+        ],
+        "Colheita": ["Janeiro", "Fevereiro", "Março", "Outubro", "Novembro", "Dezembro"]
       }
     }
   }

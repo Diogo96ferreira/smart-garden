@@ -827,6 +827,16 @@
         "Sowing": ["February", "March"],
         "Transplant": ["May"],
         "Harvest": ["August", "September", "October"]
+      },
+      "Heart cabbage - Savoy": {
+        "Sowing": ["February", "March", "July"],
+        "Transplant": ["April", "August"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Heart cabbage - Portuguese (tronchuda)": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": ["March", "April", "September", "October"],
+        "Harvest": ["November", "December", "January", "February"]
       }
     },
     "ZONE 2": {
@@ -1609,6 +1619,16 @@
         "Sowing": ["March", "April"],
         "Transplant": ["June"],
         "Harvest": ["September", "October", "November"]
+      },
+      "Heart cabbage - Savoy": {
+        "Sowing": ["February", "March", "July"],
+        "Transplant": ["April", "August"],
+        "Harvest": ["November", "December", "January"]
+      },
+      "Heart cabbage - Portuguese (tronchuda)": {
+        "Sowing": ["February", "March", "April", "August", "September"],
+        "Transplant": ["March", "April", "September", "October"],
+        "Harvest": ["November", "December", "January", "February"]
       }
     },
     "ZONE 3": {
@@ -2391,6 +2411,16 @@
         "Sowing": ["March", "April"],
         "Transplant": ["June"],
         "Harvest": ["September", "October", "November"]
+      },
+      "Heart cabbage - Savoy": {
+        "Sowing": ["March", "April", "August"],
+        "Transplant": ["May", "September"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Heart cabbage - Portuguese (tronchuda)": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": ["April", "May", "October", "November"],
+        "Harvest": ["December", "January", "February", "March"]
       }
     },
     "ZONE 4": {
@@ -3173,6 +3203,16 @@
         "Sowing": ["April", "May"],
         "Transplant": ["July"],
         "Harvest": ["October", "November", "December"]
+      },
+      "Heart cabbage - Savoy": {
+        "Sowing": ["March", "April", "August"],
+        "Transplant": ["May", "September"],
+        "Harvest": ["December", "January", "February"]
+      },
+      "Heart cabbage - Portuguese (tronchuda)": {
+        "Sowing": ["March", "April", "May", "September", "October"],
+        "Transplant": ["April", "May", "October", "November"],
+        "Harvest": ["December", "January", "February", "March"]
       }
     },
     "ZONE 5": {
@@ -4161,6 +4201,35 @@
         "Sowing": ["January", "February", "March", "April"],
         "Transplant": ["April", "May", "June"],
         "Harvest": ["July", "August", "September", "October", "November"]
+      },
+      "Heart cabbage - Savoy": {
+        "Sowing": ["January", "February", "March", "April", "June", "July", "August"],
+        "Transplant": ["March", "April", "May", "July", "August", "September"],
+        "Harvest": ["January", "February", "October", "November", "December"]
+      },
+      "Heart cabbage - Portuguese (tronchuda)": {
+        "Sowing": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "July",
+          "August",
+          "September",
+          "October"
+        ],
+        "Transplant": [
+          "February",
+          "March",
+          "April",
+          "May",
+          "August",
+          "September",
+          "October",
+          "November"
+        ],
+        "Harvest": ["January", "February", "March", "October", "November", "December"]
       }
     }
   }
