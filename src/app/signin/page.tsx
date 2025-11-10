@@ -63,8 +63,13 @@ export default function SignInPage() {
   useEffect(() => {
     try {
       const sp = new URLSearchParams(window.location.search);
-      setNext(sp.get('next') || '/pt/dashboard');
-    } catch {}
+      const raw = sp.get('next');
+      // Decode once in case middleware/auth encoded the destination
+      const dest = raw ? decodeURIComponent(raw) : '/pt/dashboard';
+      setNext(dest);
+    } catch {
+      setNext('/pt/dashboard');
+    }
   }, []);
 
   const handleEmailSignIn = async (e: React.FormEvent) => {

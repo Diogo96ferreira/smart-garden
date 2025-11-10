@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/lib/supabaseClient';
 
 type Props = {
   onNext: () => void;
@@ -16,11 +17,20 @@ export function StepName({ onBack, onNext }: Props) {
     return localStorage.getItem('userName') ?? '';
   });
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback(async () => {
     const trimmed = name.trim();
     if (!trimmed) return;
 
-    localStorage.setItem('userName', trimmed);
+    try {
+      const { data: auth } = await supabase.auth.getUser();
+      const userId = auth.user?.id;
+      if (userId) {
+        await supabase.from('users').upsert({ id: userId, name: trimmed }).eq('id', userId);
+      }
+    } catch {}
+    try {
+      localStorage.setItem('userName', trimmed);
+    } catch {}
     onNext();
   }, [name, onNext]);
 

@@ -53,8 +53,12 @@ export default function SignUpPage() {
   useEffect(() => {
     try {
       const sp = new URLSearchParams(window.location.search);
-      setNext(sp.get('next') || '/pt/dashboard');
-    } catch {}
+      const raw = sp.get('next');
+      const dest = raw ? decodeURIComponent(raw) : '/pt/dashboard';
+      setNext(dest);
+    } catch {
+      setNext('/pt/dashboard');
+    }
   }, []);
 
   const handleSignUp = async (e: React.FormEvent) => {

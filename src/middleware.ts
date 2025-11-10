@@ -45,7 +45,8 @@ export async function middleware(req: NextRequest) {
     const dest = `${url.pathname}${url.search ?? ''}`;
     const signin = req.nextUrl.clone();
     signin.pathname = '/signin';
-    signin.searchParams.set('next', encodeURIComponent(dest));
+    // Pass raw destination; client decodes if necessary
+    signin.searchParams.set('next', dest);
     return NextResponse.redirect(signin);
   }
 

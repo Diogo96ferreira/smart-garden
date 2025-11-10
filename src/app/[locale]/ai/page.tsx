@@ -50,7 +50,7 @@ export default function TiaAdeliaPage() {
   const titleText = locale === 'en' ? `Talk to ${personaName}` : `Fale com ${personaName}`;
   const chatTitle = locale === 'en' ? `Chat with ${personaName}` : `Conversar com ${personaName}`;
   const chatPlaceholder =
-    locale === 'en' ? `Ask ${personaName} something...` : `Pergunte algo \u00E0 ${personaName}...`;
+    locale === 'en' ? `Ask ${personaName} something...` : `Pergunte algo à ${personaName}...`;
   const resetState = () => {
     setResult(null);
     setMessages([]);
@@ -169,7 +169,7 @@ export default function TiaAdeliaPage() {
       <header className="space-y-3 text-left">
         <p className="eyebrow">{t('ai.header.eyebrow')}</p>
         <h1 className="text-display text-3xl sm:text-4xl">{titleText}</h1>
-        <p className="max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
+        <p className="hidden max-w-2xl text-sm text-[var(--color-text-muted)] sm:block">
           {t('ai.header.subtitle')}
         </p>
       </header>
@@ -270,7 +270,7 @@ export default function TiaAdeliaPage() {
             {result && (
               <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
                 <p className="mb-2 text-sm font-semibold text-[var(--color-text)]">
-                  {locale === 'en' ? 'Analysis Summary' : 'Resumo da an\u00E1lise'}
+                  {locale === 'en' ? 'Analysis Summary' : 'Resumo da análise'}
                 </p>
                 <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                   <dt className="text-[var(--color-text-muted)]">
@@ -278,15 +278,15 @@ export default function TiaAdeliaPage() {
                   </dt>
                   <dd className="text-[var(--color-text)]">{result.type}</dd>
                   <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Species' : 'Esp\\u00E9cie'}
+                    {locale === 'en' ? 'Species' : 'Espécie'}
                   </dt>
                   <dd className="text-[var(--color-text)]">{result.species}</dd>
                   <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Ripeness' : 'Matura\\u00E7\\u00E3o'}
+                    {locale === 'en' ? 'Ripeness' : 'Maturação'}
                   </dt>
                   <dd className="text-[var(--color-text)]">{result.ripeness}</dd>
                   <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Confidence' : 'Confian\\u00E7a'}
+                    {locale === 'en' ? 'Confidence' : 'Confiança'}
                   </dt>
                   <dd className="text-[var(--color-text)]">
                     {Math.round((result.confidence ?? 0) * 100)}%
@@ -312,7 +312,7 @@ export default function TiaAdeliaPage() {
                       <p>
                         {locale === 'en'
                           ? 'Upload a photo to start the conversation.'
-                          : 'Carrega uma fotografia para come\u00E7ar a conversa.'}
+                          : 'Carrega uma fotografia para começar a conversa.'}
                       </p>
                     </div>
                   ) : (

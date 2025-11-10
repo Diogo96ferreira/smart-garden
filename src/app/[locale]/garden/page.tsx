@@ -78,9 +78,17 @@ export default function GardenPage() {
 
   async function fetchPlants() {
     try {
+      const { data: auth } = await supabase.auth.getUser();
+      const userId = auth.user?.id;
+      if (!userId) {
+        setPlants([]);
+        setLoading(false);
+        return;
+      }
       const { data, error } = await supabase
         .from('plants')
         .select('*')
+        .eq('user_id', userId)
         .order('created_at', { ascending: true });
 
       if (error) throw error;
@@ -171,11 +179,14 @@ export default function GardenPage() {
   async function handleAddPlant() {
     if (!form.name.trim()) return;
     try {
+      const { data: auth } = await supabase.auth.getUser();
+      const userId = auth.user?.id;
       const { error } = await supabase.from('plants').insert({
         name: form.name.trim(),
         image_url: form.image_url,
         watering_freq: form.watering_freq,
         type: form.type,
+        user_id: userId ?? undefined,
       });
       if (error) throw error;
 
@@ -395,7 +406,7 @@ export default function GardenPage() {
 
       {/* Diálogo Adicionar */}
       <Dialog open={addOpen} onOpenChange={setAddOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-h-[85vh] max-w-lg overflow-y-auto sm:max-h-[90vh]">
           <DialogHeader>
             <DialogTitle>{t('garden.addNew')}</DialogTitle>
           </DialogHeader>
@@ -498,7 +509,7 @@ export default function GardenPage() {
 
       {/* Diálogo Editar */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-h-[85vh] max-w-md overflow-y-auto sm:max-h-[90vh]">
           <DialogHeader>
             <DialogTitle>{t('garden.editPlant')}</DialogTitle>
           </DialogHeader>

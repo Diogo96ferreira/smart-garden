@@ -149,7 +149,7 @@
     },
     "photo": {
       "title": "Diagn\u00F3stico por fotografia",
-      "desc": "Analisamos automaticamente a planta para sugerir cuidados e alertas relevantes.",
+      "desc": "Analisamos automaticamente a foto da planta ou fruto para sugerir cuidados e alertas relevantes.",
       "previewAlt": "Pré-visualiza\u00E7\u00E3o",
       "remove": "Remover",
       "change": "Trocar imagem",

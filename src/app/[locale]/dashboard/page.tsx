@@ -61,8 +61,25 @@ export default function DashboardPage() {
   }, [tasks.length, doneThisWeek.length]);
 
   useEffect(() => {
-    const storedName = localStorage.getItem('userName');
-    if (storedName) setUserName(storedName);
+    // Prefer server profile name, fallback to any local value
+    (async () => {
+      try {
+        const { data: auth } = await supabase.auth.getUser();
+        const userId = auth.user?.id;
+        if (userId) {
+          const { data } = await supabase.from('users').select('name').eq('id', userId).single();
+          if (data?.name && typeof data.name === 'string' && data.name.trim()) {
+            setUserName(data.name.trim());
+            try {
+              localStorage.setItem('userName', data.name.trim());
+            } catch {}
+            return;
+          }
+        }
+      } catch {}
+      const stored = typeof window !== 'undefined' ? localStorage.getItem('userName') : null;
+      if (stored) setUserName(stored);
+    })();
   }, []);
 
   // Week helpers
@@ -149,7 +166,13 @@ export default function DashboardPage() {
   useEffect(() => {
     (async () => {
       try {
-        const { data, error } = await supabase.from('plants').select('id,name,image_url');
+        const { data: auth } = await supabase.auth.getUser();
+        const userId = auth.user?.id;
+        if (!userId) return;
+        const { data, error } = await supabase
+          .from('plants')
+          .select('id,name,image_url')
+          .eq('user_id', userId);
         if (error) throw error;
         setPlants((data as PlantLite[]) ?? []);
       } catch (err) {
@@ -671,17 +694,22 @@ function TaskActionButton({
       type="button"
       onClick={onClick}
       aria-label={label}
+      title={label}
       disabled={disabled}
-      className={clsx(
-        'flex h-10 w-10 items-center justify-center rounded-full border text-[var(--color-text-muted)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
-        active
-          ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-[0_6px_14px_rgba(16,185,129,0.25)]'
-          : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary-strong)]',
-        disabled && 'cursor-not-allowed opacity-50',
-      )}
+      className="group flex flex-col items-center gap-1"
     >
-      <Icon className="h-5 w-5" />
-      <span className="sr-only">{label}</span>
+      <span
+        className={clsx(
+          'flex h-10 w-10 items-center justify-center rounded-full border text-[var(--color-text-muted)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
+          active
+            ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-[0_6px_14px_rgba(16,185,129,0.25)]'
+            : 'border-[var(--color-border)] bg-[var(--color-surface)] group-hover:border-[var(--color-primary)] group-hover:text-[var(--color-primary-strong)]',
+          disabled && 'cursor-not-allowed opacity-50',
+        )}
+      >
+        <Icon className="h-5 w-5" />
+      </span>
+      <span className="text-[10px] leading-tight text-[var(--color-text-muted)]">{label}</span>
     </button>
   );
 }

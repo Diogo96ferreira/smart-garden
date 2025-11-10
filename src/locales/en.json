@@ -149,7 +149,7 @@
     },
     "photo": {
       "title": "Photo diagnosis",
-      "desc": "We automatically analyze your plant to suggest care and alerts.",
+      "desc": "We automatically analyze the photo of your plant or fruit to suggest care and alerts.",
       "previewAlt": "Preview",
       "remove": "Remove",
       "change": "Change image",
