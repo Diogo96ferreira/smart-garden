@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -16,23 +16,33 @@ export default function SignInPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // If already signed in, bounce to intended destination
-    supabase.auth
-      .getsession()
-      .then(async ({ data }: { data: { session: { user?: { id?: string } } | null } }) => {
-        if (data.session) {
-          try {
-            await fetch('/api/ensure-profile', { method: 'POST' });
-          } catch {}
-          let dest = next;
-          try {
-            const sp = new URLSearchParams(window.location.search);
-            dest = sp.get('next') || next;
-          } catch {}
-          router.replace(dest);
+    const check = async () => {
+      try {
+        if (typeof (supabase as any).auth?.getSession === 'function') {
+          const { data } = await (supabase as any).auth.getSession();
+          return data?.session ?? null;
         }
-      });
-    const { data: sub } = supabase.auth.onAuthStateChange(
+        const { data } = await (supabase as any).auth.getUser();
+        return data?.user ? { user: data.user } : null;
+      } catch {
+        return null;
+      }
+    };
+    check().then(async (session: { user?: { id?: string } } | null) => {
+      if (session) {
+        try {
+          await fetch('/api/ensure-profile', { method: 'POST' });
+        } catch {}
+        let dest = next;
+        try {
+          const sp = new URLSearchParams(window.location.search);
+          dest = sp.get('next') || next;
+        } catch {}
+        router.replace(dest);
+      }
+    });
+
+    const { data: sub } = (supabase as any).auth.onAuthStateChange(
       (_event: unknown, session: { user?: { id?: string } } | null) => {
         if (session) {
           try {
@@ -62,7 +72,7 @@ export default function SignInPage() {
     setLoading(true);
     setError(null);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await (supabase as any).auth.signInWithPassword({ email, password });
       if (error) throw error;
       const storedLocale = localStorage.getItem('app.locale') || 'pt';
       router.replace(next || `/${storedLocale}/dashboard`);
@@ -85,7 +95,7 @@ export default function SignInPage() {
         const sp = new URLSearchParams(window.location.search);
         dest = sp.get('next') || dest;
       } catch {}
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { error } = await (supabase as any).auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/signin?next=${encodeURIComponent(dest)}`,
@@ -102,7 +112,7 @@ export default function SignInPage() {
   return (
     <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6">
       <header className="text-center">
-        <p className="eyebrow text-[var(--color-primary-strong)]">Bem‑vindo</p>
+        <p className="eyebrow text-[var(--color-primary-strong)]">Bem-vindo</p>
         <h1 className="text-display text-4xl sm:text-5xl">Smart Garden</h1>
       </header>
 
