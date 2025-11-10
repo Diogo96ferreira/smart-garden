@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/dialog';
 import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
+import { normalize as normalizeText } from '@/lib/nameMatching';
 import { usePathname } from 'next/navigation';
 
 type Plant = {
@@ -226,6 +227,50 @@ export default function GardenPage() {
     setAnalyzing(false);
   }
 
+  // Simple type-ahead suggestions for plant name (veg vs fruit/orchard)
+  const VEG_SUGGESTIONS = useMemo(
+    () => [
+      'Cebola branca',
+      'Cebola roxa',
+      'Cebola doce',
+      'Tomate cereja',
+      'Tomate coração de boi',
+      'Alface romana',
+      'Cenoura Nantes',
+      'Pimento verde',
+      'Pimento vermelho',
+      'Courgette',
+      'Pepino',
+      'Rabanete',
+      'Espinafre',
+    ],
+    [],
+  );
+  const FRUIT_SUGGESTIONS = useMemo(
+    () => [
+      'Pêssego',
+      'Pêssego Paraguayo',
+      'Pêssego Dona Maria',
+      'Nectarina',
+      'Maçã Gala',
+      'Maçã Fuji',
+      'Pera Rocha',
+      'Laranja do Algarve',
+      'Ameixa Rainha-Cláudia',
+      'Figo Pingo de Mel',
+      'Tangerina Clementina',
+      'Uva (de mesa)',
+      'Romã',
+    ],
+    [],
+  );
+  const nameSuggestions = useMemo(() => {
+    const source = (form.type === 'pomar' ? FRUIT_SUGGESTIONS : VEG_SUGGESTIONS) as string[];
+    const term = normalizeText(form.name || '');
+    if (!term || term.length < 2) return source.slice(0, 8);
+    return source.filter((s) => normalizeText(s).includes(term)).slice(0, 8);
+  }, [form.name, form.type, FRUIT_SUGGESTIONS, VEG_SUGGESTIONS]);
+
   const filteredPlants = useMemo(
     () => plants.filter((plant) => plant.type === activeTab),
     [activeTab, plants],
@@ -362,7 +407,13 @@ export default function GardenPage() {
                   placeholder="Ex.: Tomate cereja"
                   value={form.name}
                   onChange={(event) => setForm({ ...form, name: event.target.value })}
+                  list="plant-suggestions"
                 />
+                <datalist id="plant-suggestions">
+                  {nameSuggestions.map((opt) => (
+                    <option key={opt} value={opt} />
+                  ))}
+                </datalist>
               </div>
               <div>
                 <Label>{t('garden.wateringFrequency')}</Label>
