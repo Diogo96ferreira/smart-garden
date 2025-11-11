@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
+import { SETTINGS_KEY } from '@/lib/settings';
 import {
   Select,
   SelectContent,
@@ -64,15 +65,34 @@ export function StepLocation({ onBack, onNext }: Props) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    let distrito = '';
+    let municipio = '';
     const cachedLocation = localStorage.getItem('userLocation');
-    if (!cachedLocation) return;
-    try {
-      const parsed = JSON.parse(cachedLocation) as { distrito?: string; municipio?: string };
-      if (parsed.distrito) setSelectedDistrito(parsed.distrito);
-      if (parsed.municipio) setSelectedMunicipio(parsed.municipio);
-    } catch {
-      // ignore cache errors
+    if (cachedLocation) {
+      try {
+        const parsed = JSON.parse(cachedLocation) as { distrito?: string; municipio?: string };
+        distrito = parsed.distrito || '';
+        municipio = parsed.municipio || '';
+      } catch {
+        /* ignore */
+      }
     }
+    if (!distrito || !municipio) {
+      try {
+        const raw = localStorage.getItem(SETTINGS_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw) as {
+            userLocation?: { distrito?: string; municipio?: string };
+          };
+          distrito ||= parsed.userLocation?.distrito || '';
+          municipio ||= parsed.userLocation?.municipio || '';
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+    if (distrito) setSelectedDistrito(distrito);
+    if (municipio) setSelectedMunicipio(municipio);
   }, []);
 
   const municipios = useMemo(() => {
@@ -86,6 +106,18 @@ export function StepLocation({ onBack, onNext }: Props) {
       'userLocation',
       JSON.stringify({ distrito: selectedDistrito, municipio: selectedMunicipio }),
     );
+    // Mirror into settings blob for central persistence
+    try {
+      const raw = localStorage.getItem(SETTINGS_KEY);
+      const current = raw ? JSON.parse(raw) : {};
+      const next = {
+        ...current,
+        userLocation: { distrito: selectedDistrito, municipio: selectedMunicipio },
+      } as Record<string, unknown>;
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(next));
+    } catch {
+      /* ignore */
+    }
     onNext();
   }, [onNext, selectedDistrito, selectedMunicipio]);
 

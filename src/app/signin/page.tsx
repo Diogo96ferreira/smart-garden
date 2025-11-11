@@ -15,6 +15,37 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dict = {
+    pt: {
+      header: 'Bem-vindo',
+      title: 'Entrar',
+      subtitle: '{t.subtitle}',
+      email: 'Email',
+      password: 'Password',
+      submit: 'Entrar',
+      loading: 'A entrar... ',
+      or: 'ou',
+      google: 'Entrar com Google',
+      noAccount: 'N�o tens conta?',
+      linkCreate: '{t.linkCreate}',
+      appName: 'Smart Garden',
+    },
+    en: {
+      header: 'Welcome',
+      title: 'Sign in',
+      subtitle: 'Access your smart garden',
+      email: 'Email',
+      password: 'Password',
+      submit: 'Sign in',
+      loading: 'Signing in... ',
+      or: 'or',
+      google: 'Continue with Google',
+      noAccount: "Don't have an account?",
+      linkCreate: 'Create account',
+      appName: 'Smart Garden',
+    },
+  } as const;
+  const t = dict[lang];
 
   useEffect(() => {
     const check = async () => {
@@ -34,12 +65,32 @@ export default function SignInPage() {
         try {
           await fetch('/api/ensure-profile', { method: 'POST' });
         } catch {}
-        let dest = next;
+        // persist logged-in marker
+        try {
+          localStorage.setItem('app.isLoggedIn', 'true');
+        } catch {}
+        let dest = '';
         try {
           const sp = new URLSearchParams(window.location.search);
-          dest = sp.get('next') || next;
+          dest = sp.get('next') || '';
         } catch {}
-        router.replace(dest);
+        if (!dest) {
+          // route based on onboarding status when no explicit next
+          let l: 'pt' | 'en' = 'pt';
+          try {
+            const stored = localStorage.getItem('app.locale');
+            if (stored === 'en' || stored === 'pt') l = stored;
+          } catch {}
+          const done = (() => {
+            try {
+              return localStorage.getItem('onboardingComplete') === 'true';
+            } catch {
+              return false;
+            }
+          })();
+          dest = `/${l}/${done ? 'dashboard' : 'onboarding'}`;
+        }
+        router.replace(dest || next);
       }
     });
 
@@ -49,12 +100,30 @@ export default function SignInPage() {
           try {
             fetch('/api/ensure-profile', { method: 'POST' });
           } catch {}
-          let dest = next;
+          try {
+            localStorage.setItem('app.isLoggedIn', 'true');
+          } catch {}
+          let dest = '';
           try {
             const sp = new URLSearchParams(window.location.search);
-            dest = sp.get('next') || next;
+            dest = sp.get('next') || '';
           } catch {}
-          router.replace(dest);
+          if (!dest) {
+            let l: 'pt' | 'en' = 'pt';
+            try {
+              const stored = localStorage.getItem('app.locale');
+              if (stored === 'en' || stored === 'pt') l = stored;
+            } catch {}
+            const done = (() => {
+              try {
+                return localStorage.getItem('onboardingComplete') === 'true';
+              } catch {
+                return false;
+              }
+            })();
+            dest = `/${l}/${done ? 'dashboard' : 'onboarding'}`;
+          }
+          router.replace(dest || next);
         }
       },
     );
@@ -100,8 +169,16 @@ export default function SignInPage() {
     try {
       const { error } = await (supabase as any).auth.signInWithPassword({ email, password });
       if (error) throw error;
+      try {
+        localStorage.setItem('app.isLoggedIn', 'true');
+      } catch {}
       const storedLocale = localStorage.getItem('app.locale') || 'pt';
-      router.replace(next || `/${storedLocale}/dashboard`);
+      if (next) {
+        router.replace(next);
+      } else {
+        const done = localStorage.getItem('onboardingComplete') === 'true';
+        router.replace(`/${storedLocale}/${done ? 'dashboard' : 'onboarding'}`);
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Falha ao iniciar sessão';
       setError(message);
@@ -158,15 +235,13 @@ export default function SignInPage() {
         </button>
       </div>
       <header className="text-center">
-        <p className="eyebrow text-[var(--color-primary-strong)]">Bem-vindo</p>
-        <h1 className="text-display text-4xl sm:text-5xl">Smart Garden</h1>
+        <p className="eyebrow text-[var(--color-primary-strong)]">{t.header}</p>
+        <h1 className="text-display text-4xl sm:text-5xl">{t.appName}</h1>
       </header>
 
       <div className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-sm">
-        <h2 className="mb-2 text-xl font-semibold">Entrar</h2>
-        <p className="mb-6 text-sm text-[var(--color-text-muted)]">
-          Acede ao teu jardim inteligente
-        </p>
+        <h2 className="mb-2 text-xl font-semibold">{t.title}</h2>
+        <p className="mb-6 text-sm text-[var(--color-text-muted)]">{t.subtitle}</p>
 
         <form
           className="space-y-4"
@@ -174,7 +249,7 @@ export default function SignInPage() {
           aria-label="Iniciar sessão por email"
         >
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t.email}</Label>
             <Input
               id="email"
               type="email"
@@ -185,7 +260,7 @@ export default function SignInPage() {
             />
           </div>
           <div>
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t.password}</Label>
             <Input
               id="password"
               type="password"
@@ -201,11 +276,17 @@ export default function SignInPage() {
             </p>
           )}
           <Button className="w-full" disabled={loading} aria-busy={loading} aria-live="polite">
-            {loading ? 'A entrar…' : 'Entrar'}
+            {loading
+              ? lang === 'en'
+                ? 'Signing in...'
+                : 'A entrar...'
+              : lang === 'en'
+                ? 'Sign in'
+                : 'Entrar'}
           </Button>
         </form>
 
-        <div className="my-4 text-center text-sm text-[var(--color-text-muted)]">ou</div>
+        <div className="my-4 text-center text-sm text-[var(--color-text-muted)]">{t.or}</div>
 
         <Button
           className="w-full"
@@ -214,13 +295,13 @@ export default function SignInPage() {
           disabled={loading}
           aria-busy={loading}
         >
-          Entrar com Google
+          {t.google}
         </Button>
 
         <p className="mt-6 text-center text-sm">
-          Não tens conta?{' '}
+          {t.noAccount}{' '}
           <a className="text-[var(--color-primary)] underline" href="/signup">
-            Criar conta
+            {t.linkCreate}
           </a>
         </p>
       </div>

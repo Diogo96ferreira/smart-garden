@@ -16,6 +16,7 @@ export default function LogoutButton() {
         /* ignore */
       }
       try {
+        localStorage.setItem('app.isLoggedIn', 'false');
         localStorage.removeItem('onboardingComplete');
         localStorage.removeItem('userPlants');
       } catch {}

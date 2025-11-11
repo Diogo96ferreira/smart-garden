@@ -189,5 +189,31 @@
     "newTask": "New task available",
     "harvestReminder": "Remember to harvest your crops!",
     "taskCompleted": "Task completed"
+  },
+  "auth": {
+    "lang": { "pt": "PT", "en": "EN" },
+    "or": "or",
+    "google": "Continue with Google",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "signin": {
+      "header": "Welcome",
+      "title": "Sign in",
+      "subtitle": "Access your smart garden",
+      "submit": "Sign in",
+      "loading": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "linkCreate": "Create account"
+    },
+    "signup": {
+      "header": "Create account",
+      "title": "Sign up",
+      "subtitle": "Welcome to {{app}}",
+      "submit": "Create account",
+      "loading": "Creating...",
+      "haveAccount": "Already have an account?",
+      "linkSignIn": "Sign in"
+    }
   }
 }

@@ -24,6 +24,9 @@ export default function HomeRedirect() {
 
     const hasCompletedOnboarding = localStorage.getItem('onboardingComplete') === 'true';
     const locale = resolveLocale();
+    try {
+      localStorage.setItem('app.locale', locale);
+    } catch {}
 
     const fetchSession = async () => {
       try {

@@ -30,6 +30,22 @@ if (!supabaseUrl || !supabaseKey) {
 } else {
   // Browser client that keeps auth cookies in sync with the server (middleware)
   supabase = createBrowserClient(supabaseUrl, supabaseKey) as unknown as any;
+
+  // Keep a persistent local flag of login state for UI flows that avoid network
+  if (typeof window !== 'undefined') {
+    try {
+      (supabase as any).auth.onAuthStateChange?.((_event: unknown, session: unknown) => {
+        try {
+          const isLogged = session ? 'true' : 'false';
+          localStorage.setItem('app.isLoggedIn', isLogged);
+        } catch {
+          /* ignore */
+        }
+      });
+    } catch {
+      /* ignore */
+    }
+  }
 }
 
 export { supabase };

@@ -16,6 +16,39 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dict = {
+    pt: {
+      header: 'Criar conta',
+      title: 'Registo',
+      subtitle: '{t.subtitle}',
+      name: 'Nome',
+      email: 'Email',
+      password: 'Password',
+      submit: 'Criar conta',
+      loading: 'A criar... ',
+      or: 'ou',
+      google: 'Entrar com Google',
+      haveAccount: '{t.haveAccount}',
+      linkSignIn: 'Entrar',
+      appName: 'Smart Garden',
+    },
+    en: {
+      header: 'Create account',
+      title: 'Sign up',
+      subtitle: 'Welcome to Smart Garden',
+      name: 'Name',
+      email: 'Email',
+      password: 'Password',
+      submit: 'Create account',
+      loading: 'Creating... ',
+      or: 'or',
+      google: 'Continue with Google',
+      haveAccount: 'Already have an account?',
+      linkSignIn: 'Sign in',
+      appName: 'Smart Garden',
+    },
+  } as const;
+  const t = dict[lang];
 
   useEffect(() => {
     supabase.auth
@@ -158,21 +191,21 @@ export default function SignUpPage() {
         </button>
       </div>
       <header className="text-center">
-        <p className="eyebrow text-[var(--color-primary-strong)]">Criar Conta</p>
-        <h1 className="text-display text-4xl sm:text-5xl">Smart Garden</h1>
+        <p className="eyebrow text-[var(--color-primary-strong)]">{t.header}</p>
+        <h1 className="text-display text-4xl sm:text-5xl">{t.appName}</h1>
       </header>
 
       <div className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-sm">
-        <h2 className="mb-2 text-xl font-semibold">Registo</h2>
-        <p className="mb-6 text-sm text-[var(--color-text-muted)]">Bem‑vindo/a ao Smart Garden</p>
+        <h2 className="mb-2 text-xl font-semibold">{t.title}</h2>
+        <p className="mb-6 text-sm text-[var(--color-text-muted)]">{t.subtitle}</p>
 
         <form className="space-y-4" onSubmit={handleSignUp} aria-label="Criar conta por email">
           <div>
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">{t.name}</Label>
             <Input id="name" required value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t.email}</Label>
             <Input
               id="email"
               type="email"
@@ -183,7 +216,7 @@ export default function SignUpPage() {
             />
           </div>
           <div>
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t.password}</Label>
             <Input
               id="password"
               type="password"
@@ -199,11 +232,17 @@ export default function SignUpPage() {
             </p>
           )}
           <Button className="w-full" disabled={loading} aria-busy={loading}>
-            {loading ? 'A criar…' : 'Criar conta'}
+            {loading
+              ? lang === 'en'
+                ? 'Creating...'
+                : 'A criar...'
+              : lang === 'en'
+                ? 'Create account'
+                : 'Criar conta'}
           </Button>
         </form>
 
-        <div className="my-4 text-center text-sm text-[var(--color-text-muted)]">ou</div>
+        <div className="my-4 text-center text-sm text-[var(--color-text-muted)]">{t.or}</div>
 
         <Button
           className="w-full"
@@ -212,13 +251,13 @@ export default function SignUpPage() {
           disabled={loading}
           aria-busy={loading}
         >
-          Entrar com Google
+          {t.google}
         </Button>
 
         <p className="mt-6 text-center text-sm">
-          Já tens conta?{' '}
+          {t.haveAccount}{' '}
           <a className="text-[var(--color-primary)] underline" href="/signin">
-            Entrar
+            {t.linkSignIn}
           </a>
         </p>
       </div>
