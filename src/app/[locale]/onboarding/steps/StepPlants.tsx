@@ -301,6 +301,7 @@ export function StepPlants({ onBack, onNext }: Props) {
         <div className="relative">
           <Input
             id="plant-search"
+            leadingIcon={<Search className="h-4 w-4" />}
             placeholder="Exemplo: Tomate cereja, Manjericao, Morango..."
             value={searchTerm}
             onChange={(event) => {
