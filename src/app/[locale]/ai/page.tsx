@@ -266,34 +266,6 @@ export default function TiaAdeliaPage() {
                 {error}
               </p>
             )}
-
-            {result && (
-              <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
-                <p className="mb-2 text-sm font-semibold text-[var(--color-text)]">
-                  {locale === 'en' ? 'Analysis Summary' : 'Resumo da análise'}
-                </p>
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                  <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Type' : 'Tipo'}
-                  </dt>
-                  <dd className="text-[var(--color-text)]">{result.type}</dd>
-                  <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Species' : 'Espécie'}
-                  </dt>
-                  <dd className="text-[var(--color-text)]">{result.species}</dd>
-                  <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Ripeness' : 'Maturação'}
-                  </dt>
-                  <dd className="text-[var(--color-text)]">{result.ripeness}</dd>
-                  <dt className="text-[var(--color-text-muted)]">
-                    {locale === 'en' ? 'Confidence' : 'Confiança'}
-                  </dt>
-                  <dd className="text-[var(--color-text)]">
-                    {Math.round((result.confidence ?? 0) * 100)}%
-                  </dd>
-                </dl>
-              </div>
-            )}
           </CardContent>
         </Card>
 
