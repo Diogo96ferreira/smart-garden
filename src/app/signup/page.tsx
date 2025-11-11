@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 export default function SignUpPage() {
   const router = useRouter();
   const [next, setNext] = useState('/pt/dashboard');
+  const [lang, setLang] = useState<'pt' | 'en'>('pt');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -60,6 +61,26 @@ export default function SignUpPage() {
       setNext('/pt/dashboard');
     }
   }, []);
+
+  // Initialize language and keep `next` aligned
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('app.locale');
+      if (stored === 'en' || stored === 'pt') setLang(stored);
+    } catch {}
+  }, []);
+
+  const switchLanguage = (l: 'pt' | 'en') => {
+    setLang(l);
+    try {
+      localStorage.setItem('app.locale', l);
+    } catch {}
+    setNext((prev) => {
+      if (prev?.startsWith('/pt/') || prev?.startsWith('/en/'))
+        return `/${l}/${prev.split('/').slice(2).join('/')}`;
+      return `/${l}/dashboard`;
+    });
+  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,7 +136,27 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6">
+    <main className="relative mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6">
+      {/* Language switcher */}
+      <div className="absolute top-4 right-4 flex items-center gap-1 text-sm">
+        <button
+          type="button"
+          onClick={() => switchLanguage('pt')}
+          className={`rounded-md px-2 py-1 ${lang === 'pt' ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}
+          aria-pressed={lang === 'pt'}
+        >
+          PT
+        </button>
+        <span className="text-[var(--color-border)]">|</span>
+        <button
+          type="button"
+          onClick={() => switchLanguage('en')}
+          className={`rounded-md px-2 py-1 ${lang === 'en' ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}
+          aria-pressed={lang === 'en'}
+        >
+          EN
+        </button>
+      </div>
       <header className="text-center">
         <p className="eyebrow text-[var(--color-primary-strong)]">Criar Conta</p>
         <h1 className="text-display text-4xl sm:text-5xl">Smart Garden</h1>
