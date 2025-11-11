@@ -1,4 +1,4 @@
-{
+﻿{
   "app": {
     "name": "Smart Garden",
     "welcome": "Welcome to Smart Garden",
@@ -39,11 +39,11 @@
   },
   "dashboard": {
     "thisWeek": "This week",
-    "greeting": "Hello, {{name}}! Let's take care of your garden.",
+    "greeting": "Hello, {{name}}! Let\u0027s take care of your garden.",
     "intro": "Keep track of the priority tasks to keep your plants happy. Every completed action helps Smart Garden adjust future recommendations.",
     "summary": "Summary",
     "progressTitle": "Your garden is on the right track",
-    "completed": "You've completed {{done}} out of {{total}} tasks this week. Keep it up!",
+    "completed": "You\u0027ve completed {{done}} out of {{total}} tasks this week. Keep it up!",
     "weeklyProgress": "Weekly progress",
     "nextWatering": "Next watering",
     "weather": "Weather forecast",
@@ -144,7 +144,7 @@
     },
     "header": {
       "eyebrow": "Smart diagnosis",
-      "title": "Talk to Aunt Adélia",
+      "title": "Talk to Aunt AdÃ©lia",
       "subtitle": "Upload a photo of your plant to get an instant diagnosis and personalized advice on watering, pruning or harvesting."
     },
     "photo": {
@@ -160,23 +160,23 @@
       "analyzing": "Analyzing..."
     },
     "chat": {
-      "title": "Chat with Aunt Adélia",
+      "title": "Chat with Aunt AdÃ©lia",
       "desc": "Continue the conversation based on the diagnosis: ask for tips about treatment, harvest or general care.",
-      "placeholder": "Ask Aunt Adélia something...",
+      "placeholder": "Ask Aunt AdÃ©lia something...",
       "thinking": "Thinking...",
       "send": "Send"
     },
     "errors": {
       "unknown": "An unknown error occurred.",
-      "chatFail": "I couldn't answer right now. Please try again in a moment."
+      "chatFail": "I couldn\u0027t answer right now. Please try again in a moment."
     },
     "messages": {
-      "defaultReply": "Here's what I found about your plant!"
+      "defaultReply": "Here\u0027s what I found about your plant!"
     }
   },
   "onboarding": {
     "title": "Welcome to Smart Garden",
-    "subtitle": "Let's set up your garden step by step.",
+    "subtitle": "Let\u0027s set up your garden step by step.",
     "next": "Next",
     "back": "Back",
     "finish": "Finish"
@@ -191,29 +191,32 @@
     "taskCompleted": "Task completed"
   },
   "auth": {
-    "lang": { "pt": "PT", "en": "EN" },
-    "or": "or",
-    "google": "Continue with Google",
-    "email": "Email",
-    "password": "Password",
-    "name": "Name",
-    "signin": {
-      "header": "Welcome",
-      "title": "Sign in",
-      "subtitle": "Access your smart garden",
-      "submit": "Sign in",
-      "loading": "Signing in...",
-      "noAccount": "Don't have an account?",
-      "linkCreate": "Create account"
+    "lang": {
+      "pt": "PT",
+      "en": "EN"
     },
+    "or": "or",
     "signup": {
-      "header": "Create account",
-      "title": "Sign up",
       "subtitle": "Welcome to {{app}}",
-      "submit": "Create account",
       "loading": "Creating...",
+      "linkSignIn": "Sign in",
+      "header": "Create account",
+      "submit": "Create account",
       "haveAccount": "Already have an account?",
-      "linkSignIn": "Sign in"
+      "title": "Sign up"
+    },
+    "name": "Name",
+    "password": "Password",
+    "email": "Email",
+    "google": "Continue with Google",
+    "signin": {
+      "subtitle": "Access your smart garden",
+      "loading": "Signing in...",
+      "linkCreate": "Create account",
+      "header": "Welcome",
+      "submit": "Sign in",
+      "title": "Sign in",
+      "noAccount": "Don\u0027t have an account?"
     }
   }
 }

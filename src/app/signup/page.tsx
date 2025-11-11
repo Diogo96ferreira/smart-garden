@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from '@/lib/useTranslation';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -16,39 +17,22 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const dict = {
-    pt: {
-      header: 'Criar conta',
-      title: 'Registo',
-      subtitle: '{t.subtitle}',
-      name: 'Nome',
-      email: 'Email',
-      password: 'Password',
-      submit: 'Criar conta',
-      loading: 'A criar... ',
-      or: 'ou',
-      google: 'Entrar com Google',
-      haveAccount: '{t.haveAccount}',
-      linkSignIn: 'Entrar',
-      appName: 'Smart Garden',
-    },
-    en: {
-      header: 'Create account',
-      title: 'Sign up',
-      subtitle: 'Welcome to Smart Garden',
-      name: 'Name',
-      email: 'Email',
-      password: 'Password',
-      submit: 'Create account',
-      loading: 'Creating... ',
-      or: 'or',
-      google: 'Continue with Google',
-      haveAccount: 'Already have an account?',
-      linkSignIn: 'Sign in',
-      appName: 'Smart Garden',
-    },
+  const tr = useTranslation(lang);
+  const t = {
+    header: tr('auth.signup.header'),
+    title: tr('auth.signup.title'),
+    subtitle: tr('auth.signup.subtitle').replace('{{app}}', tr('app.name')),
+    name: tr('auth.name'),
+    email: tr('auth.email'),
+    password: tr('auth.password'),
+    submit: tr('auth.signup.submit'),
+    loading: tr('auth.signup.loading'),
+    or: tr('auth.or'),
+    google: tr('auth.google'),
+    haveAccount: tr('auth.signup.haveAccount'),
+    linkSignIn: tr('auth.signup.linkSignIn'),
+    appName: tr('app.name'),
   } as const;
-  const t = dict[lang];
 
   useEffect(() => {
     supabase.auth

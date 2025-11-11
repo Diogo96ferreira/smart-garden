@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from '@/lib/useTranslation';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -15,37 +16,21 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const dict = {
-    pt: {
-      header: 'Bem-vindo',
-      title: 'Entrar',
-      subtitle: '{t.subtitle}',
-      email: 'Email',
-      password: 'Password',
-      submit: 'Entrar',
-      loading: 'A entrar... ',
-      or: 'ou',
-      google: 'Entrar com Google',
-      noAccount: 'N�o tens conta?',
-      linkCreate: '{t.linkCreate}',
-      appName: 'Smart Garden',
-    },
-    en: {
-      header: 'Welcome',
-      title: 'Sign in',
-      subtitle: 'Access your smart garden',
-      email: 'Email',
-      password: 'Password',
-      submit: 'Sign in',
-      loading: 'Signing in... ',
-      or: 'or',
-      google: 'Continue with Google',
-      noAccount: "Don't have an account?",
-      linkCreate: 'Create account',
-      appName: 'Smart Garden',
-    },
+  const tr = useTranslation(lang);
+  const t = {
+    header: tr('auth.signin.header'),
+    title: tr('auth.signin.title'),
+    subtitle: tr('auth.signin.subtitle'),
+    email: tr('auth.email'),
+    password: tr('auth.password'),
+    submit: tr('auth.signin.submit'),
+    loading: tr('auth.signin.loading'),
+    or: tr('auth.or'),
+    google: tr('auth.google'),
+    noAccount: tr('auth.signin.noAccount'),
+    linkCreate: tr('auth.signin.linkCreate'),
+    appName: tr('app.name'),
   } as const;
-  const t = dict[lang];
 
   useEffect(() => {
     const check = async () => {
@@ -75,20 +60,38 @@ export default function SignInPage() {
           dest = sp.get('next') || '';
         } catch {}
         if (!dest) {
-          // route based on onboarding status when no explicit next
           let l: 'pt' | 'en' = 'pt';
           try {
             const stored = localStorage.getItem('app.locale');
             if (stored === 'en' || stored === 'pt') l = stored;
           } catch {}
-          const done = (() => {
+          const needsOnboarding = (() => {
             try {
-              return localStorage.getItem('onboardingComplete') === 'true';
+              const name = (localStorage.getItem('userName') || '').trim();
+              let distrito = '';
+              let municipio = '';
+              const rawUL = localStorage.getItem('userLocation');
+              if (rawUL) {
+                const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
+                distrito = (loc.distrito || '').trim();
+                municipio = (loc.municipio || '').trim();
+              }
+              if (!distrito || !municipio) {
+                const rawS = localStorage.getItem('garden.settings.v1');
+                if (rawS) {
+                  const s = JSON.parse(rawS) as {
+                    userLocation?: { distrito?: string; municipio?: string };
+                  };
+                  distrito ||= (s.userLocation?.distrito || '').trim();
+                  municipio ||= (s.userLocation?.municipio || '').trim();
+                }
+              }
+              return !(name && distrito && municipio);
             } catch {
-              return false;
+              return true;
             }
           })();
-          dest = `/${l}/${done ? 'dashboard' : 'onboarding'}`;
+          dest = `/${l}/${needsOnboarding ? 'onboarding' : 'dashboard'}`;
         }
         router.replace(dest || next);
       }
@@ -114,14 +117,33 @@ export default function SignInPage() {
               const stored = localStorage.getItem('app.locale');
               if (stored === 'en' || stored === 'pt') l = stored;
             } catch {}
-            const done = (() => {
+            const needsOnboarding = (() => {
               try {
-                return localStorage.getItem('onboardingComplete') === 'true';
+                const name = (localStorage.getItem('userName') || '').trim();
+                let distrito = '';
+                let municipio = '';
+                const rawUL = localStorage.getItem('userLocation');
+                if (rawUL) {
+                  const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
+                  distrito = (loc.distrito || '').trim();
+                  municipio = (loc.municipio || '').trim();
+                }
+                if (!distrito || !municipio) {
+                  const rawS = localStorage.getItem('garden.settings.v1');
+                  if (rawS) {
+                    const s = JSON.parse(rawS) as {
+                      userLocation?: { distrito?: string; municipio?: string };
+                    };
+                    distrito ||= (s.userLocation?.distrito || '').trim();
+                    municipio ||= (s.userLocation?.municipio || '').trim();
+                  }
+                }
+                return !(name && distrito && municipio);
               } catch {
-                return false;
+                return true;
               }
             })();
-            dest = `/${l}/${done ? 'dashboard' : 'onboarding'}`;
+            dest = `/${l}/${needsOnboarding ? 'onboarding' : 'dashboard'}`;
           }
           router.replace(dest || next);
         }
@@ -173,11 +195,36 @@ export default function SignInPage() {
         localStorage.setItem('app.isLoggedIn', 'true');
       } catch {}
       const storedLocale = localStorage.getItem('app.locale') || 'pt';
+      const needsOnboarding = (() => {
+        try {
+          const name = (localStorage.getItem('userName') || '').trim();
+          let distrito = '';
+          let municipio = '';
+          const rawUL = localStorage.getItem('userLocation');
+          if (rawUL) {
+            const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
+            distrito = (loc.distrito || '').trim();
+            municipio = (loc.municipio || '').trim();
+          }
+          if (!distrito || !municipio) {
+            const rawS = localStorage.getItem('garden.settings.v1');
+            if (rawS) {
+              const s = JSON.parse(rawS) as {
+                userLocation?: { distrito?: string; municipio?: string };
+              };
+              distrito ||= (s.userLocation?.distrito || '').trim();
+              municipio ||= (s.userLocation?.municipio || '').trim();
+            }
+          }
+          return !(name && distrito && municipio);
+        } catch {
+          return true;
+        }
+      })();
       if (next) {
         router.replace(next);
       } else {
-        const done = localStorage.getItem('onboardingComplete') === 'true';
-        router.replace(`/${storedLocale}/${done ? 'dashboard' : 'onboarding'}`);
+        router.replace(`/${storedLocale}/${needsOnboarding ? 'onboarding' : 'dashboard'}`);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Falha ao iniciar sessão';

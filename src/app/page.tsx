@@ -44,6 +44,33 @@ export default function HomeRedirect() {
       }
     };
 
+    const isProfileComplete = () => {
+      try {
+        const name = (localStorage.getItem('userName') || '').trim();
+        let distrito = '';
+        let municipio = '';
+        const rawUL = localStorage.getItem('userLocation');
+        if (rawUL) {
+          const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
+          distrito = (loc.distrito || '').trim();
+          municipio = (loc.municipio || '').trim();
+        }
+        if (!distrito || !municipio) {
+          const rawS = localStorage.getItem(SETTINGS_KEY);
+          if (rawS) {
+            const s = JSON.parse(rawS) as {
+              userLocation?: { distrito?: string; municipio?: string };
+            };
+            distrito ||= (s.userLocation?.distrito || '').trim();
+            municipio ||= (s.userLocation?.municipio || '').trim();
+          }
+        }
+        return Boolean(name && distrito && municipio);
+      } catch {
+        return false;
+      }
+    };
+
     fetchSession().then(
       async ({ data }: { data: { session: { user?: { id?: string } } | null } }) => {
         const isAuthed = Boolean(data.session);
@@ -52,25 +79,12 @@ export default function HomeRedirect() {
           return;
         }
 
-        let forceOnboarding = false;
-        try {
-          const userId = (data.session as any)?.user?.id;
-          if (userId) {
-            const res = await supabase
-              .from('plants')
-              .select('id', { count: 'exact', head: true })
-              .eq('user_id', userId)
-              .limit(1);
-            const count = typeof res.count === 'number' ? res.count : 0;
-            forceOnboarding = count === 0;
-          }
-        } catch {}
-
-        const target = forceOnboarding
+        const needsOnboarding = !isProfileComplete();
+        const target = needsOnboarding
           ? '/onboarding'
           : hasCompletedOnboarding
             ? '/dashboard'
-            : '/onboarding';
+            : '/dashboard';
         router.replace(`/${locale}${target}`);
       },
     );
