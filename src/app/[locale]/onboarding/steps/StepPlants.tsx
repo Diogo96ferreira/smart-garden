@@ -271,7 +271,7 @@ export function StepPlants({ onBack, onNext }: Props) {
   const showSuggestions = inputFocused && !loadingCatalogue;
 
   return (
-    <section className="mx-auto flex min-h-[calc(100vh-120px)] w-full max-w-4xl flex-col items-center justify-center gap-12 px-6 text-center">
+    <section className="mx-auto flex min-h-[calc(100vh-120px)] w-full max-w-4xl flex-col items-center justify-center gap-6 px-6 text-center">
       <div className="w-full rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-soft)]">
         <Image
           src="/onboarding/tia-plants.png"
