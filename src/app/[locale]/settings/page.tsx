@@ -107,7 +107,7 @@ export default function SettingsPage() {
   const onGenerateReport = React.useCallback(async () => {
     const range = settings.reportRange ?? '1m';
     const days = range === '1w' ? 7 : range === '2w' ? 14 : range === '1m' ? 31 : 31;
-    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}&format=pdf`;
+    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}&format=pdf&source=db`;
     const a = Object.assign(document.createElement('a'), { href: url, download: '' });
     document.body.appendChild(a);
     a.click();
@@ -144,14 +144,7 @@ export default function SettingsPage() {
     } catch {}
   }, [settings.locale]);
 
-  const onDownloadDbReport = React.useCallback(async () => {
-    const days = 31;
-    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}&format=pdf&source=db`;
-    const a = Object.assign(document.createElement('a'), { href: url, download: '' });
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }, [settings.locale]);
+  // Removed separate DB report button; report uses dropdown + source=db
 
   return (
     <main className="mx-auto max-w-6xl p-4 text-[color:var(--color-text)] sm:p-6">
@@ -281,18 +274,12 @@ export default function SettingsPage() {
                 <Download className="h-4 w-4" /> {t('settings.report.generate')}
               </button>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-1">
               <button
                 onClick={onGenerateMonthPlan}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
               >
                 {locale === 'en' ? 'Generate 1‑month plan' : 'Gerar plano 1 mês'}
-              </button>
-              <button
-                onClick={onDownloadDbReport}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
-              >
-                {locale === 'en' ? 'Download DB tasks PDF' : 'Descarregar PDF (BD)'}
               </button>
             </div>
           </section>

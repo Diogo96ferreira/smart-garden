@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getAuthUser } from '@/lib/supabaseServer';
+// Intentionally avoid getAuthUser here; we forward cookies to /api/generate-tasks instead
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   try {
-    const user = await getAuthUser();
-    if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-
     const { locale, location, resetAll, profile } = (await req.json().catch(() => ({}))) as {
       locale?: string;
       location?: { distrito?: string; municipio?: string } | null;
@@ -21,7 +19,11 @@ export async function POST(req: Request) {
 
     const res = await fetch(generatorUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        // forward supabase auth cookies to the internal endpoint
+        cookie: req.headers.get('cookie') || '',
+      },
       body: JSON.stringify({
         locale: (locale || 'pt').toLowerCase(),
         location: location ?? null,
