@@ -20,8 +20,8 @@ type NavItem = {
 };
 
 const BASE_ITEMS: NavItem[] = [
-  { id: 'home', icon: Home, href: '/dashboard', color: '#166534', label: 'Dashboard' },
-  { id: 'garden', icon: Sprout, href: '/garden', color: '#166534', label: 'Garden' },
+  { id: 'home', icon: Home, href: '/garden', color: '#166534', label: 'Dashboard' },
+  { id: 'garden', icon: Sprout, href: '/dashboard', color: '#166534', label: 'Garden' },
   { id: 'calendar', icon: CalendarDays, href: '/calendar', color: '#166534', label: 'Calendar' },
   { id: 'ai', icon: Sparkles, href: '/ai', color: '#166534', label: 'AI assistant' },
   { id: 'settings', icon: HelpCircle, href: '/settings', color: '#166534', label: 'Settings' },
