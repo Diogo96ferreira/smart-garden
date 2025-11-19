@@ -37,6 +37,16 @@ export default function SettingsPage() {
   const setAI = (v: AIProfile) => save({ aiProfile: v } as Partial<Settings>);
   const setRange = (v: ReportRange) => save({ reportRange: v } as Partial<Settings>);
 
+  // Lightweight toast + busy state for report generation
+  const [reportBusy, setReportBusy] = React.useState(false);
+  const [toast, setToast] = React.useState<null | { text: string; kind: 'success' | 'error' }>(
+    null,
+  );
+  const showToast = (text: string, kind: 'success' | 'error' = 'success') => {
+    setToast({ text, kind });
+    window.setTimeout(() => setToast(null), 3000);
+  };
+
   // Função para mudar idioma
   const handleChangeLanguage = (v: Settings['locale']) => {
     save({ locale: v });
@@ -107,11 +117,69 @@ export default function SettingsPage() {
   const onGenerateReport = React.useCallback(async () => {
     const range = settings.reportRange ?? '1m';
     const days = range === '1w' ? 7 : range === '2w' ? 14 : range === '1m' ? 31 : 31;
-    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}&format=pdf&source=db`;
+    const loc = settings.locale === 'en-US' ? 'en' : 'pt';
+
+    // 1) Ensure tasks exist in DB for the chosen window using the existing generator
+    setReportBusy(true);
+    try {
+      let location: { distrito?: string; municipio?: string } | undefined;
+      try {
+        const rawUL = localStorage.getItem('userLocation');
+        if (rawUL) location = JSON.parse(rawUL);
+      } catch {}
+      if (!location) {
+        try {
+          const raw = localStorage.getItem('garden.settings.v1');
+          if (raw) {
+            const s = JSON.parse(raw) as {
+              userLocation?: { distrito?: string; municipio?: string };
+            };
+            location = s.userLocation;
+          }
+        } catch {}
+      }
+      const res = await fetch('/api/generate-tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          locale: loc,
+          location: location ?? null,
+          horizonDays: days,
+          resetAll: false,
+        }),
+      });
+      if (res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { inserted?: number };
+        const inserted = Number(data?.inserted ?? 0);
+        if (inserted > 0) {
+          showToast(
+            loc === 'en'
+              ? `Added ${inserted} task(s) to your plan.`
+              : `Adicionadas ${inserted} tarefa(s) ao teu plano.`,
+            'success',
+          );
+        }
+      } else if (res.status === 401) {
+        showToast(
+          loc === 'en'
+            ? 'Please sign in to generate the report.'
+            : 'Inicia sessão para gerar o relatório.',
+          'error',
+        );
+        setReportBusy(false);
+        return;
+      }
+    } catch {
+      // If generation fails, still try to export whatever exists
+    }
+
+    // 2) Download the PDF built from DB tasks for the selected range
+    const url = `/api/report?rangeDays=${days}&locale=${loc}&format=pdf&source=db`;
     const a = Object.assign(document.createElement('a'), { href: url, download: '' });
     document.body.appendChild(a);
     a.click();
     a.remove();
+    setReportBusy(false);
   }, [settings.reportRange, settings.locale]);
 
   const onGenerateMonthPlan = React.useCallback(async () => {
@@ -270,19 +338,31 @@ export default function SettingsPage() {
               <button
                 onClick={onGenerateReport}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
+                disabled={reportBusy}
+                aria-busy={reportBusy}
               >
-                <Download className="h-4 w-4" /> {t('settings.report.generate')}
+                <Download className="h-4 w-4" />
+                {reportBusy
+                  ? locale === 'en'
+                    ? 'Generating...'
+                    : 'A gerar...'
+                  : t('settings.report.generate')}
               </button>
             </div>
-            <div className="grid gap-3 sm:grid-cols-1">
-              <button
-                onClick={onGenerateMonthPlan}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
-              >
-                {locale === 'en' ? 'Generate 1‑month plan' : 'Gerar plano 1 mês'}
-              </button>
-            </div>
+            {/* No extra buttons — generation is triggered by the report button above */}
           </section>
+          {toast && (
+            <div
+              role="status"
+              className={`fixed right-6 bottom-6 z-[120] rounded-lg border px-4 py-2 text-sm shadow-lg ${
+                toast.kind === 'success'
+                  ? 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]'
+                  : 'border-red-200 bg-red-50 text-red-700'
+              }`}
+            >
+              {toast.text}
+            </div>
+          )}
         </div>
         <div className="space-y-6 self-start lg:sticky lg:top-24"></div>
       </div>
