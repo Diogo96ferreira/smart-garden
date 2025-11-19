@@ -150,8 +150,12 @@ export async function GET(req: Request) {
         fs.readFile(fontHeadingPath).catch(() => null),
         fs.readFile(fontBodyPath).catch(() => null),
       ]);
-      if (heading) (doc as any).registerFont?.('Heading', heading) || doc.font(fontHeadingPath);
-      if (body) (doc as any).registerFont?.('Body', body);
+      if (heading && typeof (doc as any).registerFont === 'function') {
+        (doc as any).registerFont('Heading', heading);
+      }
+      if (body && typeof (doc as any).registerFont === 'function') {
+        (doc as any).registerFont('Body', body);
+      }
     } catch {}
 
     // Brand colors
@@ -222,8 +226,14 @@ export async function GET(req: Request) {
     } catch {}
 
     // Title + meta
+    const headingName =
+      (doc as any)._fontFamilies && (doc as any)._fontFamilies['Heading']
+        ? 'Heading'
+        : 'Helvetica-Bold';
+    const bodyName =
+      (doc as any)._fontFamilies && (doc as any)._fontFamilies['Body'] ? 'Body' : 'Helvetica';
     doc
-      .font('Heading')
+      .font(headingName)
       .fontSize(18)
       .fillColor(COLOR.text)
       .text(
@@ -232,7 +242,7 @@ export async function GET(req: Request) {
         doc.page.margins.top + 12,
       );
     doc
-      .font('Body')
+      .font(bodyName)
       .fontSize(10)
       .fillColor(COLOR.muted)
       .text(
@@ -266,7 +276,7 @@ export async function GET(req: Request) {
       doc
         .fillOpacity(1)
         .fillColor(COLOR.chip[c.k])
-        .font('Body')
+        .font(bodyName)
         .fontSize(9)
         .text(c.label, lx + 8, legendY + 3);
       doc.restore();
@@ -285,7 +295,7 @@ export async function GET(req: Request) {
         doc.fillColor(COLOR.primary).rect(doc.page.margins.left, doc.y, 4, 16).fill();
         doc
           .fillColor(COLOR.text)
-          .font('Heading')
+          .font(headingName)
           .fontSize(12)
           .text(fmtDate(r.date), doc.page.margins.left + 10, doc.y - 2);
         doc.moveDown(0.2);
@@ -308,7 +318,7 @@ export async function GET(req: Request) {
       doc.restore();
       // text
       doc
-        .font('Heading')
+        .font(headingName)
         .fontSize(11)
         .fillColor(COLOR.text)
         .text(r.title, doc.page.margins.left + chipW + 20, doc.y - 14);
@@ -335,7 +345,7 @@ export async function GET(req: Request) {
     const addFooter = () => {
       const page = (doc as any).page;
       const text = `${rangeLabel}  •  Page ${page.number}`;
-      doc.font('Body').fontSize(8).fillColor(COLOR.muted);
+      doc.font(bodyName).fontSize(8).fillColor(COLOR.muted);
       doc.text(text, doc.page.margins.left, doc.page.height - doc.page.margins.bottom + 10, {
         width: doc.page.width - doc.page.margins.left - doc.page.margins.right,
         align: 'center',

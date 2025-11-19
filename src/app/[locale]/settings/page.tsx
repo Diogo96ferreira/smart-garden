@@ -6,6 +6,7 @@ import { useSettings } from '@/hooks/useSettings';
 import { type Settings, DEFAULT_SETTINGS, type AIProfile, type ReportRange } from '@/lib/settings';
 import { useTranslation } from '@/lib/useTranslation';
 import { Settings2, Globe, Sun, Moon, Laptop, Bot, FileText, Download } from 'lucide-react';
+import { LeafLoader } from '@/components/ui/Spinner';
 import LogoutButton from '@/components/ui/LogoutButton';
 
 function useApplyTheme(theme: Settings['theme']) {
@@ -215,7 +216,10 @@ export default function SettingsPage() {
   // Removed separate DB report button; report uses dropdown + source=db
 
   return (
-    <main className="mx-auto max-w-6xl p-4 text-[color:var(--color-text)] sm:p-6">
+    <main
+      className="mx-auto max-w-6xl p-4 text-[color:var(--color-text)] sm:p-6"
+      aria-busy={reportBusy}
+    >
       <header className="mb-6 flex items-center justify-between sm:mb-8">
         <h1 className="inline-flex items-center gap-2 text-xl font-semibold">
           <Settings2 className="h-5 w-5" /> {t('settings.title')}
@@ -366,6 +370,14 @@ export default function SettingsPage() {
         </div>
         <div className="space-y-6 self-start lg:sticky lg:top-24"></div>
       </div>
+
+      {reportBusy && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/20">
+          <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-xl">
+            <LeafLoader label={locale === 'en' ? 'Generating report…' : 'A gerar relatório…'} />
+          </div>
+        </div>
+      )}
     </main>
   );
 }
