@@ -114,6 +114,45 @@ export default function SettingsPage() {
     a.remove();
   }, [settings.reportRange, settings.locale]);
 
+  const onGenerateMonthPlan = React.useCallback(async () => {
+    try {
+      let location: { distrito?: string; municipio?: string } | undefined;
+      try {
+        const rawUL = localStorage.getItem('userLocation');
+        if (rawUL) location = JSON.parse(rawUL);
+      } catch {}
+      if (!location) {
+        try {
+          const raw = localStorage.getItem('garden.settings.v1');
+          if (raw) {
+            const s = JSON.parse(raw) as {
+              userLocation?: { distrito?: string; municipio?: string };
+            };
+            location = s.userLocation;
+          }
+        } catch {}
+      }
+      await fetch('/api/plan-month', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          locale: settings.locale === 'en-US' ? 'en' : 'pt',
+          location: location ?? null,
+          resetAll: false,
+        }),
+      });
+    } catch {}
+  }, [settings.locale]);
+
+  const onDownloadDbReport = React.useCallback(async () => {
+    const days = 31;
+    const url = `/api/report?rangeDays=${days}&locale=${settings.locale === 'en-US' ? 'en' : 'pt'}&format=pdf&source=db`;
+    const a = Object.assign(document.createElement('a'), { href: url, download: '' });
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }, [settings.locale]);
+
   return (
     <main className="mx-auto max-w-6xl p-4 text-[color:var(--color-text)] sm:p-6">
       <header className="mb-6 flex items-center justify-between sm:mb-8">
@@ -240,6 +279,20 @@ export default function SettingsPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
               >
                 <Download className="h-4 w-4" /> {t('settings.report.generate')}
+              </button>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <button
+                onClick={onGenerateMonthPlan}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
+              >
+                {locale === 'en' ? 'Generate 1‑month plan' : 'Gerar plano 1 mês'}
+              </button>
+              <button
+                onClick={onDownloadDbReport}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
+              >
+                {locale === 'en' ? 'Download DB tasks PDF' : 'Descarregar PDF (BD)'}
               </button>
             </div>
           </section>
