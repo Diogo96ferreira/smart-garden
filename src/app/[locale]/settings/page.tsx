@@ -176,10 +176,61 @@ export default function SettingsPage() {
 
     // 2) Download the PDF built from DB tasks for the selected range
     const url = `/api/report?rangeDays=${days}&locale=${loc}&format=pdf&source=db`;
-    const a = Object.assign(document.createElement('a'), { href: url, download: '' });
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    try {
+      const resp = await fetch(url, {
+        method: 'GET',
+        headers: { Accept: 'application/pdf' },
+        credentials: 'same-origin',
+      });
+      if (!resp.ok) {
+        if (resp.status === 401) {
+          showToast(
+            loc === 'en'
+              ? 'Please sign in to download the report.'
+              : 'Inicia sessão para descarregar o relatório.',
+            'error',
+          );
+        } else {
+          showToast(
+            loc === 'en' ? 'Failed to generate report.' : 'Falha ao gerar relatório.',
+            'error',
+          );
+        }
+        setReportBusy(false);
+        return;
+      }
+      const ct = resp.headers.get('content-type') || '';
+      if (!ct.includes('application/pdf')) {
+        // Try to read error message
+        let message = '';
+        try {
+          const j = (await resp.json()) as { error?: string };
+          message = j?.error || '';
+        } catch {}
+        showToast(
+          message ||
+            (loc === 'en'
+              ? 'Report not available right now.'
+              : 'Relatório indisponível de momento.'),
+          'error',
+        );
+        setReportBusy(false);
+        return;
+      }
+      const blob = await resp.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const filename = `smart-garden-report-${new Date().toISOString().slice(0, 10)}-${days}d.pdf`;
+      const a = Object.assign(document.createElement('a'), { href: blobUrl, download: filename });
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+    } catch (e) {
+      showToast(
+        loc === 'en' ? 'Network error generating report.' : 'Erro de rede ao gerar relatório.',
+        'error',
+      );
+    }
     setReportBusy(false);
   }, [settings.reportRange, settings.locale]);
 
