@@ -8,6 +8,7 @@ import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import clsx from 'clsx';
 import { CheckCircle2, Clock3, HelpCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SuggestionCard from '@/components/ui/SuggestionCard';
 import SupportCard from '@/components/ui/SupportCard';
 import { LeafLoader } from '@/components/ui/Spinner';
 import { supabase } from '@/lib/supabaseClient';
@@ -28,7 +29,6 @@ type Task = {
 type PlantLite = { id: string; name: string; image_url?: string | null };
 
 export default function DashboardPage() {
-  const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslation(locale);
 
@@ -44,6 +44,17 @@ export default function DashboardPage() {
   const [plim, setPlim] = useState(false);
   const [weatherNote, setWeatherNote] = useState<string | null>(null);
   const allDoneRef = useRef(false);
+
+  // How-to modal state
+  const [howToOpen, setHowToOpen] = useState(false);
+  const [howToLoading, setHowToLoading] = useState(false);
+  const [howToData, setHowToData] = useState<null | {
+    title: string;
+    steps: { title: string; detail: string }[];
+    tips?: string[];
+    precautions?: string[];
+  }>(null);
+  const [howToTaskTitle, setHowToTaskTitle] = useState<string>('');
 
   const loadingText = locale.startsWith('en')
     ? 'Preparing your plan...'
@@ -330,6 +341,47 @@ export default function DashboardPage() {
     })();
   }, []);
 
+  async function handleHowTo(task: Task) {
+    try {
+      setHowToTaskTitle(task.title);
+      setHowToOpen(true);
+      setHowToLoading(true);
+      setHowToData(null);
+      let profile: string | undefined;
+      try {
+        const rawSettings = localStorage.getItem('garden.settings.v1');
+        if (rawSettings) {
+          const parsed = JSON.parse(rawSettings) as { aiProfile?: string };
+          profile = parsed.aiProfile;
+        }
+      } catch {}
+      const res = await fetch('/api/howto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: task.title,
+          description: task.description ?? null,
+          locale,
+          profile: profile ?? null,
+        }),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        howto?: {
+          title: string;
+          steps: { title: string; detail: string }[];
+          tips?: string[];
+          precautions?: string[];
+        };
+      };
+      if (json.howto && Array.isArray(json.howto.steps)) setHowToData(json.howto);
+    } catch (e) {
+      console.warn('HowTo failed:', e);
+      setHowToData(null);
+    } finally {
+      setHowToLoading(false);
+    }
+  }
+
   // Poll for tasks to appear after generation, for up to ~12s
   useEffect(() => {
     const total = tasks.length + doneThisWeek.length;
@@ -579,7 +631,11 @@ export default function DashboardPage() {
                           icon={Clock3}
                           onClick={() => handlePostponeTask(task)}
                         />
-                        <TaskActionButton label={t('dashboard.howTo')} icon={HelpCircle} />
+                        <TaskActionButton
+                          label={t('dashboard.howTo')}
+                          icon={HelpCircle}
+                          onClick={() => handleHowTo(task)}
+                        />
                       </div>
                     </div>
                   </motion.div>
@@ -650,26 +706,207 @@ export default function DashboardPage() {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* How-to Dialog */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="howto-title"
+        className={clsx(
+          'fixed inset-0 z-[200] items-center justify-center bg-black/30 p-4',
+          howToOpen ? 'flex' : 'hidden',
+        )}
+        onClick={() => setHowToOpen(false)}
+      >
+        <div
+          className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="mb-3 flex items-start justify-between gap-3">
+            <div>
+              <h3 id="howto-title" className="text-lg font-semibold">
+                {howToData?.title || t('dashboard.howTo')}
+              </h3>
+              <p className="text-xs text-[var(--color-text-muted)]">{howToTaskTitle}</p>
+            </div>
+            <button
+              type="button"
+              className="rounded-md border border-[var(--color-border)] px-2 py-1 text-xs"
+              onClick={() => setHowToOpen(false)}
+            >
+              {locale.startsWith('en') ? 'Close' : 'Fechar'}
+            </button>
+          </div>
+
+          {howToLoading ? (
+            <div className="flex justify-center py-6">
+              <LeafLoader label={locale.startsWith('en') ? 'Loading...' : 'A carregar...'} />
+            </div>
+          ) : howToData ? (
+            <div className="space-y-4">
+              <ol className="list-decimal space-y-2 pl-6">
+                {howToData.steps.map((s, i) => (
+                  <li key={`${i}-${s.title}`}>
+                    <div className="font-medium">{s.title}</div>
+                    <div className="text-sm text-[var(--color-text-muted)]">{s.detail}</div>
+                  </li>
+                ))}
+              </ol>
+              {howToData.tips && howToData.tips.length > 0 && (
+                <div>
+                  <div className="mb-1 text-sm font-semibold">
+                    {locale.startsWith('en') ? 'Tips' : 'Dicas'}
+                  </div>
+                  <ul className="list-disc pl-6 text-sm text-[var(--color-text-muted)]">
+                    {howToData.tips.map((t, idx) => (
+                      <li key={`tip-${idx}`}>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {howToData.precautions && howToData.precautions.length > 0 && (
+                <div>
+                  <div className="mb-1 text-sm font-semibold">
+                    {locale.startsWith('en') ? 'Precautions' : 'Cuidados'}
+                  </div>
+                  <ul className="list-disc pl-6 text-sm text-[var(--color-text-muted)]">
+                    {howToData.precautions.map((p, idx) => (
+                      <li key={`prec-${idx}`}>{p}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-sm text-[var(--color-text-muted)]">
+              {locale.startsWith('en')
+                ? 'No instructions available for this task.'
+                : 'Sem instruções disponíveis para esta tarefa.'}
+            </div>
+          )}
+        </div>
+      </div>
     </main>
   );
 }
 
-function SuggestionCard({
-  title,
-  description,
-  actionLabel,
+// SuggestionCard moved to src/components/ui/SuggestionCard.tsx
+
+// Version that renders using the reusable SuggestionCard component
+function SuggestionsPanel({
+  locale,
+  onAddTask,
 }: {
-  title: string;
-  description: string;
-  actionLabel: string;
+  locale: string;
+  onAddTask: (s: Suggestion) => Promise<void> | void;
 }) {
+  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState<Suggestion[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/suggestions?locale=${encodeURIComponent(locale)}`);
+        const json = (await res.json().catch(() => ({}))) as { suggestions?: Suggestion[] };
+        const dismissedRaw = localStorage.getItem('suggestions.dismissed.v1');
+        const dismissed = new Set<string>(
+          (dismissedRaw ? JSON.parse(dismissedRaw) : []) as string[],
+        );
+        if (!cancelled) setItems((json.suggestions ?? []).filter((s) => !dismissed.has(s.id)));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  const dismiss = (id: string) => {
+    setItems((prev) => prev.filter((s) => s.id !== id));
+    try {
+      const dismissedRaw = localStorage.getItem('suggestions.dismissed.v1');
+      const dismissed = new Set<string>((dismissedRaw ? JSON.parse(dismissedRaw) : []) as string[]);
+      dismissed.add(id);
+      localStorage.setItem('suggestions.dismissed.v1', JSON.stringify(Array.from(dismissed)));
+    } catch {}
+  };
+
+  if (loading) {
+    return (
+      <div className="mt-6 flex items-center justify-center py-6">
+        <LeafLoader
+          label={locale.startsWith('en') ? 'Loading suggestions' : 'A carregar sugestões'}
+        />
+      </div>
+    );
+  }
+
+  if (!items.length) {
+    return (
+      <div className="mt-6 text-sm text-[var(--color-text-muted)]">
+        {locale.startsWith('en') ? 'No suggestions right now.' : 'Sem sugestões para já'}
+      </div>
+    );
+  }
+
+  const isEN = locale.startsWith('en');
+  const dismissLabel = isEN ? 'Dismiss' : 'Ignorar';
+
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] p-4">
-      <h3 className="font-semibold text-[var(--color-text)]">{title}</h3>
-      <p className="mt-2 text-sm text-[var(--color-text-muted)]">{description}</p>
-      <Button variant="ghost" size="sm" className="mt-3 px-0 text-[var(--color-primary-strong)]">
-        {actionLabel}
-      </Button>
+    <div className="mt-6 space-y-4">
+      {items.map((s) => {
+        if (s.action === 'create_task') {
+          return (
+            <SuggestionCard
+              key={s.id}
+              title={s.title}
+              description={s.description}
+              primaryLabel={isEN ? 'Add to plan' : 'Adicionar ao plano'}
+              onPrimary={() => onAddTask(s)}
+              onDismiss={() => dismiss(s.id)}
+              dismissLabel={dismissLabel}
+            />
+          );
+        }
+        if (s.action === 'open_garden') {
+          return (
+            <SuggestionCard
+              key={s.id}
+              title={s.title}
+              description={s.description}
+              primaryLabel={isEN ? 'Open Garden' : 'Abrir Garden'}
+              primaryVariant="secondary"
+              onPrimary={() => (window.location.href = `/${locale}/garden`)}
+              onDismiss={() => dismiss(s.id)}
+              dismissLabel={dismissLabel}
+            />
+          );
+        }
+        if (s.action === 'open_calendar') {
+          return (
+            <SuggestionCard
+              key={s.id}
+              title={s.title}
+              description={s.description}
+              primaryLabel={isEN ? 'Open Calendar' : 'Abrir Calendário'}
+              primaryVariant="secondary"
+              onPrimary={() => (window.location.href = `/${locale}/calendar`)}
+              onDismiss={() => dismiss(s.id)}
+              dismissLabel={dismissLabel}
+            />
+          );
+        }
+        return (
+          <SuggestionCard
+            key={s.id}
+            title={s.title}
+            description={s.description}
+            onDismiss={() => dismiss(s.id)}
+            dismissLabel={dismissLabel}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -722,7 +959,7 @@ type Suggestion = {
   plant_id?: string | null;
 };
 
-function SuggestionsPanel({
+function SuggestionsPanelLegacy({
   locale,
   onAddTask,
 }: {
