@@ -1,0 +1,20 @@
+// Title + meta
+    const headingName =
+      (doc as any)._fontFamilies && (doc as any)._fontFamilies['Heading']
+        ? 'Heading'
+        : 'Helvetica-Bold';
+    const bodyName =
+      (doc as any)._fontFamilies && (doc as any)._fontFamilies['Body'] ? 'Body' : 'Helvetica';
+    doc
+      .font(headingName)
+      .fontSize(18)
+      .fillColor(COLOR.text)
+      .text(
+        locale === 'en' ? 'Smart Garden — Care Plan' : 'Smart Garden — Plano de cuidados',
+        doc.page.margins.left + 56,
+        doc.page.margins.top + 12,
+      );
+    doc
+      .font(bodyName)
+      .fontSize(10)
+  

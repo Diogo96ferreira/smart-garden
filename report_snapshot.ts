@@ -263,7 +263,7 @@ export async function GET(req: Request) {
 
     // Group by date and render items
     let currentDate = '';
-    const bodyFont = bodyName;
+    const bodyFont = 'Body';
     for (const r of unique) {
       if (r.date !== currentDate) {
         currentDate = r.date;
