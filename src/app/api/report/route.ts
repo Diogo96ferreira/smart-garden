@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
 import PDFDocument from 'pdfkit';
-import fs from 'node:fs/promises';
-import path from 'node:path';
+// Avoid importing fs/path to keep this portable on serverless
 import { parseActionKey, type Locale } from '@/lib/nameMatching';
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
@@ -140,23 +139,7 @@ export async function GET(req: Request) {
       doc.on('end', () => resolve(Buffer.concat(chunks))),
     );
 
-    // Load assets (fallbacks if missing)
-    const publicDir = path.join(process.cwd(), 'public');
-    const fontHeadingPath = path.join(publicDir, 'fonts', 'Aptos-SemiBold.ttf');
-    const fontBodyPath = path.join(publicDir, 'fonts', 'Aptos-Light.ttf');
-    const logoPath = path.join(publicDir, 'spinner.png');
-    try {
-      const [heading, body] = await Promise.all([
-        fs.readFile(fontHeadingPath).catch(() => null),
-        fs.readFile(fontBodyPath).catch(() => null),
-      ]);
-      if (heading && typeof (doc as any).registerFont === 'function') {
-        (doc as any).registerFont('Heading', heading);
-      }
-      if (body && typeof (doc as any).registerFont === 'function') {
-        (doc as any).registerFont('Body', body);
-      }
-    } catch {}
+    // Skip FS font/logo loads: rely on built‑in fonts for reliability
 
     // Brand colors
     const COLOR = {
@@ -217,13 +200,7 @@ export async function GET(req: Request) {
       .fill();
     doc.fillColor(COLOR.text);
 
-    // Logo
-    try {
-      const logo = await fs.readFile(logoPath);
-      const x = doc.page.margins.left + 6;
-      const y = doc.page.margins.top + 10;
-      doc.image(logo, x, y, { width: 40, height: 40, fit: [40, 40] });
-    } catch {}
+    // Logo skipped (no FS access)
 
     // Title + meta
     const headingName =
