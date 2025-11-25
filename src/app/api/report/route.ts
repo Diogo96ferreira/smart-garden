@@ -5,6 +5,7 @@ import PDFDocument from 'pdfkit';
 import { parseActionKey, type Locale } from '@/lib/nameMatching';
 import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';
 import path from 'path';
+import fs from 'fs';
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
   if (!rows.length) return 'date,title,description\n';
@@ -194,9 +195,22 @@ export async function GET(req: Request) {
     }
 
     // Preparar caminhos das fontes TrueType que suportam caracteres portugueses
+    // No Vercel, precisamos usar caminhos relativos à raiz do projeto
     const fontPath = path.join(process.cwd(), 'public', 'fonts');
     const headingName = 'Aptos-SemiBold';
     const bodyName = 'Aptos-Light';
+
+    // Carregar fontes como buffers (funciona no Vercel)
+    let headingFontBuffer: Buffer;
+    let bodyFontBuffer: Buffer;
+
+    try {
+      headingFontBuffer = fs.readFileSync(path.join(fontPath, 'Aptos-SemiBold.ttf'));
+      bodyFontBuffer = fs.readFileSync(path.join(fontPath, 'Aptos-Light.ttf'));
+    } catch (error) {
+      console.error('[report] Failed to load fonts:', error);
+      throw new Error('Failed to load PDF fonts');
+    }
 
     // PDF
     const doc = new PDFDocument({
@@ -205,9 +219,9 @@ export async function GET(req: Request) {
       autoFirstPage: false, // Não criar primeira página automaticamente
     });
 
-    // Registar fontes ANTES de criar qualquer página
-    doc.registerFont(headingName, path.join(fontPath, 'Aptos-SemiBold.ttf'));
-    doc.registerFont(bodyName, path.join(fontPath, 'Aptos-Light.ttf'));
+    // Registar fontes ANTES de criar qualquer página (usando buffers)
+    doc.registerFont(headingName, headingFontBuffer);
+    doc.registerFont(bodyName, bodyFontBuffer);
 
     // Agora criar a primeira página e definir fonte padrão
     doc.addPage();
