@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
-import PDFDocument from 'pdfkit';
+import { generatePdf } from '@/lib/pdfGenerator';
 import { parseActionKey, type Locale } from '@/lib/nameMatching';
 import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';
+
+export type Row = { date: string; title: string; description?: string };
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
   if (!rows.length) return 'date,title,description\n';
@@ -83,7 +85,6 @@ export async function GET(req: Request) {
 
     const plants = (plantsData as PlantRow[] | null) ?? [];
 
-    type Row = { date: string; title: string; description?: string };
     const rows: Row[] = [];
 
     // 1. Fetch existing DB tasks (Priority)
@@ -192,228 +193,10 @@ export async function GET(req: Request) {
       });
     }
 
-    // Preparar geração de PDF com fontes padrão do PDFKit
-    // Usar Courier que é uma fonte padrão que funciona no Vercel
-    const headingName = 'Courier-Bold';
-    const bodyName = 'Courier';
-
-    // PDF - usar configuração simples sem autoFirstPage
-    const doc = new PDFDocument({
-      size: 'A4',
-      margin: 42,
-    });
-
-    // Definir fonte padrão imediatamente após criar o documento
-    doc.font(bodyName);
-
-    const chunks: Uint8Array[] = [];
+    // Generate PDF using react-pdf
     const filename = `plan-${locale}-${new Date().toISOString().slice(0, 10)}-${rangeDays}d.pdf`;
-
-    doc.on('data', (c: Uint8Array) => chunks.push(c));
-
-    const done = new Promise<Buffer>((resolve) => {
-      doc.on('end', () => resolve(Buffer.concat(chunks)));
-    });
-
-    const COLOR = {
-      primary: '#22c55e',
-      text: '#111111',
-      muted: '#6b7280',
-      border: '#e5e7eb',
-      chip: {
-        water: '#10b981',
-        prune: '#ef4444',
-        fertilize: '#f59e0b',
-        inspect: '#64748b',
-        harvest: '#16a34a',
-        sow: '#8b5cf6',
-        transplant: '#0ea5e9',
-        other: '#6b7280',
-      },
-    } as const;
-
-    const fmtDate = (iso: string) =>
-      new Date(iso).toLocaleDateString(locale === 'en' ? 'en-US' : 'pt-PT', {
-        weekday: 'short',
-        day: '2-digit',
-        month: 'short',
-      });
-
-    // Header
-    const headerH = 70;
-
-    doc.save();
-    doc
-      .rect(
-        doc.page.margins.left,
-        doc.page.margins.top,
-        doc.page.width - doc.page.margins.left - doc.page.margins.right,
-        headerH,
-      )
-      .fill('#ffffff');
-
-    doc
-      .fillColor(COLOR.primary)
-      .rect(
-        doc.page.margins.left,
-        doc.page.margins.top + headerH - 4,
-        doc.page.width - doc.page.margins.left - doc.page.margins.right,
-        4,
-      )
-      .fill();
-
-    doc.fillColor(COLOR.text);
-
-    doc
-      .font(headingName)
-      .fontSize(18)
-      .fillColor(COLOR.text)
-      .text(
-        locale === 'en' ? 'Smart Garden - Care Plan' : 'Smart Garden - Plano de cuidados',
-        doc.page.margins.left + 56,
-        doc.page.margins.top + 12,
-      );
-
-    doc
-      .font(bodyName)
-      .fontSize(10)
-      .fillColor(COLOR.muted)
-      .text(
-        `${new Date().toLocaleString(locale === 'en' ? 'en-US' : 'pt-PT')} | ${rangeDays} ${
-          locale === 'en' ? 'days' : 'dias'
-        }`,
-        doc.page.margins.left + 56,
-        doc.page.margins.top + 36,
-      );
-
-    doc.restore();
-    doc.moveDown(2);
-    doc.translate(0, headerH - 10);
-
-    // Legenda
-    const legendY = doc.y;
-    const chips: Array<{ k: keyof typeof COLOR.chip; label: string }> = [
-      { k: 'water', label: locale === 'en' ? 'Water' : 'Regar' },
-      { k: 'prune', label: locale === 'en' ? 'Prune' : 'Podar' },
-      { k: 'fertilize', label: locale === 'en' ? 'Fertilize' : 'Adubar' },
-      { k: 'inspect', label: locale === 'en' ? 'Inspect' : 'Inspecionar' },
-      { k: 'harvest', label: locale === 'en' ? 'Harvest' : 'Colher' },
-      { k: 'sow', label: locale === 'en' ? 'Sow' : 'Semear' },
-      {
-        k: 'transplant',
-        label: locale === 'en' ? 'Transplant' : 'Transplantar',
-      },
-    ];
-
-    let lx = doc.page.margins.left;
-
-    for (const c of chips) {
-      const w = doc.widthOfString(c.label) + 18;
-      doc.save();
-      doc.roundedRect(lx, legendY, w, 16, 8).fillOpacity(0.12).fill(COLOR.chip[c.k]);
-      doc
-        .fillOpacity(1)
-        .fillColor(COLOR.chip[c.k])
-        .font(bodyName)
-        .fontSize(9)
-        .text(c.label, lx + 8, legendY + 3);
-      doc.restore();
-      lx += w + 8;
-    }
-
-    doc.moveDown(1.6);
-
-    // Linhas
-    let currentDate = '';
-
-    for (const r of unique) {
-      if (r.date !== currentDate) {
-        currentDate = r.date;
-        doc.moveDown(0.6);
-
-        doc.fillColor(COLOR.primary).rect(doc.page.margins.left, doc.y, 4, 16).fill();
-
-        doc
-          .fillColor(COLOR.text)
-          .font(headingName)
-          .fontSize(12)
-          .text(fmtDate(r.date), doc.page.margins.left + 10, doc.y - 2);
-
-        doc.moveDown(0.2);
-      }
-
-      const tAction = (() => {
-        const t = (r.title || '').toLowerCase();
-        if (/\b(water|regar|rega)\b/.test(t)) return 'water';
-        if (/\b(prune|poda|podar)\b/.test(t)) return 'prune';
-        if (/\b(fertil|adub)\b/.test(t)) return 'fertilize';
-        if (/\b(inspect|verificar|inspecionar)\b/.test(t)) return 'inspect';
-        if (/\b(harvest|colher|colheita)\b/.test(t)) return 'harvest';
-        if (/\b(sow|semear|semeadura)\b/.test(t)) return 'sow';
-        if (/\b(transplant|transplante|transplantar)\b/.test(t)) return 'transplant';
-        return 'other';
-      })() as keyof typeof COLOR.chip;
-
-      const chipW = 56;
-      const y0 = doc.y + 2;
-
-      doc.save();
-      doc
-        .roundedRect(doc.page.margins.left + 10, y0, chipW, 14, 7)
-        .fillOpacity(0.12)
-        .fill(COLOR.chip[tAction]);
-
-      doc
-        .fillOpacity(1)
-        .fillColor(COLOR.chip[tAction])
-        .font(bodyName)
-        .fontSize(8)
-        .text(tAction.toUpperCase(), doc.page.margins.left + 16, y0 + 3);
-
-      doc.restore();
-
-      doc
-        .font(headingName)
-        .fontSize(11)
-        .fillColor(COLOR.text)
-        .text(r.title, doc.page.margins.left + chipW + 20, doc.y - 14);
-
-      if (r.description) {
-        doc.font(bodyName).fontSize(9).fillColor(COLOR.muted).text(r.description, { indent: 16 });
-      }
-
-      doc.moveDown(0.3);
-
-      doc.save();
-      doc
-        .strokeColor(COLOR.border)
-        .moveTo(doc.page.margins.left + 10, doc.y)
-        .lineTo(doc.page.width - doc.page.margins.right, doc.y)
-        .stroke();
-      doc.restore();
-    }
-
-    // Footer
-    const rangeLabel = `${rangeDays} ${locale === 'en' ? 'days' : 'dias'}`;
-
-    const addFooter = () => {
-      const page = (doc as { page: { number: number } }).page;
-      const text = `${rangeLabel} | Page ${page.number}`;
-
-      doc.font(bodyName).fontSize(8).fillColor(COLOR.muted);
-      doc.text(text, doc.page.margins.left, doc.page.height - doc.page.margins.bottom + 10, {
-        width: doc.page.width - doc.page.margins.left - doc.page.margins.right,
-        align: 'center',
-      });
-    };
-
-    addFooter();
-    doc.on('pageAdded', addFooter);
-
-    doc.end();
-    const pdfBuffer = await done;
-
-    return new NextResponse(new Uint8Array(pdfBuffer), {
+    const pdfBuffer = await generatePdf({ locale, rangeDays, unique, filename });
+    return new NextResponse(pdfBuffer, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
