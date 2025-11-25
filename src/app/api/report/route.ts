@@ -4,6 +4,7 @@ import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
 import PDFDocument from 'pdfkit';
 import { parseActionKey, type Locale } from '@/lib/nameMatching';
 import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';
+import path from 'path';
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
   if (!rows.length) return 'date,title,description\n';
@@ -203,8 +204,13 @@ export async function GET(req: Request) {
       doc.on('end', () => resolve(Buffer.concat(chunks)));
     });
 
-    const headingName = 'Helvetica-Bold';
-    const bodyName = 'Helvetica';
+    // Registar fontes TrueType que suportam caracteres portugueses
+    const fontPath = path.join(process.cwd(), 'public', 'fonts');
+    doc.registerFont('Aptos-SemiBold', path.join(fontPath, 'Aptos-SemiBold.ttf'));
+    doc.registerFont('Aptos-Light', path.join(fontPath, 'Aptos-Light.ttf'));
+
+    const headingName = 'Aptos-SemiBold';
+    const bodyName = 'Aptos-Light';
 
     const COLOR = {
       primary: '#22c55e',
