@@ -4,8 +4,6 @@ import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
 import PDFDocument from 'pdfkit';
 import { parseActionKey, type Locale } from '@/lib/nameMatching';
 import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';
-import path from 'path';
-import fs from 'fs';
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
   if (!rows.length) return 'date,title,description\n';
@@ -194,37 +192,18 @@ export async function GET(req: Request) {
       });
     }
 
-    // Preparar caminhos das fontes TrueType que suportam caracteres portugueses
-    // No Vercel, precisamos usar caminhos relativos à raiz do projeto
-    const fontPath = path.join(process.cwd(), 'public', 'fonts');
-    const headingName = 'Aptos-SemiBold';
-    const bodyName = 'Aptos-Light';
+    // Preparar geração de PDF com fontes padrão do PDFKit
+    // Usar Courier que é uma fonte padrão que funciona no Vercel
+    const headingName = 'Courier-Bold';
+    const bodyName = 'Courier';
 
-    // Carregar fontes como buffers (funciona no Vercel)
-    let headingFontBuffer: Buffer;
-    let bodyFontBuffer: Buffer;
-
-    try {
-      headingFontBuffer = fs.readFileSync(path.join(fontPath, 'Aptos-SemiBold.ttf'));
-      bodyFontBuffer = fs.readFileSync(path.join(fontPath, 'Aptos-Light.ttf'));
-    } catch (error) {
-      console.error('[report] Failed to load fonts:', error);
-      throw new Error('Failed to load PDF fonts');
-    }
-
-    // PDF
+    // PDF - usar configuração simples sem autoFirstPage
     const doc = new PDFDocument({
       size: 'A4',
       margin: 42,
-      autoFirstPage: false, // Não criar primeira página automaticamente
     });
 
-    // Registar fontes ANTES de criar qualquer página (usando buffers)
-    doc.registerFont(headingName, headingFontBuffer);
-    doc.registerFont(bodyName, bodyFontBuffer);
-
-    // Agora criar a primeira página e definir fonte padrão
-    doc.addPage();
+    // Definir fonte padrão imediatamente após criar o documento
     doc.font(bodyName);
 
     const chunks: Uint8Array[] = [];
