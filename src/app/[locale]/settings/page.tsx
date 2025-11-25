@@ -193,8 +193,14 @@ export default function SettingsPage() {
             'error',
           );
         } else {
+          let errorMsg = '';
+          try {
+            const errorData = await resp.json();
+            errorMsg = errorData.error;
+          } catch {}
+
           showToast(
-            loc === 'en' ? 'Failed to generate report.' : 'Falha ao gerar relatório.',
+            errorMsg || (loc === 'en' ? 'Failed to generate report.' : 'Falha ao gerar relatório.'),
             'error',
           );
         }

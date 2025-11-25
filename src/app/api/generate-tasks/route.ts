@@ -278,8 +278,10 @@ export async function POST(req: Request) {
       horizonDays: hDays,
     });
 
-    // Always run AI, passing the horizon
-    const aiGenerated = await aiTasks(plantList, locale, persona, hDays);
+    // Always run AI, but cap at 7 days to avoid timeouts/token limits
+    // The rule-based system will cover the full horizon.
+    const aiHorizon = Math.min(hDays, 7);
+    const aiGenerated = await aiTasks(plantList, locale, persona, aiHorizon);
 
     // Normalize day for dedupe (AI tasks may not include due_date)
     const todayStr = new Date().toISOString().slice(0, 10);
