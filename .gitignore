@@ -54,3 +54,9 @@ dist
 .env.test.local
 .env.production.local
 !.env.example
+
+# Test files
+test-pdf*.js
+test-pdf*.mjs
+test-pdf-output.pdf
+report_segment.txt
