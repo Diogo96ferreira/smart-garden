@@ -212,6 +212,9 @@ export async function GET(req: Request) {
     const headingName = 'Aptos-SemiBold';
     const bodyName = 'Aptos-Light';
 
+    // Definir fonte padrão para evitar carregamento de Helvetica
+    doc.font(bodyName);
+
     const COLOR = {
       primary: '#22c55e',
       text: '#111111',
