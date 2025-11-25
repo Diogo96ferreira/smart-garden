@@ -1,8 +1,33 @@
 {
   "functions": {
+    "src/app/api/**/route.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
     "src/app/api/report/route.ts": {
       "memory": 3008,
       "maxDuration": 60
+    },
+    "src/app/api/plan-month/route.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "src/app/api/howto/route.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "src/app/api/generate-tasks/route.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "src/app/api/chat/route.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "src/app/api/analyze-image/route.ts": {
+      "memory": 1024,
+      "maxDuration": 30
     }
-  }
+  },
+  "regions": ["iad1"]
 }
