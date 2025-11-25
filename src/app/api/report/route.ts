@@ -193,8 +193,26 @@ export async function GET(req: Request) {
       });
     }
 
+    // Preparar caminhos das fontes TrueType que suportam caracteres portugueses
+    const fontPath = path.join(process.cwd(), 'public', 'fonts');
+    const headingName = 'Aptos-SemiBold';
+    const bodyName = 'Aptos-Light';
+
     // PDF
-    const doc = new PDFDocument({ size: 'A4', margin: 42 });
+    const doc = new PDFDocument({
+      size: 'A4',
+      margin: 42,
+      autoFirstPage: false, // Não criar primeira página automaticamente
+    });
+
+    // Registar fontes ANTES de criar qualquer página
+    doc.registerFont(headingName, path.join(fontPath, 'Aptos-SemiBold.ttf'));
+    doc.registerFont(bodyName, path.join(fontPath, 'Aptos-Light.ttf'));
+
+    // Agora criar a primeira página e definir fonte padrão
+    doc.addPage();
+    doc.font(bodyName);
+
     const chunks: Uint8Array[] = [];
     const filename = `plan-${locale}-${new Date().toISOString().slice(0, 10)}-${rangeDays}d.pdf`;
 
@@ -203,17 +221,6 @@ export async function GET(req: Request) {
     const done = new Promise<Buffer>((resolve) => {
       doc.on('end', () => resolve(Buffer.concat(chunks)));
     });
-
-    // Registar fontes TrueType que suportam caracteres portugueses
-    const fontPath = path.join(process.cwd(), 'public', 'fonts');
-    doc.registerFont('Aptos-SemiBold', path.join(fontPath, 'Aptos-SemiBold.ttf'));
-    doc.registerFont('Aptos-Light', path.join(fontPath, 'Aptos-Light.ttf'));
-
-    const headingName = 'Aptos-SemiBold';
-    const bodyName = 'Aptos-Light';
-
-    // Definir fonte padrão para evitar carregamento de Helvetica
-    doc.font(bodyName);
 
     const COLOR = {
       primary: '#22c55e',
