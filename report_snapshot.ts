@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
 import PDFDocument from 'pdfkit';
-// Avoid importing fs/path to keep this portable on serverless
+import path from 'path';
 import { parseActionKey, type Locale } from '@/lib/nameMatching';
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
@@ -131,15 +131,31 @@ export async function GET(req: Request) {
     }
 
     // PDF — styled, branded
-    const doc = new PDFDocument({ size: 'A4', margin: 42 });
+    // Preparar caminhos das fontes TrueType que suportam caracteres portugueses
+    const fontPath = path.join(process.cwd(), 'public', 'fonts');
+    const headingName = 'Aptos-SemiBold';
+    const bodyName = 'Aptos-Light';
+
+    const doc = new PDFDocument({
+      size: 'A4',
+      margin: 42,
+      autoFirstPage: false, // Não criar primeira página automaticamente
+    });
+
+    // Registar fontes ANTES de criar qualquer página
+    doc.registerFont(headingName, path.join(fontPath, 'Aptos-SemiBold.ttf'));
+    doc.registerFont(bodyName, path.join(fontPath, 'Aptos-Light.ttf'));
+
+    // Agora criar a primeira página e definir fonte padrão
+    doc.addPage();
+    doc.font(bodyName);
+
     const chunks: Uint8Array[] = [];
     const filename = `plan-${locale}-${new Date().toISOString().slice(0, 10)}-${rangeDays}d.pdf`;
     doc.on('data', (c: Uint8Array) => chunks.push(c));
     const done = new Promise<Buffer>((resolve) =>
       doc.on('end', () => resolve(Buffer.concat(chunks))),
     );
-
-    // Skip FS font/logo loads: rely on built‑in fonts for reliability
 
     // Brand colors
     const COLOR = {
@@ -202,13 +218,7 @@ export async function GET(req: Request) {
 
     // Logo skipped (no FS access)
 
-    // Title + meta
-    const headingName =
-      (doc as any)._fontFamilies && (doc as any)._fontFamilies['Heading']
-        ? 'Heading'
-        : 'Helvetica-Bold';
-    const bodyName =
-      (doc as any)._fontFamilies && (doc as any)._fontFamilies['Body'] ? 'Body' : 'Helvetica';
+    // Title + meta (fontes já definidas acima)
     doc
       .font(headingName)
       .fontSize(18)
@@ -263,7 +273,6 @@ export async function GET(req: Request) {
 
     // Group by date and render items
     let currentDate = '';
-    const bodyFont = 'Body';
     for (const r of unique) {
       if (r.date !== currentDate) {
         currentDate = r.date;
@@ -289,7 +298,7 @@ export async function GET(req: Request) {
       doc
         .fillOpacity(1)
         .fillColor(COLOR.chip[action])
-        .font(bodyFont)
+        .font(bodyName)
         .fontSize(8)
         .text(action.toUpperCase(), doc.page.margins.left + 16, y0 + 3);
       doc.restore();
@@ -301,7 +310,7 @@ export async function GET(req: Request) {
         .text(r.title, doc.page.margins.left + chipW + 20, doc.y - 14);
       if (r.description) {
         doc
-          .font(bodyFont)
+          .font(bodyName)
           .fontSize(9)
           .fillColor(COLOR.muted)
           .text(String(r.description), { indent: 16, continued: false });
