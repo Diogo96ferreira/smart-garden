@@ -123,9 +123,11 @@ async function aiTasks(
   plants: Plant[],
   locale: Locale,
   persona: AIPersona,
+  horizonDays: number,
 ): Promise<GeneratedTask[]> {
   if (!ai) return [];
 
+  const days = horizonDays > 0 ? horizonDays : 7;
   const today = new Date().toISOString().slice(0, 10);
   const localeName = locale === 'en' ? 'English (United States)' : 'Portugues (Portugal)';
   const system = `You are an expert kitchen garden/orchard assistant. Output strictly and only a compact JSON array of tasks.
@@ -143,7 +145,7 @@ Plants: ${JSON.stringify(
     })),
   )}
 
-Generate at most 6 actionable tasks for the next 7 days. Include watering due items and 1-2 seasonal care tasks (fertilize, prune, mulch) when appropriate. Keep titles <= 60 chars. Use natural ${
+Generate at most ${Math.max(6, Math.ceil(days / 2))} actionable tasks for the next ${days} days. Include watering due items and seasonal care tasks (fertilize, prune, mulch) when appropriate. Keep titles <= 60 chars. Use natural ${
     locale === 'en' ? 'US English' : 'Portuguese'
   } suitable for a gardening app.`;
 
@@ -268,15 +270,16 @@ export async function POST(req: Request) {
       }
     }
 
+    const hDays = Math.max(0, Number.isFinite(horizonDays as number) ? (horizonDays as number) : 0);
+
     const baseTasks = ruleBasedTasks(plantList, locale, {
       wateringDelta: delta,
       skipWateringToday: skipToday,
-      horizonDays: Math.max(
-        0,
-        Number.isFinite(horizonDays as number) ? (horizonDays as number) : 0,
-      ),
+      horizonDays: hDays,
     });
-    const aiGenerated = (horizonDays ?? 0) > 0 ? [] : await aiTasks(plantList, locale, persona);
+
+    // Always run AI, passing the horizon
+    const aiGenerated = await aiTasks(plantList, locale, persona, hDays);
 
     // Normalize day for dedupe (AI tasks may not include due_date)
     const todayStr = new Date().toISOString().slice(0, 10);

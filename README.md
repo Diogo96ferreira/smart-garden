@@ -2,19 +2,48 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+1.  **Environment Setup**:
+    Copy `.env.example` to `.env.local` and fill in the required values:
+
+    ```bash
+    cp .env.example .env.local
+    ```
+
+    Required variables:
+    - `NEXT_PUBLIC_SUPABASE_URL`
+    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+    - `GEMINI_API_KEY` (Optional, for AI features)
+
+2.  **Install Dependencies**:
+    ```bash
+    npm install
+    ```
+
+### Development
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Testing
+
+This project uses Jest for unit testing. To run the tests:
+
+```bash
+npm test
+```
+
+### Scripts
+
+- `npm run build-db`: Validates database connection and reads local calendar data (placeholder for seeding logic).
+- `npm run lint`: Runs ESLint.
+- `npm run format`: Runs Prettier.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

@@ -3,6 +3,7 @@ export const runtime = 'nodejs';
 import { getServerSupabase, getAuthUser } from '@/lib/supabaseServer';
 import PDFDocument from 'pdfkit';
 import { parseActionKey, type Locale } from '@/lib/nameMatching';
+import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';
 
 function toCsv(rows: Array<Record<string, unknown>>): string {
   if (!rows.length) return 'date,title,description\n';
@@ -46,6 +47,27 @@ export async function GET(req: Request) {
     const end = new Date(start);
     end.setDate(start.getDate() + rangeDays + 1);
 
+    // Parse location for weather-aware extrapolation
+    const locParam = searchParams.get('location');
+    let location: UserLocation | null = null;
+    if (locParam) {
+      try {
+        location = JSON.parse(locParam);
+      } catch {}
+    }
+
+    // Calculate weather delta
+    let delta = 0;
+    if (location) {
+      try {
+        const summary = await getWeatherByLocation(location);
+        const res = computeWateringDelta(summary);
+        delta = res.delta;
+      } catch (e) {
+        console.warn('[report] weather lookup failed:', e);
+      }
+    }
+
     type PlantRow = {
       id: string;
       name: string;
@@ -53,55 +75,18 @@ export async function GET(req: Request) {
       last_watered?: string | null;
     };
 
-    let plants: PlantRow[] | null = null;
+    // Always fetch plants for synthesis to fill gaps
+    const { data: plantsData } = await supabase
+      .from('plants')
+      .select('id,name,watering_freq,last_watered')
+      .eq('user_id', user.id);
 
-    const includeSynthesis = source !== 'db';
-    if (includeSynthesis) {
-      const { data } = await supabase
-        .from('plants')
-        .select('id,name,watering_freq,last_watered')
-        .eq('user_id', user.id);
-
-      plants = (data as PlantRow[] | null) ?? null;
-    }
+    const plants = (plantsData as PlantRow[] | null) ?? [];
 
     type Row = { date: string; title: string; description?: string };
     const rows: Row[] = [];
 
-    // Síntese a partir de plantas (rega recorrente)
-    if (includeSynthesis && plants && plants.length) {
-      for (const p of plants) {
-        const freq = Math.max(1, Math.min(60, Number(p.watering_freq ?? 3)));
-
-        let next = p.last_watered ? new Date(p.last_watered) : new Date(start);
-        if (Number.isNaN(next.getTime())) next = new Date(start);
-        next.setHours(0, 0, 0, 0);
-
-        while (next < start) next.setDate(next.getDate() + freq);
-
-        const lastStr = p.last_watered
-          ? new Date(p.last_watered).toLocaleDateString(locale === 'en' ? 'en-US' : 'pt-PT')
-          : locale === 'en'
-            ? 'never'
-            : 'nunca';
-
-        while (next < end) {
-          const d = next.toISOString().slice(0, 10);
-          rows.push({
-            date: d,
-            title: locale === 'en' ? `Water: ${p.name}` : `Regar: ${p.name}`,
-            description:
-              locale === 'en'
-                ? `Water every ${freq} day(s). Last watering: ${lastStr}.`
-                : `Regar a cada ${freq} dia(s). Ultima rega: ${lastStr}.`,
-          });
-
-          next.setDate(next.getDate() + freq);
-        }
-      }
-    }
-
-    // Tarefas já existentes na BD
+    // 1. Fetch existing DB tasks (Priority)
     const { data: tasksDb } = await supabase
       .from('tasks')
       .select('title,description,due_date')
@@ -119,6 +104,42 @@ export async function GET(req: Request) {
         title: t.title ?? '',
         description: t.description ?? '',
       });
+    }
+
+    // 2. Synthesize future tasks (Extrapolation)
+    if (plants && plants.length) {
+      for (const p of plants) {
+        // Apply weather delta to frequency
+        const baseFreq = p.watering_freq ?? 3;
+        const freq = Math.max(1, Math.min(60, baseFreq + delta));
+
+        let next = p.last_watered ? new Date(p.last_watered) : new Date(start);
+        if (Number.isNaN(next.getTime())) next = new Date(start);
+        next.setHours(0, 0, 0, 0);
+
+        // Advance to start date
+        while (next < start) next.setDate(next.getDate() + freq);
+
+        const lastStr = p.last_watered
+          ? new Date(p.last_watered).toLocaleDateString(locale === 'en' ? 'en-US' : 'pt-PT')
+          : locale === 'en'
+            ? 'never'
+            : 'nunca';
+
+        while (next < end) {
+          const d = next.toISOString().slice(0, 10);
+          rows.push({
+            date: d,
+            title: locale === 'en' ? `Water: ${p.name}` : `Regar: ${p.name}`,
+            description:
+              locale === 'en'
+                ? `Water every ${freq} day(s). Last watering: ${lastStr}.`
+                : `Regar a cada ${freq} dia(s). Última rega: ${lastStr}.`,
+          });
+
+          next.setDate(next.getDate() + freq);
+        }
+      }
     }
 
     // Deduplicar por (data, ação, planta)
@@ -392,6 +413,7 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     console.error('[report] error:', error);
-    return NextResponse.json({ error: 'failed_to_generate_report' }, { status: 500 });
+    const message = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

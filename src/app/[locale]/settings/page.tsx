@@ -39,7 +39,7 @@ export default function SettingsPage() {
   const setRange = (v: ReportRange) => save({ reportRange: v } as Partial<Settings>);
 
   // Lightweight toast + busy state for report generation
-  const [reportBusy, setReportBusy] = React.useState(false);
+  const [reportStatus, setReportStatus] = React.useState<string | null>(null);
   const [toast, setToast] = React.useState<null | { text: string; kind: 'success' | 'error' }>(
     null,
   );
@@ -121,7 +121,7 @@ export default function SettingsPage() {
     const loc = settings.locale === 'en-US' ? 'en' : 'pt';
 
     // 1) Ensure tasks exist in DB for the chosen window using the existing generator
-    setReportBusy(true);
+    setReportStatus(locale === 'en' ? 'Generating tasks...' : 'A gerar tarefas...');
     try {
       let location: { distrito?: string; municipio?: string } | undefined;
       try {
@@ -167,7 +167,7 @@ export default function SettingsPage() {
             : 'Inicia sessão para gerar o relatório.',
           'error',
         );
-        setReportBusy(false);
+        setReportStatus(null);
         return;
       }
     } catch {
@@ -175,7 +175,9 @@ export default function SettingsPage() {
     }
 
     // 2) Download the PDF built from DB tasks for the selected range
-    const url = `/api/report?rangeDays=${days}&locale=${loc}&format=pdf&source=db`;
+    setReportStatus(locale === 'en' ? 'Generating PDF...' : 'A criar PDF...');
+    const locParam = location ? `&location=${encodeURIComponent(JSON.stringify(location))}` : '';
+    const url = `/api/report?rangeDays=${days}&locale=${loc}&format=pdf&source=db${locParam}`;
     try {
       const resp = await fetch(url, {
         method: 'GET',
@@ -196,7 +198,7 @@ export default function SettingsPage() {
             'error',
           );
         }
-        setReportBusy(false);
+        setReportStatus(null);
         return;
       }
       const ct = resp.headers.get('content-type') || '';
@@ -214,7 +216,7 @@ export default function SettingsPage() {
               : 'Relatório indisponível de momento.'),
           'error',
         );
-        setReportBusy(false);
+        setReportStatus(null);
         return;
       }
       const blob = await resp.blob();
@@ -231,7 +233,7 @@ export default function SettingsPage() {
         'error',
       );
     }
-    setReportBusy(false);
+    setReportStatus(null);
   }, [settings.reportRange, settings.locale]);
 
   const onGenerateMonthPlan = React.useCallback(async () => {
@@ -269,7 +271,7 @@ export default function SettingsPage() {
   return (
     <main
       className="mx-auto max-w-6xl p-4 text-[color:var(--color-text)] sm:p-6"
-      aria-busy={reportBusy}
+      aria-busy={!!reportStatus}
     >
       <header className="mb-6 flex items-center justify-between sm:mb-8">
         <h1 className="inline-flex items-center gap-2 text-xl font-semibold">
@@ -393,14 +395,14 @@ export default function SettingsPage() {
               <button
                 onClick={onGenerateReport}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
-                disabled={reportBusy}
-                aria-busy={reportBusy}
+                disabled={!!reportStatus}
+                aria-busy={!!reportStatus}
               >
                 <Download className="h-4 w-4" />
-                {reportBusy
+                {reportStatus
                   ? locale === 'en'
-                    ? 'Generating...'
-                    : 'A gerar...'
+                    ? 'Processing...'
+                    : 'A processar...'
                   : t('settings.report.generate')}
               </button>
             </div>
@@ -422,10 +424,10 @@ export default function SettingsPage() {
         <div className="space-y-6 self-start lg:sticky lg:top-24"></div>
       </div>
 
-      {reportBusy && (
+      {reportStatus && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/20">
           <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-xl">
-            <LeafLoader label={locale === 'en' ? 'Generating report…' : 'A gerar relatório…'} />
+            <LeafLoader label={reportStatus} />
           </div>
         </div>
       )}
