@@ -285,149 +285,143 @@ export default function SettingsPage() {
         </h1>
         <LogoutButton />
       </header>
-      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="space-y-6">
-          {/* Tema */}
-          <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
-            <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
-              {t('settings.theme')}
-            </h2>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                {
-                  v: 'system',
-                  label: t('settings.themeOptions.system'),
-                  icon: <Laptop className="h-4 w-4" />,
-                },
-                {
-                  v: 'light',
-                  label: t('settings.themeOptions.light'),
-                  icon: <Sun className="h-4 w-4" />,
-                },
-                {
-                  v: 'dark',
-                  label: t('settings.themeOptions.dark'),
-                  icon: <Moon className="h-4 w-4" />,
-                },
-              ].map((opt) => (
-                <button
-                  key={opt.v}
-                  onClick={() => setTheme(opt.v as Settings['theme'])}
-                  className={`inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm shadow-sm ${
-                    settings.theme === opt.v
-                      ? 'bg-[var(--color-surface-muted)]'
-                      : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
-                  }`}
-                >
-                  {opt.icon} {opt.label}
-                </button>
-              ))}
-            </div>
-          </section>
-
-          {/* Idioma */}
-          <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
-            <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
-              <Globe className="h-4 w-4" /> {t('settings.language')}
-            </h2>
-            <div className="grid grid-cols-2 gap-2 sm:max-w-md">
+      <div className="mx-auto max-w-4xl space-y-6">
+        {/* Tema */}
+        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+          <h2 className="inline-flex items-center gap-2 pb-2 font-medium">{t('settings.theme')}</h2>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              {
+                v: 'system',
+                label: t('settings.themeOptions.system'),
+                icon: <Laptop className="h-4 w-4" />,
+              },
+              {
+                v: 'light',
+                label: t('settings.themeOptions.light'),
+                icon: <Sun className="h-4 w-4" />,
+              },
+              {
+                v: 'dark',
+                label: t('settings.themeOptions.dark'),
+                icon: <Moon className="h-4 w-4" />,
+              },
+            ].map((opt) => (
               <button
-                onClick={() => handleChangeLanguage('pt-PT')}
-                className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
-                  (settings.locale ?? DEFAULT_SETTINGS.locale) === 'pt-PT'
+                key={opt.v}
+                onClick={() => setTheme(opt.v as Settings['theme'])}
+                className={`inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm shadow-sm ${
+                  settings.theme === opt.v
                     ? 'bg-[var(--color-surface-muted)]'
                     : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
                 }`}
               >
-                {t('settings.languageOptions.pt')}
+                {opt.icon} {opt.label}
               </button>
-              <button
-                onClick={() => handleChangeLanguage('en-US')}
-                className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
-                  (settings.locale ?? DEFAULT_SETTINGS.locale) === 'en-US'
-                    ? 'bg-[var(--color-surface-muted)]'
-                    : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
-                }`}
-              >
-                {t('settings.languageOptions.en')}
-              </button>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          {/* Perfil de IA */}
-          <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
-            <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
-              <Bot className="h-4 w-4" /> {t('ai.title')}
-            </h2>
-            <div className="grid gap-4">
-              {AI_PROFILES.map((p) => (
-                <label
-                  key={p.id}
-                  className="flex cursor-pointer items-start gap-3 rounded-sm p-3 shadow-sm hover:bg-[color:var(--color-surface-muted)]"
-                >
-                  <input
-                    type="radio"
-                    name="aiProfile"
-                    checked={(settings.aiProfile ?? DEFAULT_SETTINGS.aiProfile) === p.id}
-                    onChange={() => setAI(p.id as AIProfile)}
-                    className="mt-1"
-                  />
-                  <div>
-                    <div className="text-sm font-medium">{p.label}</div>
-                    <div className="text-xs text-[color:var(--color-text-muted)]">{p.desc}</div>
-                  </div>
-                </label>
-              ))}
-            </div>
-          </section>
-
-          {/* Relatório de tarefas */}
-          <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
-            <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
-              <FileText className="h-4 w-4" /> {t('settings.report.title')}
-            </h2>
-            <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
-              <select
-                value={settings.reportRange ?? DEFAULT_SETTINGS.reportRange}
-                onChange={(e) => setRange(e.target.value as ReportRange)}
-                className="rounded-lg border border-[color:var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[color:var(--color-text)] shadow-sm"
-              >
-                {RANGES.map((r) => (
-                  <option key={r.id} value={r.id}>
-                    {r.label}
-                  </option>
-                ))}
-              </select>
-              <button
-                onClick={onGenerateReport}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
-                disabled={!!reportStatus}
-                aria-busy={!!reportStatus}
-              >
-                <Download className="h-4 w-4" />
-                {reportStatus
-                  ? locale === 'en'
-                    ? 'Processing...'
-                    : 'A processar...'
-                  : t('settings.report.generate')}
-              </button>
-            </div>
-            {/* No extra buttons — generation is triggered by the report button above */}
-          </section>
-          {toast && (
-            <div
-              role="status"
-              className={`fixed right-6 bottom-6 z-[120] rounded-lg border px-4 py-2 text-sm shadow-lg ${
-                toast.kind === 'success'
-                  ? 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]'
-                  : 'border-red-200 bg-red-50 text-red-700'
+        {/* Idioma */}
+        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+          <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
+            <Globe className="h-4 w-4" /> {t('settings.language')}
+          </h2>
+          <div className="grid grid-cols-2 gap-2 sm:max-w-md">
+            <button
+              onClick={() => handleChangeLanguage('pt-PT')}
+              className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
+                (settings.locale ?? DEFAULT_SETTINGS.locale) === 'pt-PT'
+                  ? 'bg-[var(--color-surface-muted)]'
+                  : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
               }`}
             >
-              {toast.text}
-            </div>
-          )}
-        </div>
-        <div className="space-y-6 self-start lg:sticky lg:top-24"></div>
+              {t('settings.languageOptions.pt')}
+            </button>
+            <button
+              onClick={() => handleChangeLanguage('en-US')}
+              className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
+                (settings.locale ?? DEFAULT_SETTINGS.locale) === 'en-US'
+                  ? 'bg-[var(--color-surface-muted)]'
+                  : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
+              }`}
+            >
+              {t('settings.languageOptions.en')}
+            </button>
+          </div>
+        </section>
+
+        {/* Perfil de IA */}
+        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+          <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
+            <Bot className="h-4 w-4" /> {t('ai.title')}
+          </h2>
+          <div className="grid gap-4">
+            {AI_PROFILES.map((p) => (
+              <label
+                key={p.id}
+                className="flex cursor-pointer items-start gap-3 rounded-sm p-3 shadow-sm hover:bg-[color:var(--color-surface-muted)]"
+              >
+                <input
+                  type="radio"
+                  name="aiProfile"
+                  checked={(settings.aiProfile ?? DEFAULT_SETTINGS.aiProfile) === p.id}
+                  onChange={() => setAI(p.id as AIProfile)}
+                  className="mt-1"
+                />
+                <div>
+                  <div className="text-sm font-medium">{p.label}</div>
+                  <div className="text-xs text-[color:var(--color-text-muted)]">{p.desc}</div>
+                </div>
+              </label>
+            ))}
+          </div>
+        </section>
+
+        {/* Relatório de tarefas */}
+        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+          <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
+            <FileText className="h-4 w-4" /> {t('settings.report.title')}
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+            <select
+              value={settings.reportRange ?? DEFAULT_SETTINGS.reportRange}
+              onChange={(e) => setRange(e.target.value as ReportRange)}
+              className="rounded-lg border border-[color:var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[color:var(--color-text)] shadow-sm"
+            >
+              {RANGES.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.label}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={onGenerateReport}
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
+              disabled={!!reportStatus}
+              aria-busy={!!reportStatus}
+            >
+              <Download className="h-4 w-4" />
+              {reportStatus
+                ? locale === 'en'
+                  ? 'Processing...'
+                  : 'A processar...'
+                : t('settings.report.generate')}
+            </button>
+          </div>
+        </section>
+        {toast && (
+          <div
+            role="status"
+            className={`fixed right-6 bottom-6 z-[120] rounded-lg border px-4 py-2 text-sm shadow-lg ${
+              toast.kind === 'success'
+                ? 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]'
+                : 'border-red-200 bg-red-50 text-red-700'
+            }`}
+          >
+            {toast.text}
+          </div>
+        )}
       </div>
 
       {reportStatus && (
