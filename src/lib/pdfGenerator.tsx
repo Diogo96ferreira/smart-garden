@@ -170,6 +170,35 @@ export async function generatePdf({
     groupedRows[row.date].push(row);
   });
 
+  // Dicionário de tradução para as ações
+  const TRANSLATIONS = {
+    pt: {
+      water: 'Regar',
+      prune: 'Podar',
+      fertilize: 'Adubar',
+      inspect: 'Inspecionar',
+      harvest: 'Colher',
+      sow: 'Semear',
+      transplant: 'Transplantar',
+      other: 'Outro',
+    },
+    en: {
+      water: 'Water',
+      prune: 'Prune',
+      fertilize: 'Fertilize',
+      inspect: 'Inspect',
+      harvest: 'Harvest',
+      sow: 'Sow',
+      transplant: 'Transplant',
+      other: 'Other',
+    },
+  };
+
+  const t = (key: keyof typeof COLOR.chip) => {
+    const lang = locale === 'en' ? 'en' : 'pt';
+    return TRANSLATIONS[lang][key] || key;
+  };
+
   const MyDocument = () => (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -196,7 +225,7 @@ export async function generatePdf({
           {Object.entries(COLOR.chip).map(([key, color]) => (
             <View key={key} style={styles.legendItem}>
               <View style={[styles.legendDot, { backgroundColor: color }]} />
-              <Text style={styles.legendText}>{key}</Text>
+              <Text style={styles.legendText}>{t(key as keyof typeof COLOR.chip)}</Text>
             </View>
           ))}
         </View>
@@ -208,12 +237,16 @@ export async function generatePdf({
               <Text style={styles.dayTitle}>{fmtDate(date)}</Text>
             </View>
             {tasks.map((task, i) => {
-              const action =
+              const actionKey =
                 (parseActionKey(task.title, locale) as keyof typeof COLOR.chip) || 'other';
+
+              // Traduzir o badge
+              const actionLabel = t(actionKey);
+
               return (
                 <View key={i} style={styles.taskRow}>
-                  <View style={[styles.actionBadge, { backgroundColor: COLOR.chip[action] }]}>
-                    <Text style={styles.actionText}>{action}</Text>
+                  <View style={[styles.actionBadge, { backgroundColor: COLOR.chip[actionKey] }]}>
+                    <Text style={styles.actionText}>{actionLabel}</Text>
                   </View>
                   <View style={styles.taskContent}>
                     <Text style={styles.taskTitle}>{task.title}</Text>
