@@ -323,6 +323,7 @@ export async function POST(req: Request) {
       .eq('done', false);
     if (pendingError) throw pendingError;
 
+    const pendingWateringPlants = new Set<string>();
     const existingKeys = new Set(
       (pending ?? []).map(
         (row: {
@@ -332,6 +333,9 @@ export async function POST(req: Request) {
           created_at?: string | null;
         }) => {
           const action = parseActionKey(row.title ?? '', locale);
+          if (action === 'water' && row.plant_id) {
+            pendingWateringPlants.add(row.plant_id);
+          }
           const day = (row.due_date || row.created_at || '').slice(0, 10);
           return `${row.plant_id ?? 'null'}|${action}|${day}`;
         },
@@ -345,6 +349,12 @@ export async function POST(req: Request) {
 
     const unique = candidates.filter((task) => {
       const action = parseActionKey(task.title, locale);
+
+      // Prevent accumulating watering tasks: if there's already a pending one for this plant, skip.
+      if (action === 'water' && task.plant_id && pendingWateringPlants.has(task.plant_id)) {
+        return false;
+      }
+
       const day = dayOf(task);
       const key = `${task.plant_id ?? 'null'}|${action}|${day}`;
       if (existingKeys.has(key)) return false;
