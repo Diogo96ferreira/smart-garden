@@ -1,4 +1,4 @@
-﻿{
+{
   "app": {
     "name": "Smart Garden",
     "welcome": "Bem-vindo ao Smart Garden",
@@ -216,7 +216,27 @@
       "header": "Bem-vindo",
       "submit": "Entrar",
       "title": "Entrar",
-      "noAccount": "Não tens conta?"
+      "noAccount": "Não tens conta?",
+      "forgotPassword": "Esqueceste-te da password?",
+      "resetTitle": "Recuperar password",
+      "resetSubtitle": "Vamos enviar-te um email com o link para criar uma nova password.",
+      "resetSubmit": "Enviar link",
+      "resetLoading": "A enviar...",
+      "resetSent": "Se o email existir, vais receber um link para recuperar a password.",
+      "resetEmailRequired": "Indica o teu email para recuperar a password.",
+      "backToSignIn": "Voltar a entrar"
+    },
+    "reset": {
+      "title": "Escolhe uma nova password",
+      "subtitle": "Define a nova password para voltares a entrar.",
+      "confirm": "Confirmar nova password",
+      "mismatch": "As passwords devem coincidir.",
+      "passwordRequired": "Escreve a nova password.",
+      "submit": "Atualizar password",
+      "loading": "A atualizar...",
+      "success": "Password atualizada. A redirecionar...",
+      "missingSession": "O link de recuperacao expirou ou ja foi usado. Pede um novo.",
+      "backToSignIn": "Voltar a entrar"
     }
   }
 }

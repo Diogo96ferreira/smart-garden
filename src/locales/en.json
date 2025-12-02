@@ -1,4 +1,4 @@
-﻿{
+{
   "app": {
     "name": "Smart Garden",
     "welcome": "Welcome to Smart Garden",
@@ -39,11 +39,11 @@
   },
   "dashboard": {
     "thisWeek": "This week",
-    "greeting": "Hello, {{name}}! Let\u0027s take care of your garden.",
+    "greeting": "Hello, {{name}}! Let's take care of your garden.",
     "intro": "Keep track of the priority tasks to keep your plants happy. Every completed action helps Smart Garden adjust future recommendations.",
     "summary": "Summary",
     "progressTitle": "Your garden is on the right track",
-    "completed": "You\u0027ve completed {{done}} out of {{total}} tasks this week. Keep it up!",
+    "completed": "You've completed {{done}} out of {{total}} tasks this week. Keep it up!",
     "weeklyProgress": "Weekly progress",
     "nextWatering": "Next watering",
     "weather": "Weather forecast",
@@ -168,15 +168,15 @@
     },
     "errors": {
       "unknown": "An unknown error occurred.",
-      "chatFail": "I couldn\u0027t answer right now. Please try again in a moment."
+      "chatFail": "I couldn't answer right now. Please try again in a moment."
     },
     "messages": {
-      "defaultReply": "Here\u0027s what I found about your plant!"
+      "defaultReply": "Here's what I found about your plant!"
     }
   },
   "onboarding": {
     "title": "Welcome to Smart Garden",
-    "subtitle": "Let\u0027s set up your garden step by step.",
+    "subtitle": "Let's set up your garden step by step.",
     "next": "Next",
     "back": "Back",
     "finish": "Finish"
@@ -216,7 +216,27 @@
       "header": "Welcome",
       "submit": "Sign in",
       "title": "Sign in",
-      "noAccount": "Don\u0027t have an account?"
+      "noAccount": "Don't have an account?",
+      "forgotPassword": "Forgot your password?",
+      "resetTitle": "Reset password",
+      "resetSubtitle": "We will email you a link to set a new password.",
+      "resetSubmit": "Send reset link",
+      "resetLoading": "Sending link...",
+      "resetSent": "If that email is registered, a reset link is on the way.",
+      "resetEmailRequired": "Enter your email to reset your password.",
+      "backToSignIn": "Back to sign in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "subtitle": "Enter your new password to finish resetting.",
+      "confirm": "Confirm new password",
+      "mismatch": "Passwords must match.",
+      "passwordRequired": "Enter your new password.",
+      "submit": "Update password",
+      "loading": "Updating...",
+      "success": "Password updated. Redirecting...",
+      "missingSession": "This reset link is invalid or expired. Please request a new one.",
+      "backToSignIn": "Back to sign in"
     }
   }
 }

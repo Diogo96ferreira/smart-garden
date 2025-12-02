@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,7 +17,13 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
+  const [resetError, setResetError] = useState<string | null>(null);
   const tr = useTranslation(lang);
+  const auth = useMemo(() => (supabase as SupabaseClient).auth, []);
   const t = {
     header: tr('auth.signin.header'),
     title: tr('auth.signin.title'),
@@ -30,16 +37,24 @@ export default function SignInPage() {
     noAccount: tr('auth.signin.noAccount'),
     linkCreate: tr('auth.signin.linkCreate'),
     appName: tr('app.name'),
+    forgotPassword: tr('auth.signin.forgotPassword'),
+    resetTitle: tr('auth.signin.resetTitle'),
+    resetSubtitle: tr('auth.signin.resetSubtitle'),
+    resetSubmit: tr('auth.signin.resetSubmit'),
+    resetLoading: tr('auth.signin.resetLoading'),
+    resetSent: tr('auth.signin.resetSent'),
+    resetEmailRequired: tr('auth.signin.resetEmailRequired'),
+    backToSignIn: tr('auth.signin.backToSignIn'),
   } as const;
 
   useEffect(() => {
     const check = async () => {
       try {
-        if (typeof (supabase as any).auth?.getSession === 'function') {
-          const { data } = await (supabase as any).auth.getSession();
+        if (typeof auth?.getSession === 'function') {
+          const { data } = await auth.getSession();
           return data?.session ?? null;
         }
-        const { data } = await (supabase as any).auth.getUser();
+        const { data } = await auth.getUser();
         return data?.user ? { user: data.user } : null;
       } catch {
         return null;
@@ -97,7 +112,7 @@ export default function SignInPage() {
       }
     });
 
-    const { data: sub } = (supabase as any).auth.onAuthStateChange(
+    const { data: sub } = auth.onAuthStateChange(
       (_event: unknown, session: { user?: { id?: string } } | null) => {
         if (session) {
           try {
@@ -150,7 +165,7 @@ export default function SignInPage() {
       },
     );
     return () => sub.subscription?.unsubscribe?.();
-  }, [next, router]);
+  }, [auth, next, router]);
 
   useEffect(() => {
     try {
@@ -189,7 +204,7 @@ export default function SignInPage() {
     setLoading(true);
     setError(null);
     try {
-      const { error } = await (supabase as any).auth.signInWithPassword({ email, password });
+      const { error } = await auth.signInWithPassword({ email, password });
       if (error) throw error;
       try {
         localStorage.setItem('app.isLoggedIn', 'true');
@@ -234,6 +249,34 @@ export default function SignInPage() {
     }
   };
 
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const targetEmail = (resetEmail || email).trim();
+    setResetError(null);
+    setResetMessage(null);
+    if (!targetEmail) {
+      setResetError(t.resetEmailRequired);
+      return;
+    }
+    setResetLoading(true);
+    try {
+      const redirectBase =
+        typeof window !== 'undefined' ? `${window.location.origin}/reset-password` : undefined;
+      const redirectTo =
+        redirectBase && next ? `${redirectBase}?next=${encodeURIComponent(next)}` : redirectBase;
+      const { error } = await auth.resetPasswordForEmail(targetEmail, {
+        redirectTo,
+      });
+      if (error) throw error;
+      setResetMessage(t.resetSent);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao enviar email de reset';
+      setResetError(message);
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
   const handleGoogle = async () => {
     setLoading(true);
     setError(null);
@@ -245,7 +288,7 @@ export default function SignInPage() {
         const sp = new URLSearchParams(window.location.search);
         dest = sp.get('next') || dest;
       } catch {}
-      const { error } = await (supabase as any).auth.signInWithOAuth({
+      const { error } = await auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(dest)}`,
@@ -332,6 +375,57 @@ export default function SignInPage() {
                 : 'Entrar'}
           </Button>
         </form>
+
+        <div className="mt-3 text-center text-sm">
+          <button
+            type="button"
+            onClick={() => {
+              setShowReset((prev) => {
+                const nextState = !prev;
+                if (nextState && !resetEmail) setResetEmail(email);
+                return nextState;
+              });
+              setResetError(null);
+              setResetMessage(null);
+            }}
+            className="text-[var(--color-primary)] underline-offset-2 hover:underline"
+          >
+            {showReset ? t.backToSignIn : t.forgotPassword}
+          </button>
+        </div>
+
+        {showReset && (
+          <form
+            className="mt-4 space-y-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm"
+            onSubmit={handlePasswordReset}
+            aria-label={t.resetTitle}
+          >
+            <div>
+              <p className="text-sm font-semibold">{t.resetTitle}</p>
+              <p className="text-xs text-[var(--color-text-muted)]">{t.resetSubtitle}</p>
+            </div>
+            <div>
+              <Label htmlFor="reset-email">{t.email}</Label>
+              <Input
+                id="reset-email"
+                type="email"
+                autoComplete="email"
+                required
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+              />
+            </div>
+            {resetError && (
+              <p role="alert" className="text-sm text-red-600">
+                {resetError}
+              </p>
+            )}
+            {resetMessage && <p className="text-sm text-green-700">{resetMessage}</p>}
+            <Button className="w-full" variant="secondary" disabled={resetLoading}>
+              {resetLoading ? t.resetLoading : t.resetSubmit}
+            </Button>
+          </form>
+        )}
 
         <div className="my-4 text-center text-sm text-[var(--color-text-muted)]">{t.or}</div>
 
