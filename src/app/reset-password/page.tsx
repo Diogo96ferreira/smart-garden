@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabaseClient';
@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTranslation } from '@/lib/useTranslation';
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const auth = useMemo(() => (supabase as SupabaseClient).auth, []);
@@ -117,7 +117,7 @@ export default function ResetPasswordPage() {
           ? err.message
           : lang === 'en'
             ? 'Could not update password'
-            : 'N\u00e3o foi poss\u00edvel atualizar a password';
+            : 'Não foi possível atualizar a password';
       setError(message);
     } finally {
       setLoading(false);
@@ -180,5 +180,19 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center p-6">
+          <p className="text-sm text-[var(--color-text-muted)]">Loading...</p>
+        </main>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
   );
 }
