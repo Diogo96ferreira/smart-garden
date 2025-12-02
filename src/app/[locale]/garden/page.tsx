@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Plus, PencilLine } from 'lucide-react';
+import { Plus, PencilLine, Sprout, Shovel, ShoppingBasket } from 'lucide-react';
 import { LineTabs } from '@/components/ui/InlineTabs';
 import { LeafLoader } from '@/components/ui/Spinner';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
 import { normalize as normalizeText } from '@/lib/nameMatching';
 import { usePathname } from 'next/navigation';
+import { fetchCalendarData, detectZone, type Zone, type ZoneData } from '@/lib/calendarData';
 
 type Plant = {
   id: string;
@@ -72,9 +73,40 @@ export default function GardenPage() {
   const [editUploading, setEditUploading] = useState(false);
   const [editPreview, setEditPreview] = useState<string | null>(null);
 
+  // Calendar Data
+  const [calendarData, setCalendarData] = useState<Record<Zone, ZoneData> | null>(null);
+  const [userZone, setUserZone] = useState<Zone>('ZONA 1');
+
   useEffect(() => {
     fetchPlants();
+    loadCalendar();
   }, []);
+
+  async function loadCalendar() {
+    try {
+      const { zonas, calendario, zonemap } = await fetchCalendarData(locale);
+      setCalendarData(calendario);
+
+      let distrito: string | null = null;
+      let concelho: string | null = null;
+      try {
+        const u = localStorage.getItem('userLocation');
+        if (u) {
+          const obj = JSON.parse(u) as { distrito?: string; municipio?: string };
+          distrito = obj?.distrito ?? localStorage.getItem('distrito');
+          concelho = obj?.municipio ?? localStorage.getItem('concelho');
+        } else {
+          distrito = localStorage.getItem('distrito');
+          concelho = localStorage.getItem('concelho');
+        }
+      } catch {}
+
+      const z = detectZone({ zonas, zonemap, distrito, concelho }) ?? ('ZONA 1' as Zone);
+      setUserZone(z);
+    } catch (e) {
+      console.warn('Failed to load calendar data', e);
+    }
+  }
 
   async function fetchPlants() {
     try {
@@ -272,6 +304,8 @@ export default function GardenPage() {
       'Tangerina Clementina',
       'Uva (de mesa)',
       'Romã',
+      'Nêsperas',
+      'Dióspiros',
     ],
     [],
   );
@@ -286,6 +320,42 @@ export default function GardenPage() {
     () => plants.filter((plant) => plant.type === activeTab),
     [activeTab, plants],
   );
+
+  const getPlantCalendarInfo = (plantName: string) => {
+    if (!calendarData) return null;
+    const zoneInfo = calendarData[userZone];
+    if (!zoneInfo) return null;
+
+    const norm = (s: string) =>
+      s
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .trim();
+
+    const pName = norm(plantName);
+
+    // Find best match in calendar keys
+    const match = Object.keys(zoneInfo).find((k) => {
+      const kNorm = norm(k);
+      return pName.includes(kNorm) || kNorm.includes(pName);
+    });
+
+    if (!match) return null;
+
+    const entry = zoneInfo[match];
+    const formatMonths = (months?: string[]) => {
+      if (!months || months.length === 0) return null;
+      // Simple range logic or just first 3 chars
+      return months.map((m) => m.slice(0, 3)).join(', ');
+    };
+
+    return {
+      sowing: formatMonths(entry.Semeadura ?? entry.Sowing),
+      planting: formatMonths(entry.Transplante ?? entry.Transplant ?? entry.Transplanting),
+      harvest: formatMonths(entry.Colheita ?? entry.Harvest),
+    };
+  };
 
   if (loading) {
     return (
@@ -352,54 +422,100 @@ export default function GardenPage() {
           </div>
         ) : (
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {filteredPlants.map((plant) => (
-              <motion.div
-                key={plant.id}
-                layout
-                className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-soft)]"
-              >
-                <div className="relative mb-4 h-40 w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-surface-muted)]">
-                  {plant.image_url ? (
-                    <Image
-                      src={plant.image_url}
-                      alt={plant.name}
-                      fill
-                      sizes="320px"
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center p-6">
+            {filteredPlants.map((plant) => {
+              const calInfo = getPlantCalendarInfo(plant.name);
+              return (
+                <motion.div
+                  key={plant.id}
+                  layout
+                  className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-soft)]"
+                >
+                  <div className="relative mb-4 h-40 w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-surface-muted)]">
+                    {plant.image_url ? (
                       <Image
-                        src="/spinner.png"
-                        alt="Loading"
-                        width={96}
-                        height={96}
-                        className="opacity-70"
+                        src={plant.image_url}
+                        alt={plant.name}
+                        fill
+                        sizes="320px"
+                        className="object-cover"
                       />
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-[var(--color-text)]">{plant.name}</h3>
-                    <p className="text-sm text-[var(--color-text-muted)]">
-                      {t('garden.waterEvery').replace('{{days}}', plant.watering_freq.toString())}
-                    </p>
+                    ) : (
+                      <div className="flex h-full items-center justify-center p-6">
+                        <Image
+                          src="/spinner.png"
+                          alt="Loading"
+                          width={96}
+                          height={96}
+                          className="opacity-70"
+                        />
+                      </div>
+                    )}
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<PencilLine className="h-4 w-4" />}
-                    onClick={() => {
-                      setSelectedPlant(plant);
-                      setEditOpen(true);
-                    }}
-                  >
-                    {t('garden.edit')}
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
+                  <div className="flex items-start justify-between">
+                    <div className="w-full">
+                      <h3 className="text-lg font-semibold text-[var(--color-text)]">
+                        {plant.name}
+                      </h3>
+
+                      {calInfo ? (
+                        <div className="mt-2 space-y-1">
+                          {calInfo.sowing && (
+                            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+                              <Sprout className="h-3 w-3 text-emerald-600" />
+                              <span className="truncate" title={calInfo.sowing}>
+                                Sem: {calInfo.sowing}
+                              </span>
+                            </div>
+                          )}
+                          {calInfo.planting && (
+                            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+                              <Shovel className="h-3 w-3 text-sky-600" />
+                              <span className="truncate" title={calInfo.planting}>
+                                Plan: {calInfo.planting}
+                              </span>
+                            </div>
+                          )}
+                          {calInfo.harvest && (
+                            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+                              <ShoppingBasket className="h-3 w-3 text-amber-600" />
+                              <span className="truncate" title={calInfo.harvest}>
+                                Col: {calInfo.harvest}
+                              </span>
+                            </div>
+                          )}
+                          {!calInfo.sowing && !calInfo.planting && !calInfo.harvest && (
+                            <p className="text-sm text-[var(--color-text-muted)]">
+                              {t('garden.waterEvery').replace(
+                                '{{days}}',
+                                plant.watering_freq.toString(),
+                              )}
+                            </p>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-[var(--color-text-muted)]">
+                          {t('garden.waterEvery').replace(
+                            '{{days}}',
+                            plant.watering_freq.toString(),
+                          )}
+                        </p>
+                      )}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      icon={<PencilLine className="h-4 w-4" />}
+                      onClick={() => {
+                        setSelectedPlant(plant);
+                        setEditOpen(true);
+                      }}
+                    >
+                      {t('garden.edit')}
+                    </Button>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         )}
       </section>
