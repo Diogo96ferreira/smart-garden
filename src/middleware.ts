@@ -2,15 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 
 const LOCALES = ['pt', 'en'] as const;
-const SECTIONS = [
-  'dashboard',
-  'garden',
-  'settings',
-  'calendar',
-  'ai',
-  'onboarding',
-  'reports',
-] as const;
+const SECTIONS = ['dashboard', 'garden', 'settings', 'calendar', 'ai', 'onboarding'] as const;
 const PROTECTED_PREFIXES = LOCALES.flatMap((l) => SECTIONS.map((s) => `/${l}/${s}`));
 
 export async function middleware(req: NextRequest) {
