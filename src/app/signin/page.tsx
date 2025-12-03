@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabaseClient';
@@ -47,6 +47,38 @@ export default function SignInPage() {
     backToSignIn: tr('auth.signin.backToSignIn'),
   } as const;
 
+  const fetchRemoteOnboardingFlag = useCallback(async (userId?: string) => {
+    if (!userId) return null;
+    try {
+      const { data } = await supabase.from('users').select('*').eq('id', userId).limit(1).single();
+      const flag =
+        (data as Record<string, unknown> | null)?.['has-onboarding'] ??
+        (data as Record<string, unknown> | null)?.['has_onboarding'];
+      if (flag === true) return true;
+      if (flag === false) return false;
+    } catch {
+      /* ignore */
+    }
+    return null;
+  }, []);
+
+  const determineNeedsOnboarding = useCallback(
+    async (userId?: string) => {
+      const remoteFlag = await fetchRemoteOnboardingFlag(userId);
+      if (remoteFlag === true) {
+        try {
+          localStorage.setItem('onboardingComplete', 'true');
+        } catch {
+          /* ignore */
+        }
+        return false;
+      }
+      // If the column is false or NULL, force onboarding regardless of local state
+      return true;
+    },
+    [fetchRemoteOnboardingFlag],
+  );
+
   useEffect(() => {
     const check = async () => {
       try {
@@ -80,32 +112,7 @@ export default function SignInPage() {
             const stored = localStorage.getItem('app.locale');
             if (stored === 'en' || stored === 'pt') l = stored;
           } catch {}
-          const needsOnboarding = (() => {
-            try {
-              const name = (localStorage.getItem('userName') || '').trim();
-              let distrito = '';
-              let municipio = '';
-              const rawUL = localStorage.getItem('userLocation');
-              if (rawUL) {
-                const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
-                distrito = (loc.distrito || '').trim();
-                municipio = (loc.municipio || '').trim();
-              }
-              if (!distrito || !municipio) {
-                const rawS = localStorage.getItem('garden.settings.v1');
-                if (rawS) {
-                  const s = JSON.parse(rawS) as {
-                    userLocation?: { distrito?: string; municipio?: string };
-                  };
-                  distrito ||= (s.userLocation?.distrito || '').trim();
-                  municipio ||= (s.userLocation?.municipio || '').trim();
-                }
-              }
-              return !(name && distrito && municipio);
-            } catch {
-              return true;
-            }
-          })();
+          const needsOnboarding = await determineNeedsOnboarding(session.user?.id);
           dest = `/${l}/${needsOnboarding ? 'onboarding' : 'dashboard'}`;
         }
         router.replace(dest || next);
@@ -113,7 +120,7 @@ export default function SignInPage() {
     });
 
     const { data: sub } = auth.onAuthStateChange(
-      (_event: unknown, session: { user?: { id?: string } } | null) => {
+      async (_event: unknown, session: { user?: { id?: string } } | null) => {
         if (session) {
           try {
             fetch('/api/ensure-profile', { method: 'POST' });
@@ -132,32 +139,7 @@ export default function SignInPage() {
               const stored = localStorage.getItem('app.locale');
               if (stored === 'en' || stored === 'pt') l = stored;
             } catch {}
-            const needsOnboarding = (() => {
-              try {
-                const name = (localStorage.getItem('userName') || '').trim();
-                let distrito = '';
-                let municipio = '';
-                const rawUL = localStorage.getItem('userLocation');
-                if (rawUL) {
-                  const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
-                  distrito = (loc.distrito || '').trim();
-                  municipio = (loc.municipio || '').trim();
-                }
-                if (!distrito || !municipio) {
-                  const rawS = localStorage.getItem('garden.settings.v1');
-                  if (rawS) {
-                    const s = JSON.parse(rawS) as {
-                      userLocation?: { distrito?: string; municipio?: string };
-                    };
-                    distrito ||= (s.userLocation?.distrito || '').trim();
-                    municipio ||= (s.userLocation?.municipio || '').trim();
-                  }
-                }
-                return !(name && distrito && municipio);
-              } catch {
-                return true;
-              }
-            })();
+            const needsOnboarding = await determineNeedsOnboarding(session.user?.id);
             dest = `/${l}/${needsOnboarding ? 'onboarding' : 'dashboard'}`;
           }
           router.replace(dest || next);
@@ -165,7 +147,7 @@ export default function SignInPage() {
       },
     );
     return () => sub.subscription?.unsubscribe?.();
-  }, [auth, next, router]);
+  }, [auth, next, router, determineNeedsOnboarding]);
 
   useEffect(() => {
     try {
@@ -210,32 +192,13 @@ export default function SignInPage() {
         localStorage.setItem('app.isLoggedIn', 'true');
       } catch {}
       const storedLocale = localStorage.getItem('app.locale') || 'pt';
-      const needsOnboarding = (() => {
-        try {
-          const name = (localStorage.getItem('userName') || '').trim();
-          let distrito = '';
-          let municipio = '';
-          const rawUL = localStorage.getItem('userLocation');
-          if (rawUL) {
-            const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
-            distrito = (loc.distrito || '').trim();
-            municipio = (loc.municipio || '').trim();
-          }
-          if (!distrito || !municipio) {
-            const rawS = localStorage.getItem('garden.settings.v1');
-            if (rawS) {
-              const s = JSON.parse(rawS) as {
-                userLocation?: { distrito?: string; municipio?: string };
-              };
-              distrito ||= (s.userLocation?.distrito || '').trim();
-              municipio ||= (s.userLocation?.municipio || '').trim();
-            }
-          }
-          return !(name && distrito && municipio);
-        } catch {
-          return true;
-        }
-      })();
+      let needsOnboarding = true;
+      try {
+        const { data: authUser } = await auth.getUser();
+        needsOnboarding = await determineNeedsOnboarding(authUser.user?.id);
+      } catch {
+        /* ignore */
+      }
       if (next) {
         router.replace(next);
       } else {

@@ -6,13 +6,13 @@ export async function generatePdf({
   locale,
   rangeDays,
   unique,
-  filename,
+  filename: _filename,
 }: {
   locale: Locale;
   rangeDays: number;
   unique: Row[];
   filename: string;
-}): Promise<any> {
+}): Promise<Uint8Array> {
   const COLOR = {
     primary: '#166534', // Green 800 - mais escuro e profissional
     secondary: '#22c55e', // Green 500

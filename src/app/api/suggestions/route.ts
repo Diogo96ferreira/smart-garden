@@ -87,7 +87,7 @@ export async function GET(req: Request) {
     // Cap to 3 suggestions
     const suggestions = list.slice(0, 3);
     return NextResponse.json({ suggestions });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ suggestions: [] });
   }
 }

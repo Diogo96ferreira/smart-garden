@@ -8,7 +8,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
-import { usePathname } from 'next/navigation';
 import { useTranslation } from '@/lib/useTranslation';
 import { useSettings } from '@/hooks/useSettings';
 import { useLocale } from '@/lib/useLocale';
@@ -39,7 +38,6 @@ export default function TiaAdeliaPage() {
   const [uploading, setUploading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslation(locale);
   const { settings } = useSettings();

@@ -8,6 +8,7 @@ import { useTranslation } from '@/lib/useTranslation';
 import { Settings2, Globe, Sun, Moon, Laptop, Bot, FileText, Download } from 'lucide-react';
 import { LeafLoader } from '@/components/ui/Spinner';
 import LogoutButton from '@/components/ui/LogoutButton';
+import { FeedbackForm } from '@/components/ui/FeedbackForm';
 
 function useApplyTheme(theme: Settings['theme']) {
   React.useEffect(() => {
@@ -233,44 +234,14 @@ export default function SettingsPage() {
       a.click();
       a.remove();
       URL.revokeObjectURL(blobUrl);
-    } catch (e) {
+    } catch (_error) {
       showToast(
         loc === 'en' ? 'Network error generating report.' : 'Erro de rede ao gerar relatório.',
         'error',
       );
     }
     setReportStatus(null);
-  }, [settings.reportRange, settings.locale]);
-
-  const onGenerateMonthPlan = React.useCallback(async () => {
-    try {
-      let location: { distrito?: string; municipio?: string } | undefined;
-      try {
-        const rawUL = localStorage.getItem('userLocation');
-        if (rawUL) location = JSON.parse(rawUL);
-      } catch {}
-      if (!location) {
-        try {
-          const raw = localStorage.getItem('garden.settings.v1');
-          if (raw) {
-            const s = JSON.parse(raw) as {
-              userLocation?: { distrito?: string; municipio?: string };
-            };
-            location = s.userLocation;
-          }
-        } catch {}
-      }
-      await fetch('/api/plan-month', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          locale: settings.locale === 'en-US' ? 'en' : 'pt',
-          location: location ?? null,
-          resetAll: false,
-        }),
-      });
-    } catch {}
-  }, [settings.locale]);
+  }, [settings.reportRange, settings.locale, locale]);
 
   // Removed separate DB report button; report uses dropdown + source=db
 
@@ -410,6 +381,10 @@ export default function SettingsPage() {
             </button>
           </div>
         </section>
+
+        {/* Feedback Form */}
+        <FeedbackForm />
+
         {toast && (
           <div
             role="status"

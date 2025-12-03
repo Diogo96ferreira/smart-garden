@@ -120,6 +120,15 @@
     "languageOptions": {
       "pt": "Português (PT)",
       "en": "English (US)"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "message": "A sua mensagem",
+      "placeholder": "Diga-nos o que pensa...",
+      "submit": "Enviar Feedback",
+      "sending": "A enviar...",
+      "sent": "Enviado!",
+      "error": "Erro, tente novamente"
     }
   },
   "ai": {

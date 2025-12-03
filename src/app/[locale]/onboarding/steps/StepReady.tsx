@@ -46,6 +46,33 @@ export function StepReady({ onBack, onFinish }: Props) {
         }
       }
     } catch {}
+    try {
+      const { data: auth } = await supabase.auth.getUser();
+      const userId = auth.user?.id;
+      if (userId) {
+        // Prefer server column, fall back to auth metadata for compatibility
+        const completionPayload: Record<string, unknown> = { id: userId, 'has-onboarding': true };
+        const { error } = await supabase
+          .from('users')
+          .upsert(completionPayload, { onConflict: 'id' });
+        if (error && error.code === '42703') {
+          // Fallback to a snake_case column name if it exists instead
+          await supabase
+            .from('users')
+            .upsert({ id: userId, has_onboarding: true }, { onConflict: 'id' });
+        }
+        await supabase.auth.updateUser({
+          data: {
+            onboarding_complete: true,
+            onboarding_completed_at: new Date().toISOString(),
+          },
+        });
+      }
+      // Keep local flag in sync so subsequent navigations avoid onboarding immediately
+      localStorage.setItem('onboardingComplete', 'true');
+    } catch {
+      /* ignore */
+    }
     onFinish();
   }, [onFinish]);
 

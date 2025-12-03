@@ -1,11 +1,12 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Stepper } from '@/components/ui/Stepper';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/lib/supabaseClient';
 import { StepWelcome } from './steps/StepWelcome';
 import { StepName } from './steps/StepName';
 import { StepLocation } from './steps/StepLocation';
@@ -18,6 +19,40 @@ export default function OnboardingPage() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'pt';
+
+  useEffect(() => {
+    let active = true;
+    const checkIfCompleted = async () => {
+      try {
+        const { data: auth } = await supabase.auth.getUser();
+        const userId = auth.user?.id;
+        if (!userId) return;
+        const { data } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', userId)
+          .limit(1)
+          .single();
+        const hasCompleted =
+          ((data as Record<string, unknown> | null)?.['has-onboarding'] ??
+            (data as Record<string, unknown> | null)?.['has_onboarding']) === true;
+        if (hasCompleted && active) {
+          try {
+            localStorage.setItem('onboardingComplete', 'true');
+          } catch {
+            /* ignore */
+          }
+          router.replace(`/${locale}/dashboard`);
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+    checkIfCompleted();
+    return () => {
+      active = false;
+    };
+  }, [locale, router]);
 
   const handleFinish = useCallback(() => {
     localStorage.setItem('onboardingComplete', 'true');

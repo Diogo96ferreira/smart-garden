@@ -28,7 +28,7 @@ async function main() {
     process.exit(1);
   }
 
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const _supabase = createClient(supabaseUrl, supabaseKey);
 
   // 1. Read local calendar data
   const calendarPath = path.join(__dirname, '..', 'public', 'calendario.json');

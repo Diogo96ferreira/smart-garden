@@ -17,9 +17,8 @@ function toCsv(rows: Array<Record<string, unknown>>): string {
   };
   const lines = [headers.join(',')];
   for (const r of rows) {
-    lines.push(
-      [esc((r as any).date), esc((r as any).title), esc((r as any).description)].join(','),
-    );
+    const row = r as { date?: unknown; title?: unknown; description?: unknown };
+    lines.push([esc(row.date), esc(row.title), esc(row.description)].join(','));
   }
   return lines.join('\n');
 }
@@ -42,7 +41,6 @@ export async function GET(req: Request) {
       : 'pt';
 
     const format = (searchParams.get('format') ?? 'pdf').toLowerCase();
-    const source = (searchParams.get('source') ?? 'mixed').toLowerCase(); // 'db' | 'mixed'
 
     const today = new Date();
     const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());

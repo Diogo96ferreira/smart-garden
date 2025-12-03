@@ -42,7 +42,7 @@ export async function GET(req: Request) {
           .from('plants')
           .select('id,name,watering_freq,last_watered')
           .eq('user_id', user.id)
-      : ({ data: null } as any);
+      : ({ data: null } as { data: null });
 
     type Row = { date: string; title: string; description?: string };
     const rows: Row[] = [];
@@ -321,7 +321,7 @@ export async function GET(req: Request) {
     // Footer page numbers
     const rangeLabel = `${rangeDays} ${locale === 'en' ? 'days' : 'dias'}`;
     const addFooter = () => {
-      const page = (doc as any).page;
+      const page = (doc as unknown as { page: { width: number; height: number } }).page;
       const text = `${rangeLabel}  •  Page ${page.number}`;
       doc.font(bodyName).fontSize(8).fillColor(COLOR.muted);
       doc.text(text, doc.page.margins.left, doc.page.height - doc.page.margins.bottom + 10, {

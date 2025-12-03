@@ -22,11 +22,29 @@ export default function HomeRedirect() {
       return DEFAULT_SETTINGS.locale.toLowerCase().startsWith('en') ? 'en' : 'pt';
     };
 
-    const hasCompletedOnboarding = localStorage.getItem('onboardingComplete') === 'true';
     const locale = resolveLocale();
     try {
       localStorage.setItem('app.locale', locale);
     } catch {}
+
+    const fetchOnboardingFlag = async (userId: string) => {
+      try {
+        const { data } = await (supabase as any)
+          .from('users')
+          .select('*')
+          .eq('id', userId)
+          .limit(1)
+          .single();
+        const flag =
+          (data as Record<string, unknown> | null)?.['has-onboarding'] ??
+          (data as Record<string, unknown> | null)?.['has_onboarding'];
+        if (flag === true) return true;
+        if (flag === false) return false;
+      } catch {
+        /* ignore */
+      }
+      return null;
+    };
 
     const fetchSession = async () => {
       try {
@@ -44,48 +62,37 @@ export default function HomeRedirect() {
       }
     };
 
-    const isProfileComplete = () => {
-      try {
-        const name = (localStorage.getItem('userName') || '').trim();
-        let distrito = '';
-        let municipio = '';
-        const rawUL = localStorage.getItem('userLocation');
-        if (rawUL) {
-          const loc = JSON.parse(rawUL) as { distrito?: string; municipio?: string };
-          distrito = (loc.distrito || '').trim();
-          municipio = (loc.municipio || '').trim();
-        }
-        if (!distrito || !municipio) {
-          const rawS = localStorage.getItem(SETTINGS_KEY);
-          if (rawS) {
-            const s = JSON.parse(rawS) as {
-              userLocation?: { distrito?: string; municipio?: string };
-            };
-            distrito ||= (s.userLocation?.distrito || '').trim();
-            municipio ||= (s.userLocation?.municipio || '').trim();
-          }
-        }
-        return Boolean(name && distrito && municipio);
-      } catch {
-        return false;
-      }
-    };
-
     fetchSession().then(
-      async ({ data }: { data: { session: { user?: { id?: string } } | null } }) => {
-        const isAuthed = Boolean(data.session);
+      async ({
+        data,
+      }: {
+        data: {
+          session: { user?: { id?: string; user_metadata?: Record<string, unknown> } } | null;
+        };
+      }) => {
+        const sessionUser = data.session?.user as {
+          id?: string;
+          user_metadata?: Record<string, unknown>;
+        } | null;
+        const isAuthed = Boolean(sessionUser);
         if (!isAuthed) {
           router.replace(`/signin?next=/${locale}/onboarding`);
           return;
         }
 
-        const needsOnboarding = !isProfileComplete();
-        const target = needsOnboarding
-          ? '/onboarding'
-          : hasCompletedOnboarding
-            ? '/dashboard'
-            : '/dashboard';
-        router.replace(`/${locale}${target}`);
+        const remoteFlag = sessionUser?.id ? await fetchOnboardingFlag(sessionUser.id) : null;
+        const hasServerCompleted = remoteFlag === true;
+
+        if (hasServerCompleted) {
+          try {
+            localStorage.setItem('onboardingComplete', 'true');
+          } catch {
+            /* ignore */
+          }
+        }
+
+        const needsOnboarding = !hasServerCompleted;
+        router.replace(`/${locale}${needsOnboarding ? '/onboarding' : '/dashboard'}`);
       },
     );
   }, [router]);

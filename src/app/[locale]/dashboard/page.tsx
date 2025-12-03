@@ -14,7 +14,6 @@ import { LeafLoader } from '@/components/ui/Spinner';
 import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
 import { isWateringTask } from '@/lib/nameMatching';
-import { usePathname } from 'next/navigation';
 import { useLocale } from '@/lib/useLocale';
 
 type Task = {
@@ -959,6 +958,7 @@ type Suggestion = {
   plant_id?: string | null;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SuggestionsPanelLegacy({
   locale,
   onAddTask,

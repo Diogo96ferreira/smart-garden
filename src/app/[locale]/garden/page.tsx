@@ -80,6 +80,7 @@ export default function GardenPage() {
   useEffect(() => {
     fetchPlants();
     loadCalendar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function loadCalendar() {

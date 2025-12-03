@@ -1,31 +1,16 @@
 import { NextResponse } from 'next/server';
 import { computeWateringDelta, getWeatherByLocation, type UserLocation } from '@/lib/weather';
 
-function makeNote(locale: 'pt' | 'en', opts: { skipToday: boolean; delta: number }): string {
+function buildNote(locale: 'pt' | 'en', opts: { skipToday: boolean; delta: number }): string {
   const { skipToday, delta } = opts;
   if (skipToday) {
     return locale === 'en'
-      ? "It's been raining in your area — no need to water today. Check back tomorrow; if needed, you'll see it in tasks."
-      : 'Tem chovido na tua zona, não precisamos de regar hoje. Volta amanhã e se for preciso terás nas tarefas';
-  }
-  if (delta < 0) {
-    return locale === 'en'
-      ? "It's very hot — we will bring watering forward."
-      : 'Está muito quente, temos de antecipar as regas';
-  }
-  return '';
-}
-
-function makeNote2(locale: 'pt' | 'en', opts: { skipToday: boolean; delta: number }): string {
-  const { skipToday, delta } = opts;
-  if (skipToday) {
-    return locale === 'en'
-      ? "It's been raining in your area — no need to water today. Check back tomorrow; if needed, you'll see it in tasks."
+      ? "It's been raining in your area, no need to water today. Check back tomorrow; if needed, you'll see it in tasks."
       : 'Tem chovido na tua zona, não precisamos de regar hoje. Volta amanhã e, se for preciso, terás nas tarefas.';
   }
   if (delta < 0) {
     return locale === 'en'
-      ? "It's very hot — we will bring watering forward."
+      ? "It's very hot, we will bring watering forward."
       : 'Está muito quente, temos de antecipar as regas.';
   }
   return '';
@@ -48,7 +33,7 @@ export async function POST(req: Request) {
     if (!summary) return NextResponse.json({ note: null });
 
     const { delta, skipToday } = computeWateringDelta(summary);
-    const note = makeNote2(locale, { skipToday, delta });
+    const note = buildNote(locale, { skipToday, delta });
 
     return NextResponse.json({ note, delta, skipToday, summary });
   } catch (error) {
