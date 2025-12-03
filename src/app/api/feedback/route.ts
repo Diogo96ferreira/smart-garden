@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       to: TO_EMAIL,
       subject: 'New Feedback from Smart Garden App',
       html: emailHtml,
-      replyTo: user?.email ?? undefined,
+      reply_to: user?.email ?? undefined,
     });
 
     return NextResponse.json({ success: true });
