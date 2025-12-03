@@ -321,8 +321,13 @@ export async function GET(req: Request) {
     // Footer page numbers
     const rangeLabel = `${rangeDays} ${locale === 'en' ? 'days' : 'dias'}`;
     const addFooter = () => {
-      const page = (doc as unknown as { page: { width: number; height: number } }).page;
-      const text = `${rangeLabel}  •  Page ${page.number}`;
+      const page = (
+        doc as unknown as {
+          page: { width: number; height: number; number?: number; document?: { page?: number } };
+        }
+      ).page;
+      const pageNumber = page.number ?? page.document?.page ?? undefined;
+      const text = `${rangeLabel}  •  Page ${pageNumber ?? ''}`;
       doc.font(bodyName).fontSize(8).fillColor(COLOR.muted);
       doc.text(text, doc.page.margins.left, doc.page.height - doc.page.margins.bottom + 10, {
         width: doc.page.width - doc.page.margins.left - doc.page.margins.right,

@@ -194,7 +194,10 @@ export async function GET(req: Request) {
     // Generate PDF using react-pdf
     const filename = `plan-${locale}-${new Date().toISOString().slice(0, 10)}-${rangeDays}d.pdf`;
     const pdfBuffer = await generatePdf({ locale, rangeDays, unique, filename });
-    return new NextResponse(pdfBuffer, {
+    const arrayBuffer = new ArrayBuffer(pdfBuffer.byteLength);
+    new Uint8Array(arrayBuffer).set(pdfBuffer);
+    const pdfBlob = new Blob([arrayBuffer], { type: 'application/pdf' });
+    return new NextResponse(pdfBlob, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',

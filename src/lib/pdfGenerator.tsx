@@ -270,6 +270,6 @@ export async function generatePdf({
     </Document>
   );
 
-  const buffer = await pdf(<MyDocument />).toBuffer();
+  const buffer = (await pdf(<MyDocument />).toBuffer()) as unknown as Uint8Array;
   return buffer;
 }

@@ -1,7 +1,6 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { getAuthUser } from '@/lib/supabaseServer';
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
@@ -18,10 +17,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const supabase = createRouteHandlerClient({ cookies });
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getAuthUser();
 
     const { message } = await request.json();
 
@@ -43,7 +39,7 @@ export async function POST(request: Request) {
       to: TO_EMAIL,
       subject: 'New Feedback from Smart Garden App',
       html: emailHtml,
-      reply_to: user?.email ?? undefined,
+      replyTo: user?.email ?? undefined,
     });
 
     return NextResponse.json({ success: true });
