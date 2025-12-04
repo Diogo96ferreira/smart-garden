@@ -74,6 +74,30 @@
     "waterDesc": "Water every {{days}} day(s). Last watering: {{date}}.",
     "never": "never"
   },
+  "legal": {
+    "privacy": {
+      "eyebrow": "Privacy",
+      "title": "Privacy Policy",
+      "summary": "We keep your data limited to what Smart Garden needs to function. No surprises.",
+      "dataWeStore": "What we store",
+      "dataWeStoreDesc": "Your account data, plants you register, generated tasks and optional photos you upload to Supabase storage.",
+      "usage": "How we use it",
+      "usageDesc": "To generate care tasks, sync your garden across devices, and improve recommendations. We don't sell your data.",
+      "rights": "Your rights",
+      "rightsDesc": "You can delete your account and data at any time via Support or by requesting removal."
+    },
+    "terms": {
+      "eyebrow": "Terms",
+      "title": "Terms of Use",
+      "summary": "Please use Smart Garden responsibly; advice is informational and not a substitute for professional guidance.",
+      "use": "Acceptable use",
+      "useDesc": "Don't misuse the service, scrape, or attack it. Keep uploads appropriate and lawful.",
+      "liability": "Liability",
+      "liabilityDesc": "We aim for accuracy but can't guarantee outcomes for your crops. Use recommendations at your own discretion.",
+      "contact": "Contact",
+      "contactDesc": "Need help or data removal? Reach us via the support card or support@smartgarden.example."
+    }
+  },
   "garden": {
     "title": "My garden",
     "subtitle": "Daily care and records",
@@ -107,6 +131,8 @@
     "language": "Language",
     "zone": "Zone",
     "saveSuccess": "Settings saved successfully.",
+    "legal": "Privacy & Terms",
+    "legalDesc": "Review how we handle your data and the terms of using Smart Garden.",
     "report": {
       "title": "Task Report",
       "range": {

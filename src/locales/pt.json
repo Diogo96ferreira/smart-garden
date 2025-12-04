@@ -3,14 +3,14 @@
     "name": "Smart Garden",
     "welcome": "Bem-vindo ao Smart Garden",
     "loading": "A carregar...",
-    "noData": "Sem dados disponíveis.",
+    "noData": "Sem dados disponÃ­veis.",
     "error": "Ocorreu um erro. Tenta novamente."
   },
   "common": {
     "today": "Hoje",
     "crop": "Cultura",
     "zone": "Zona",
-    "actions": "Ações",
+    "actions": "AÃ§Ãµes",
     "save": "Guardar",
     "cancel": "Cancelar",
     "delete": "Apagar",
@@ -25,11 +25,11 @@
     "sowing": "Semeadura",
     "transplant": "Transplante",
     "harvest": "Colheita",
-    "overview": "Visão Geral",
-    "history": "Histórico"
+    "overview": "VisÃ£o Geral",
+    "history": "HistÃ³rico"
   },
   "calendar": {
-    "loading": "A carregar calendário...",
+    "loading": "A carregar calendÃ¡rio...",
     "title": "Planeador de culturas",
     "filters": "Filtros",
     "sow": "Semear",
@@ -39,30 +39,30 @@
   },
   "dashboard": {
     "thisWeek": "Esta semana",
-    "greeting": "Olá, {{name}}! Vamos cuidar da tua horta.",
-    "intro": "Acompanha as tarefas prioritárias para manter as plantas felizes. A cada ação concluída, a Smart Garden ajusta as recomendações seguintes.",
+    "greeting": "OlÃ¡, {{name}}! Vamos cuidar da tua horta.",
+    "intro": "Acompanha as tarefas prioritÃ¡rias para manter as plantas felizes. A cada aÃ§Ã£o concluÃ­da, a Smart Garden ajusta as recomendaÃ§Ãµes seguintes.",
     "summary": "Resumo",
-    "progressTitle": "A tua horta está no bom caminho",
-    "completed": "Concluíste {{done}} de {{total}} tarefas esta semana. Continua!",
+    "progressTitle": "A tua horta estÃ¡ no bom caminho",
+    "completed": "ConcluÃ­ste {{done}} de {{total}} tarefas esta semana. Continua!",
     "weeklyProgress": "Progresso semanal",
-    "nextWatering": "Próxima rega",
+    "nextWatering": "PrÃ³xima rega",
     "weather": "Clima previsto",
-    "newSuggestions": "Novas sugestões",
+    "newSuggestions": "Novas sugestÃµes",
     "mulch": {
       "title": "Coloca cobertura morta",
-      "desc": "Ajuda a reter humidade e protege as raízes em dias quentes."
+      "desc": "Ajuda a reter humidade e protege as raÃ­zes em dias quentes."
     },
     "nightWatering": {
       "title": "Rever rega ao fim do dia",
-      "desc": "A rega ao final do dia reduz a evaporação."
+      "desc": "A rega ao final do dia reduz a evaporaÃ§Ã£o."
     },
     "seeHow": "Ver como",
-    "adjust": "Ajustar horários",
+    "adjust": "Ajustar horÃ¡rios",
     "carePlan": "Plano de cuidados",
-    "completedShort": "concluídas",
-    "noDescription": "Sem descrição disponível.",
+    "completedShort": "concluÃ­das",
+    "noDescription": "Sem descriÃ§Ã£o disponÃ­vel.",
     "unmark": "Desmarcar tarefa",
-    "markDone": "Marcar como concluída",
+    "markDone": "Marcar como concluÃ­da",
     "delay": "Adiar tarefa",
     "howTo": "Como fazer",
     "generateTasks": "Gerar tarefas",
@@ -74,21 +74,45 @@
     "waterDesc": "Regar a cada {{days}} dia(s). Última rega: {{date}}.",
     "never": "nunca"
   },
+  "legal": {
+    "privacy": {
+      "eyebrow": "Privacidade",
+      "title": "Política de Privacidade",
+      "summary": "Guardamos apenas o necessário para a Smart Garden funcionar. Sem surpresas.",
+      "dataWeStore": "O que guardamos",
+      "dataWeStoreDesc": "Dados de conta, plantas registadas, tarefas geradas e, se quiseres, fotos que envias para o armazenamento da Supabase.",
+      "usage": "Como usamos",
+      "usageDesc": "Para gerar tarefas de cuidado, sincronizar a tua horta entre dispositivos e melhorar recomendações. Não vendemos os teus dados.",
+      "rights": "Os teus direitos",
+      "rightsDesc": "Podes apagar a conta e os dados a qualquer momento via Suporte ou pedindo remoção."
+    },
+    "terms": {
+      "eyebrow": "Termos",
+      "title": "Termos de Utilização",
+      "summary": "Usa a Smart Garden de forma responsável; as dicas são informativas e não substituem aconselhamento profissional.",
+      "use": "Uso aceitável",
+      "useDesc": "Não faças uso indevido, scraping ou ataques. Mantém os envios adequados e legais.",
+      "liability": "Responsabilidade",
+      "liabilityDesc": "Queremos ser precisos mas não garantimos resultados nas tuas culturas. Usa as recomendações por tua conta e risco.",
+      "contact": "Contacto",
+      "contactDesc": "Precisas de ajuda ou remover dados? Fala connosco pelo cartão de suporte ou em support@smartgarden.example."
+    }
+  },
   "garden": {
     "title": "A minha horta",
-    "subtitle": "Cuidados diários e registos",
-    "description": "Acompanha as plantas que vivem contigo. Regista novas espécies, ajusta frequências de rega e mantém um histórico organizado entre horta e pomar.",
+    "subtitle": "Cuidados diÃ¡rios e registos",
+    "description": "Acompanha as plantas que vivem contigo. Regista novas espÃ©cies, ajusta frequÃªncias de rega e mantÃ©m um histÃ³rico organizado entre horta e pomar.",
     "addPlant": "Adicionar planta",
     "registerPlant": "Registar planta",
     "emptyTitle": "Nada por aqui ainda",
-    "emptyDescription": "Adiciona uma nova planta para começares a acompanhar ciclos de rega e colheita.",
-    "wateringFrequency": "Frequência de rega (dias)",
+    "emptyDescription": "Adiciona uma nova planta para comeÃ§ares a acompanhar ciclos de rega e colheita.",
+    "wateringFrequency": "FrequÃªncia de rega (dias)",
     "type": "Tipo",
     "name": "Nome",
     "photo": "Fotografia",
     "cancel": "Cancelar",
     "savePlant": "Guardar planta",
-    "saveChanges": "Guardar alterações",
+    "saveChanges": "Guardar alteraÃ§Ãµes",
     "delete": "Eliminar",
     "analyzing": "A analisar a imagem...",
     "uploading": "A carregar imagem...",
@@ -102,20 +126,20 @@
     "loading": "A carregar a horta..."
   },
   "settings": {
-    "title": "Definições",
+    "title": "DefiniÃ§Ãµes",
     "theme": "Tema",
     "language": "Idioma",
     "zone": "Zona",
-    "saveSuccess": "Definições guardadas com sucesso.",
+    "saveSuccess": "DefiniÃ§Ãµes guardadas com sucesso.",
     "report": {
-      "title": "Relatório de Tarefas",
+      "title": "RelatÃ³rio de Tarefas",
       "range": {
         "1w": "1 semana",
         "2w": "2 semanas",
-        "1m": "1 mês",
+        "1m": "1 mÃªs",
         "all": "Sempre"
       },
-      "generate": "Gerar relatório"
+      "generate": "Gerar relatÃ³rio"
     },
     "themeOptions": {
       "system": "Sistema",
@@ -123,7 +147,7 @@
       "dark": "Escuro"
     },
     "languageOptions": {
-      "pt": "Português (PT)",
+      "pt": "PortuguÃªs (PT)",
       "en": "English (US)"
     },
     "feedback": {
@@ -134,37 +158,39 @@
       "sending": "A enviar...",
       "sent": "Enviado!",
       "error": "Erro, tente novamente"
-    }
+    },
+    "legal": "Privacidade e Termos",
+    "legalDesc": "Consulta como tratamos os teus dados e os termos de utilização da Smart Garden."
   },
   "ai": {
     "title": "Perfil de IA",
     "profiles": {
       "tia-adelia": {
-        "label": "Tia Adélia",
-        "desc": "Conselhos práticos em linguagem simples, focados na horta caseira."
+        "label": "Tia AdÃ©lia",
+        "desc": "Conselhos prÃ¡ticos em linguagem simples, focados na horta caseira."
       },
       "eng-pedro": {
         "label": "Engenheiro Pedro",
-        "desc": "Tom profissional e recomendações objetivas."
+        "desc": "Tom profissional e recomendaÃ§Ãµes objetivas."
       },
       "diogo-campos": {
         "label": "Diogo Campos",
-        "desc": "Dicas acessíveis e simpáticas para cuidar, regar e colher."
+        "desc": "Dicas acessÃ­veis e simpÃ¡ticas para cuidar, regar e colher."
       },
       "agro-core": {
         "label": "AGRO-CORE v1.0",
-        "desc": "Análise objetiva e concisa com tom técnico."
+        "desc": "AnÃ¡lise objetiva e concisa com tom tÃ©cnico."
       }
     },
     "header": {
-      "eyebrow": "Diagnóstico inteligente",
-      "title": "Fale com a Tia Adélia",
-      "subtitle": "Carrega uma fotografia da planta para obter um diagnóstico imediato e conselhos personalizados sobre rega, poda ou colheita."
+      "eyebrow": "DiagnÃ³stico inteligente",
+      "title": "Fale com a Tia AdÃ©lia",
+      "subtitle": "Carrega uma fotografia da planta para obter um diagnÃ³stico imediato e conselhos personalizados sobre rega, poda ou colheita."
     },
     "photo": {
-      "title": "Diagnóstico por fotografia",
+      "title": "DiagnÃ³stico por fotografia",
       "desc": "Analisamos automaticamente a foto da planta ou fruto para sugerir cuidados e alertas relevantes.",
-      "previewAlt": "Pré-visualização",
+      "previewAlt": "PrÃ©-visualizaÃ§Ã£o",
       "remove": "Remover",
       "change": "Trocar imagem",
       "dragTitle": "Arrasta uma fotografia ou escolhe do dispositivo",
@@ -174,18 +200,18 @@
       "analyzing": "A analisar..."
     },
     "chat": {
-      "title": "Conversar com a Tia Adélia",
-      "desc": "Continua a conversa com base no diagnóstico: pede conselhos sobre tratamento, colheita ou cuidados gerais.",
-      "placeholder": "Pergunta algo à Tia Adélia...",
+      "title": "Conversar com a Tia AdÃ©lia",
+      "desc": "Continua a conversa com base no diagnÃ³stico: pede conselhos sobre tratamento, colheita ou cuidados gerais.",
+      "placeholder": "Pergunta algo Ã  Tia AdÃ©lia...",
       "thinking": "A pensar...",
       "send": "Enviar"
     },
     "errors": {
       "unknown": "Ocorreu um erro desconhecido.",
-      "chatFail": "Não consegui responder agora. Tenta novamente dentro de instantes."
+      "chatFail": "NÃ£o consegui responder agora. Tenta novamente dentro de instantes."
     },
     "messages": {
-      "defaultReply": "Aqui está o que descobri sobre a tua planta!"
+      "defaultReply": "Aqui estÃ¡ o que descobri sobre a tua planta!"
     }
   },
   "onboarding": {
@@ -200,9 +226,9 @@
     "loading": "A preparar o teu jardim..."
   },
   "notifications": {
-    "newTask": "Nova tarefa disponível",
+    "newTask": "Nova tarefa disponÃ­vel",
     "harvestReminder": "Lembra-te de colher as tuas culturas!",
-    "taskCompleted": "Tarefa concluída"
+    "taskCompleted": "Tarefa concluÃ­da"
   },
   "auth": {
     "lang": {
@@ -216,7 +242,7 @@
       "linkSignIn": "Entrar",
       "header": "Criar conta",
       "submit": "Criar conta",
-      "haveAccount": "Já tens conta?",
+      "haveAccount": "JÃ¡ tens conta?",
       "title": "Registo"
     },
     "name": "Nome",
@@ -230,7 +256,7 @@
       "header": "Bem-vindo",
       "submit": "Entrar",
       "title": "Entrar",
-      "noAccount": "Não tens conta?",
+      "noAccount": "NÃ£o tens conta?",
       "forgotPassword": "Esqueceste-te da password?",
       "resetTitle": "Recuperar password",
       "resetSubtitle": "Vamos enviar-te um email com o link para criar uma nova password.",

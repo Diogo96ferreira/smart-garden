@@ -386,6 +386,26 @@ export default function SettingsPage() {
         {/* Feedback Form */}
         <FeedbackForm />
 
+        {/* Legal */}
+        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+          <h2 className="inline-flex items-center gap-2 pb-1 font-medium">{t('settings.legal')}</h2>
+          <p className="text-sm text-[var(--color-text-muted)]">{t('settings.legalDesc')}</p>
+          <div className="flex flex-wrap gap-3">
+            <a
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text)] hover:bg-[var(--color-surface-muted)]"
+              href={`/${locale}/privacy`}
+            >
+              {t('legal.privacy.title')}
+            </a>
+            <a
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text)] hover:bg-[var(--color-surface-muted)]"
+              href={`/${locale}/terms`}
+            >
+              {t('legal.terms.title')}
+            </a>
+          </div>
+        </section>
+
         {/* Support */}
         <SupportCard locale={locale} />
 
