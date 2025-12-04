@@ -9,6 +9,7 @@ import { Settings2, Globe, Sun, Moon, Laptop, Bot, FileText, Download } from 'lu
 import { LeafLoader } from '@/components/ui/Spinner';
 import LogoutButton from '@/components/ui/LogoutButton';
 import { FeedbackForm } from '@/components/ui/FeedbackForm';
+import SupportCard from '@/components/ui/SupportCard';
 
 function useApplyTheme(theme: Settings['theme']) {
   React.useEffect(() => {
@@ -384,6 +385,9 @@ export default function SettingsPage() {
 
         {/* Feedback Form */}
         <FeedbackForm />
+
+        {/* Support */}
+        <SupportCard locale={locale} />
 
         {toast && (
           <div

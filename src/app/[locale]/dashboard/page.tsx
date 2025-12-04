@@ -9,7 +9,6 @@ import clsx from 'clsx';
 import { CheckCircle2, Clock3, HelpCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SuggestionCard from '@/components/ui/SuggestionCard';
-import SupportCard from '@/components/ui/SupportCard';
 import { LeafLoader } from '@/components/ui/Spinner';
 import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
@@ -672,8 +671,6 @@ export default function DashboardPage() {
           {t('dashboard.intro')}
         </p>
       </header>
-
-      <SupportCard locale={locale} />
 
       <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="rounded-[var(--radius-lg)] bg-linear-to-br from-[var(--color-primary)] via-[#3f9260] to-[#2d6f45] p-8 text-white shadow-[var(--shadow-soft)]">
