@@ -472,6 +472,98 @@ export default function DashboardPage() {
       .replace(/\s+/g, ' ')
       .trim();
 
+  const translatePlantName = (name: string, target: 'pt' | 'en') => {
+    if (!name) return name;
+    const directPtToEn: Record<string, string> = {
+      tomate: 'tomato',
+      'tomate cereja': 'cherry tomato',
+      'tomate coracao de boi': 'oxheart tomato',
+      'tomate chucha': 'plum tomato',
+      'tomate italiano': 'roma tomato',
+      pimento: 'pepper',
+      malagueta: 'chili',
+      beringela: 'eggplant',
+      berinjela: 'eggplant',
+      curgete: 'zucchini',
+      courgete: 'zucchini',
+      abobora: 'pumpkin',
+      pepino: 'cucumber',
+      cebola: 'onion',
+      alho: 'garlic',
+      alface: 'lettuce',
+      'alface repolho': 'butterhead lettuce',
+      'alface romana': 'romaine lettuce',
+      'alface folha de carvalho': 'oak leaf lettuce',
+      'alface iceberg': 'iceberg lettuce',
+      couve: 'cabbage',
+      'couve flor': 'cauliflower',
+      couveflor: 'cauliflower',
+      'couve galega': 'portuguese kale',
+      'couve coracao': 'pointed cabbage',
+      'couve brocolo': 'broccoli',
+      brocolo: 'broccoli',
+      brocolos: 'broccoli',
+      cenoura: 'carrot',
+      beterraba: 'beet',
+      rabanete: 'radish',
+      nabo: 'turnip',
+      ervilha: 'pea',
+      fava: 'broad bean',
+      feijao: 'bean',
+      'grao de bico': 'chickpea',
+      milho: 'corn',
+      batata: 'potato',
+      'batata doce': 'sweet potato',
+      espinafre: 'spinach',
+      acelga: 'chard',
+      agriao: 'watercress',
+      salsa: 'parsley',
+      coentros: 'coriander',
+      manjericao: 'basil',
+      oregao: 'oregano',
+      alecrim: 'rosemary',
+      tomilho: 'thyme',
+      morango: 'strawberry',
+      laranja: 'orange',
+      limao: 'lemon',
+      tangerina: 'tangerine',
+      ameixa: 'plum',
+      pessego: 'peach',
+      nectarina: 'nectarine',
+      maca: 'apple',
+      pera: 'pear',
+      figo: 'fig',
+      uva: 'grape',
+      amendoa: 'almond',
+      noz: 'walnut',
+      roma: 'pomegranate',
+      abacate: 'avocado',
+      kiwi: 'kiwi',
+    };
+    const directEnToPt: Record<string, string> = Object.fromEntries(
+      Object.entries(directPtToEn).map(([pt, en]) => [en, pt]),
+    );
+
+    const map = target === 'en' ? directPtToEn : directEnToPt;
+    const originalNorm = norm(name);
+    if (map[originalNorm]) {
+      const translated = map[originalNorm];
+      return name[0] === name[0]?.toUpperCase()
+        ? translated.charAt(0).toUpperCase() + translated.slice(1)
+        : translated;
+    }
+
+    const tokens = name.split(/(\s+|[-/])/);
+    const mapped = tokens.map((token) => {
+      const base = norm(token);
+      if (!base) return token;
+      const t = map[base];
+      if (!t) return token;
+      return token[0] === token[0]?.toUpperCase() ? t.charAt(0).toUpperCase() + t.slice(1) : t;
+    });
+    return mapped.join('');
+  };
+
   const localeKey: 'pt' | 'en' = locale.startsWith('en') ? 'en' : 'pt';
 
   const formatTaskText = (task: Task) => {
@@ -488,7 +580,9 @@ export default function DashboardPage() {
         return plants.find((p) => norm(p.name || '') === target) ?? null;
       })();
 
-    const plantName = plant?.name || task.title.split(':').slice(1).join(':').trim() || task.title;
+    const rawPlantName =
+      plant?.name || task.title.split(':').slice(1).join(':').trim() || task.title;
+    const plantName = translatePlantName(rawPlantName, localeKey);
     const extractDays = () => {
       const m = `${task.title} ${task.description ?? ''}`.match(/(\d+)\s*(day|dias|dia)/i);
       return m ? Number.parseInt(m[1], 10) : null;
