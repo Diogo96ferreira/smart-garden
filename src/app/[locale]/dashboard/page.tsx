@@ -13,7 +13,7 @@ import SupportCard from '@/components/ui/SupportCard';
 import { LeafLoader } from '@/components/ui/Spinner';
 import { supabase } from '@/lib/supabaseClient';
 import { useTranslation } from '@/lib/useTranslation';
-import { isWateringTask } from '@/lib/nameMatching';
+import { isWateringTask, parseActionKey } from '@/lib/nameMatching';
 import { useLocale } from '@/lib/useLocale';
 
 type Task = {
@@ -25,7 +25,13 @@ type Task = {
   created_at?: string;
 };
 
-type PlantLite = { id: string; name: string; image_url?: string | null };
+type PlantLite = {
+  id: string;
+  name: string;
+  image_url?: string | null;
+  watering_freq?: number | null;
+  last_watered?: string | null;
+};
 
 export default function DashboardPage() {
   const locale = useLocale();
@@ -181,7 +187,7 @@ export default function DashboardPage() {
         if (!userId) return;
         const { data, error } = await supabase
           .from('plants')
-          .select('id,name,image_url')
+          .select('id,name,image_url,watering_freq,last_watered')
           .eq('user_id', userId);
         if (error) throw error;
         setPlants((data as PlantLite[]) ?? []);
@@ -197,7 +203,9 @@ export default function DashboardPage() {
       .channel('plants-updates')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'plants' }, async () => {
         try {
-          const { data, error } = await supabase.from('plants').select('id,name,image_url');
+          const { data, error } = await supabase
+            .from('plants')
+            .select('id,name,image_url,watering_freq,last_watered');
           if (!error) setPlants((data as PlantLite[]) ?? []);
         } catch {}
       })
@@ -464,6 +472,73 @@ export default function DashboardPage() {
       .replace(/\s+/g, ' ')
       .trim();
 
+  const localeKey: 'pt' | 'en' = locale.startsWith('en') ? 'en' : 'pt';
+
+  const formatTaskText = (task: Task) => {
+    const actionPt = parseActionKey(task.title, 'pt');
+    const actionEn = parseActionKey(task.title, 'en');
+    const action = actionPt !== 'other' ? actionPt : actionEn;
+
+    const plant =
+      (task.plant_id && plants.find((p) => p.id === task.plant_id)) ||
+      (() => {
+        const maybe = task.title.split(':').slice(1).join(':').trim();
+        if (!maybe) return null;
+        const target = norm(maybe);
+        return plants.find((p) => norm(p.name || '') === target) ?? null;
+      })();
+
+    const plantName = plant?.name || task.title.split(':').slice(1).join(':').trim() || task.title;
+    const extractDays = () => {
+      const m = `${task.title} ${task.description ?? ''}`.match(/(\d+)\s*(day|dias|dia)/i);
+      return m ? Number.parseInt(m[1], 10) : null;
+    };
+    const formatDate = (value?: string | null) => {
+      if (!value) return t('tasks.never');
+      const d = new Date(value);
+      if (Number.isNaN(d.getTime())) return t('tasks.never');
+      return d.toLocaleDateString(localeKey === 'en' ? 'en-US' : 'pt-PT');
+    };
+
+    if (action === 'water') {
+      const freq = plant?.watering_freq ?? extractDays();
+      const last = plant?.last_watered ?? null;
+      const title = t('tasks.waterTitle').replace('{{name}}', plantName);
+      const description =
+        freq != null
+          ? t('tasks.waterDesc')
+              .replace('{{days}}', String(freq))
+              .replace('{{date}}', formatDate(last))
+          : task.description || t('dashboard.noDescription');
+      return { title, description };
+    }
+
+    const titleByAction = () => {
+      if (!plantName || plantName === task.title) return task.title;
+      switch (action) {
+        case 'prune':
+          return localeKey === 'en' ? `Prune: ${plantName}` : `Podar: ${plantName}`;
+        case 'fertilize':
+          return localeKey === 'en' ? `Fertilize: ${plantName}` : `Adubar: ${plantName}`;
+        case 'inspect':
+          return localeKey === 'en' ? `Inspect: ${plantName}` : `Verificar: ${plantName}`;
+        case 'harvest':
+          return localeKey === 'en' ? `Harvest: ${plantName}` : `Colher: ${plantName}`;
+        case 'sow':
+          return localeKey === 'en' ? `Sow: ${plantName}` : `Semear: ${plantName}`;
+        case 'transplant':
+          return localeKey === 'en' ? `Transplant: ${plantName}` : `Transplantar: ${plantName}`;
+        default:
+          return task.title;
+      }
+    };
+
+    return {
+      title: titleByAction(),
+      description: task.description || t('dashboard.noDescription'),
+    };
+  };
+
   // No client backfill: tasks are always generated from server with plant_id
 
   const imageForTask = (task: Task): string | null => {
@@ -581,64 +656,67 @@ export default function DashboardPage() {
             {/* Pending */}
             <div className="space-y-4">
               <AnimatePresence initial={false} mode="popLayout">
-                {tasks.map((task, index) => (
-                  <motion.div
-                    key={task.id}
-                    layout
-                    layoutId={`task-${task.id}`}
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20, scale: 0.98 }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 500,
-                      damping: 40,
-                      mass: 0.7,
-                      delay: index * 0.02,
-                    }}
-                    className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-soft)]"
-                  >
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                      <div className="flex items-center gap-4">
-                        <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
-                          <Image
-                            src={imageForTask(task) || '/spinner.png'}
-                            alt={task.title}
-                            fill
-                            sizes="80px"
-                            className="object-cover"
+                {tasks.map((task, index) => {
+                  const display = formatTaskText(task);
+                  return (
+                    <motion.div
+                      key={task.id}
+                      layout
+                      layoutId={`task-${task.id}`}
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20, scale: 0.98 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 500,
+                        damping: 40,
+                        mass: 0.7,
+                        delay: index * 0.02,
+                      }}
+                      className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-soft)]"
+                    >
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                        <div className="flex items-center gap-4">
+                          <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
+                            <Image
+                              src={imageForTask(task) || '/spinner.png'}
+                              alt={display.title}
+                              fill
+                              sizes="80px"
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="text-left">
+                            <h3 className="text-lg font-semibold text-[var(--color-text)]">
+                              {display.title}
+                            </h3>
+                            <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+                              {display.description || t('dashboard.noDescription')}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-1 items-center justify-end gap-3">
+                          <TaskActionButton
+                            label={t('dashboard.markDone')}
+                            icon={CheckCircle2}
+                            onClick={() => handleCompleteTask(task)}
+                          />
+                          <TaskActionButton
+                            label={t('dashboard.delay')}
+                            icon={Clock3}
+                            onClick={() => handlePostponeTask(task)}
+                          />
+                          <TaskActionButton
+                            label={t('dashboard.howTo')}
+                            icon={HelpCircle}
+                            onClick={() => handleHowTo(task)}
                           />
                         </div>
-                        <div className="text-left">
-                          <h3 className="text-lg font-semibold text-[var(--color-text)]">
-                            {task.title}
-                          </h3>
-                          <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-                            {task.description || t('dashboard.noDescription')}
-                          </p>
-                        </div>
                       </div>
-
-                      <div className="flex flex-1 items-center justify-end gap-3">
-                        <TaskActionButton
-                          label={t('dashboard.markDone')}
-                          icon={CheckCircle2}
-                          onClick={() => handleCompleteTask(task)}
-                        />
-                        <TaskActionButton
-                          label={t('dashboard.delay')}
-                          icon={Clock3}
-                          onClick={() => handlePostponeTask(task)}
-                        />
-                        <TaskActionButton
-                          label={t('dashboard.howTo')}
-                          icon={HelpCircle}
-                          onClick={() => handleHowTo(task)}
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </AnimatePresence>
             </div>
 
@@ -652,28 +730,31 @@ export default function DashboardPage() {
                 </div>
                 <div className="space-y-3">
                   <AnimatePresence initial={false} mode="popLayout">
-                    {doneThisWeek.map((task) => (
-                      <motion.div
-                        key={`done-${task.id}`}
-                        layout
-                        layoutId={`task-${task.id}`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 opacity-70 saturate-50"
-                      >
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="h-5 w-5 text-[var(--color-primary)]" />
-                          <div>
-                            <div className="text-sm font-medium text-[var(--color-text)]">
-                              {task.title}
-                            </div>
-                            <div className="text-xs text-[var(--color-text-muted)]">
-                              {task.description || t('dashboard.noDescription')}
+                    {doneThisWeek.map((task) => {
+                      const display = formatTaskText(task);
+                      return (
+                        <motion.div
+                          key={`done-${task.id}`}
+                          layout
+                          layoutId={`task-${task.id}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 opacity-70 saturate-50"
+                        >
+                          <div className="flex items-center gap-3">
+                            <CheckCircle2 className="h-5 w-5 text-[var(--color-primary)]" />
+                            <div>
+                              <div className="text-sm font-medium text-[var(--color-text)]">
+                                {display.title}
+                              </div>
+                              <div className="text-xs text-[var(--color-text-muted)]">
+                                {display.description || t('dashboard.noDescription')}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      );
+                    })}
                   </AnimatePresence>
                 </div>
               </div>

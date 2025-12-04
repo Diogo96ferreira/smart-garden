@@ -75,6 +75,9 @@ export default function GardenPage() {
 
   // Calendar Data
   const [calendarData, setCalendarData] = useState<Record<Zone, ZoneData> | null>(null);
+  const [fallbackCalendarData, setFallbackCalendarData] = useState<Record<Zone, ZoneData> | null>(
+    null,
+  );
   const [userZone, setUserZone] = useState<Zone>('ZONA 1');
 
   useEffect(() => {
@@ -87,6 +90,16 @@ export default function GardenPage() {
     try {
       const { zonas, calendario, zonemap } = await fetchCalendarData(locale);
       setCalendarData(calendario);
+      if (locale === 'en') {
+        try {
+          const { calendario: calendarioPt } = await fetchCalendarData('pt');
+          setFallbackCalendarData(calendarioPt);
+        } catch (fallbackError) {
+          console.warn('Failed to load PT calendar fallback', fallbackError);
+        }
+      } else {
+        setFallbackCalendarData(null);
+      }
 
       let distrito: string | null = null;
       let concelho: string | null = null;
@@ -323,39 +336,96 @@ export default function GardenPage() {
   );
 
   const getPlantCalendarInfo = (plantName: string) => {
-    if (!calendarData) return null;
-    const zoneInfo = calendarData[userZone];
-    if (!zoneInfo) return null;
+    const findCalendarEntry = (data: Record<Zone, ZoneData> | null) => {
+      if (!data) return null;
+      const zoneInfo = data[userZone];
+      if (!zoneInfo) return null;
 
-    const norm = (s: string) =>
-      s
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/\p{Diacritic}/gu, '')
-        .trim();
+      const norm = (s: string) =>
+        s
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}/gu, '')
+          .trim();
 
-    const pName = norm(plantName);
+      const pName = norm(plantName);
 
-    // Find best match in calendar keys
-    const match = Object.keys(zoneInfo).find((k) => {
-      const kNorm = norm(k);
-      return pName.includes(kNorm) || kNorm.includes(pName);
-    });
+      const monthAbbr: Record<string, string> =
+        locale === 'en'
+          ? {
+              january: 'Jan',
+              fevereiro: 'Feb',
+              february: 'Feb',
+              marco: 'Mar',
+              march: 'Mar',
+              abril: 'Apr',
+              april: 'Apr',
+              may: 'May',
+              maio: 'May',
+              june: 'Jun',
+              junho: 'Jun',
+              july: 'Jul',
+              julho: 'Jul',
+              agosto: 'Aug',
+              august: 'Aug',
+              september: 'Sep',
+              setembro: 'Sep',
+              october: 'Oct',
+              outubro: 'Oct',
+              november: 'Nov',
+              novembro: 'Nov',
+              december: 'Dec',
+              dezembro: 'Dec',
+            }
+          : {
+              janeiro: 'Jan',
+              january: 'Jan',
+              fevereiro: 'Fev',
+              february: 'Fev',
+              marco: 'Mar',
+              march: 'Mar',
+              abril: 'Abr',
+              april: 'Abr',
+              may: 'Mai',
+              maio: 'Mai',
+              june: 'Jun',
+              junho: 'Jun',
+              july: 'Jul',
+              julho: 'Jul',
+              agosto: 'Ago',
+              august: 'Ago',
+              september: 'Set',
+              setembro: 'Set',
+              october: 'Out',
+              outubro: 'Out',
+              november: 'Nov',
+              novembro: 'Nov',
+              december: 'Dez',
+              dezembro: 'Dez',
+            };
 
-    if (!match) return null;
+      // Find best match in calendar keys
+      const match = Object.keys(zoneInfo).find((k) => {
+        const kNorm = norm(k);
+        return pName.includes(kNorm) || kNorm.includes(pName);
+      });
 
-    const entry = zoneInfo[match];
-    const formatMonths = (months?: string[]) => {
-      if (!months || months.length === 0) return null;
-      // Simple range logic or just first 3 chars
-      return months.map((m) => m.slice(0, 3)).join(', ');
+      if (!match) return null;
+
+      const entry = zoneInfo[match];
+      const formatMonths = (months?: string[]) => {
+        if (!months || months.length === 0) return null;
+        return months.map((m) => monthAbbr[norm(m)] ?? m.slice(0, 3)).join(', ');
+      };
+
+      return {
+        sowing: formatMonths(entry.Semeadura ?? entry.Sowing),
+        planting: formatMonths(entry.Transplante ?? entry.Transplant ?? entry.Transplanting),
+        harvest: formatMonths(entry.Colheita ?? entry.Harvest),
+      };
     };
 
-    return {
-      sowing: formatMonths(entry.Semeadura ?? entry.Sowing),
-      planting: formatMonths(entry.Transplante ?? entry.Transplant ?? entry.Transplanting),
-      harvest: formatMonths(entry.Colheita ?? entry.Harvest),
-    };
+    return findCalendarEntry(calendarData) ?? findCalendarEntry(fallbackCalendarData);
   };
 
   if (loading) {

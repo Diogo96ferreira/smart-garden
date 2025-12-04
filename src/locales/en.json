@@ -69,6 +69,11 @@
     "generating": "Generating...",
     "syncTasks": "Sync"
   },
+  "tasks": {
+    "waterTitle": "Water: {{name}}",
+    "waterDesc": "Water every {{days}} day(s). Last watering: {{date}}.",
+    "never": "never"
+  },
   "garden": {
     "title": "My garden",
     "subtitle": "Daily care and records",

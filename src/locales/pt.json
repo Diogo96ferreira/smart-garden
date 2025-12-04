@@ -69,6 +69,11 @@
     "generating": "A gerar...",
     "syncTasks": "Sincronizar"
   },
+  "tasks": {
+    "waterTitle": "Regar: {{name}}",
+    "waterDesc": "Regar a cada {{days}} dia(s). Última rega: {{date}}.",
+    "never": "nunca"
+  },
   "garden": {
     "title": "A minha horta",
     "subtitle": "Cuidados diários e registos",
