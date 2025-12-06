@@ -28,6 +28,7 @@ async function main() {
     process.exit(1);
   }
 
+  // eslint-disable-next-line no-unused-vars
   const _supabase = createClient(supabaseUrl, supabaseKey);
 
   // 1. Read local calendar data
