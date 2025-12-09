@@ -112,9 +112,9 @@ const copy = {
   },
 } satisfies Record<Lang, any>;
 
-export default function LandingPreviewPage() {
+export default function LandingPreviewPage({ initialLang = 'pt' }: { initialLang?: Lang }) {
   const router = useRouter();
-  const [lang, setLang] = useState<Lang>('pt');
+  const [lang, setLang] = useState<Lang>(initialLang);
   const content = useMemo(() => copy[lang], [lang]);
   const onboardingPath = `/${lang}/onboarding`;
 

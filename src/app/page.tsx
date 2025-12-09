@@ -8,15 +8,16 @@ import { DEFAULT_SETTINGS, SETTINGS_KEY } from '@/lib/settings';
 
 const LOCALES = ['pt', 'en'] as const;
 
-function resolveLocaleFromAcceptLanguage(): 'pt' | 'en' {
-  const header = headers().get('accept-language')?.toLowerCase() ?? '';
+function resolveLocaleFromAcceptLanguage(headerValue: string | null): 'pt' | 'en' {
+  const header = headerValue?.toLowerCase() ?? '';
   if (header.startsWith('en')) return 'en';
   return 'pt';
 }
 
-function resolveLocaleFromCookie(): 'pt' | 'en' | null {
-  const store = cookies();
-  const stored = store.get('app.locale')?.value ?? store.get(SETTINGS_KEY)?.value;
+function resolveLocaleFromCookie(
+  cookieStore: Awaited<ReturnType<typeof cookies>>,
+): 'pt' | 'en' | null {
+  const stored = cookieStore.get('app.locale')?.value ?? cookieStore.get(SETTINGS_KEY)?.value;
   if (stored?.toLowerCase().startsWith('en')) return 'en';
   if (stored?.toLowerCase().startsWith('pt')) return 'pt';
   return null;
@@ -28,8 +29,15 @@ function resolveDefaultLocale(): 'pt' | 'en' {
   return 'pt';
 }
 
-function resolveLocale(): 'pt' | 'en' {
-  return resolveLocaleFromCookie() ?? resolveLocaleFromAcceptLanguage() ?? resolveDefaultLocale();
+function resolveLocale(
+  cookieStore: Awaited<ReturnType<typeof cookies>>,
+  acceptLanguage: string | null,
+): 'pt' | 'en' {
+  return (
+    resolveLocaleFromCookie(cookieStore) ??
+    resolveLocaleFromAcceptLanguage(acceptLanguage) ??
+    resolveDefaultLocale()
+  );
 }
 
 async function fetchOnboardingFlag(userId: string): Promise<boolean | null> {
@@ -48,24 +56,25 @@ async function fetchOnboardingFlag(userId: string): Promise<boolean | null> {
 }
 
 export default async function Home() {
-  const locale = resolveLocale();
-  const supabase = await getServerSupabase();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const cookieStore = await cookies();
+  const acceptLanguage = (await headers()).get('accept-language');
+  const locale = resolveLocale(cookieStore, acceptLanguage);
+  let userId: string | null = null;
 
-  const userId = session?.user?.id;
-  const hasSession = Boolean(userId);
-
-  if (hasSession) {
-    const remoteFlag = userId ? await fetchOnboardingFlag(userId) : null;
-    const needsOnboarding = remoteFlag !== true;
-    redirect(`/${locale}/${needsOnboarding ? 'onboarding' : 'dashboard'}`);
+  try {
+    const supabase = await getServerSupabase();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    userId = session?.user?.id ?? null;
+    if (userId) {
+      const remoteFlag = await fetchOnboardingFlag(userId);
+      const needsOnboarding = remoteFlag !== true;
+      redirect(`/${locale}/${needsOnboarding ? 'onboarding' : 'dashboard'}`);
+    }
+  } catch {
+    // If Supabase is unavailable, fall back to showing the landing
   }
 
-  // No session: render landing
-  if (!LOCALES.includes(locale)) {
-    redirect('/pt'); // fallback
-  }
-  return <LandingPreviewPage />;
+  return <LandingPreviewPage initialLang={LOCALES.includes(locale) ? locale : 'pt'} />;
 }
