@@ -11,11 +11,6 @@ const TO_EMAIL = 'diogo96ferreira@gmail.com';
 const FROM_EMAIL = 'onboarding@resend.dev';
 
 export async function POST(request: Request) {
-  if (!resend) {
-    console.error('Resend API key is not configured. Set RESEND_API_KEY env variable.');
-    return NextResponse.json({ error: 'Email service is not configured.' }, { status: 500 });
-  }
-
   try {
     const user = await getAuthUser();
 
@@ -34,6 +29,12 @@ export async function POST(request: Request) {
       <pre style="white-space: pre-wrap; font-family: sans-serif;">${message}</pre>
     `;
 
+    if (!resend) {
+      console.warn('Resend API key is not configured. Feedback saved to logs only.');
+      console.info('Feedback message:', { user: user?.email ?? 'Anonymous', message });
+      return NextResponse.json({ success: true, delivered: false });
+    }
+
     await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
       replyTo: user?.email ?? undefined,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, delivered: true });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     console.error('Error sending feedback email:', errorMessage);
