@@ -50,13 +50,11 @@ export function StepReady({ onBack, onFinish }: Props) {
       const { data: auth } = await supabase.auth.getUser();
       const userId = auth.user?.id;
       if (userId) {
-        // Prefer server column, fall back to auth metadata for compatibility
         const completionPayload: Record<string, unknown> = { id: userId, 'has-onboarding': true };
         const { error } = await supabase
           .from('users')
           .upsert(completionPayload, { onConflict: 'id' });
         if (error && error.code === '42703') {
-          // Fallback to a snake_case column name if it exists instead
           await supabase
             .from('users')
             .upsert({ id: userId, has_onboarding: true }, { onConflict: 'id' });
@@ -68,7 +66,6 @@ export function StepReady({ onBack, onFinish }: Props) {
           },
         });
       }
-      // Keep local flag in sync so subsequent navigations avoid onboarding immediately
       localStorage.setItem('onboardingComplete', 'true');
     } catch {
       /* ignore */
@@ -99,17 +96,18 @@ export function StepReady({ onBack, onFinish }: Props) {
           src="/onboarding/tia-final.png"
           width={640}
           height={420}
-          alt="Tia Adélia a plantar uma muda ao pôr-do-sol."
+          alt="Tia Adelia a plantar uma muda ao por-do-sol."
           className="h-auto w-full rounded-[var(--radius-md)] object-cover"
         />
       </div>
 
       <div className="flex flex-col items-center gap-4">
-        <p className="eyebrow">🌇 Step 6</p>
+        <p className="eyebrow">Step 6</p>
         <h2 className="text-display text-4xl leading-tight sm:text-5xl">Vamos plantar juntos!</h2>
         <p className="max-w-2xl text-lg text-[var(--color-text-muted)] sm:text-xl">
-          Está tudo pronto para iniciar a sua horta inteligente com a Tia Adélia. Vamos cuidar das
-          suas plantas passo a passo e celebrar cada colheita.
+          Pronto para ligar a sua horta — urbana, varanda ou jardim partilhado — com a Tia Adelia.
+          Vamos cuidar das plantas passo a passo e celebrar cada colheita, com alertas adaptados ao
+          clima da sua zona.
         </p>
       </div>
 
@@ -118,7 +116,7 @@ export function StepReady({ onBack, onFinish }: Props) {
           Voltar
         </Button>
         <Button size="lg" className="w-full" onClick={handleFinish}>
-          Começar a minha horta
+          Comecar a minha horta
         </Button>
       </div>
     </section>

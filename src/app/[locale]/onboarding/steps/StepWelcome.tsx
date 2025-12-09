@@ -26,26 +26,27 @@ export function StepWelcome({ onNext }: Props) {
           src="/onboarding/tia-welcome.png"
           width={640}
           height={420}
-          alt="Tia Adélia à porta de casa com um cesto de legumes."
+          alt="Tia Adelia a porta de casa com um cesto de legumes."
           className="h-auto w-full rounded-[var(--radius-md)] object-cover"
           priority
         />
       </div>
 
       <div className="flex flex-col items-center gap-4">
-        <p className="eyebrow">🪴 Step 1</p>
+        <p className="eyebrow">Step 1</p>
         <h1 className="text-display text-4xl leading-tight sm:text-5xl">
-          Bem-vindo à Smart Garden
+          Bem-vindo a Smart Garden
         </h1>
         <p className="max-w-2xl text-lg text-[var(--color-text-muted)] sm:text-xl">
-          A Tia Adélia vai acompanhá-lo na criação de uma horta inteligente, ligando a tradição ao
-          cuidado assistido pela tecnologia.
+          A Tia Adelia vai acompanha-lo na criacao de uma horta inteligente — em varanda, quintal ou
+          jardim partilhado — ligando tradicao ao cuidado assistido pela tecnologia. Usamos os dados
+          para sincronizar e sugerir alertas alinhados com o clima da sua zona.
         </p>
       </div>
 
       <div className="flex w-full max-w-sm items-center justify-center">
         <Button variant="primary" size="lg" className="w-full text-white" onClick={onNext}>
-          🌱 Vamos começar
+          Vamos comecar
         </Button>
       </div>
     </section>

@@ -22,7 +22,8 @@ type Props = {
   onNext: () => void;
 };
 
-const MAX_SELECTION = 3;
+const MAX_SELECTION = 1;
+const QUICK_SUGGESTIONS = ['Manjericao', 'Alface', 'Salsa'];
 
 export function StepPlants({ onBack, onNext }: Props) {
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
@@ -44,7 +45,6 @@ export function StepPlants({ onBack, onNext }: Props) {
     let active = true;
     async function load() {
       try {
-        // Base: calendário público (servido a partir de /public)
         const [calRes, extraRes] = await Promise.all([
           fetch('/calendario.pt.json'),
           fetch('/plants.catalog.pt.json').catch(() => new Response('[]', { status: 200 })),
@@ -63,22 +63,18 @@ export function StepPlants({ onBack, onNext }: Props) {
           if (extraRes && extraRes.ok) extras = (await extraRes.json()) as Partial<Vegetable>[];
         } catch {}
 
-        // Extrair nomes únicos do calendário
         const zonas: Array<Record<string, CalEntry>> = cal?.calendario
           ? (Object.values(cal.calendario) as Array<Record<string, CalEntry>>)
           : [];
         const nomes = new Set<string>();
         for (const zona of zonas) {
-          for (const nome of Object.keys(zona)) {
-            nomes.add(String(nome));
-          }
+          for (const nome of Object.keys(zona)) nomes.add(String(nome));
         }
 
-        // Transformar em catálogo mínimo
         const monthsOrder = [
           'Janeiro',
           'Fevereiro',
-          'Março',
+          'Marco',
           'Abril',
           'Maio',
           'Junho',
@@ -93,7 +89,6 @@ export function StepPlants({ onBack, onNext }: Props) {
 
         const vegetablesFromCal: Vegetable[] = [];
         for (const nome of nomes) {
-          // Encontrar qualquer registo para apanhar janelas
           let semeadura: string[] | undefined;
           let colheita: string[] | undefined;
           for (const zona of zonas) {
@@ -104,7 +99,7 @@ export function StepPlants({ onBack, onNext }: Props) {
             }
             if (semeadura && colheita) break;
           }
-          const sow = Array.isArray(semeadura) && semeadura.length ? semeadura : ['Março'];
+          const sow = Array.isArray(semeadura) && semeadura.length ? semeadura : ['Marco'];
           const harv = Array.isArray(colheita) && colheita.length ? colheita : ['Julho'];
           const sowSorted = [...sow].sort((a, b) => monthIdx(a) - monthIdx(b));
           const harvSorted = [...harv].sort((a, b) => monthIdx(a) - monthIdx(b));
@@ -126,7 +121,6 @@ export function StepPlants({ onBack, onNext }: Props) {
           });
         }
 
-        // Mesclar extras (se houver), deduplicando por id
         const extrasMapped: Vegetable[] = Array.isArray(extras)
           ? extras.map((e) => ({
               id: String(e.id ?? e.name)
@@ -137,7 +131,7 @@ export function StepPlants({ onBack, onNext }: Props) {
                 .replace(/^-|-$|--+/g, ''),
               name: String(e.name ?? ''),
               wateringFrequencyDays: Number(e.wateringFrequencyDays ?? 3),
-              plantingWindow: e.plantingWindow ?? { startMonth: 'Março', endMonth: 'Abril' },
+              plantingWindow: e.plantingWindow ?? { startMonth: 'Marco', endMonth: 'Abril' },
               harvestWindow: e.harvestWindow ?? { startMonth: 'Julho', endMonth: 'Setembro' },
             }))
           : [];
@@ -194,13 +188,12 @@ export function StepPlants({ onBack, onNext }: Props) {
   }, []);
 
   const handleNext = useCallback(async () => {
-    if (!selectedIds.length) return;
     localStorage.setItem('userPlants', JSON.stringify(selectedIds));
 
     try {
       const { data: auth } = await supabase.auth.getUser();
       const userId = auth.user?.id;
-      if (userId) {
+      if (userId && selectedIds.length) {
         const existing = await supabase.from('plants').select('id,name').eq('user_id', userId);
         const existingNames = new Set(
           (existing.data ?? []).map((p: { name?: string | null }) =>
@@ -217,20 +210,22 @@ export function StepPlants({ onBack, onNext }: Props) {
             type: 'horta',
           }));
         if (toInsert.length) {
-          const payload = userId ? toInsert.map((p) => ({ ...p, user_id: userId })) : toInsert;
+          const payload = toInsert.map((p) => ({ ...p, user_id: userId }));
           await supabase
             .from('plants')
             .upsert(payload, { onConflict: 'user_id,name', ignoreDuplicates: true });
         }
       }
-    } catch {}
+    } catch {
+      /* ignore persistence issues to not block onboarding */
+    }
 
     onNext();
   }, [catalogue, onNext, selectedIds]);
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && selectedIds.length) {
+      if (event.key === 'Enter') {
         event.preventDefault();
         handleNext();
       }
@@ -241,7 +236,7 @@ export function StepPlants({ onBack, onNext }: Props) {
     };
     window.addEventListener('keydown', listener);
     return () => window.removeEventListener('keydown', listener);
-  }, [handleNext, onBack, selectedIds.length]);
+  }, [handleNext, onBack]);
 
   const selectedVegetables = useMemo(
     () =>
@@ -283,11 +278,13 @@ export function StepPlants({ onBack, onNext }: Props) {
       </div>
 
       <div className="flex flex-col items-center gap-4">
-        <p className="eyebrow">🌱 Step 4</p>
-        <h2 className="text-display text-4xl leading-tight sm:text-5xl">Escolha ate 3 plantas</h2>
+        <p className="eyebrow">Step 4</p>
+        <h2 className="text-display text-4xl leading-tight sm:text-5xl">
+          Escolha 1 planta (opcional)
+        </h2>
         <p className="max-w-2xl text-lg text-[var(--color-text-muted)] sm:text-xl">
-          Estas serao as primeiras plantas acompanhadas pela Smart Garden. Use a pesquisa para
-          encontrar especies e selecione ate tres favoritas.
+          Pode comecar so com uma planta ou saltar este passo. Se nao souber o que plantar, escolha
+          algo simples e rapido (ex.: Manjericao, Alface, Salsa) e altere depois.
         </p>
       </div>
 
@@ -302,7 +299,7 @@ export function StepPlants({ onBack, onNext }: Props) {
           <Input
             id="plant-search"
             leadingIcon={<Search className="h-4 w-4" />}
-            placeholder="Exemplo: Tomate cereja, Manjericao, Morango..."
+            placeholder="Exemplo: Tomate, Manjericao, Morango..."
             value={searchTerm}
             onChange={(event) => {
               setSearchTerm(event.target.value);
@@ -321,7 +318,7 @@ export function StepPlants({ onBack, onNext }: Props) {
               {catalogueError && <p className="px-4 py-3 text-sm text-red-600">{catalogueError}</p>}
               {!catalogueError && suggestions.length === 0 && (
                 <p className="px-4 py-3 text-sm text-[var(--color-text-muted)]">
-                  Nenhum resultado para &ldquo;{searchTerm}&rdquo;.
+                  Nenhum resultado para "{searchTerm}".
                 </p>
               )}
               {!catalogueError && suggestions.length > 0 && (
@@ -365,9 +362,26 @@ export function StepPlants({ onBack, onNext }: Props) {
             </button>
           ))}
           {selectedVegetables.length === 0 && !loadingCatalogue && (
-            <p className="text-sm text-[var(--color-text-muted)]">
-              Ainda nao escolheu nenhuma planta.
-            </p>
+            <div className="flex flex-col items-center gap-2 text-sm text-[var(--color-text-muted)]">
+              <p>Ainda nao escolheu nenhuma planta.</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {QUICK_SUGGESTIONS.map((name) => (
+                  <button
+                    key={name}
+                    type="button"
+                    className="rounded-full border border-[var(--color-border)] px-3 py-1 text-[var(--color-text)] transition hover:border-[var(--color-primary)] hover:text-[var(--color-primary-strong)]"
+                    onClick={() => {
+                      const veg = catalogue.find(
+                        (v) => v.name.toLowerCase() === name.toLowerCase(),
+                      );
+                      if (veg) handleSelect(veg);
+                    }}
+                  >
+                    Sugestao rapida: {name}
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
         </div>
 
@@ -405,12 +419,7 @@ export function StepPlants({ onBack, onNext }: Props) {
         <Button variant="secondary" size="lg" className="w-full" onClick={onBack}>
           Voltar
         </Button>
-        <Button
-          size="lg"
-          className="w-full"
-          onClick={handleNext}
-          disabled={!selectedVegetables.length}
-        >
+        <Button size="lg" className="w-full" onClick={handleNext}>
           Continuar
         </Button>
       </div>
