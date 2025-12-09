@@ -198,18 +198,16 @@ export default function LandingPreviewPage({ initialLang = 'pt' }: { initialLang
                 <span>{content.panelTitle}</span>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                {content.panelCards.map(
-                  (card: { label: string; value: string; note: string }): JSX.Element => (
-                    <Card
-                      key={card.label}
-                      className="border-[var(--color-border)] bg-black/80 p-4 text-white"
-                    >
-                      <p className="text-sm text-gray-300">{card.label}</p>
-                      <p className="text-3xl font-semibold">{card.value}</p>
-                      <p className="mt-2 text-xs text-gray-400">{card.note}</p>
-                    </Card>
-                  ),
-                )}
+                {content.panelCards.map((card: { label: string; value: string; note: string }) => (
+                  <Card
+                    key={card.label}
+                    className="border-[var(--color-border)] bg-black/80 p-4 text-white"
+                  >
+                    <p className="text-sm text-gray-300">{card.label}</p>
+                    <p className="text-3xl font-semibold">{card.value}</p>
+                    <p className="mt-2 text-xs text-gray-400">{card.note}</p>
+                  </Card>
+                ))}
               </div>
             </Card>
           </div>
@@ -223,25 +221,23 @@ export default function LandingPreviewPage({ initialLang = 'pt' }: { initialLang
             <h2 className="text-3xl font-semibold">{content.featuresTitle}</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {content.features.map(
-              (f: { title: string; desc: string; tag: string }): JSX.Element => (
-                <Card
-                  key={f.title}
-                  className="group h-full bg-[var(--color-background)] transition hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-lg"
-                >
-                  <CardHeader className="flex flex-row items-center justify-between text-sm text-[var(--color-primary-strong)]">
-                    <span className="rounded-full bg-[var(--color-primary-soft)] px-3 py-1 text-xs font-semibold">
-                      {f.tag}
-                    </span>
-                    <span className="text-[var(--color-text-muted)]">Preview</span>
-                  </CardHeader>
-                  <CardContent>
-                    <CardTitle className="mt-1 text-lg">{f.title}</CardTitle>
-                    <CardDescription className="mt-2 text-sm">{f.desc}</CardDescription>
-                  </CardContent>
-                </Card>
-              ),
-            )}
+            {content.features.map((f: { title: string; desc: string; tag: string }) => (
+              <Card
+                key={f.title}
+                className="group h-full bg-[var(--color-background)] transition hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-lg"
+              >
+                <CardHeader className="flex flex-row items-center justify-between text-sm text-[var(--color-primary-strong)]">
+                  <span className="rounded-full bg-[var(--color-primary-soft)] px-3 py-1 text-xs font-semibold">
+                    {f.tag}
+                  </span>
+                  <span className="text-[var(--color-text-muted)]">Preview</span>
+                </CardHeader>
+                <CardContent>
+                  <CardTitle className="mt-1 text-lg">{f.title}</CardTitle>
+                  <CardDescription className="mt-2 text-sm">{f.desc}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
