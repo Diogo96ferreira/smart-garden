@@ -103,7 +103,7 @@ body {
   mask-image: linear-gradient(to bottom, black, transparent 70%);
 }
 
-.app-shell > * {
+.app-shell > :not(nav) {
   position: relative;
   z-index: 1;
 }

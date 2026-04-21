@@ -91,7 +91,7 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
       {/* Desktop sidebar */}
       <nav
         aria-label="Main navigation"
-        className="hidden md:fixed md:top-6 md:left-5 md:z-40 md:flex md:flex-col"
+        className="hidden md:!fixed md:top-6 md:left-5 md:z-40 md:flex md:flex-col"
       >
         <ul className="flex max-h-[calc(100vh-48px)] flex-col gap-2 rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/86 p-2 shadow-[0_20px_55px_rgba(31,55,28,0.18)] backdrop-blur-xl xl:w-52">
           {items.map((item) => {
