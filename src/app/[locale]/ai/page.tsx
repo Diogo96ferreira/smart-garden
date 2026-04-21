@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { Camera, Loader2, SendHorizonal, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -164,7 +165,18 @@ export default function TiaAdeliaPage() {
         shouldLockScroll ? 'justify-start overflow-hidden' : 'pb-6',
       )}
     >
-      <header className="page-hero overflow-hidden p-5 sm:p-7">
+      <motion.header
+        initial={{ opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.52, ease: 'easeOut' }}
+        className="page-hero relative overflow-hidden p-5 sm:p-7"
+      >
+        <motion.div
+          aria-hidden
+          className="absolute inset-y-0 -left-1/3 w-1/3 skew-x-[-16deg] bg-white/20 blur-xl"
+          animate={{ x: ['0%', '420%'] }}
+          transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
+        />
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-3 text-left">
             <p className="eyebrow inline-flex items-center gap-2 text-[var(--color-primary-strong)]">
@@ -178,111 +190,132 @@ export default function TiaAdeliaPage() {
           </div>
           <Avatar size={65} src={avatarSrc} alt={personaName} />
         </div>
-      </header>
+      </motion.header>
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <Card className="glass-panel self-start overflow-hidden border-white/70">
-          <CardHeader className="gap-4 space-y-2">
-            <CardTitle>{t('ai.photo.title')}</CardTitle>
-            <CardDescription className="pb-2">{t('ai.photo.desc')}</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-7">
-            <div
-              className="flex flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-8 text-center"
-              onDragEnter={() => setDragActive(true)}
-              onDragOver={(event) => {
-                event.preventDefault();
-                setDragActive(true);
-              }}
-              onDragLeave={() => setDragActive(false)}
-              onDrop={handleDrop}
-            >
-              {preview ? (
-                <div className="flex flex-col items-center gap-4">
-                  <div className="relative overflow-hidden rounded-[24px] border border-white/70 shadow-[var(--shadow-lift)]">
-                    <Image
-                      src={preview}
-                      alt={t('ai.photo.previewAlt')}
-                      width={360}
-                      height={360}
-                      unoptimized
-                      onLoadingComplete={() => setUploading(false)}
-                      className="aspect-square object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-wrap justify-center gap-3">
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setPreview(null);
-                        setImageFile(null);
-                        resetState();
-                      }}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.06, ease: 'easeOut' }}
+        >
+          <Card className="glass-panel self-start overflow-hidden border-white/70">
+            <CardHeader className="gap-4 space-y-2">
+              <CardTitle>{t('ai.photo.title')}</CardTitle>
+              <CardDescription className="pb-2">{t('ai.photo.desc')}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-7">
+              <motion.div
+                whileHover={{ y: -3 }}
+                className={clsx(
+                  'flex flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-8 text-center transition-colors',
+                  dragActive && 'border-[var(--color-primary)] bg-[var(--color-primary-soft)]',
+                )}
+                onDragEnter={() => setDragActive(true)}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  setDragActive(true);
+                }}
+                onDragLeave={() => setDragActive(false)}
+                onDrop={handleDrop}
+              >
+                {preview ? (
+                  <div className="flex flex-col items-center gap-4">
+                    <motion.div
+                      whileHover={{ scale: 1.025 }}
+                      transition={{ duration: 0.2 }}
+                      className="relative overflow-hidden rounded-[24px] border border-white/70 shadow-[var(--shadow-lift)]"
                     >
-                      {t('ai.photo.remove')}
-                    </Button>
-                    <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
-                      {t('ai.photo.change')}
-                    </Button>
+                      <Image
+                        src={preview}
+                        alt={t('ai.photo.previewAlt')}
+                        width={360}
+                        height={360}
+                        unoptimized
+                        onLoadingComplete={() => setUploading(false)}
+                        className="aspect-square object-cover"
+                      />
+                    </motion.div>
+                    <div className="flex flex-wrap justify-center gap-3">
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          setPreview(null);
+                          setImageFile(null);
+                          resetState();
+                        }}
+                      >
+                        {t('ai.photo.remove')}
+                      </Button>
+                      <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
+                        {t('ai.photo.change')}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <>
-                  <div className="flex h-[76px] w-[76px] items-center justify-center rounded-3xl bg-white shadow-sm">
-                    <Image
-                      src={avatarSrc}
-                      alt={personaName}
-                      width={65}
-                      height={65}
-                      className="rounded-2xl"
+                ) : (
+                  <>
+                    <div className="flex h-[76px] w-[76px] items-center justify-center rounded-3xl bg-white shadow-sm">
+                      <Image
+                        src={avatarSrc}
+                        alt={personaName}
+                        width={65}
+                        height={65}
+                        className="rounded-2xl"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-base font-semibold text-[var(--color-text)]">
+                        {t('ai.photo.dragTitle')}
+                      </p>
+                      <p className="text-sm text-[var(--color-text-muted)]">
+                        {t('ai.photo.dragSubtitle')}
+                      </p>
+                    </div>
+                    <Button
+                      variant="secondary"
+                      icon={<Camera className="h-4 w-4" aria-hidden />}
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      {t('ai.photo.choose')}
+                    </Button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleFileChange}
                     />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-base font-semibold text-[var(--color-text)]">
-                      {t('ai.photo.dragTitle')}
-                    </p>
-                    <p className="text-sm text-[var(--color-text-muted)]">
-                      {t('ai.photo.dragSubtitle')}
-                    </p>
-                  </div>
-                  <Button
-                    variant="secondary"
-                    icon={<Camera className="h-4 w-4" aria-hidden />}
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    {t('ai.photo.choose')}
-                  </Button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                </>
+                  </>
+                )}
+              </motion.div>
+
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={handleAnalyze}
+                disabled={loading || uploading || dragActive || !imageFile}
+                icon={
+                  loading || uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : undefined
+                }
+              >
+                {loading ? t('ai.photo.analyzing') : t('ai.photo.analyze')}
+              </Button>
+
+              {error && (
+                <p className="rounded-[var(--radius-md)] bg-red-100 px-4 py-3 text-sm text-red-600">
+                  {error}
+                </p>
               )}
-            </div>
-
-            <Button
-              size="lg"
-              className="w-full"
-              onClick={handleAnalyze}
-              disabled={loading || uploading || dragActive || !imageFile}
-              icon={loading || uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : undefined}
-            >
-              {loading ? t('ai.photo.analyzing') : t('ai.photo.analyze')}
-            </Button>
-
-            {error && (
-              <p className="rounded-[var(--radius-md)] bg-red-100 px-4 py-3 text-sm text-red-600">
-                {error}
-              </p>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {hasAnalysis && (
-          <div className="self-start lg:sticky lg:top-24">
+          <motion.div
+            initial={{ opacity: 0, x: 26 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.48, ease: 'easeOut' }}
+            className="self-start lg:sticky lg:top-24"
+          >
             <Card className="glass-panel border-white/70">
               <CardHeader className="space-y-2">
                 <CardTitle>{chatTitle}</CardTitle>
@@ -355,7 +388,7 @@ export default function TiaAdeliaPage() {
                 </form>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         )}
       </div>
     </main>

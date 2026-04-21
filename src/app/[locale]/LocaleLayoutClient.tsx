@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import BottomBar from '@/components/ui/BottomBar';
 import { LocaleContextProvider } from '@/lib/useLocale';
 import { SETTINGS_KEY, DEFAULT_SETTINGS, type Settings } from '@/lib/settings';
@@ -15,6 +16,7 @@ type LocaleLayoutClientProps = {
 
 export default function LocaleLayoutClient({ children, locale }: LocaleLayoutClientProps) {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
 
   // hide navigation bar on onboarding and splash screens
   const hideBottomBar = useMemo(
@@ -63,7 +65,17 @@ export default function LocaleLayoutClient({ children, locale }: LocaleLayoutCli
   return (
     <LocaleContextProvider value={locale}>
       <div className="app-shell">
-        {children}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={pathname}
+            initial={reduceMotion ? false : { opacity: 0, y: 14, filter: 'blur(6px)' }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10, filter: 'blur(4px)' }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
         {!hideBottomBar && <BottomBar locale={locale} currentPath={pathname} />}
       </div>
     </LocaleContextProvider>

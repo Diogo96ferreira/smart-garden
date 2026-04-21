@@ -436,17 +436,47 @@ export default function GardenPage() {
     );
   }
 
+  const activeCount = filteredPlants.length;
+  const totalCount = plants.length;
+
   return (
     <main className="app-page flex min-h-screen flex-col gap-8">
-      <div className="page-hero flex flex-col gap-5 p-5 sm:p-7 lg:flex-row lg:items-end lg:justify-between">
-        <div>
+      <motion.div
+        initial={{ opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+        className="page-hero relative flex flex-col gap-5 overflow-hidden p-5 sm:p-7 lg:flex-row lg:items-end lg:justify-between"
+      >
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent opacity-50"
+        />
+        <motion.div
+          aria-hidden
+          className="absolute top-6 right-8 hidden h-24 w-24 rounded-[40%] border border-[var(--color-primary)]/20 sm:block"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+        />
+        <div className="relative z-10">
           <p className="eyebrow text-[var(--color-primary-strong)]">{t('garden.title')}</p>
           <h1 className="text-display text-3xl sm:text-4xl">{t('garden.subtitle')}</h1>
           <p className="mt-2 max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
             {t('garden.description')}
           </p>
         </div>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <div className="relative z-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <div className="stat-card min-w-36">
+            <p className="text-xs font-semibold tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+              Total
+            </p>
+            <p className="mt-1 text-2xl font-semibold">{totalCount}</p>
+          </div>
+          <div className="stat-card min-w-36">
+            <p className="text-xs font-semibold tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+              {activeTab}
+            </p>
+            <p className="mt-1 text-2xl font-semibold">{activeCount}</p>
+          </div>
           <Button
             size="lg"
             icon={<Plus className="h-4 w-4" />}
@@ -459,7 +489,7 @@ export default function GardenPage() {
             {t('garden.addPlant')}
           </Button>
         </div>
-      </div>
+      </motion.div>
 
       <LineTabs
         tabs={[
@@ -473,7 +503,12 @@ export default function GardenPage() {
 
       <section className="space-y-6">
         {filteredPlants.length === 0 ? (
-          <div className="glass-panel p-12 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+            className="glass-panel p-12 text-center"
+          >
             <h2 className="text-display text-2xl">{t('garden.emptyTitle')}</h2>
             <p className="mt-3 text-sm text-[var(--color-text-muted)]">
               {t('garden.emptyDescription')}
@@ -490,7 +525,7 @@ export default function GardenPage() {
             >
               {t('garden.registerPlant')}
             </Button>
-          </div>
+          </motion.div>
         ) : (
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {filteredPlants.map((plant) => {
@@ -499,9 +534,11 @@ export default function GardenPage() {
                 <motion.div
                   key={plant.id}
                   layout
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
                   whileHover={{ y: -6 }}
                   transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-                  className="interactive-card overflow-hidden rounded-[var(--radius-lg)] border border-white/70 bg-[var(--color-surface)]/86 p-4 shadow-[var(--shadow-card)] backdrop-blur-xl"
+                  className="interactive-card group overflow-hidden rounded-[var(--radius-lg)] border border-white/70 bg-[var(--color-surface)]/86 p-4 shadow-[var(--shadow-card)] backdrop-blur-xl"
                 >
                   <div className="relative mb-4 h-44 w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-surface-muted)]">
                     {plant.image_url ? (
@@ -523,6 +560,7 @@ export default function GardenPage() {
                         />
                       </div>
                     )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   </div>
                   <div className="flex items-start justify-between gap-3">
                     <div className="w-full">

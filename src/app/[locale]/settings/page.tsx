@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { useSettings } from '@/hooks/useSettings';
 import { type Settings, DEFAULT_SETTINGS, type AIProfile, type ReportRange } from '@/lib/settings';
 import { useTranslation } from '@/lib/useTranslation';
@@ -248,7 +249,18 @@ export default function SettingsPage() {
 
   return (
     <main className="app-page text-[color:var(--color-text)]" aria-busy={!!reportStatus}>
-      <header className="page-hero mb-8 flex items-center justify-between gap-4 p-5 sm:p-7">
+      <motion.header
+        initial={{ opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.52, ease: 'easeOut' }}
+        className="page-hero relative mb-8 flex items-center justify-between gap-4 overflow-hidden p-5 sm:p-7"
+      >
+        <motion.div
+          aria-hidden
+          className="absolute top-4 right-8 hidden h-20 w-40 rounded-full border border-[var(--color-primary)]/20 sm:block"
+          animate={{ x: [0, 10, 0], opacity: [0.25, 0.55, 0.25] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        />
         <div>
           <p className="eyebrow text-[var(--color-primary-strong)]">Smart Garden</p>
           <h1 className="mt-2 inline-flex items-center gap-2 text-3xl font-semibold sm:text-4xl">
@@ -256,10 +268,15 @@ export default function SettingsPage() {
           </h1>
         </div>
         <LogoutButton />
-      </header>
-      <div className="mx-auto max-w-4xl space-y-6">
+      </motion.header>
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.06, ease: 'easeOut' }}
+        className="mx-auto max-w-4xl space-y-6"
+      >
         {/* Tema */}
-        <section className="glass-panel space-y-3 p-5">
+        <section className="glass-panel interactive-card space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">{t('settings.theme')}</h2>
           <div className="grid grid-cols-3 gap-2">
             {[
@@ -295,7 +312,7 @@ export default function SettingsPage() {
         </section>
 
         {/* Idioma */}
-        <section className="glass-panel space-y-3 p-5">
+        <section className="glass-panel interactive-card space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
             <Globe className="h-4 w-4" /> {t('settings.language')}
           </h2>
@@ -324,7 +341,7 @@ export default function SettingsPage() {
         </section>
 
         {/* Perfil de IA */}
-        <section className="glass-panel space-y-3 p-5">
+        <section className="glass-panel interactive-card space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
             <Bot className="h-4 w-4" /> {t('ai.title')}
           </h2>
@@ -351,7 +368,7 @@ export default function SettingsPage() {
         </section>
 
         {/* Relatório de tarefas */}
-        <section className="glass-panel space-y-3 p-5">
+        <section className="glass-panel interactive-card space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
             <FileText className="h-4 w-4" /> {t('settings.report.title')}
           </h2>
@@ -387,7 +404,7 @@ export default function SettingsPage() {
         <FeedbackForm />
 
         {/* Legal */}
-        <section className="glass-panel space-y-3 p-5">
+        <section className="glass-panel interactive-card space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-1 font-medium">{t('settings.legal')}</h2>
           <p className="text-sm text-[var(--color-text-muted)]">{t('settings.legalDesc')}</p>
           <div className="flex flex-wrap gap-3">
@@ -421,7 +438,7 @@ export default function SettingsPage() {
             {toast.text}
           </div>
         )}
-      </div>
+      </motion.div>
 
       {reportStatus && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/20">

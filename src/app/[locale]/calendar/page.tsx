@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Sprout, Shovel, ShoppingBasket, Filter, Loader2, Search, MapPinned } from 'lucide-react';
 import GanttChart, { ActionKey, ZoneData } from '@/components/ui/GanttChart';
 import { useTranslation } from '@/lib/useTranslation';
@@ -181,7 +182,18 @@ export default function CalendarPage() {
 
   return (
     <main className="app-page-wide min-h-screen space-y-6 overflow-x-hidden text-[color:var(--color-text)]">
-      <header className="page-hero overflow-hidden p-5 sm:p-7">
+      <motion.header
+        initial={{ opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.52, ease: 'easeOut' }}
+        className="page-hero relative overflow-hidden p-5 sm:p-7"
+      >
+        <motion.div
+          aria-hidden
+          className="absolute right-8 bottom-0 hidden h-24 w-48 rounded-t-full border border-[var(--color-primary)]/20 sm:block"
+          animate={{ x: [0, 12, 0], opacity: [0.35, 0.6, 0.35] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        />
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-2">
             <p className="eyebrow inline-flex items-center gap-2 text-[var(--color-primary-strong)]">
@@ -195,9 +207,14 @@ export default function CalendarPage() {
             {zone}
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      <section className="glass-panel space-y-4 p-4 sm:p-5">
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.06, ease: 'easeOut' }}
+        className="glass-panel space-y-4 p-4 sm:p-5"
+      >
         <div className="flex flex-wrap items-center gap-3">
           <span className="app-chip">
             <Filter className="h-3.5 w-3.5" /> {t('calendar.filters')}
@@ -226,9 +243,11 @@ export default function CalendarPage() {
             ].map((a) => {
               const active = actions.includes(a.k as ActionKey);
               return (
-                <button
+                <motion.button
                   key={a.k}
                   onClick={() => toggleAction(a.k as ActionKey)}
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-[12px] font-semibold ring-1 transition ${
                     active
                       ? `${a.on} border-transparent`
@@ -237,7 +256,7 @@ export default function CalendarPage() {
                   title={a.label}
                 >
                   {a.icon} {a.label}
-                </button>
+                </motion.button>
               );
             })}
           </div>
@@ -252,11 +271,16 @@ export default function CalendarPage() {
             className="h-12 w-full rounded-2xl border border-[color:var(--color-border)] bg-[var(--color-surface)] py-2 pr-3 pl-12 text-sm text-[color:var(--color-text)] placeholder:text-[var(--color-text-muted)]"
           />
         </div>
-      </section>
+      </motion.section>
 
       <div ref={ganttAnchorRef} />
 
-      <section className="glass-panel overflow-hidden p-2 sm:p-3">
+      <motion.section
+        initial={{ opacity: 0, y: 20, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.55, delay: 0.12, ease: 'easeOut' }}
+        className="glass-panel overflow-hidden p-2 sm:p-3"
+      >
         <GanttChart
           data={zoneData}
           actions={actions}
@@ -267,7 +291,7 @@ export default function CalendarPage() {
           stickyMode="inside"
           maxHeight={maxHeight}
         />
-      </section>
+      </motion.section>
     </main>
   );
 }
