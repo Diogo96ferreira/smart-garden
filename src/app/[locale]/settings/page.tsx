@@ -247,19 +247,19 @@ export default function SettingsPage() {
   // Removed separate DB report button; report uses dropdown + source=db
 
   return (
-    <main
-      className="mx-auto max-w-6xl p-4 text-[color:var(--color-text)] sm:p-6"
-      aria-busy={!!reportStatus}
-    >
-      <header className="mb-6 flex items-center justify-between sm:mb-8">
-        <h1 className="inline-flex items-center gap-2 text-xl font-semibold">
-          <Settings2 className="h-5 w-5" /> {t('settings.title')}
-        </h1>
+    <main className="app-page text-[color:var(--color-text)]" aria-busy={!!reportStatus}>
+      <header className="page-hero mb-8 flex items-center justify-between gap-4 p-5 sm:p-7">
+        <div>
+          <p className="eyebrow text-[var(--color-primary-strong)]">Smart Garden</p>
+          <h1 className="mt-2 inline-flex items-center gap-2 text-3xl font-semibold sm:text-4xl">
+            <Settings2 className="h-7 w-7" /> {t('settings.title')}
+          </h1>
+        </div>
         <LogoutButton />
       </header>
       <div className="mx-auto max-w-4xl space-y-6">
         {/* Tema */}
-        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+        <section className="glass-panel space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">{t('settings.theme')}</h2>
           <div className="grid grid-cols-3 gap-2">
             {[
@@ -282,7 +282,7 @@ export default function SettingsPage() {
               <button
                 key={opt.v}
                 onClick={() => setTheme(opt.v as Settings['theme'])}
-                className={`inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm shadow-sm ${
+                className={`inline-flex items-center justify-center gap-2 rounded-2xl px-3 py-3 text-sm font-semibold shadow-sm transition ${
                   settings.theme === opt.v
                     ? 'bg-[var(--color-surface-muted)]'
                     : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
@@ -295,14 +295,14 @@ export default function SettingsPage() {
         </section>
 
         {/* Idioma */}
-        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+        <section className="glass-panel space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
             <Globe className="h-4 w-4" /> {t('settings.language')}
           </h2>
           <div className="grid grid-cols-2 gap-2 sm:max-w-md">
             <button
               onClick={() => handleChangeLanguage('pt-PT')}
-              className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
+              className={`rounded-2xl px-3 py-3 text-sm font-semibold shadow-sm transition ${
                 (settings.locale ?? DEFAULT_SETTINGS.locale) === 'pt-PT'
                   ? 'bg-[var(--color-surface-muted)]'
                   : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
@@ -312,7 +312,7 @@ export default function SettingsPage() {
             </button>
             <button
               onClick={() => handleChangeLanguage('en-US')}
-              className={`rounded-lg px-3 py-2 text-sm shadow-sm ${
+              className={`rounded-2xl px-3 py-3 text-sm font-semibold shadow-sm transition ${
                 (settings.locale ?? DEFAULT_SETTINGS.locale) === 'en-US'
                   ? 'bg-[var(--color-surface-muted)]'
                   : 'bg-[var(--color-surface)] hover:bg-[color:var(--color-surface-muted)]'
@@ -324,7 +324,7 @@ export default function SettingsPage() {
         </section>
 
         {/* Perfil de IA */}
-        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+        <section className="glass-panel space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
             <Bot className="h-4 w-4" /> {t('ai.title')}
           </h2>
@@ -332,7 +332,7 @@ export default function SettingsPage() {
             {AI_PROFILES.map((p) => (
               <label
                 key={p.id}
-                className="flex cursor-pointer items-start gap-3 rounded-sm p-3 shadow-sm hover:bg-[color:var(--color-surface-muted)]"
+                className="interactive-card flex cursor-pointer items-start gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]/70 p-4 shadow-sm hover:bg-[color:var(--color-surface-muted)]"
               >
                 <input
                   type="radio"
@@ -351,7 +351,7 @@ export default function SettingsPage() {
         </section>
 
         {/* Relatório de tarefas */}
-        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+        <section className="glass-panel space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-2 font-medium">
             <FileText className="h-4 w-4" /> {t('settings.report.title')}
           </h2>
@@ -369,7 +369,7 @@ export default function SettingsPage() {
             </select>
             <button
               onClick={onGenerateReport}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--color-surface-muted)]"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--color-surface)] px-4 py-3 text-sm font-semibold shadow-sm transition hover:bg-[color:var(--color-surface-muted)]"
               disabled={!!reportStatus}
               aria-busy={!!reportStatus}
             >
@@ -387,7 +387,7 @@ export default function SettingsPage() {
         <FeedbackForm />
 
         {/* Legal */}
-        <section className="space-y-3 rounded-xl bg-[var(--color-surface)] p-4 shadow-sm">
+        <section className="glass-panel space-y-3 p-5">
           <h2 className="inline-flex items-center gap-2 pb-1 font-medium">{t('settings.legal')}</h2>
           <p className="text-sm text-[var(--color-text-muted)]">{t('settings.legalDesc')}</p>
           <div className="flex flex-wrap gap-3">

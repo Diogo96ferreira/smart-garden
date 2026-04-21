@@ -437,10 +437,10 @@ export default function GardenPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-8 px-6 py-12">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <main className="app-page flex min-h-screen flex-col gap-8">
+      <div className="page-hero flex flex-col gap-5 p-5 sm:p-7 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="eyebrow">{t('garden.title')}</p>
+          <p className="eyebrow text-[var(--color-primary-strong)]">{t('garden.title')}</p>
           <h1 className="text-display text-3xl sm:text-4xl">{t('garden.subtitle')}</h1>
           <p className="mt-2 max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
             {t('garden.description')}
@@ -473,7 +473,7 @@ export default function GardenPage() {
 
       <section className="space-y-6">
         {filteredPlants.length === 0 ? (
-          <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-12 text-center shadow-[var(--shadow-soft)]">
+          <div className="glass-panel p-12 text-center">
             <h2 className="text-display text-2xl">{t('garden.emptyTitle')}</h2>
             <p className="mt-3 text-sm text-[var(--color-text-muted)]">
               {t('garden.emptyDescription')}
@@ -499,9 +499,11 @@ export default function GardenPage() {
                 <motion.div
                   key={plant.id}
                   layout
-                  className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-soft)]"
+                  whileHover={{ y: -6 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                  className="interactive-card overflow-hidden rounded-[var(--radius-lg)] border border-white/70 bg-[var(--color-surface)]/86 p-4 shadow-[var(--shadow-card)] backdrop-blur-xl"
                 >
-                  <div className="relative mb-4 h-40 w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-surface-muted)]">
+                  <div className="relative mb-4 h-44 w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-surface-muted)]">
                     {plant.image_url ? (
                       <Image
                         src={plant.image_url}
@@ -522,16 +524,16 @@ export default function GardenPage() {
                       </div>
                     )}
                   </div>
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-3">
                     <div className="w-full">
                       <h3 className="text-lg font-semibold text-[var(--color-text)]">
                         {plant.name}
                       </h3>
 
                       {calInfo ? (
-                        <div className="mt-2 space-y-1">
+                        <div className="mt-3 grid gap-2">
                           {calInfo.sowing && (
-                            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+                            <div className="app-chip max-w-full justify-start overflow-hidden !px-3 !py-1.5">
                               <Sprout className="h-3 w-3 text-emerald-600" />
                               <span className="truncate" title={calInfo.sowing}>
                                 Sem: {calInfo.sowing}
@@ -539,7 +541,7 @@ export default function GardenPage() {
                             </div>
                           )}
                           {calInfo.planting && (
-                            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+                            <div className="app-chip max-w-full justify-start overflow-hidden !px-3 !py-1.5">
                               <Shovel className="h-3 w-3 text-sky-600" />
                               <span className="truncate" title={calInfo.planting}>
                                 Plan: {calInfo.planting}
@@ -547,7 +549,7 @@ export default function GardenPage() {
                             </div>
                           )}
                           {calInfo.harvest && (
-                            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+                            <div className="app-chip max-w-full justify-start overflow-hidden !px-3 !py-1.5">
                               <ShoppingBasket className="h-3 w-3 text-amber-600" />
                               <span className="truncate" title={calInfo.harvest}>
                                 Col: {calInfo.harvest}

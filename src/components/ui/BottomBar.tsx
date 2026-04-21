@@ -20,8 +20,8 @@ type NavItem = {
 };
 
 const BASE_ITEMS: NavItem[] = [
-  { id: 'home', icon: Home, href: '/garden', color: '#166534', label: 'Dashboard' },
-  { id: 'garden', icon: Sprout, href: '/dashboard', color: '#166534', label: 'Garden' },
+  { id: 'home', icon: Home, href: '/dashboard', color: '#166534', label: 'Dashboard' },
+  { id: 'garden', icon: Sprout, href: '/garden', color: '#166534', label: 'Garden' },
   { id: 'calendar', icon: CalendarDays, href: '/calendar', color: '#166534', label: 'Calendar' },
   { id: 'ai', icon: Sparkles, href: '/ai', color: '#166534', label: 'AI assistant' },
   { id: 'settings', icon: HelpCircle, href: '/settings', color: '#166534', label: 'Settings' },
@@ -51,7 +51,7 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
         aria-label="Main navigation"
         className="fixed inset-x-0 bottom-0 z-50 flex items-end justify-center transition-colors duration-500 md:hidden"
       >
-        <ul className="relative flex h-[60px] w-full max-w-md items-end justify-around border-t border-[color:var(--color-border)] bg-[var(--color-surface)] shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
+        <ul className="relative mb-3 flex h-[64px] w-[calc(100%-24px)] max-w-md items-center justify-around rounded-[24px] border border-[color:var(--color-border)] bg-[var(--color-surface)]/88 px-2 shadow-[0_16px_42px_rgba(0,0,0,0.18)] backdrop-blur-xl">
           {items.map((item) => {
             const Icon = item.icon;
             const isActive = item.id === activeId;
@@ -60,8 +60,8 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
               <li
                 key={item.id}
                 className={clsx(
-                  'relative flex h-[60px] w-[60px] items-center justify-center rounded-t-full transition-all duration-300',
-                  isActive ? '-top-3' : 'top-0',
+                  'relative flex h-[54px] w-[54px] items-center justify-center rounded-full transition-all duration-300',
+                  isActive ? '-translate-y-2' : 'translate-y-0',
                 )}
               >
                 <Link
@@ -69,13 +69,13 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
                   aria-label={item.label}
                   aria-current={isActive ? 'page' : undefined}
                   className={clsx(
-                    'flex h-[60px] w-[60px] items-center justify-center rounded-full transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
+                    'flex h-[50px] w-[50px] items-center justify-center rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
                     isActive
-                      ? 'shadow-[0_6px_14px_rgba(16,185,129,0.25)]'
+                      ? 'bg-[var(--color-primary-soft)] shadow-[0_12px_28px_rgba(16,185,129,0.24)]'
                       : 'text-[color:var(--color-text-muted)] hover:text-[var(--color-primary-strong)]',
                   )}
                   style={{
-                    backgroundColor: 'var(--color-surface)',
+                    backgroundColor: isActive ? 'var(--color-primary-soft)' : 'transparent',
                     color: isActive ? item.color : 'var(--color-text-muted)',
                   }}
                 >
@@ -91,9 +91,9 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
       {/* Desktop sidebar */}
       <nav
         aria-label="Main navigation"
-        className="hidden md:fixed md:inset-y-0 md:left-6 md:z-40 md:flex md:flex-col md:justify-center"
+        className="hidden md:fixed md:inset-y-0 md:left-5 md:z-40 md:flex md:flex-col md:justify-center"
       >
-        <ul className="flex max-h-[80vh] flex-col gap-2 rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 p-2 shadow-[0_8px_24px_rgba(0,0,0,0.12)] backdrop-blur">
+        <ul className="flex max-h-[80vh] flex-col gap-2 rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/78 p-2 shadow-[0_20px_55px_rgba(31,55,28,0.18)] backdrop-blur-xl">
           {items.map((item) => {
             const Icon = item.icon;
             const isActive = item.id === activeId;
@@ -104,9 +104,9 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
                   aria-label={item.label}
                   aria-current={isActive ? 'page' : undefined}
                   className={clsx(
-                    'group flex items-center gap-3 rounded-xl px-3 py-2 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
+                    'group flex min-h-12 items-center gap-3 rounded-2xl px-3 py-2 transition-all focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
                     isActive
-                      ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)]'
+                      ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)] shadow-sm'
                       : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary-strong)]',
                   )}
                 >

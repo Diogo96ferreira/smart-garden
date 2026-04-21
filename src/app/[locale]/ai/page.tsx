@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
-import { Loader2, SendHorizonal } from 'lucide-react';
+import { Camera, Loader2, SendHorizonal, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -160,20 +160,28 @@ export default function TiaAdeliaPage() {
   return (
     <main
       className={clsx(
-        'mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-4',
+        'app-page flex flex-col gap-8',
         shouldLockScroll ? 'justify-start overflow-hidden' : 'pb-6',
       )}
     >
-      <header className="space-y-3 text-left">
-        <p className="eyebrow">{t('ai.header.eyebrow')}</p>
-        <h1 className="text-display text-3xl sm:text-4xl">{titleText}</h1>
-        <p className="hidden max-w-2xl text-sm text-[var(--color-text-muted)] sm:block">
-          {t('ai.header.subtitle')}
-        </p>
+      <header className="page-hero overflow-hidden p-5 sm:p-7">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-3 text-left">
+            <p className="eyebrow inline-flex items-center gap-2 text-[var(--color-primary-strong)]">
+              <Sparkles className="h-4 w-4" aria-hidden />
+              {t('ai.header.eyebrow')}
+            </p>
+            <h1 className="text-display text-3xl sm:text-4xl">{titleText}</h1>
+            <p className="max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
+              {t('ai.header.subtitle')}
+            </p>
+          </div>
+          <Avatar size={65} src={avatarSrc} alt={personaName} />
+        </div>
       </header>
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <Card className="self-start">
+        <Card className="glass-panel self-start overflow-hidden border-white/70">
           <CardHeader className="gap-4 space-y-2">
             <CardTitle>{t('ai.photo.title')}</CardTitle>
             <CardDescription className="pb-2">{t('ai.photo.desc')}</CardDescription>
@@ -191,15 +199,17 @@ export default function TiaAdeliaPage() {
             >
               {preview ? (
                 <div className="flex flex-col items-center gap-4">
-                  <Image
-                    src={preview}
-                    alt={t('ai.photo.previewAlt')}
-                    width={320}
-                    height={320}
-                    unoptimized
-                    onLoadingComplete={() => setUploading(false)}
-                    className="rounded-[var(--radius-md)] object-cover shadow-[var(--shadow-soft)]"
-                  />
+                  <div className="relative overflow-hidden rounded-[24px] border border-white/70 shadow-[var(--shadow-lift)]">
+                    <Image
+                      src={preview}
+                      alt={t('ai.photo.previewAlt')}
+                      width={360}
+                      height={360}
+                      unoptimized
+                      onLoadingComplete={() => setUploading(false)}
+                      className="aspect-square object-cover"
+                    />
+                  </div>
                   <div className="flex flex-wrap justify-center gap-3">
                     <Button
                       variant="ghost"
@@ -218,13 +228,13 @@ export default function TiaAdeliaPage() {
                 </div>
               ) : (
                 <>
-                  <div className="flex h-[65px] w-[65px] items-center justify-center rounded-full bg-white shadow-sm">
+                  <div className="flex h-[76px] w-[76px] items-center justify-center rounded-3xl bg-white shadow-sm">
                     <Image
                       src={avatarSrc}
                       alt={personaName}
                       width={65}
                       height={65}
-                      className="rounded-full"
+                      className="rounded-2xl"
                     />
                   </div>
                   <div className="space-y-1">
@@ -235,7 +245,11 @@ export default function TiaAdeliaPage() {
                       {t('ai.photo.dragSubtitle')}
                     </p>
                   </div>
-                  <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
+                  <Button
+                    variant="secondary"
+                    icon={<Camera className="h-4 w-4" aria-hidden />}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
                     {t('ai.photo.choose')}
                   </Button>
                   <input
@@ -269,13 +283,13 @@ export default function TiaAdeliaPage() {
 
         {hasAnalysis && (
           <div className="self-start lg:sticky lg:top-24">
-            <Card>
+            <Card className="glass-panel border-white/70">
               <CardHeader className="space-y-2">
                 <CardTitle>{chatTitle}</CardTitle>
                 <CardDescription>{t('ai.chat.desc')}</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-6">
-                <div className="min-h-[180px] space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
+                <div className="min-h-[240px] space-y-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-4">
                   {messages.length === 0 ? (
                     <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
                       <Avatar size={65} src={avatarSrc} alt={personaName} />

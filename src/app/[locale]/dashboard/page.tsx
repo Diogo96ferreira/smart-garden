@@ -661,53 +661,75 @@ export default function DashboardPage() {
   const tasksLoading = loading || awaitingTasks;
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-10 px-6 py-12">
-      <header className="space-y-2">
-        <p className="eyebrow text-left">{t('dashboard.thisWeek')}</p>
-        <h1 className="text-display text-3xl sm:text-4xl">
-          {t('dashboard.greeting').replace('{{name}}', userName)}
-        </h1>
-        <p className="max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
-          {t('dashboard.intro')}
-        </p>
+    <main className="app-page flex min-h-screen flex-col gap-9">
+      <header className="page-hero overflow-hidden p-5 sm:p-7">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-2">
+            <p className="eyebrow text-left text-[var(--color-primary-strong)]">
+              {t('dashboard.thisWeek')}
+            </p>
+            <h1 className="text-display text-3xl sm:text-4xl">
+              {t('dashboard.greeting').replace('{{name}}', userName)}
+            </h1>
+            <p className="max-w-2xl text-sm text-[var(--color-text-muted)] sm:text-base">
+              {t('dashboard.intro')}
+            </p>
+          </div>
+          <div className="app-chip">
+            {doneThisWeek.length}/{tasks.length + doneThisWeek.length}{' '}
+            {t('dashboard.completedShort')}
+          </div>
+        </div>
       </header>
 
       <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-[var(--radius-lg)] bg-linear-to-br from-[var(--color-primary)] via-[#3f9260] to-[#2d6f45] p-8 text-white shadow-[var(--shadow-soft)]">
-          <p className="text-sm tracking-wider text-white/70 uppercase">{t('dashboard.summary')}</p>
-          <h2 className="mt-2 text-3xl leading-tight font-semibold">
-            {t('dashboard.progressTitle')}
-          </h2>
-          <p className="mt-4 max-w-md text-sm text-white/80">
-            {t('dashboard.completed')
-              .replace('{{done}}', doneThisWeek.length.toString())
-              .replace('{{total}}', (tasks.length + doneThisWeek.length).toString())}
-          </p>
-          <div className="mt-6 flex flex-col gap-4">
-            <div>
-              <div className="flex items-center justify-between text-sm text-white/70">
-                <span>{t('dashboard.weeklyProgress')}</span>
-                <span>{progress}%</span>
+        <div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-linear-to-br from-[var(--color-primary)] via-[#3f9260] to-[#2d6f45] p-8 text-white shadow-[var(--shadow-lift)]">
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-25"
+            style={{
+              backgroundImage:
+                'repeating-linear-gradient(115deg, rgba(255,255,255,0.36) 0 1px, transparent 1px 64px)',
+            }}
+          />
+          <div className="relative">
+            <p className="text-sm tracking-wider text-white/70 uppercase">
+              {t('dashboard.summary')}
+            </p>
+            <h2 className="mt-2 text-3xl leading-tight font-semibold">
+              {t('dashboard.progressTitle')}
+            </h2>
+            <p className="mt-4 max-w-md text-sm text-white/80">
+              {t('dashboard.completed')
+                .replace('{{done}}', doneThisWeek.length.toString())
+                .replace('{{total}}', (tasks.length + doneThisWeek.length).toString())}
+            </p>
+            <div className="mt-6 flex flex-col gap-4">
+              <div>
+                <div className="flex items-center justify-between text-sm text-white/70">
+                  <span>{t('dashboard.weeklyProgress')}</span>
+                  <span>{progress}%</span>
+                </div>
+                <div className="mt-2 h-2 rounded-full bg-white/25">
+                  <motion.div
+                    className="h-full rounded-full bg-white"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                  />
+                </div>
               </div>
-              <div className="mt-2 h-2 rounded-full bg-white/25">
-                <motion.div
-                  className="h-full rounded-full bg-white"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.6, ease: 'easeOut' }}
-                />
-              </div>
+              {weatherNote && (
+                <div className="mt-2 flex items-start gap-3 rounded-[var(--radius-md)] bg-white/10 p-3 text-sm leading-snug">
+                  <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-white/80" />
+                  <p className="text-white/90">{weatherNote}</p>
+                </div>
+              )}
             </div>
-            {weatherNote && (
-              <div className="mt-2 flex items-start gap-3 rounded-[var(--radius-md)] bg-white/10 p-3 text-sm leading-snug">
-                <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-white/80" />
-                <p className="text-white/90">{weatherNote}</p>
-              </div>
-            )}
           </div>
         </div>
 
-        <aside className="rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-soft)]">
+        <aside className="glass-panel p-6">
           <p className="eyebrow">{t('dashboard.newSuggestions')}</p>
           <SuggestionsPanel
             locale={locale}
@@ -731,9 +753,9 @@ export default function DashboardPage() {
       </section>
 
       <section className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="section-title">
           <h2 className="text-display text-2xl">{t('dashboard.carePlan')}</h2>
-          <p className="text-sm text-[var(--color-text-muted)]">
+          <p className="app-chip">
             {doneThisWeek.length}/{tasks.length + doneThisWeek.length}{' '}
             {t('dashboard.completedShort')}
           </p>
@@ -764,11 +786,11 @@ export default function DashboardPage() {
                         mass: 0.7,
                         delay: index * 0.02,
                       }}
-                      className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-soft)]"
+                      className="interactive-card rounded-[var(--radius-lg)] border border-white/70 bg-[var(--color-surface)]/88 p-5 shadow-[var(--shadow-card)] backdrop-blur-xl"
                     >
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                         <div className="flex items-center gap-4">
-                          <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)]">
+                          <div className="relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-md)] shadow-sm">
                             <Image
                               src={imageForTask(task) || '/spinner.png'}
                               alt={display.title}
@@ -830,7 +852,7 @@ export default function DashboardPage() {
                           layoutId={`task-${task.id}`}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 opacity-70 saturate-50"
+                          className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]/72 p-4 opacity-70 saturate-50"
                         >
                           <div className="flex items-center gap-3">
                             <CheckCircle2 className="h-5 w-5 text-[var(--color-primary)]" />
@@ -868,7 +890,7 @@ export default function DashboardPage() {
               <div className="flex items-center gap-2 text-[var(--color-primary-strong)]">
                 <Sparkles className="h-5 w-5" />
                 <span className="text-sm font-semibold">
-                  {locale.startsWith('en') ? 'All tasks done!' : 'Tudo concluï¿½do!'}
+                  {locale.startsWith('en') ? 'All tasks done!' : 'Tudo concluído!'}
                 </span>
                 <Sparkles className="h-5 w-5" />
               </div>

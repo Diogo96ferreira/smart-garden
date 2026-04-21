@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sprout, Shovel, ShoppingBasket, Filter, Loader2 } from 'lucide-react';
+import { Sprout, Shovel, ShoppingBasket, Filter, Loader2, Search, MapPinned } from 'lucide-react';
 import GanttChart, { ActionKey, ZoneData } from '@/components/ui/GanttChart';
 import { useTranslation } from '@/lib/useTranslation';
 import { usePathname } from 'next/navigation';
@@ -169,8 +169,8 @@ export default function CalendarPage() {
 
   if (loading || !raw) {
     return (
-      <main className="flex items-center justify-center overflow-x-hidden bg-[var(--color-background)] p-6 text-[color:var(--color-text)]">
-        <span className="inline-flex items-center gap-2 text-sm text-[color:var(--color-text-muted)]">
+      <main className="app-page-wide flex min-h-screen items-center justify-center text-[color:var(--color-text)]">
+        <span className="app-chip">
           <Loader2 className="h-4 w-4 animate-spin" /> {t('calendar.loading')}
         </span>
       </main>
@@ -180,79 +180,98 @@ export default function CalendarPage() {
   const zoneData = raw.calendario?.[zone] ?? {};
 
   return (
-    <main className="mx-auto min-h-screen max-w-full space-y-5 overflow-x-hidden bg-[var(--color-background)] p-4 pb-8 text-[color:var(--color-text)] sm:p-6">
-      <header className="flex flex-wrap items-center gap-3">
-        <h1 className="text-xl font-semibold">{t('calendar.title')}</h1>
+    <main className="app-page-wide min-h-screen space-y-6 overflow-x-hidden text-[color:var(--color-text)]">
+      <header className="page-hero overflow-hidden p-5 sm:p-7">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-2">
+            <p className="eyebrow inline-flex items-center gap-2 text-[var(--color-primary-strong)]">
+              <CalendarIcon />
+              {t('calendar.filters')}
+            </p>
+            <h1 className="text-display text-3xl sm:text-4xl">{t('calendar.title')}</h1>
+          </div>
+          <div className="app-chip">
+            <MapPinned className="h-4 w-4 text-[var(--color-primary-strong)]" />
+            {zone}
+          </div>
+        </div>
       </header>
 
-      {/* Filtros topo */}
-      <div className="flex flex-wrap items-center gap-3">
-        <span className="inline-flex items-center gap-2 text-xs text-gray-600">
-          <Filter className="h-3.5 w-3.5" /> {t('calendar.filters')}
-        </span>
+      <section className="glass-panel space-y-4 p-4 sm:p-5">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="app-chip">
+            <Filter className="h-3.5 w-3.5" /> {t('calendar.filters')}
+          </span>
 
-        <div className="flex items-center gap-1">
-          {[
-            {
-              k: 'Semeadura',
-              label: t('calendar.sow'),
-              icon: <Sprout className="h-3.5 w-3.5" />,
-              on: 'bg-emerald-200 text-emerald-900',
-            },
-            {
-              k: 'Transplante',
-              label: t('calendar.transplant'),
-              icon: <Shovel className="h-3.5 w-3.5" />,
-              on: 'bg-sky-200 text-sky-900',
-            },
-            {
-              k: 'Colheita',
-              label: t('calendar.harvest'),
-              icon: <ShoppingBasket className="h-3.5 w-3.5" />,
-              on: 'bg-amber-200 text-amber-900',
-            },
-          ].map((a) => {
-            const active = actions.includes(a.k as ActionKey);
-            return (
-              <button
-                key={a.k}
-                onClick={() => toggleAction(a.k as ActionKey)}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[12px] transition ${
-                  active
-                    ? `${a.on} border-transparent`
-                    : 'border-[color:var(--color-border)] bg-[var(--color-surface)] text-[color:var(--color-text)]'
-                }`}
-                title={a.label}
-              >
-                {a.icon} {a.label}
-              </button>
-            );
-          })}
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              {
+                k: 'Semeadura',
+                label: t('calendar.sow'),
+                icon: <Sprout className="h-3.5 w-3.5" />,
+                on: 'bg-emerald-100 text-emerald-900 ring-emerald-200',
+              },
+              {
+                k: 'Transplante',
+                label: t('calendar.transplant'),
+                icon: <Shovel className="h-3.5 w-3.5" />,
+                on: 'bg-sky-100 text-sky-900 ring-sky-200',
+              },
+              {
+                k: 'Colheita',
+                label: t('calendar.harvest'),
+                icon: <ShoppingBasket className="h-3.5 w-3.5" />,
+                on: 'bg-amber-100 text-amber-900 ring-amber-200',
+              },
+            ].map((a) => {
+              const active = actions.includes(a.k as ActionKey);
+              return (
+                <button
+                  key={a.k}
+                  onClick={() => toggleAction(a.k as ActionKey)}
+                  className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-[12px] font-semibold ring-1 transition ${
+                    active
+                      ? `${a.on} border-transparent`
+                      : 'bg-[var(--color-surface)] text-[color:var(--color-text-muted)] ring-[color:var(--color-border)] hover:text-[var(--color-primary-strong)]'
+                  }`}
+                  title={a.label}
+                >
+                  {a.icon} {a.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Pesquisa */}
         <div className="relative w-full">
+          <Search className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-[var(--color-text-muted)]" />
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={t('calendar.search')}
-            className="w-full rounded-lg border border-[color:var(--color-border)] bg-[var(--color-surface)] py-2 pr-3 pl-12 text-sm text-[color:var(--color-text)] placeholder:text-gray-400"
+            className="h-12 w-full rounded-2xl border border-[color:var(--color-border)] bg-[var(--color-surface)] py-2 pr-3 pl-12 text-sm text-[color:var(--color-text)] placeholder:text-[var(--color-text-muted)]"
           />
         </div>
-      </div>
+      </section>
 
       <div ref={ganttAnchorRef} />
 
-      <GanttChart
-        data={zoneData}
-        actions={actions}
-        search={q}
-        nameColWidth={180}
-        cellWidth={64}
-        stickyFirstRow
-        stickyMode="inside"
-        maxHeight={maxHeight}
-      />
+      <section className="glass-panel overflow-hidden p-2 sm:p-3">
+        <GanttChart
+          data={zoneData}
+          actions={actions}
+          search={q}
+          nameColWidth={180}
+          cellWidth={64}
+          stickyFirstRow
+          stickyMode="inside"
+          maxHeight={maxHeight}
+        />
+      </section>
     </main>
   );
+}
+
+function CalendarIcon() {
+  return <Sprout className="h-4 w-4" aria-hidden />;
 }

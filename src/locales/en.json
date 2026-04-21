@@ -184,7 +184,7 @@
     },
     "header": {
       "eyebrow": "Smart diagnosis",
-      "title": "Talk to Aunt AdÃ©lia",
+      "title": "Talk to Aunt Adelia",
       "subtitle": "Upload a photo of your plant to get an instant diagnosis and personalized advice on watering, pruning or harvesting."
     },
     "photo": {
@@ -200,9 +200,9 @@
       "analyzing": "Analyzing..."
     },
     "chat": {
-      "title": "Chat with Aunt AdÃ©lia",
+      "title": "Chat with Aunt Adelia",
       "desc": "Continue the conversation based on the diagnosis: ask for tips about treatment, harvest or general care.",
-      "placeholder": "Ask Aunt AdÃ©lia something...",
+      "placeholder": "Ask Aunt Adelia something...",
       "thinking": "Thinking...",
       "send": "Send"
     },
