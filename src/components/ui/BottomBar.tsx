@@ -91,9 +91,9 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
       {/* Desktop sidebar */}
       <nav
         aria-label="Main navigation"
-        className="hidden md:fixed md:inset-y-0 md:left-5 md:z-40 md:flex md:flex-col md:justify-center"
+        className="hidden md:fixed md:top-6 md:left-5 md:z-40 md:flex md:flex-col"
       >
-        <ul className="flex max-h-[80vh] flex-col gap-2 rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/78 p-2 shadow-[0_20px_55px_rgba(31,55,28,0.18)] backdrop-blur-xl">
+        <ul className="flex max-h-[calc(100vh-48px)] flex-col gap-2 rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/86 p-2 shadow-[0_20px_55px_rgba(31,55,28,0.18)] backdrop-blur-xl xl:w-52">
           {items.map((item) => {
             const Icon = item.icon;
             const isActive = item.id === activeId;
@@ -104,7 +104,7 @@ export default function BottomBar({ locale, currentPath }: BottomBarProps) {
                   aria-label={item.label}
                   aria-current={isActive ? 'page' : undefined}
                   className={clsx(
-                    'group flex min-h-12 items-center gap-3 rounded-2xl px-3 py-2 transition-all focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none',
+                    'group flex h-12 w-12 items-center justify-center gap-3 rounded-2xl px-0 py-2 transition-all focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] focus-visible:outline-none xl:w-full xl:justify-start xl:px-3',
                     isActive
                       ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)] shadow-sm'
                       : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary-strong)]',
